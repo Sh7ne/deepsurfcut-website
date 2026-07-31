@@ -17,5 +17,5 @@ Simplified Chinese.
 - Build command: leave empty
 - Build output directory: `.`
 
-The repository is intentionally build-free. Production currently uses a Cloudflare
-Pages Direct Upload project, so pushing to GitHub does not deploy automatically.
+The repository is intentionally build-free. Cloudflare Pages automatically deploys
+the `main` branch to production and creates preview deployments for other branches.
