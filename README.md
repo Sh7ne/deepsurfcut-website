@@ -1,6 +1,6 @@
 # DeepSurfCut website
 
-Static product website for `https://deepsurfcut.com`.
+Static product website for `https://deepsurf.app`.
 
 ## Local preview
 

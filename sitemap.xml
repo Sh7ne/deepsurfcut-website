@@ -4,51 +4,51 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
 >
   <url>
-    <loc>https://deepsurfcut.com/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://deepsurfcut.com/" />
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurfcut.com/zh/" />
+    <loc>https://deepsurf.app/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deepsurf.app/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurf.app/zh/" />
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://deepsurfcut.com/zh/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://deepsurfcut.com/" />
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurfcut.com/zh/" />
+    <loc>https://deepsurf.app/zh/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deepsurf.app/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurf.app/zh/" />
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://deepsurfcut.com/privacy/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://deepsurfcut.com/privacy/" />
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurfcut.com/zh/privacy/" />
+    <loc>https://deepsurf.app/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deepsurf.app/privacy/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurf.app/zh/privacy/" />
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://deepsurfcut.com/zh/privacy/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://deepsurfcut.com/privacy/" />
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurfcut.com/zh/privacy/" />
+    <loc>https://deepsurf.app/zh/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deepsurf.app/privacy/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurf.app/zh/privacy/" />
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://deepsurfcut.com/terms/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://deepsurfcut.com/terms/" />
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurfcut.com/zh/terms/" />
+    <loc>https://deepsurf.app/terms/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deepsurf.app/terms/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurf.app/zh/terms/" />
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://deepsurfcut.com/zh/terms/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://deepsurfcut.com/terms/" />
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurfcut.com/zh/terms/" />
+    <loc>https://deepsurf.app/zh/terms/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deepsurf.app/terms/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurf.app/zh/terms/" />
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://deepsurfcut.com/support/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://deepsurfcut.com/support/" />
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurfcut.com/zh/support/" />
+    <loc>https://deepsurf.app/support/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deepsurf.app/support/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurf.app/zh/support/" />
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://deepsurfcut.com/zh/support/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://deepsurfcut.com/support/" />
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurfcut.com/zh/support/" />
+    <loc>https://deepsurf.app/zh/support/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deepsurf.app/support/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurf.app/zh/support/" />
     <priority>0.7</priority>
   </url>
 </urlset>

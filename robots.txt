@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://deepsurfcut.com/sitemap.xml
+Sitemap: https://deepsurf.app/sitemap.xml
