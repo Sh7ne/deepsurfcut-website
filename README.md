@@ -8,7 +8,8 @@ Static product website for `https://deepsurfcut.com`.
 python3 -m http.server 4173
 ```
 
-Open `http://localhost:4173`.
+Open `http://localhost:4173` for English or `http://localhost:4173/zh/` for
+Simplified Chinese.
 
 ## Cloudflare Pages
 

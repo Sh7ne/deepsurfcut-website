@@ -1,19 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+>
   <url>
     <loc>https://deepsurfcut.com/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deepsurfcut.com/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurfcut.com/zh/" />
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://deepsurfcut.com/zh/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deepsurfcut.com/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurfcut.com/zh/" />
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://deepsurfcut.com/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deepsurfcut.com/privacy/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurfcut.com/zh/privacy/" />
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://deepsurfcut.com/zh/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deepsurfcut.com/privacy/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurfcut.com/zh/privacy/" />
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://deepsurfcut.com/terms/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deepsurfcut.com/terms/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurfcut.com/zh/terms/" />
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://deepsurfcut.com/zh/terms/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deepsurfcut.com/terms/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurfcut.com/zh/terms/" />
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://deepsurfcut.com/support/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deepsurfcut.com/support/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurfcut.com/zh/support/" />
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://deepsurfcut.com/zh/support/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deepsurfcut.com/support/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurfcut.com/zh/support/" />
     <priority>0.7</priority>
   </url>
 </urlset>
