@@ -1,0 +1,156 @@
+:root {
+  color-scheme: dark;
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  background: #0b0c0d;
+  color: #f6f7f8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #0b0c0d;
+}
+
+header {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  min-height: 76px;
+  padding: 14px max(24px, calc((100vw - 1420px) / 2));
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 24px;
+  background: rgba(11, 12, 13, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(16px);
+}
+
+h1,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: 18px;
+  letter-spacing: 0;
+}
+
+header p {
+  margin-top: 4px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 12px;
+}
+
+.mode-switch {
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 6px;
+  background: #17191b;
+}
+
+.mode-switch button {
+  min-width: 94px;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.62);
+  background: transparent;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mode-switch button[aria-pressed="true"] {
+  color: #0b0c0d;
+  background: #f6f7f8;
+}
+
+main {
+  width: min(1420px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 50px 0 72px;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 42px;
+}
+
+figure {
+  min-width: 0;
+  margin: 0;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+figcaption {
+  min-height: 62px;
+  display: grid;
+  grid-template-columns: 12px 1fr;
+  gap: 11px;
+  align-items: start;
+}
+
+.swatch {
+  width: 12px;
+  height: 12px;
+  margin-top: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 50%;
+  background: var(--swatch);
+}
+
+.model {
+  display: block;
+  font-size: 15px;
+  font-weight: 760;
+}
+
+.finish {
+  display: block;
+  margin-top: 4px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+}
+
+figure img {
+  width: 100%;
+  height: min(74vh, 820px);
+  display: block;
+  object-fit: contain;
+  object-position: top center;
+  filter: drop-shadow(0 28px 32px rgba(0, 0, 0, 0.42));
+}
+
+@media (max-width: 860px) {
+  header {
+    grid-template-columns: 1fr;
+  }
+
+  .mode-switch {
+    width: 100%;
+  }
+
+  main {
+    width: calc(100% - 32px);
+    padding-top: 34px;
+  }
+
+  .options {
+    grid-template-columns: 1fr;
+    gap: 56px;
+  }
+
+  figure img {
+    height: 72vh;
+  }
+}
