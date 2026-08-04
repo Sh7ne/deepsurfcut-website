@@ -405,6 +405,65 @@ a {
   letter-spacing: 0.08em;
 }
 
+.use-cases {
+  padding: 126px 0;
+  background: var(--paper);
+}
+
+.use-cases-heading {
+  display: grid;
+  grid-template-columns: 0.55fr 2.35fr;
+  gap: 52px;
+  margin-bottom: 76px;
+}
+
+.use-cases h2 {
+  margin: 0;
+  font-size: 72px;
+  line-height: 0.98;
+  font-weight: 760;
+}
+
+.use-cases-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line);
+}
+
+.use-cases-grid article {
+  min-height: 260px;
+  padding: 28px 38px 0 0;
+  border-right: 1px solid var(--line);
+}
+
+.use-cases-grid article + article {
+  padding-left: 38px;
+}
+
+.use-cases-grid article:last-child {
+  padding-right: 0;
+  border-right: 0;
+}
+
+.use-case-index {
+  margin: 0 0 50px;
+  color: var(--blue);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.use-cases-grid h3 {
+  margin: 0 0 12px;
+  font-size: 23px;
+}
+
+.use-cases-grid article > p:last-child {
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
 .product {
   display: grid;
   grid-template-columns: minmax(320px, 0.8fr) minmax(0, 1.2fr);
@@ -759,6 +818,7 @@ a {
 
   .outcome h2,
   .section-heading h2,
+  .use-cases h2,
   .product h2,
   .export-copy h2,
   .privacy-band h2,
@@ -777,6 +837,7 @@ a {
 
   .outcome-grid,
   .section-heading,
+  .use-cases-heading,
   .privacy-grid {
     grid-template-columns: 1fr;
     gap: 28px;
@@ -793,6 +854,23 @@ a {
 
   .step-tag {
     display: none;
+  }
+
+  .use-cases-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .use-cases-grid article,
+  .use-cases-grid article + article,
+  .use-cases-grid article:last-child {
+    min-height: auto;
+    padding: 28px 0 36px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .use-case-index {
+    margin-bottom: 30px;
   }
 
   .product,
@@ -925,6 +1003,7 @@ a {
 
   .outcome,
   .workflow,
+  .use-cases,
   .privacy-band {
     padding-top: 82px;
   }
@@ -935,6 +1014,7 @@ a {
 
   .outcome h2,
   .section-heading h2,
+  .use-cases h2,
   .product h2,
   .export-copy h2,
   .privacy-band h2,
@@ -948,6 +1028,14 @@ a {
   }
 
   .section-heading {
+    margin-bottom: 52px;
+  }
+
+  .use-cases {
+    padding-bottom: 82px;
+  }
+
+  .use-cases-heading {
     margin-bottom: 52px;
   }
 
@@ -1004,6 +1092,20 @@ a {
 
   .support-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 360px) {
+  .site-header .brand span {
+    display: none;
+  }
+
+  .header-cta {
+    white-space: nowrap;
+  }
+
+  .hero h1 {
+    font-size: 46px;
   }
 }
 
