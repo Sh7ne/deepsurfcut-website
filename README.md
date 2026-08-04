@@ -19,3 +19,10 @@ Simplified Chinese.
 
 The repository is intentionally build-free. Cloudflare Pages automatically deploys
 the `main` branch to production and creates preview deployments for other branches.
+
+## Device mockups
+
+The iPhone 17 Pro mockups are rendered from Apple's official
+[Product Bezel](https://developer.apple.com/design/resources/) resource under the
+Apple Design Resources License. Only the finished DeepSurfCut UI mockups are included;
+the standalone Apple bezel template is not redistributed in this repository.
