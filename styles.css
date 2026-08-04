@@ -616,6 +616,78 @@ a {
   font-size: 13px;
 }
 
+.platform-band {
+  padding: 126px 0;
+  background: #dfe8f1;
+}
+
+.platform-layout {
+  display: grid;
+  grid-template-columns: 0.72fr 1.28fr;
+  gap: 58px 72px;
+  align-items: center;
+}
+
+.platform-copy h2 {
+  max-width: 510px;
+  margin: 0;
+  font-size: 58px;
+  line-height: 0.98;
+  font-weight: 760;
+}
+
+.platform-copy > p:last-child {
+  max-width: 500px;
+  margin: 30px 0 0;
+  color: rgba(10, 11, 12, 0.64);
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.mac-preview {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(10, 11, 12, 0.14);
+  border-radius: 6px;
+  box-shadow: 0 30px 70px rgba(34, 46, 58, 0.22);
+}
+
+.mac-preview img {
+  width: 100%;
+  height: auto;
+}
+
+.platform-list {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid rgba(10, 11, 12, 0.18);
+}
+
+.platform-list > div {
+  min-width: 0;
+  padding: 24px 28px 0 0;
+}
+
+.platform-list > div + div {
+  padding-left: 28px;
+  border-left: 1px solid rgba(10, 11, 12, 0.18);
+}
+
+.platform-list span {
+  font-size: 14px;
+  font-weight: 780;
+}
+
+.platform-list p {
+  max-width: 290px;
+  margin: 10px 0 0;
+  color: rgba(10, 11, 12, 0.6);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
 .privacy-band {
   padding: 126px 0;
   color: var(--white);
@@ -813,6 +885,7 @@ a {
   .use-cases h2,
   .product h2,
   .export-copy h2,
+  .platform-copy h2,
   .privacy-band h2,
   .launch h2,
   .legal-page h1 {
@@ -868,6 +941,20 @@ a {
   .product,
   .export-band {
     grid-template-columns: 1fr;
+  }
+
+  .platform-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .platform-copy h2,
+  .platform-copy > p:last-child {
+    max-width: 680px;
+  }
+
+  .mac-preview,
+  .platform-list {
+    grid-column: 1;
   }
 
   .product {
@@ -996,8 +1083,13 @@ a {
   .outcome,
   .workflow,
   .use-cases,
+  .platform-band,
   .privacy-band {
     padding-top: 82px;
+  }
+
+  .platform-band {
+    padding-bottom: 82px;
   }
 
   .outcome-grid {
@@ -1009,6 +1101,7 @@ a {
   .use-cases h2,
   .product h2,
   .export-copy h2,
+  .platform-copy h2,
   .privacy-band h2,
   .launch h2,
   .legal-page h1 {
@@ -1059,6 +1152,29 @@ a {
   .device-frame-secondary {
     width: min(320px, 88%);
     height: auto;
+  }
+
+  .platform-layout {
+    gap: 42px;
+  }
+
+  .platform-copy > p:last-child {
+    margin-top: 24px;
+    font-size: 15px;
+  }
+
+  .platform-list {
+    grid-template-columns: 1fr;
+  }
+
+  .platform-list > div {
+    padding: 22px 0;
+  }
+
+  .platform-list > div + div {
+    padding-left: 0;
+    border-top: 1px solid rgba(10, 11, 12, 0.18);
+    border-left: 0;
   }
 
   .privacy-points > div {
