@@ -564,7 +564,7 @@ a {
 .device-frame {
   position: relative;
   width: min(410px, 78%);
-  aspect-ratio: 1350 / 2760;
+  aspect-ratio: 1380 / 2880;
   height: auto;
   margin: 0;
   filter: drop-shadow(0 36px 42px rgba(0, 0, 0, 0.46));
