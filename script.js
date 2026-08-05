@@ -1,3 +1,5 @@
+document.documentElement.classList.add("has-js");
+
 const header = document.querySelector("[data-header]");
 const year = document.querySelector("[data-year]");
 const video = document.querySelector(".hero-media");
