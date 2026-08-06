@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="DeepSurfCut turns fixed-camera deep-water standing-wave sessions into editable, rider-specific clips for coaching, delivery, and content."
+      content="DeepSurfCut uses on-device analysis to turn one fixed-camera deep-water standing-wave session into editable, rider-specific clips and reels."
     />
     <meta name="apple-itunes-app" content="app-id=6776393723" />
     <meta name="theme-color" content="#090a0b" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="DeepSurfCut | Every ride, sorted by rider." />
+    <meta property="og:title" content="DeepSurfCut | One session. One click. Every rider." />
     <meta
       property="og:description"
-      content="Turn a full deep-water standing-wave session into editable, rider-specific clips."
+      content="Choose one session. DeepSurfCut finds every ride, groups repeat rides by surfer, and builds editable reels on your device."
     />
     <meta property="og:image" content="https://deepsurf.app/assets/hero-poster.jpg" />
     <meta property="og:url" content="https://deepsurf.app/" />
@@ -22,8 +22,8 @@
     <link rel="alternate" hreflang="zh-Hans" href="https://deepsurf.app/zh/" />
     <link rel="alternate" hreflang="x-default" href="https://deepsurf.app/" />
     <link rel="icon" href="/assets/app-icon.png" />
-    <link rel="stylesheet" href="/styles.css?v=premium-2" />
-    <script src="/script.js?v=premium-2" defer></script>
+    <link rel="stylesheet" href="/styles.css?v=motion-1" />
+    <script src="/script.js?v=motion-1" defer></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -31,11 +31,11 @@
         "name": "DeepSurfCut",
         "operatingSystem": "iOS, iPadOS, macOS",
         "applicationCategory": "SportsApplication",
-        "description": "Session video workflow for deep-water standing-wave surfing.",
+        "description": "On-device session video workflow for deep-water standing-wave surfing.",
         "downloadUrl": "https://apps.apple.com/app/deepsurfcut/id6776393723"
       }
     </script>
-    <title>DeepSurfCut | Every ride, sorted by rider.</title>
+    <title>DeepSurfCut | One session. One click. Every rider.</title>
   </head>
   <body>
     <header class="site-header" data-header>
@@ -44,10 +44,10 @@
         <span>DeepSurfCut</span>
       </a>
       <nav aria-label="Primary navigation">
+        <a href="#autocut">One click</a>
+        <a href="#product">Editor</a>
         <a href="#workflow">Workflow</a>
-        <a href="#product">Product</a>
         <a href="#platforms">Platforms</a>
-        <a href="#use-cases">For teams</a>
         <a href="/support/">Support</a>
       </nav>
       <div class="header-actions">
@@ -75,21 +75,35 @@
           <source src="/assets/hero.mp4" type="video/mp4" />
         </video>
         <div class="hero-shade" aria-hidden="true"></div>
+        <div class="hero-tech-layer" aria-hidden="true">
+          <span class="hero-tech-frame hero-tech-frame-left"></span>
+          <span class="hero-tech-frame hero-tech-frame-right"></span>
+          <span class="hero-tech-sweep"></span>
+          <div class="hero-telemetry">
+            <span>SESSION FEED</span>
+            <span>FIXED CAMERA</span>
+            <span>ON-DEVICE READY</span>
+          </div>
+        </div>
         <div class="hero-content">
           <img class="hero-icon" src="/assets/app-icon.png" alt="" width="92" height="92" />
           <p class="eyebrow">Session video for deep-water standing waves</p>
           <h1 id="hero-title">DeepSurfCut</h1>
-          <p class="hero-line">Every ride. Sorted by rider.</p>
+          <p class="hero-line">One session. One click. Every rider.</p>
           <p class="hero-copy">
-            Turn one fixed-camera session into editable, rider-specific clips for coaching,
-            delivery, and content. DeepSurfCut finds the rides and organizes the session.
+            Choose one fixed-camera recording. DeepSurfCut finds every ride, groups repeat rides
+            by surfer, and builds editable reels on your device.
           </p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#workflow">See the workflow</a>
+            <a class="button button-primary" href="#autocut">Watch it sort</a>
             <a class="button button-quiet" href="#product">Explore the editor</a>
           </div>
         </div>
-        <a class="hero-scroll" href="#outcome">One session in. Rider-ready footage out.</a>
+        <div class="hero-capability-rail" aria-label="DeepSurfCut processing pipeline">
+          <span><b>01</b> Fixed-camera session</span>
+          <span><b>02</b> On-device analysis</span>
+          <span><b>03</b> Editable rider tracks</span>
+        </div>
       </section>
 
       <section class="outcome" id="outcome" aria-label="Product outcome">
@@ -101,6 +115,70 @@
             DeepSurfCut pulls the riding time forward, groups repeat rides by surfer, and turns
             one long recording into a timeline you can actually use.
           </p>
+        </div>
+        <div
+          class="autocut-lab section-inner"
+          id="autocut"
+          role="region"
+          aria-label="One-click session sorting demo"
+          data-autocut
+          data-state="ready"
+          data-status-idle="Session ready"
+          data-status-analysing="Reading the full session"
+          data-status-detecting="Isolating every ride"
+          data-status-grouping="Grouping repeat rides by surfer"
+          data-status-ready="Timeline ready"
+          data-action-run="Run one-click cut"
+          data-action-working="Sorting the session"
+          data-action-replay="Run it again"
+        >
+          <div class="autocut-toolbar">
+            <div>
+              <span class="autocut-overline">DEEPSURFCUT / ONE-CLICK PROOF</span>
+              <strong data-autocut-status role="status" aria-live="polite">Timeline ready</strong>
+            </div>
+            <span class="autocut-local">ON-DEVICE</span>
+          </div>
+          <div class="autocut-feed" aria-hidden="true">
+            <img src="/assets/hero-poster.jpg" alt="" width="1600" height="900" />
+            <span class="autocut-feed-shade"></span>
+            <span class="autocut-scan"></span>
+            <span class="autocut-zone autocut-zone-entry"><b>ENTRY</b></span>
+            <span class="autocut-zone autocut-zone-ride"><b>RIDE</b></span>
+            <span class="autocut-zone autocut-zone-fall"><b>FALL</b></span>
+          </div>
+          <div class="autocut-timeline">
+            <div class="autocut-rail-heading">
+              <span>FULL SESSION</span>
+              <span>RIDE &rarr; TRACK</span>
+            </div>
+            <div class="autocut-raw" aria-hidden="true"><span></span></div>
+            <div class="autocut-tracks" aria-hidden="true">
+              <div class="autocut-track autocut-track-blue">
+                <b>RIDER A</b><span class="autocut-clip clip-a1"></span><span class="autocut-clip clip-a2"></span>
+              </div>
+              <div class="autocut-track autocut-track-green">
+                <b>RIDER B</b><span class="autocut-clip clip-b1"></span><span class="autocut-clip clip-b2"></span>
+              </div>
+              <div class="autocut-track autocut-track-orange">
+                <b>RIDER C</b><span class="autocut-clip clip-c1"></span><span class="autocut-clip clip-c2"></span>
+              </div>
+              <div class="autocut-track autocut-track-magenta">
+                <b>RIDER D</b><span class="autocut-clip clip-d1"></span><span class="autocut-clip clip-d2"></span>
+              </div>
+            </div>
+          </div>
+          <div class="autocut-command">
+            <div class="autocut-proof" aria-hidden="true">
+              <span>Rides detected</span>
+              <span>Riders grouped</span>
+              <span>Ready to review</span>
+            </div>
+            <button class="autocut-button" type="button" data-autocut-button>
+              <span class="autocut-button-icon" aria-hidden="true"></span>
+              <span data-autocut-action>Run it again</span>
+            </button>
+          </div>
         </div>
         <div class="signal-strip" aria-hidden="true">
           <span class="signal signal-blue"></span>
@@ -155,6 +233,60 @@
         </div>
       </section>
 
+      <section class="product" id="product" aria-labelledby="product-title">
+        <div class="product-copy section-inner">
+          <p class="section-label">Human-correctable AI</p>
+          <h2 id="product-title">A first pass you can change.</h2>
+          <p>
+            Every detected ride becomes a real clip on a rider track, not a result hidden in a
+            gallery. Jump between rides, correct the grouping, and shape the final export yourself.
+          </p>
+          <ul class="feature-lines">
+            <li><span>Review</span> Jump straight to each ride</li>
+            <li><span>Correct</span> Trim, split, move, merge, undo</li>
+            <li><span>Deliver</span> Single clips or complete rider reels</li>
+          </ul>
+        </div>
+        <div class="product-stage">
+          <div class="timeline-echo" aria-hidden="true">
+            <span class="echo-blue"></span>
+            <span class="echo-green"></span>
+            <span class="echo-orange"></span>
+            <span class="echo-magenta"></span>
+          </div>
+          <figure class="device-frame" data-reveal data-tilt>
+            <img
+              src="/assets/device-options/timeline-iphone-air-space-black.png?v=device-options-3"
+              alt="DeepSurfCut showing detected surfers on a multitrack timeline in a Space Black iPhone Air"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        </div>
+      </section>
+
+      <section class="export-band" id="export" aria-labelledby="export-title">
+        <div class="export-visual">
+          <figure class="device-frame device-frame-secondary" data-reveal data-tilt>
+            <img
+              src="/assets/device-options/export-iphone-air-space-black.png?v=device-options-3"
+              alt="DeepSurfCut export controls for selecting surfers and clip padding in a Space Black iPhone Air"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        </div>
+        <div class="export-copy">
+          <p class="section-label">Ready for coaching and delivery</p>
+          <h2 id="export-title">Give every rider their session back.</h2>
+          <p>
+            Select one or more surfers, keep useful context before and after each ride, and export
+            separate clips or a complete reel. Useful after lessons, open sessions, training, and events.
+          </p>
+          <p class="small-proof">Original orientation and audio stay intact.</p>
+        </div>
+      </section>
+
       <section class="use-cases" id="use-cases" aria-labelledby="use-cases-title">
         <div class="section-inner">
           <div class="use-cases-heading">
@@ -190,56 +322,6 @@
         </div>
       </section>
 
-      <section class="product" id="product" aria-labelledby="product-title">
-        <div class="product-copy section-inner">
-          <p class="section-label">Human-correctable AI</p>
-          <h2 id="product-title">A first pass you can change.</h2>
-          <p>
-            Every detected ride becomes a real clip on a rider track, not a result hidden in a
-            gallery. Jump between rides, correct the grouping, and shape the final export yourself.
-          </p>
-          <ul class="feature-lines">
-            <li><span>Review</span> Jump straight to each ride</li>
-            <li><span>Correct</span> Trim, split, move, merge, undo</li>
-            <li><span>Deliver</span> Single clips or complete rider reels</li>
-          </ul>
-        </div>
-        <div class="product-stage">
-          <div class="timeline-echo" aria-hidden="true">
-            <span class="echo-blue"></span>
-            <span class="echo-green"></span>
-            <span class="echo-orange"></span>
-            <span class="echo-magenta"></span>
-          </div>
-          <figure class="device-frame" data-reveal>
-            <img
-              src="/assets/device-options/timeline-iphone-air-space-black.png?v=device-options-3"
-              alt="DeepSurfCut showing detected surfers on a multitrack timeline in a Space Black iPhone Air"
-            />
-          </figure>
-        </div>
-      </section>
-
-      <section class="export-band" aria-labelledby="export-title">
-        <div class="export-visual">
-          <figure class="device-frame device-frame-secondary" data-reveal>
-            <img
-              src="/assets/device-options/export-iphone-air-space-black.png?v=device-options-3"
-              alt="DeepSurfCut export controls for selecting surfers and clip padding in a Space Black iPhone Air"
-            />
-          </figure>
-        </div>
-        <div class="export-copy">
-          <p class="section-label">Ready for coaching and delivery</p>
-          <h2 id="export-title">Give every rider their session back.</h2>
-          <p>
-            Select one or more surfers, keep useful context before and after each ride, and export
-            separate clips or a complete reel. Useful after lessons, open sessions, training, and events.
-          </p>
-          <p class="small-proof">Original orientation and audio stay intact.</p>
-        </div>
-      </section>
-
       <section class="platform-band" id="platforms" aria-labelledby="platform-title">
         <div class="section-inner platform-layout">
           <div class="platform-copy">
@@ -255,6 +337,8 @@
             <img
               src="/assets/deepsurfcut-mac.png?v=platforms-3"
               alt="DeepSurfCut native Mac app with the video workspace and surfer panel"
+              loading="lazy"
+              decoding="async"
             />
           </figure>
           <div class="platform-list" aria-label="Supported Apple platforms">
