@@ -22,8 +22,9 @@
     <link rel="alternate" hreflang="zh-Hans" href="https://deepsurf.app/zh/" />
     <link rel="alternate" hreflang="x-default" href="https://deepsurf.app/" />
     <link rel="icon" href="/assets/app-icon.png" />
-    <link rel="stylesheet" href="/styles.css?v=motion-1" />
-    <script src="/script.js?v=motion-1" defer></script>
+    <link rel="stylesheet" href="/home.css?v=20260912-1" />
+    <script src="/assets/lucide.min.js" defer></script>
+    <script src="/home.js?v=20260912-1" defer></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -38,379 +39,60 @@
     <title>DeepSurfCut｜一次点击，整场自动按人整理</title>
   </head>
   <body>
+    <a class="skip-link" href="#main">跳到正文</a>
     <header class="site-header" data-header>
-      <a class="brand" href="/zh/" aria-label="DeepSurfCut 中文首页">
-        <img src="/assets/app-icon.png" alt="" width="36" height="36" />
-        <span>DeepSurfCut</span>
-      </a>
-      <nav aria-label="主导航">
-        <a href="#autocut">一键成片</a>
-        <a href="#product">剪辑器</a>
-        <a href="#workflow">工作流程</a>
-        <a href="#platforms">平台</a>
-        <a href="/zh/support/">支持</a>
-      </nav>
-      <div class="header-actions">
-        <a class="language-switch" href="/" lang="en" hreflang="en">English</a>
-        <a
-          class="header-cta"
-          href="https://apps.apple.com/app/deepsurfcut/id6776393723"
-          target="_blank"
-          rel="noopener"
-        >App Store 下载</a>
+      <div class="header-inner">
+        <a class="brand" href="/zh/" aria-label="DeepSurfCut"><img src="/assets/app-icon.png" alt="" width="32" height="32" /><span>DeepSurfCut</span></a>
+        <nav class="desktop-nav" aria-label="打开导航"><a href="#autocut">一键整理</a><a href="#product">剪辑与导出</a><a href="#platforms">支持设备</a></nav>
+        <div class="header-actions"><a class="language-link" href="/" lang="en">EN</a><a class="header-download" href="https://apps.apple.com/app/deepsurfcut/id6776393723" target="_blank" rel="noopener">下载 App<i data-lucide="arrow-up-right" aria-hidden="true" ></i></a><button class="icon-button menu-toggle" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="打开导航" title="打开导航"><i data-lucide="menu" aria-hidden="true" ></i></button></div>
       </div>
+      <nav id="mobile-nav" class="mobile-nav" aria-label="打开导航" hidden><a href="#autocut">一键整理</a><a href="#product">剪辑与导出</a><a href="#platforms">支持设备</a><a href="/zh/support/">支持</a></nav>
     </header>
-
-    <main>
+    <main id="main">
       <section class="hero" aria-labelledby="hero-title">
-        <video
-          class="hero-media"
-          autoplay
-          muted
-          loop
-          playsinline
-          poster="/assets/hero-poster.jpg"
-          aria-hidden="true"
-        >
-          <source src="/assets/hero.mp4" type="video/mp4" />
-        </video>
+        <video class="hero-video" data-hero-video muted loop playsinline preload="none" poster="/assets/hero-poster.jpg" aria-hidden="true"><source src="/assets/hero.mp4" type="video/mp4" /></video>
         <div class="hero-shade" aria-hidden="true"></div>
-        <div class="hero-tech-layer" aria-hidden="true">
-          <span class="hero-tech-frame hero-tech-frame-left"></span>
-          <span class="hero-tech-frame hero-tech-frame-right"></span>
-          <span class="hero-tech-sweep"></span>
-          <div class="hero-telemetry">
-            <span>场次画面</span>
-            <span>固定机位</span>
-            <span>端侧分析就绪</span>
-          </div>
-        </div>
-        <div class="hero-content">
-          <img class="hero-icon" src="/assets/app-icon.png" alt="" width="92" height="92" />
-          <p class="eyebrow">面向深水冲浪场次的视频整理工具</p>
+        <div class="hero-content wrap">
+          <p class="eyebrow">专为深水冲浪而生</p>
           <h1 id="hero-title">DeepSurfCut</h1>
-          <p class="hero-line hero-line-zh"><span>一次点击，</span><span>整场自动按人整理。</span></p>
-          <p class="hero-copy">
-            选择一段固定机位拍摄的完整场次。DeepSurfCut 在设备端找出每次上浪、按冲浪者归类，
-            并生成可以继续编辑的视频合集。
-          </p>
-          <div class="hero-actions">
-            <a class="button button-primary" href="#autocut">看它自动整理</a>
-            <a class="button button-quiet" href="#product">了解剪辑器</a>
-          </div>
+          <p class="hero-headline">你的场次。<br>每一次精彩上浪。</p>
+          <p class="hero-intro">一段录像，每位冲浪者，自动整理。</p>
+          <p class="hero-description">从完整场次到每个人的冲浪片段与合集，全部在你的设备上完成。</p>
+          <div class="hero-actions"><a class="button button-light" href="https://apps.apple.com/app/deepsurfcut/id6776393723" target="_blank" rel="noopener"><i data-lucide="download" aria-hidden="true" ></i>在 App Store 下载</a><a class="hero-demo-link" href="#autocut">看看它如何整理<i data-lucide="arrow-down" aria-hidden="true" ></i></a></div>
         </div>
-        <div class="hero-capability-rail" aria-label="DeepSurfCut 处理流程">
-          <span><b>01</b> 固定机位完整场次</span>
-          <span><b>02</b> 设备端自动分析</span>
-          <span><b>03</b> 按人整理的可编辑轨道</span>
+        <div class="hero-bottom wrap"><span>把时间留给冲浪。</span><span class="hero-platforms">iPhone · iPad · Mac</span><button class="icon-button video-toggle" data-video-toggle aria-label="暂停视频" title="暂停视频"><i data-lucide="pause" aria-hidden="true" data-video-icon></i></button></div>
+      </section>
+
+      <section class="section process" id="autocut" aria-labelledby="process-title">
+        <div class="wrap">
+          <div class="section-heading" data-reveal><div><p class="eyebrow">01 / 从整场录像到每次上浪</p><h2 id="process-title">一次点击。<br>整场井井有条。</h2></div><p class="section-intro">让相机一直录。DeepSurfCut 自动找出上浪片段、按冲浪者归类，生成可以继续编辑的时间线。</p></div>
+          <div class="demo" data-demo data-state="idle" data-filter="all" data-status-idle="场次已就绪" data-status-scanning="正在找出上浪片段…" data-status-detected="正在按冲浪者归类…" data-status-sorted="每个人的时间线，已整理好" data-action-run="分析场次" data-action-working="正在分析…" data-action-replay="再看一次">
+            <div class="demo-toolbar"><span><i data-lucide="film" aria-hidden="true" ></i> 完整场次</span><span class="demo-label">工作流程示意</span><span class="demo-local"><i data-lucide="cpu" aria-hidden="true" ></i>设备端分析</span></div>
+            <div class="demo-workspace">
+              <div class="demo-footage"><img src="/assets/hero-poster.jpg" width="1600" height="900" alt="固定机位拍摄的深水冲浪场次" loading="lazy" /><div class="footage-caption"><i data-lucide="video" aria-hidden="true" ></i><span>完整场次</span></div></div>
+              <div class="demo-control"><p class="eyebrow">DEEPSURFCUT</p><h3 data-demo-status role="status" aria-live="polite">场次已就绪</h3><div class="demo-progress" data-demo-progress role="progressbar" aria-label="正在分析…" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div><button class="button button-accent" type="button" data-demo-run><i data-lucide="scan-line" aria-hidden="true" ></i><span data-demo-action>分析场次</span></button></div>
+            </div>
+            <div class="demo-timeline">
+              <div class="timeline-ruler" aria-hidden="true"><span>00:00</span><span>SESSION</span><span>END</span></div>
+              <div class="timeline-body" aria-hidden="true"><div class="track-labels"><span>原始录像</span><span><i class="dot rider-a"></i>冲浪者 A</span><span><i class="dot rider-b"></i>冲浪者 B</span><span><i class="dot rider-c"></i>冲浪者 C</span></div><div class="track-area"><div class="track-line source-track"></div><div class="track-line"></div><div class="track-line"></div><div class="track-line"></div><div class="raw-recording"></div><span class="demo-clip" data-rider="a" style="--start:1%;--size:11%;--end:1%;--row:1;--delay:0ms"><b>A</b></span><span class="demo-clip" data-rider="b" style="--start:14%;--size:10%;--end:1%;--row:2;--delay:35ms"><b>B</b></span><span class="demo-clip" data-rider="c" style="--start:27%;--size:8%;--end:1%;--row:3;--delay:70ms"><b>C</b></span><span class="demo-clip" data-rider="a" style="--start:38%;--size:12%;--end:14%;--row:1;--delay:105ms"><b>A</b></span><span class="demo-clip" data-rider="b" style="--start:53%;--size:9%;--end:13%;--row:2;--delay:140ms"><b>B</b></span><span class="demo-clip" data-rider="c" style="--start:65%;--size:10%;--end:11%;--row:3;--delay:175ms"><b>C</b></span><span class="demo-clip" data-rider="a" style="--start:78%;--size:8%;--end:28%;--row:1;--delay:210ms"><b>A</b></span><span class="demo-clip" data-rider="b" style="--start:89%;--size:10%;--end:24%;--row:2;--delay:245ms"><b>B</b></span><div class="scan-playhead"></div></div></div>
+              <div class="demo-timeline-footer"><p><span class="before-label">一段连续拍摄的完整录像</span><span class="after-label">每次上浪，已按冲浪者整理。</span></p><div class="rider-filters" aria-label="所有人"><button type="button" data-rider-filter="all" aria-pressed="true"  aria-label="所有人">所有人</button><button type="button" data-rider-filter="a" aria-pressed="false" disabled aria-label="冲浪者 A"><i class="dot rider-a"></i>A</button><button type="button" data-rider-filter="b" aria-pressed="false" disabled aria-label="冲浪者 B"><i class="dot rider-b"></i>B</button><button type="button" data-rider-filter="c" aria-pressed="false" disabled aria-label="冲浪者 C"><i class="dot rider-c"></i>C</button></div></div>
+            </div>
+          </div>
+          <p class="demo-note">工作流程示意。实际处理时间取决于录像和设备。</p>
+          <ol class="process-steps"><li><span class="step-index">01</span><div><h3>导入</h3><p>固定机位，录下完整浪区与场次。</p></div></li><li><span class="step-index">02</span><div><h3>分析</h3><p>从等待与轮换中，找出真正的上浪。</p></div></li><li><span class="step-index">03</span><div><h3>完成你的剪辑</h3><p>复盘、微调，把每个人的场次分享出去。</p></div></li></ol>
         </div>
       </section>
 
-      <section class="outcome" id="outcome" aria-label="产品结果">
-        <div class="section-inner outcome-grid">
-          <p class="section-label">为完整场次而设计</p>
-          <h2>浪一直开着。<br />相机也一直录着。</h2>
-          <p>
-            一次深水冲浪场次由多段短暂上浪、重置、讲解和等待组成。DeepSurfCut 将真正的上浪时间
-            从长录像中提取出来，把同一位冲浪者的多次上浪归在一起，变成可以直接使用的时间线。
-          </p>
-        </div>
-        <div
-          class="autocut-lab section-inner"
-          id="autocut"
-          role="region"
-          aria-label="一键整理场次演示"
-          data-autocut
-          data-state="ready"
-          data-status-idle="场次已就绪"
-          data-status-analysing="正在读取完整场次"
-          data-status-detecting="正在找出每一次上浪"
-          data-status-grouping="正在按冲浪者归类"
-          data-status-ready="时间线已生成"
-          data-action-run="一键整理示例场次"
-          data-action-working="正在自动整理"
-          data-action-replay="再看一次"
-        >
-          <div class="autocut-toolbar">
-            <div>
-              <span class="autocut-overline">DEEPSURFCUT / 一键处理演示</span>
-              <strong data-autocut-status role="status" aria-live="polite">时间线已生成</strong>
-            </div>
-            <span class="autocut-local">完全在设备端</span>
-          </div>
-          <div class="autocut-feed" aria-hidden="true">
-            <img src="/assets/hero-poster.jpg" alt="" width="1600" height="900" />
-            <span class="autocut-feed-shade"></span>
-            <span class="autocut-scan"></span>
-            <span class="autocut-zone autocut-zone-entry"><b>入场</b></span>
-            <span class="autocut-zone autocut-zone-ride"><b>上浪</b></span>
-            <span class="autocut-zone autocut-zone-fall"><b>落水</b></span>
-          </div>
-          <div class="autocut-timeline">
-            <div class="autocut-rail-heading">
-              <span>完整场次</span>
-              <span>上浪片段 &rarr; 冲浪者轨道</span>
-            </div>
-            <div class="autocut-raw" aria-hidden="true"><span></span></div>
-            <div class="autocut-tracks" aria-hidden="true">
-              <div class="autocut-track autocut-track-blue">
-                <b>冲浪者 A</b><span class="autocut-clip clip-a1"></span><span class="autocut-clip clip-a2"></span>
-              </div>
-              <div class="autocut-track autocut-track-green">
-                <b>冲浪者 B</b><span class="autocut-clip clip-b1"></span><span class="autocut-clip clip-b2"></span>
-              </div>
-              <div class="autocut-track autocut-track-orange">
-                <b>冲浪者 C</b><span class="autocut-clip clip-c1"></span><span class="autocut-clip clip-c2"></span>
-              </div>
-              <div class="autocut-track autocut-track-magenta">
-                <b>冲浪者 D</b><span class="autocut-clip clip-d1"></span><span class="autocut-clip clip-d2"></span>
-              </div>
-            </div>
-          </div>
-          <div class="autocut-command">
-            <div class="autocut-proof" aria-hidden="true">
-              <span>已找到上浪片段</span>
-              <span>已按冲浪者归类</span>
-              <span>可以复盘与导出</span>
-            </div>
-            <button class="autocut-button" type="button" data-autocut-button>
-              <span class="autocut-button-icon" aria-hidden="true"></span>
-              <span data-autocut-action>再看一次</span>
-            </button>
-          </div>
-        </div>
-        <div class="signal-strip" aria-hidden="true">
-          <span class="signal signal-blue"></span>
-          <span class="signal signal-green"></span>
-          <span class="signal signal-orange"></span>
-          <span class="signal signal-magenta"></span>
-          <span class="signal signal-cyan"></span>
-          <span class="signal signal-yellow"></span>
-        </div>
-      </section>
+      <section class="section editor" id="product" aria-labelledby="editor-title"><div class="wrap editor-layout">
+        <div class="editor-copy" data-reveal><p class="eyebrow">02 / 剪辑，由你定稿</p><h2 id="editor-title">自动完成初剪。<br>细节，由你决定。</h2><p class="section-intro">每位冲浪者都有自己的轨道。直达值得回看的瞬间，把最终剪辑调整到你想要的样子。</p><div class="editor-tabs" role="tablist" aria-label="剪辑与导出" data-editor-tabs><button type="button" role="tab" id="tab-review" aria-controls="editor-review" aria-selected="true" tabindex="0" data-editor-tab="review"><i data-lucide="sliders-horizontal" aria-hidden="true" ></i>复盘与微调</button><button type="button" role="tab" id="tab-export" aria-controls="editor-export" aria-selected="false" tabindex="-1" data-editor-tab="export"><i data-lucide="share-2" aria-hidden="true" ></i>导出与分享</button></div></div>
+        <div class="editor-panel" role="tabpanel" id="editor-review" aria-labelledby="tab-review" ><div class="editor-detail"><h3>每次上浪，一眼找到。</h3><p>连续回看同一位冲浪者的多次尝试。调整片段边界、修正归类，也能随时撤销修改。</p><ul><li><i data-lucide="check" aria-hidden="true" ></i>直接跳转到每次上浪</li><li><i data-lucide="check" aria-hidden="true" ></i>修剪、切分、移动与合并</li><li><i data-lucide="check" aria-hidden="true" ></i>修正冲浪者分组</li></ul></div><figure class="phone-stage"><img src="/assets/device-options/timeline-iphone-air-space-black.png?v=device-options-3" alt="黑色 iPhone Air 上的 DeepSurfCut 冲浪者轨道与视频剪辑器" loading="lazy" decoding="async" /><figcaption>iPhone 上的 DeepSurfCut</figcaption></figure></div><div class="editor-panel" role="tabpanel" id="editor-export" aria-labelledby="tab-export" hidden><div class="editor-detail"><h3>他们的上浪，准备分享。</h3><p>选择冲浪者，导出独立片段或完整个人合集。需要保留多少前后画面，由你决定。</p><ul><li><i data-lucide="check" aria-hidden="true" ></i>选择一位或多位冲浪者</li><li><i data-lucide="check" aria-hidden="true" ></i>保留上浪前后的必要画面</li><li><i data-lucide="check" aria-hidden="true" ></i>保留原始画面方向与声音</li></ul></div><figure class="phone-stage"><img src="/assets/device-options/export-iphone-air-space-black.png?v=device-options-3" alt="黑色 iPhone Air 上的 DeepSurfCut 冲浪者选择与导出设置" loading="lazy" decoding="async" /><figcaption>iPhone 上的 DeepSurfCut</figcaption></figure></div>
+      </div></section>
 
-      <section class="workflow" id="workflow" aria-labelledby="workflow-title">
-        <div class="section-inner">
-          <div class="section-heading">
-            <p class="section-label">工作流程</p>
-            <h2 id="workflow-title">从完整场次<br />到每一次上浪。</h2>
-          </div>
-          <ol class="workflow-list">
-            <li data-reveal>
-              <span class="step-number">01</span>
-              <div>
-                <h3>导入完整场次</h3>
-                <p>打开一段稳定的广角录像，让入浪区、浪区和落水区始终在画面内。</p>
-              </div>
-              <span class="step-tag">固定机位</span>
-            </li>
-            <li data-reveal>
-              <span class="step-number">02</span>
-              <div>
-                <h3>找出每一次上浪</h3>
-                <p>端侧分析将有效冲浪过程与两次上浪之间的等待时间分开。</p>
-              </div>
-              <span class="step-tag">端侧 AI</span>
-            </li>
-            <li data-reveal>
-              <span class="step-number">03</span>
-              <div>
-                <h3>按冲浪者整理场次</h3>
-                <p>同一位冲浪者的多次上浪会进入对应轨道，方便连续复盘。</p>
-              </div>
-              <span class="step-tag">按人归类</span>
-            </li>
-            <li data-reveal>
-              <span class="step-number">04</span>
-              <div>
-                <h3>调整并交付</h3>
-                <p>修正片段边界或分组，再导出单次上浪或每个人的完整合集。</p>
-              </div>
-              <span class="step-tag">最终决定由你</span>
-            </li>
-          </ol>
-        </div>
-      </section>
+      <section class="section platforms" id="platforms" aria-labelledby="platforms-title"><div class="wrap"><div class="section-heading" data-reveal><div><p class="eyebrow">03 / 适合你的工作空间</p><h2 id="platforms-title">浪边，随手复盘。<br>大屏，从容剪辑。</h2></div><p class="section-intro">根据场次选择合适的屏幕。从快速回看到长场次剪辑，始终专注于你的冲浪画面。</p></div><figure class="mac-stage" data-reveal><img src="/assets/mac-timeline.webp" alt="DeepSurfCut 原生 Mac 应用的完整视频工作区与冲浪者面板" loading="lazy" decoding="async" /></figure><div class="platform-list"><div><i data-lucide="smartphone" aria-hidden="true" ></i><h3>iPhone</h3><p>刚下浪，就能复盘与分享。</p></div><div><i data-lucide="tablet" aria-hidden="true" ></i><h3>iPad</h3><p>更宽阔的画面，更自如的触控编辑。</p></div><div><i data-lucide="monitor" aria-hidden="true" ></i><h3>Mac</h3><p>为长场次准备的原生桌面工作区。</p></div></div></div></section>
 
-      <section class="product" id="product" aria-labelledby="product-title">
-        <div class="product-copy section-inner">
-          <p class="section-label">可以人工修正的 AI</p>
-          <h2 id="product-title">AI 完成初步整理，<br />结果由你调整。</h2>
-          <p>
-            每次识别出的上浪都会成为冲浪者轨道上的真实片段，而不是藏在相册里的结果。
-            你可以在多次上浪之间快速跳转、修正分组，并亲自决定最终导出内容。
-          </p>
-          <ul class="feature-lines">
-            <li><span>复盘</span> 直接跳转到每一次上浪</li>
-            <li><span>修正</span> 修剪、切分、移动、合并、撤销</li>
-            <li><span>交付</span> 单独片段或每个人的完整合集</li>
-          </ul>
-        </div>
-        <div class="product-stage">
-          <div class="timeline-echo" aria-hidden="true">
-            <span class="echo-blue"></span>
-            <span class="echo-green"></span>
-            <span class="echo-orange"></span>
-            <span class="echo-magenta"></span>
-          </div>
-          <figure class="device-frame" data-reveal data-tilt>
-            <img
-              src="/assets/device-options/timeline-iphone-air-space-black.png?v=device-options-3"
-              alt="黑色 iPhone Air 中的 DeepSurfCut 多轨时间线与识别出的冲浪者"
-              loading="lazy"
-              decoding="async"
-            />
-          </figure>
-        </div>
-      </section>
-
-      <section class="export-band" id="export" aria-labelledby="export-title">
-        <div class="export-visual">
-          <figure class="device-frame device-frame-secondary" data-reveal data-tilt>
-            <img
-              src="/assets/device-options/export-iphone-air-space-black.png?v=device-options-3"
-              alt="黑色 iPhone Air 中的 DeepSurfCut 冲浪者选择与片段导出设置"
-              loading="lazy"
-              decoding="async"
-            />
-          </figure>
-        </div>
-        <div class="export-copy">
-          <p class="section-label">用于复盘与交付</p>
-          <h2 id="export-title">把整场录像，<br />还给每位冲浪者。</h2>
-          <p>
-            选择一位或多位冲浪者，保留每次上浪前后的必要画面，再导出独立片段或完整合集。
-            适用于教学课、公开场、训练和赛事结束后的复盘与交付。
-          </p>
-          <p class="small-proof">保留原始画面方向与声音。</p>
-        </div>
-      </section>
-
-      <section class="use-cases" id="use-cases" aria-labelledby="use-cases-title">
-        <div class="section-inner">
-          <div class="use-cases-heading">
-            <p class="section-label">面向真实场次工作</p>
-            <h2 id="use-cases-title">从场馆团队<br />到最终交付。</h2>
-          </div>
-          <div class="use-cases-grid">
-            <article data-reveal>
-              <p class="use-case-index">01</p>
-              <h3>场馆团队</h3>
-              <p>
-                为教学课、公开场、包场和赛事提供按冲浪者整理的视频，
-                不必把前台变成剪辑工作室。
-              </p>
-            </article>
-            <article data-reveal>
-              <p class="use-case-index">02</p>
-              <h3>教练</h3>
-              <p>
-                连续查看同一位冲浪者的多次尝试，针对动作进行复盘，
-                趁场次记忆仍然清晰时发送重点片段。
-              </p>
-            </article>
-            <article data-reveal>
-              <p class="use-case-index">03</p>
-              <h3>冲浪者与内容创作者</h3>
-              <p>
-                轻松找到每一次上浪，对比整场进步，并制作真正想分享的个人合集。
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="platform-band" id="platforms" aria-labelledby="platform-title">
-        <div class="section-inner platform-layout">
-          <div class="platform-copy">
-            <p class="section-label">iPhone、iPad 与 Mac</p>
-            <h2 id="platform-title">浪边快速复盘。<br />大屏继续整理。</h2>
-            <p>
-              根据场次选择合适的设备：在浪边用 iPhone 或 iPad 快速复盘与交付；
-              需要更宽的时间线和桌面文件工作流时，使用原生 Mac 版本继续处理。
-            </p>
-          </div>
-          <figure class="mac-preview" data-reveal>
-            <img
-              src="/assets/deepsurfcut-mac.png?v=platforms-3"
-              alt="DeepSurfCut 原生 Mac 版本的视频工作区与冲浪者面板"
-              loading="lazy"
-              decoding="async"
-            />
-          </figure>
-          <div class="platform-list" aria-label="支持的 Apple 平台">
-            <div>
-              <span>iPhone</span>
-              <p>在浪边快速复盘与交付。</p>
-            </div>
-            <div>
-              <span>iPad</span>
-              <p>为视频、冲浪者和时间线留出更大空间。</p>
-            </div>
-            <div>
-              <span>Mac</span>
-              <p>面向长场次的原生桌面工作区。</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="privacy-band" id="privacy" aria-labelledby="privacy-title">
-        <div class="section-inner privacy-grid">
-          <div>
-            <p class="section-label">本地优先的工作流</p>
-            <h2 id="privacy-title">完整场次留在你的设备上。</h2>
-          </div>
-          <div class="privacy-points">
-            <div>
-              <span class="privacy-index">01</span>
-              <h3>分析留在本机</h3>
-              <p>随 App 提供的 Core ML 模型会在设备上处理你选择的视频。</p>
-            </div>
-            <div>
-              <span class="privacy-index">02</span>
-              <h3>无需账号或上传</h3>
-              <p>无需登录、排队等待云端处理，也没有托管项目库。</p>
-            </div>
-            <div>
-              <span class="privacy-index">03</span>
-              <h3>交付位置由你选择</h3>
-              <p>只导入你需要的素材，也只导出到你指定的位置。</p>
-            </div>
-          </div>
-          <a class="text-link" href="/zh/privacy/">阅读隐私政策</a>
-        </div>
-      </section>
-
-      <section class="launch" id="launch" aria-labelledby="launch-title">
-        <div class="launch-media" aria-hidden="true"></div>
-        <div class="section-inner launch-content">
-          <img src="/assets/app-icon.png" alt="" width="76" height="76" />
-          <p class="section-label">已在 App Store 上架</p>
-          <h2 id="launch-title">少拖进度条。<br />多去冲浪。</h2>
-          <p>DeepSurfCut iPhone、iPad 与 Mac 版本现已在 App Store 上架。</p>
-          <a
-            class="button button-dark"
-            href="https://apps.apple.com/app/deepsurfcut/id6776393723"
-            target="_blank"
-            rel="noopener"
-          >在 App Store 下载</a>
-        </div>
-      </section>
+      <section class="privacy-band"><div class="wrap privacy-layout"><div><i data-lucide="shield-check" aria-hidden="true" ></i><h2>你的录像。<br>留在你的设备。</h2></div><div><p>场次分析在本机完成。导入哪些素材、把成片导出到哪里，都由你掌握。</p><ul><li><i data-lucide="check" aria-hidden="true" ></i>本地处理</li><li><i data-lucide="check" aria-hidden="true" ></i>无需上传录像</li><li><i data-lucide="check" aria-hidden="true" ></i>导出由你掌握</li></ul><a class="text-link" href="/zh/privacy/">隐私政策<i data-lucide="arrow-up-right" aria-hidden="true" ></i></a></div></div></section>
+      <section class="closing"><div class="wrap closing-layout"><div><p class="eyebrow">为下一场冲浪做好准备</p><h2>少拖进度条。<br>多去冲浪。</h2></div><div><img src="/assets/app-icon.png" width="64" height="64" alt="DeepSurfCut" /><p>适用于 iPhone、iPad 与 Mac 的 DeepSurfCut。</p><a class="button button-dark" href="https://apps.apple.com/app/deepsurfcut/id6776393723" target="_blank" rel="noopener"><i data-lucide="download" aria-hidden="true" ></i>在 App Store 下载</a></div></div></section>
     </main>
-
-    <footer class="site-footer">
-      <a class="brand footer-brand" href="/zh/">
-        <img src="/assets/app-icon.png" alt="" width="32" height="32" />
-        <span>DeepSurfCut</span>
-      </a>
-      <div class="footer-links">
-        <a href="/zh/privacy/">隐私</a>
-        <a href="/zh/terms/">条款</a>
-        <a href="/zh/support/">支持</a>
-        <a href="/" lang="en" hreflang="en">English</a>
-      </div>
-      <p>© <span data-year></span> DeepSurfCut</p>
-    </footer>
+    <footer class="site-footer wrap"><a class="brand" href="/zh/"><span>DeepSurfCut</span></a><p>© <span data-year>2026</span> DeepSurfCut</p><nav aria-label="支持"><a href="/zh/privacy/">隐私</a><a href="/zh/terms/">条款</a><a href="/zh/support/">支持</a><a href="/" lang="en">EN</a></nav></footer>
   </body>
 </html>

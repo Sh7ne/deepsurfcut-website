@@ -7,36 +7,31 @@
       name="description"
       content="DeepSurfCut privacy policy. Video analysis runs locally on your device."
     />
-    <meta name="theme-color" content="#090a0b" />
+    <meta name="theme-color" content="#fafbf9" />
     <meta name="apple-itunes-app" content="app-id=6776393723" />
     <link rel="canonical" href="https://deepsurf.app/privacy/" />
     <link rel="alternate" hreflang="en" href="https://deepsurf.app/privacy/" />
     <link rel="alternate" hreflang="zh-Hans" href="https://deepsurf.app/zh/privacy/" />
     <link rel="alternate" hreflang="x-default" href="https://deepsurf.app/privacy/" />
     <link rel="icon" href="/assets/app-icon.png" />
-    <link rel="stylesheet" href="/styles.css?v=motion-1" />
-    <script src="/script.js?v=motion-1" defer></script>
+    <link rel="stylesheet" href="/home.css?v=20260912-1" />
+    <link rel="stylesheet" href="/legal.css?v=20260912-1" />
+    <script src="/assets/lucide.min.js" defer></script>
+    <script src="/home.js?v=20260912-1" defer></script>
     <title>Privacy Policy | DeepSurfCut</title>
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header legal-header" data-header>
-      <a class="brand" href="/" aria-label="DeepSurfCut home">
-        <img src="/assets/app-icon.png" alt="" width="36" height="36" />
-        <span>DeepSurfCut</span>
-      </a>
-      <nav aria-label="Primary navigation">
-        <a href="/#workflow">Workflow</a>
-        <a href="/#product">Product</a>
-        <a href="/privacy/" aria-current="page">Privacy</a>
-        <a href="/support/">Support</a>
-      </nav>
-      <div class="header-actions">
-        <a class="language-switch" href="/zh/privacy/" lang="zh-CN" hreflang="zh-Hans">中文</a>
-        <a class="header-cta" href="/">Back home</a>
+      <div class="header-inner">
+        <a class="brand" href="/" aria-label="DeepSurfCut"><img src="/assets/app-icon.png" alt="" width="32" height="32" /><span>DeepSurfCut</span></a>
+        <nav class="desktop-nav" aria-label="Primary navigation"><a href="/#autocut">How it works</a><a href="/#product">The editor</a><a href="/#platforms">On your devices</a></nav>
+        <div class="header-actions"><a class="language-link" href="/zh/privacy/" lang="zh-Hans" hreflang="zh-Hans">中文</a><a class="header-download" href="https://apps.apple.com/app/deepsurfcut/id6776393723" target="_blank" rel="noopener">Get DeepSurfCut<i data-lucide="arrow-up-right" aria-hidden="true"></i></a><button class="icon-button menu-toggle" type="button" data-menu-toggle aria-controls="mobile-nav" aria-expanded="false" aria-label="Open menu" title="Open menu"><i data-lucide="menu" aria-hidden="true"></i></button></div>
       </div>
+      <nav id="mobile-nav" class="mobile-nav" aria-label="Primary navigation" hidden><a href="/#autocut">How it works</a><a href="/#product">The editor</a><a href="/#platforms">On your devices</a><a href="/privacy/" aria-current="page">Privacy</a><a href="/terms/">Terms</a><a href="/support/">Support</a></nav>
     </header>
 
-    <main class="legal-main">
+    <main id="main" class="legal-main">
       <article class="legal-page">
         <p class="section-label">Last updated July 31, 2026</p>
         <h1>Privacy Policy</h1>
@@ -119,18 +114,6 @@
       </article>
     </main>
 
-    <footer class="site-footer">
-      <a class="brand footer-brand" href="/">
-        <img src="/assets/app-icon.png" alt="" width="32" height="32" />
-        <span>DeepSurfCut</span>
-      </a>
-      <div class="footer-links">
-        <a href="/privacy/">Privacy</a>
-        <a href="/terms/">Terms</a>
-        <a href="/support/">Support</a>
-        <a href="/zh/privacy/" lang="zh-CN" hreflang="zh-Hans">中文</a>
-      </div>
-      <p>© <span data-year></span> DeepSurfCut</p>
-    </footer>
+    <footer class="site-footer wrap"><a class="brand" href="/"><span>DeepSurfCut</span></a><p>© <span data-year>2026</span> DeepSurfCut</p><nav aria-label="Support"><a href="/privacy/" aria-current="page">Privacy</a><a href="/terms/">Terms</a><a href="/support/">Support</a><a href="/zh/privacy/" lang="zh-Hans" hreflang="zh-Hans">中文</a></nav></footer>
   </body>
 </html>
