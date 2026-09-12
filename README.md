@@ -32,8 +32,23 @@ Hero playback pauses offscreen and includes a manual pause control.
 
 The homepage uses Space Black iPhone Air mockups rendered from Apple's official
 [Product Bezel](https://developer.apple.com/design/resources/) resource under the
-Apple Design Resources License. Only the finished DeepSurfCut UI mockups are included;
-the standalone Apple bezel template is not redistributed in this repository.
+Apple Design Resources License. The existing finished mockup supplies the bezel;
+real app captures sit over its measured screen area in HTML/CSS. The standalone
+Apple bezel template is not redistributed in this repository.
 
-The Mac workspace image is an actual DeepSurfCut application screenshot.
+## App screenshots
+
+The September 12 asset refresh uses genuine captures from the maintained App Store
+screenshot project, optimized as versioned WebP files for the website:
+
+- iPhone: rider timeline, export settings, and completed export saved to Photos.
+- Mac: the existing full workspace, plus the real export panel.
+- iPad: a September 12 timeline-detail capture with a selected ride. Only the
+  correctly exposed timeline is included; the HDR video preview is not used.
+
+The iPhone and Mac captures are from app version 0.13.0 (18); the new iPad detail
+is from 0.12.0 (17). The September 12 package reuses earlier iPhone and Mac captures.
+Original app UI remains in English on both language versions of the website.
+No controls, results, or translations are painted into the captures.
+
 Lucide icons are distributed locally; their license is in `assets/lucide.LICENSE.txt`.

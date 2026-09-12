@@ -269,8 +269,8 @@
     setStage('idle');
   });
 
-  document.querySelectorAll('[data-editor-tabs]').forEach((tabList) => {
-    const tabs = Array.from(tabList.querySelectorAll('[data-editor-tab]'));
+  document.querySelectorAll('[data-editor-tabs], [data-screenshot-tabs]').forEach((tabList) => {
+    const tabs = Array.from(tabList.querySelectorAll('[role="tab"]'));
     if (!tabs.length) return;
 
     const selectTab = (selected, focus = false) => {
