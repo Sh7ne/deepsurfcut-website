@@ -43,8 +43,9 @@ screenshot project, optimized as versioned WebP files for the website:
 
 - iPhone: rider timeline, export settings, and completed export saved to Photos.
 - Mac: the existing full workspace, plus the real export panel.
-- iPad: a September 12 timeline-detail capture with a selected ride. Only the
-  correctly exposed timeline is included; the HDR video preview is not used.
+- iPad (archived, not displayed): a September 12 timeline-detail capture with a
+  selected ride. The homepage keeps the iPad support description without repeating
+  the timeline already visible in the Mac workspace. The HDR video preview is not used.
 
 The iPhone and Mac captures are from app version 0.13.0 (18); the new iPad detail
 is from 0.12.0 (17). The September 12 package reuses earlier iPhone and Mac captures.

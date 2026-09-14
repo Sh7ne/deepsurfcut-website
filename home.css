@@ -207,19 +207,14 @@ html[lang="zh-CN"] h2 { line-height: 1.24; }
 .platforms .section-heading { grid-template-columns: 1.4fr 1fr; }
 .platforms h2 { font-size: 44px; }
 .workspace-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 16px; font-size: 12px; }
-.workspace-toolbar > span, .ipad-detail figcaption > span:first-child { display: inline-flex; align-items: center; gap: 9px; }
-.workspace-toolbar svg, .ipad-detail figcaption svg { width: 16px; height: 16px; flex-shrink: 0; color: #536672; }
+.workspace-toolbar > span { display: inline-flex; align-items: center; gap: 9px; }
+.workspace-toolbar svg { width: 16px; height: 16px; flex-shrink: 0; color: #536672; }
 .workspace-tabs { display: flex; gap: 20px; border-bottom: 1px solid var(--line); }
 .workspace-tabs button { min-height: 40px; border-bottom: 2px solid transparent; color: var(--muted); }
 .workspace-tabs button[aria-selected="true"] { border-color: #151719; color: #151719; }
 .workspace-panels { aspect-ratio: 2304 / 1445; }
 .mac-stage { width: 100%; height: 100%; background: #202427; border: 1px solid #dce1e4; border-radius: 7px; overflow: hidden; box-shadow: 0 16px 38px #10182012; }
 .mac-stage img { width: 100%; height: 100%; object-fit: contain; }
-.ipad-detail { margin-top: 44px; }
-.ipad-detail figcaption { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px 20px; margin-bottom: 17px; font-size: 12px; }
-.ipad-detail figcaption > span:last-child { color: var(--muted); font-size: 11px; }
-.ipad-timeline-scroll { overflow-x: auto; background: #1c1c1e; border: 1px solid #dce1e4; border-radius: 4px; scrollbar-color: #737b83 #1c1c1e; scrollbar-width: thin; }
-.ipad-timeline-scroll img { display: block; width: 100%; min-width: 760px; height: auto; }
 .platform-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 45px; margin-top: 37px; }
 .platform-list > div { display: grid; grid-template-columns: 24px 1fr; column-gap: 12px; align-items: center; }
 .platform-list svg { color: #536672; }
@@ -386,9 +381,6 @@ html[lang="zh-CN"] h2 { line-height: 1.24; }
   .workspace-toolbar { gap: 12px; font-size: 10px; }
   .workspace-tabs { gap: 16px; font-size: 11px; }
   .workspace-panels { width: calc(100% + 16px); margin-left: -8px; }
-  .ipad-detail { margin-top: 30px; }
-  .ipad-detail figcaption { font-size: 11px; }
-  .ipad-detail figcaption > span:last-child { font-size: 10px; }
   .platform-list { grid-template-columns: 1fr; gap: 23px; margin-top: 30px; }
   .platform-list > div { padding-top: 18px; border-top: 1px solid var(--line); }
   .platform-list p { font-size: 12px; margin-top: 3px; }
