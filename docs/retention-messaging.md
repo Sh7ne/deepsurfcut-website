@@ -26,8 +26,10 @@ The App Store sends `{"signedPayload":"<Apple-signed JWS>"}` as
 
 ## Configuration
 
-Add the following text variables in the existing Cloudflare Pages project's
-Settings > Variables and Secrets. Set production and preview deployment variables
+Add the following variables with type **Secret** in the existing Cloudflare Pages
+project's Settings > Variables and Secrets. Store each JSON object as a string.
+Secret bindings can be managed in the dashboard even when `wrangler.jsonc` owns
+the runtime configuration. Set production and preview deployment variables
 independently; a Cloudflare preview deployment is distinct from Apple's Sandbox.
 
 | Variable | Value |
