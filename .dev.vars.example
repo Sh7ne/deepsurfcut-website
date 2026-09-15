@@ -1,0 +1,5 @@
+# Copy to .dev.vars for local use. Configure these separately in Cloudflare.
+# Map exact subscription product IDs and Apple userLocale values to APPROVED
+# message UUIDs. Empty maps deliberately return 503, allowing Apple's fallback.
+RETENTION_MESSAGES_PRODUCTION='{}'
+RETENTION_MESSAGES_SANDBOX='{}'
