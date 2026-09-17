@@ -6,3 +6,18 @@
 
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
+
+/device-preview/*
+  X-Robots-Tag: noindex, follow
+
+/404.html
+  X-Robots-Tag: noindex, follow
+
+/zh/404.html
+  X-Robots-Tag: noindex, follow
+
+https://deepsurfcut.pages.dev/*
+  X-Robots-Tag: noindex, follow
+
+https://:branch.deepsurfcut.pages.dev/*
+  X-Robots-Tag: noindex, follow

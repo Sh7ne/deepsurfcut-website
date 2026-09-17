@@ -63,6 +63,14 @@ test('Pages deployment and Apple verification run in the Cloudflare runtime', { 
     });
   });
 
+  await t.test('unknown pages do not return a successful copy of the homepage', async () => {
+    for (const path of ['/not-a-real-page/', '/zh/not-a-real-page/']) {
+      const response = await deployed.fetch(path);
+      assert.equal(response.status, 404, path);
+      assert.notEqual(await response.text(), await readFile('index.html', 'utf8'));
+    }
+  });
+
   // Only this temporary test entry trusts our ephemeral test CA. The deployed
   // Pages entry points above are built and tested with the real Apple roots.
   await writeFile('.test-worker/test-entry.mjs', `

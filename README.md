@@ -55,6 +55,21 @@ local ports and write Wrangler logs; they do not deploy or call the Apple API.
 
 Passing local tests does not replace Apple's required sandbox performance test.
 
+## Search visibility
+
+The eight public pages use static, crawlable HTML, self-canonical URLs, reciprocal
+English/Simplified Chinese language links, descriptive metadata, and linked
+WebSite/WebPage/SoftwareApplication structured data. The sitemap lists only these
+canonical pages. Keep its `lastmod` dates tied to substantive content changes,
+not build dates. No prices or ratings are invented for search features.
+
+Run `npm run test:seo` after page changes. `npm test` includes these checks alongside
+the existing API tests. The runtime suite verifies missing-page 404 responses.
+
+See [SEO operations](docs/seo.md) for the audit, deployment checks, and the
+account-level Search Console and domain-redirect setup that remains separate
+from the website source.
+
 ## UI and motion
 
 The bilingual homepage uses `home.css` and `home.js`. The policy and support pages

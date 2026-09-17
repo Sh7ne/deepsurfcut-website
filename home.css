@@ -167,6 +167,9 @@ html[lang="zh-CN"] h2 { line-height: 1.24; }
 .step-index { font-size: 11px; color: #7a838a; padding-top: 3px; }
 .process-steps h3 { font-size: 17px; }
 .process-steps p { font-size: 13px; line-height: 1.7; color: var(--muted); margin-top: 7px; }
+.recording-link { margin-top: 25px; font-size: 13px; color: var(--muted); }
+.recording-link .text-link { display: inline; line-height: 1.8; }
+.recording-link svg { display: inline; width: 14px; height: 14px; margin-left: 6px; vertical-align: middle; }
 
 .editor { background: #eff3f5; border-top: 1px solid #dce1e4; border-bottom: 1px solid #dce1e4; overflow: hidden; }
 .editor-layout { display: grid; grid-template-columns: 1.1fr 1fr; grid-template-rows: auto 1fr; gap: 32px 75px; position: relative; min-height: 710px; }

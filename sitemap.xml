@@ -5,50 +5,54 @@
 >
   <url>
     <loc>https://deepsurf.app/</loc>
+    <lastmod>2026-09-17</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://deepsurf.app/" />
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurf.app/zh/" />
-    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deepsurf.app/" />
   </url>
   <url>
     <loc>https://deepsurf.app/zh/</loc>
+    <lastmod>2026-09-17</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://deepsurf.app/" />
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurf.app/zh/" />
-    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deepsurf.app/" />
   </url>
   <url>
     <loc>https://deepsurf.app/privacy/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://deepsurf.app/privacy/" />
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurf.app/zh/privacy/" />
-    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deepsurf.app/privacy/" />
   </url>
   <url>
     <loc>https://deepsurf.app/zh/privacy/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://deepsurf.app/privacy/" />
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurf.app/zh/privacy/" />
-    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deepsurf.app/privacy/" />
   </url>
   <url>
     <loc>https://deepsurf.app/terms/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://deepsurf.app/terms/" />
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurf.app/zh/terms/" />
-    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deepsurf.app/terms/" />
   </url>
   <url>
     <loc>https://deepsurf.app/zh/terms/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://deepsurf.app/terms/" />
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurf.app/zh/terms/" />
-    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deepsurf.app/terms/" />
   </url>
   <url>
     <loc>https://deepsurf.app/support/</loc>
+    <lastmod>2026-09-17</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://deepsurf.app/support/" />
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurf.app/zh/support/" />
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deepsurf.app/support/" />
   </url>
   <url>
     <loc>https://deepsurf.app/zh/support/</loc>
+    <lastmod>2026-09-17</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://deepsurf.app/support/" />
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://deepsurf.app/zh/support/" />
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deepsurf.app/support/" />
   </url>
 </urlset>
