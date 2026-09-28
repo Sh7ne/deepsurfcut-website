@@ -9,7 +9,7 @@ await mkdir(output);
 for (const path of [
   'index.html', '404.html', 'home.css', 'home.js', 'legal.css', 'styles.css', 'script.js',
   'robots.txt', 'sitemap.xml', '_headers', '_routes.json',
-  'assets', 'privacy', 'support', 'terms', 'zh', 'device-preview',
+  'assets', 'privacy', 'support', 'terms', 'zh', 'device-preview', 'deepfollow',
 ]) {
   await cp(new URL(path, root), new URL(path, output), {
     recursive: true,
