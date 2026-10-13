@@ -1,4 +1,7 @@
 import { cp, mkdir, rm } from 'node:fs/promises';
+import { updatePages } from './render-updates.mjs';
+
+await updatePages({ check: true });
 
 // Publish only website assets. Server code, tests, dependencies, and local
 // credentials must never be copied into the public Pages output directory.
@@ -8,6 +11,7 @@ await rm(output, { recursive: true, force: true });
 await mkdir(output);
 for (const path of [
   'index.html', '404.html', 'home.css', 'home.js', 'legal.css', 'styles.css', 'script.js',
+  'updates', 'updates.css', 'updates.js',
   'robots.txt', 'sitemap.xml', '_headers', '_routes.json',
   'assets', 'privacy', 'support', 'terms', 'zh', 'device-preview', 'deepfollow',
 ]) {

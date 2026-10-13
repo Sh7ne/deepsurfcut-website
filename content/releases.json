@@ -1,0 +1,91 @@
+{
+  "updated": "2026-10-14",
+  "platforms": {
+    "ios": [
+      {
+        "version": "1.3.2",
+        "releasedAt": "2026-10-12T18:44:22Z",
+        "title": { "en": "Keep every ride together", "zh": "每次上浪，整理得更稳" },
+        "notes": [
+          { "en": "More reliable surfer grouping when people cross paths or tracking switches between people. Short rides are easier to match to the right surfer at lower analysis frame rates.", "zh": "改善多人交错、追踪交接时的人物归组，以及较低分析帧率下短暂上浪片段的身份恢复。" },
+          { "en": "Resuming an interrupted analysis restores more of the tracking and surfer identity state.", "zh": "分析中断后继续时，恢复更完整的追踪和人物身份状态。" },
+          { "en": "End-card exports better preserve the selected opening and final frames, frame timing, HDR appearance, and short audio endings.", "zh": "片尾导出更好地保留选段开头和最后画面，改善帧时序、HDR 显示及短音频结尾。" },
+          { "en": "A sound-reactive wave animation, fading ocean audio, and clearer titles bring a more polished finish to your reel.", "zh": "新增随声音变化的海浪片尾动画、渐弱的海浪声，以及更清晰的标题。" },
+          { "en": "Surfer previews follow the source video's frame cadence more closely. Remaining-time estimates now cover grouping and preview preparation until results are ready.", "zh": "人物预览更贴合原视频帧率；剩余时间估计覆盖人物归组和预览准备，直到结果就绪。" },
+          { "en": "Fewer unnecessary video copies and automatic limits on regenerable caches help manage storage.", "zh": "减少不必要的视频复制，自动限制可重新生成的缓存占用。" },
+          { "en": "Unsaved Exports helps recover completed videos that have not yet been saved to Photos.", "zh": "通过“未保存的导出”找回已完成、但尚未保存到“照片”的视频。" }
+        ]
+      },
+      {
+        "version": "1.2.2",
+        "releasedAt": "2026-10-03T19:06:54Z",
+        "title": { "en": "Choose your scan precision", "zh": "按需选择分析精度" },
+        "notes": [
+          { "en": "Choose Low, Medium, or High scan precision in Settings, with Medium as the default. Resumed scans keep their original precision.", "zh": "设置中新增低、中、高三档分析精度，默认中档；中断后继续分析时保留原有精度。" },
+          { "en": "Optional end cards use a four-second blurred background from the final exported frame, with a larger app icon and a clearer title.", "zh": "可选片尾以导出最后一帧作为四秒模糊背景，配合更大的 App 图标与更清晰的标题。" }
+        ]
+      },
+      {
+        "version": "1.2.0",
+        "releasedAt": "2026-10-02T00:15:55Z",
+        "title": { "en": "Smoother follows. More reliable edits.", "zh": "跟拍更平稳，编辑更可靠" },
+        "notes": [
+          { "en": "Smoother Portrait Follow exports, clearer crops at the source resolution, and improved audio endings.", "zh": "竖屏跟拍导出更平稳，按原始分辨率裁切，改进音频结尾处理。" },
+          { "en": "More reliable clip merging, splitting, project reopening, and export order.", "zh": "提高片段合并、切分、项目重新打开及导出顺序的可靠性。" },
+          { "en": "Updated on-device surfer and surfboard detection, with clearer guidance for adjusting the surf area and using the timeline.", "zh": "更新端侧人物与冲浪板检测，提供更清晰的浪区调整和时间线操作引导。" },
+          { "en": "Improved end-card compatibility, with a one-second final logo hold.", "zh": "改进片尾兼容性，最终 Logo 停留一秒。" },
+          { "en": "Refined Quick Start layouts and a new hint for collapsing surfer cards.", "zh": "优化快速入门布局，增加折叠冲浪者卡片的提示。" }
+        ]
+      },
+      {
+        "version": "1.0.1",
+        "releasedAt": "2026-09-25T13:26:30Z",
+        "title": { "en": "Portrait Follow and more editing control", "zh": "竖屏跟拍，更多编辑自由" },
+        "notes": [
+          { "en": "Portrait Follow creates 9:16 videos that follow your selected surfer, with smoother framing through brief tracking gaps.", "zh": "新增竖屏跟拍：将选定冲浪者的片段导出为 9:16 视频，短暂丢失追踪时也能保持更平稳的构图。" },
+          { "en": "More reliable tracking and grouping when surfers overlap, turn, move farther from the camera, or cross the pool boundaries.", "zh": "改善人物重叠、转身、远近变化和经过泳池边界时的追踪与分组表现。" },
+          { "en": "Better camera-angle support: Improved pool-area detection for tilted or non-level camera views.", "zh": "优化拍摄角度适配：改善倾斜或机位不够水平视频的浪区识别。" },
+          { "en": "Create surfer tracks manually, move clips to the right track, and regenerate surfer thumbnails. Project saving, reopening, and timeline editing are more reliable.", "zh": "可手动新建冲浪者轨道、移动片段、重新生成人物缩略图；项目保存、重新打开和时间线编辑更加可靠。" },
+          { "en": "Export the final 1-10 seconds of a clip, adjust footage before and after each ride, and follow progress per surfer. Cancel exports while keeping completed files.", "zh": "可导出每段最后 1–10 秒，调整片段前后保留时长，查看每位冲浪者的导出进度；取消导出时保留已完成的文件。" },
+          { "en": "Add an optional branded outro matched to landscape or portrait output, with better support for trimmed clips and different frame rates.", "zh": "新增适配横屏或竖屏输出的可选品牌片尾，改善裁切片段和不同帧率的兼容性。" },
+          { "en": "Change the app's language directly in Settings. DeepSurfCut Pro works across iPhone, iPad, and Mac with the same Apple Account.", "zh": "可直接在设置中切换应用语言；同一 Apple 账户的 DeepSurfCut Pro 权益支持 iPhone、iPad 和 Mac。" },
+          { "en": "Clearer long-video analysis, slow-processing options, and error messages. Feedback does not automatically attach videos or images.", "zh": "改善长视频分析，处理缓慢或无法继续时提供更明确的提示；发送反馈不会自动附加视频或图像。" },
+          { "en": "Improved background analysis, progress updates, and interrupted-scan recovery, subject to system availability.", "zh": "改善后台分析、进度更新、中断恢复及最近完整扫描结果的恢复；后台处理仍受系统可用性限制。" },
+          { "en": "Check available storage before large imports, recover completed exports if saving to Photos fails, and edit on iPad in portrait, landscape, or resized windows.", "zh": "导入大视频前检查存储空间；保存到“照片”失败时仍可找回已导出文件；iPad 编辑器适配横屏、竖屏和窗口尺寸变化。" }
+        ]
+      },
+      {
+        "version": "0.9.9",
+        "releasedAt": "2026-08-06T19:36:03Z",
+        "title": { "en": "Faster timeline navigation", "zh": "更便捷的时间线操作" },
+        "notes": [
+          { "en": "Improved surfer tracking, timeline navigation, and export reliability. Quickly center the timeline on the yellow playhead and display detected analysis areas.", "zh": "改善冲浪者追踪、时间线导航和导出可靠性；快速将时间线定位到黄色播放头，并显示检测到的分析区域。" },
+          { "en": "Press and hold a segment to export it, view export progress, or export only the final 10 seconds of selected clips. Supported exports can continue in the background.", "zh": "长按片段即可导出，支持查看导出进度、只导出所选片段最后 10 秒，以及在系统支持时继续后台导出。" }
+        ]
+      },
+      {
+        "version": "0.9.3",
+        "releasedAt": "2026-07-15T13:24:12Z",
+        "title": { "en": "Earlier release", "zh": "早期版本" },
+        "notes": []
+      }
+    ],
+    "macos": [
+      {
+        "version": "1.2.2",
+        "releasedAt": "2026-10-09T00:59:17Z",
+        "title": { "en": "Scan precision and refined end cards", "zh": "分析精度与片尾优化" },
+        "notes": [
+          { "en": "Choose Low, Medium, or High scan precision in Settings, with Medium as the default.", "zh": "设置中新增低、中、高三档分析精度，默认中档。" },
+          { "en": "Optional end cards use the final frame as a four-second blurred background, with a larger app icon and a clearer outlined title.", "zh": "可选片尾采用最后一帧作为四秒模糊背景，配合更大的 App 图标和更清晰的描边标题。" }
+        ]
+      },
+      {
+        "version": "0.9.9",
+        "releasedAt": "2026-08-01T23:45:44Z",
+        "title": { "en": "Earlier release", "zh": "早期版本" },
+        "notes": []
+      }
+    ]
+  }
+}

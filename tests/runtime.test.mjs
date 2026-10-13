@@ -48,15 +48,15 @@ test('Pages deployment and Apple verification run in the Cloudflare runtime', { 
   });
 
   await t.test('existing pages and assets are preserved and private files are excluded', async () => {
-    for (const [url, file] of [['/', 'index.html'], ['/zh/', 'zh/index.html'], ['/privacy/', 'privacy/index.html'], ['/home.css', 'home.css']]) {
+    for (const [url, file] of [['/', 'index.html'], ['/zh/', 'zh/index.html'], ['/privacy/', 'privacy/index.html'], ['/home.css', 'home.css'], ['/updates/', 'updates/index.html'], ['/zh/updates/', 'zh/updates/index.html']]) {
       const response = await deployed.fetch(url);
       assert.equal(response.status, 200);
       assert.equal(await response.text(), await readFile(file, 'utf8'));
     }
     const output = await readdir('dist', { recursive: true });
     for (const name of output) {
-      assert.ok(!/(^|\/)(server|tests|node_modules|functions|scripts|\.git|\.DS_Store|\.dev\.vars)(\/|$)/.test(name), name);
-      assert.ok(!['package.json', 'package-lock.json', 'wrangler.jsonc'].includes(name), name);
+      assert.ok(!/(^|\/)(server|tests|node_modules|functions|scripts|content|docs|\.git|\.DS_Store|\.dev\.vars)(\/|$)/.test(name), name);
+      assert.ok(!['AGENTS.md', 'README.md', 'package.json', 'package-lock.json', 'wrangler.jsonc'].includes(name), name);
     }
     assert.deepEqual(JSON.parse(await readFile('dist/_routes.json', 'utf8')), {
       version: 1, include: ['/api/retention', '/api/retention/*'], exclude: [],

@@ -8,7 +8,8 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "dev": "npm run build && wrangler pages dev",
-    "test": "node --test tests/retention.test.mjs tests/seo.test.mjs",
+    "test": "node --test tests/retention.test.mjs tests/seo.test.mjs tests/updates.test.mjs",
+    "updates:generate": "node scripts/render-updates.mjs",
     "test:seo": "node --test tests/seo.test.mjs",
     "test:runtime": "node --test tests/runtime.test.mjs"
   },

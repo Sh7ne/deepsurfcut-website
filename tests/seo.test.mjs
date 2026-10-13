@@ -7,6 +7,8 @@ import { load } from 'cheerio';
 const root = new URL('../', import.meta.url);
 const origin = 'https://deepsurf.app';
 const pages = [
+  { file: 'updates/index.html', path: '/updates/', pair: '/zh/updates/', language: 'en', locale: 'en_US', content: "What's new" },
+  { file: 'zh/updates/index.html', path: '/zh/updates/', pair: '/updates/', language: 'zh-Hans', locale: 'zh_CN', content: '版本更新' },
   { file: 'index.html', path: '/', pair: '/zh/', language: 'en', locale: 'en_US', content: 'standing waves' },
   { file: 'zh/index.html', path: '/zh/', pair: '/', language: 'zh-Hans', locale: 'zh_CN', content: '\u6df1\u6c34\u51b2\u6d6a' },
   { file: 'privacy/index.html', path: '/privacy/', pair: '/zh/privacy/', language: 'en', locale: 'en_US', content: 'Privacy Policy' },
@@ -134,7 +136,7 @@ test('structured data describes the real website and application without invente
   }
 });
 
-test('the sitemap lists only the eight canonical pages and all language alternatives', async () => {
+test('the sitemap lists the canonical product pages and all language alternatives', async () => {
   const $ = load(await readFile(new URL('sitemap.xml', root), 'utf8'), { xmlMode: true });
   const entries = $('urlset > url').toArray();
   assert.equal(entries.length, pages.length);

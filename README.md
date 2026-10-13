@@ -57,7 +57,7 @@ Passing local tests does not replace Apple's required sandbox performance test.
 
 ## Search visibility
 
-The eight public pages use static, crawlable HTML, self-canonical URLs, reciprocal
+The ten primary product pages use static, crawlable HTML, self-canonical URLs, reciprocal
 English/Simplified Chinese language links, descriptive metadata, and linked
 WebSite/WebPage/SoftwareApplication structured data. The sitemap lists only these
 canonical pages. Keep its `lastmod` dates tied to substantive content changes,
@@ -69,6 +69,19 @@ the existing API tests. The runtime suite verifies missing-page 404 responses.
 See [SEO operations](docs/seo.md) for the audit, deployment checks, and the
 account-level Search Console and domain-redirect setup that remains separate
 from the website source.
+
+## App update history
+
+Release history lives at `/updates/` and `/zh/updates/`, with separate iOS and
+macOS histories. Approved bilingual copy and source release timestamps live in
+`content/releases.json`. This file is not copied into the public build.
+
+After a verified public marketing-version release, update that platform's entry,
+set the content update date, run `npm run updates:generate`, and update the two
+sitemap dates. Build-only changes do not create another entry. `npm test` checks
+the data, generated pages, and SEO; `npm run build` rejects stale generated pages.
+Both histories remain readable without JavaScript. See `AGENTS.md` for the
+publication and maintenance rules.
 
 ## UI and motion
 
