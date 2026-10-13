@@ -206,6 +206,27 @@ html[lang="zh-CN"] h2 { line-height: 1.24; }
 .editor-panel:not([hidden]) .editor-detail { animation: panel-in .32s ease; }
 @keyframes panel-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
+.editor-follow-link { margin-top: 18px; font-size: 12px; }
+.portrait-follow { background: #fff; border-bottom: 1px solid var(--line); }
+.follow-comparison { display: grid; grid-template-columns: minmax(0, 1fr) 20px minmax(0, .31640625fr); gap: 28px; align-items: center; }
+.follow-label { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 12px; font-size: 12px; color: var(--muted); }
+.follow-label span:last-child { font-variant-numeric: tabular-nums; }
+.follow-source-image, .follow-portrait { position: relative; overflow: hidden; border-radius: 4px; background: #143c4c; }
+.follow-source-image { aspect-ratio: 16 / 9; }
+.follow-source-image > img { width: 100%; height: 100%; object-fit: cover; }
+/* Match the illustrative crop to the same source pixels in the portrait view. */
+.follow-crop { position: absolute; inset-block: 0; left: 10.5%; width: 31.640625%; border: 2px solid white; box-shadow: 0 0 0 100vmax #07182442; }
+.follow-crop span { position: absolute; top: 10px; left: 10px; padding: 2px 6px; color: white; background: #142a34; font-size: 11px; }
+.follow-portrait { aspect-ratio: 9 / 16; }
+.follow-portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 15.36% 50%; }
+.follow-arrow { margin-top: 28px; color: #4d7b91; }
+.follow-figure figcaption { margin-top: 16px; color: var(--muted); font-size: 11px; line-height: 1.7; }
+.follow-benefits { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 38px; margin-top: 38px; padding-top: 30px; border-top: 1px solid var(--line); }
+.follow-benefits li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 12px; }
+.follow-benefits svg { color: #456f84; margin-top: 2px; }
+.follow-benefits h3 { font-size: 16px; line-height: 1.5; }
+.follow-benefits p { margin-top: 7px; font-size: 13px; line-height: 1.8; color: var(--muted); }
+.follow-note { margin-top: 28px; font-size: 11px; line-height: 1.8; color: var(--muted); }
 .platforms { padding-bottom: 84px; }
 .platforms .section-heading { grid-template-columns: 1.4fr 1fr; }
 .platforms h2 { font-size: 44px; }
@@ -268,6 +289,10 @@ html[lang="zh-CN"] h2 { line-height: 1.24; }
   .closing h2 { font-size: 50px; }
 }
 @media (max-width: 820px) {
+  .follow-comparison { gap: 16px; }
+  .follow-label { font-size: 10px; }
+  .follow-benefits { gap: 22px; }
+  .follow-benefits li { grid-template-columns: minmax(0, 1fr); gap: 10px; }
   .wrap { width: calc(100% - 48px); }
   .header-inner { width: calc(100% - 40px); height: 68px; }
   .desktop-nav { display: none; }
@@ -311,6 +336,13 @@ html[lang="zh-CN"] h2 { line-height: 1.24; }
   .site-footer nav { gap: 19px; }
 }
 @media (max-width: 600px) {
+  .follow-comparison { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .follow-output { width: 200px; max-width: 100%; justify-self: center; }
+  .follow-arrow { margin: 0; justify-self: center; transform: rotate(90deg); }
+  .follow-label { font-size: 11px; }
+  .follow-crop span { top: 6px; left: 6px; font-size: 9px; }
+  .follow-benefits { grid-template-columns: minmax(0, 1fr); gap: 24px; margin-top: 28px; padding-top: 26px; }
+  .follow-benefits li { grid-template-columns: 22px minmax(0, 1fr); gap: 12px; }
   :root { scroll-padding-top: 25px; }
   .wrap { width: calc(100% - 40px); }
   .header-inner { width: calc(100% - 32px); gap: 10px; }

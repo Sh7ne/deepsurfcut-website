@@ -136,6 +136,31 @@ test('structured data describes the real website and application without invente
   }
 });
 
+test('both homepages expose Portrait Follow with an honest visual and matching metadata', async () => {
+  for (const page of documents.filter((candidate) => candidate.path === '/' || candidate.path === '/zh/')) {
+    const $ = page.$;
+    const section = single($, '#portrait-follow', page.file);
+    assert.equal(section.attr('hidden'), undefined, 'the feature is not hidden behind a tab');
+    assert.equal(section.closest('[role="tabpanel"]').length, 0);
+    assert.ok(section.find('h2').text().trim());
+    assert.match(section.text(), /9:16/);
+    assert.match(meta($, 'description', page.file), /9:16/);
+    assert.match($('.hero-description').text(), /9:16/);
+    assert.match($('#editor-export').text(), /9:16/);
+    assert.ok($('.editor-follow-link[href="#portrait-follow"]').length);
+    const images = section.find('img');
+    assert.equal(images.length, 2);
+    assert.equal(images.eq(0).attr('src'), images.eq(1).attr('src'), 'comparison uses the same real frame');
+    await assertLocalFile(new URL(images.eq(0).attr('src'), page.url), page.file);
+    assert.match(section.find('figcaption').text(), page.language === 'en' ? /illustration, not an app export/ : /取景示意，非应用导出/);
+    assert.match(section.find('.follow-note').text(), page.language === 'en' ? /analyzed again/ : /重新分析/);
+    const schema = JSON.parse($('script[type="application/ld+json"]').text());
+    const app = schema['@graph'].find((node) => node['@type'] === 'SoftwareApplication');
+    assert.ok(app.featureList.some((feature) => feature.includes('9:16')));
+    assert.equal($('.phone-bezel[src="/assets/iphone-air-base-20260912.webp"]').length, 3);
+  }
+});
+
 test('the sitemap lists the canonical product pages and all language alternatives', async () => {
   const $ = load(await readFile(new URL('sitemap.xml', root), 'utf8'), { xmlMode: true });
   const entries = $('urlset > url').toArray();

@@ -101,6 +101,12 @@ Apple bezel template is not redistributed in this repository.
 
 ## App screenshots
 
+The homepage's Portrait Follow comparison uses an unchanged frame from the
+existing public session video at 1.25 seconds. CSS shows a 9:16 crop of that same
+frame. Both languages explicitly label it as a framing illustration, not an app
+export or a newly captured interface. The phone screenshots retain the genuine
+iPhone Air bezel.
+
 The September 12 asset refresh uses genuine captures from the maintained App Store
 screenshot project, optimized as versioned WebP files for the website:
 

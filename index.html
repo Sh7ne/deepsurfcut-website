@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Automatically find rides in fixed-camera standing-wave footage, group them by surfer, and edit or export clips and reels on iPhone, iPad, and Mac."
+      content="Find rides in standing-wave footage, group them by surfer, and export clips, reels, or 9:16 Portrait Follow videos on iPhone, iPad, and Mac."
     />
     <meta name="apple-itunes-app" content="app-id=6776393723" />
     <meta name="theme-color" content="#090a0b" />
@@ -17,7 +17,7 @@
     <meta property="og:title" content="DeepSurfCut | Standing-Wave Surfing Video Editor" />
     <meta
       property="og:description"
-      content="Automatically find rides in fixed-camera standing-wave footage, group them by surfer, and edit or export clips and reels on iPhone, iPad, and Mac."
+      content="Find rides in standing-wave footage, group them by surfer, and export clips, reels, or 9:16 Portrait Follow videos on iPhone, iPad, and Mac."
     />
     <meta property="og:image" content="https://deepsurf.app/assets/social-preview-20260917.jpg" />
     <meta property="og:image:type" content="image/jpeg" />
@@ -27,7 +27,7 @@
     <meta property="og:url" content="https://deepsurf.app/" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="DeepSurfCut | Standing-Wave Surfing Video Editor" />
-    <meta name="twitter:description" content="Automatically find rides in fixed-camera standing-wave footage, group them by surfer, and edit or export clips and reels on iPhone, iPad, and Mac." />
+    <meta name="twitter:description" content="Find rides in standing-wave footage, group them by surfer, and export clips, reels, or 9:16 Portrait Follow videos on iPhone, iPad, and Mac." />
     <meta name="twitter:image" content="https://deepsurf.app/assets/social-preview-20260917.jpg" />
     <meta name="twitter:image:alt" content="DeepSurfCut on Mac showing standing-wave footage and separate surfer timelines" />
     <link rel="canonical" href="https://deepsurf.app/" />
@@ -37,7 +37,7 @@
     <link rel="icon" href="/assets/favicon-96.png" type="image/png" sizes="96x96" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180" />
     <link rel="preload" as="image" href="/assets/hero-poster-20260917.webp" type="image/webp" fetchpriority="high" />
-    <link rel="stylesheet" href="/home.css?v=20261014-1" />
+    <link rel="stylesheet" href="/home.css?v=20261014-2" />
     <script src="/assets/lucide.min.js" defer></script>
     <script src="/home.js?v=20260912-4" defer></script>
     <script type="application/ld+json">
@@ -56,7 +56,7 @@
             "@id": "https://deepsurf.app/#webpage",
             "url": "https://deepsurf.app/",
             "name": "DeepSurfCut | Standing-Wave Surfing Video Editor",
-            "description": "Automatically find rides in fixed-camera standing-wave footage, group them by surfer, and edit or export clips and reels on iPhone, iPad, and Mac.",
+            "description": "Find rides in standing-wave footage, group them by surfer, and export clips, reels, or 9:16 Portrait Follow videos on iPhone, iPad, and Mac.",
             "inLanguage": "en",
             "isPartOf": { "@id": "https://deepsurf.app/#website" },
             "mainEntity": { "@id": "https://deepsurf.app/#software" }
@@ -68,12 +68,12 @@
             "name": "DeepSurfCut",
             "operatingSystem": "iOS, iPadOS, macOS",
             "applicationCategory": "MultimediaApplication",
-            "description": "On-device video editing for fixed-camera deep-water standing-wave sessions: find rides, group them by surfer, refine the timeline, and export clips or reels.",
+            "description": "On-device editing for fixed-camera standing-wave sessions: find rides, group surfers, refine the timeline, and export original-format or 9:16 Portrait Follow clips and reels.",
             "image": "https://deepsurf.app/assets/app-icon.png",
             "screenshot": "https://deepsurf.app/assets/social-preview-20260917.jpg",
             "downloadUrl": "https://apps.apple.com/app/deepsurfcut/id6776393723",
             "sameAs": "https://apps.apple.com/app/deepsurfcut/id6776393723",
-            "featureList": ["On-device session analysis", "Rider grouping", "Editable multitrack timeline", "Clip and rider-reel export"]
+            "featureList": ["On-device session analysis", "Rider grouping", "Editable multitrack timeline", "Clip and rider-reel export", "9:16 Portrait Follow", "Source audio and optional wave end cards"]
           }
         ]
       }
@@ -99,7 +99,7 @@
           <h1 id="hero-title">DeepSurfCut</h1>
           <p class="hero-headline">Your session.<br>Your best rides.</p>
           <p class="hero-intro">One recording. Every rider. Automatically.</p>
-          <p class="hero-description">AI video editing for standing-wave surfing. Every rider's clips and reels, processed on your device.</p>
+          <p class="hero-description">AI editing for standing-wave sessions. Find each surfer's rides and export clips, reels, or 9:16 Portrait Follow videos, all on your device.</p>
           <div class="hero-actions"><a class="button button-light" href="https://apps.apple.com/app/deepsurfcut/id6776393723" target="_blank" rel="noopener"><i data-lucide="download" aria-hidden="true" ></i>Download on the App Store</a><a class="hero-demo-link" href="#autocut">See it in action<i data-lucide="arrow-down" aria-hidden="true" ></i></a></div>
         </div>
         <div class="hero-bottom wrap"><span>More time on the wave.</span><span class="hero-platforms">iPhone · iPad · Mac</span><button class="icon-button video-toggle" data-video-toggle aria-label="Pause video" title="Pause video"><i data-lucide="pause" aria-hidden="true" data-video-icon></i></button></div>
@@ -128,6 +128,7 @@
 
       <section class="section editor" id="product" aria-labelledby="editor-title"><div class="wrap editor-layout">
         <div class="editor-copy" data-reveal><p class="eyebrow">02 / YOUR FINAL CUT</p><h2 id="editor-title">Automatic first pass.<br>Full control after.</h2><p class="section-intro">A real timeline for every rider. Go straight to the moments that matter and make the final cut yours.</p>
+          <a class="text-link editor-follow-link" href="#portrait-follow">Explore Portrait Follow<i data-lucide="arrow-down" aria-hidden="true"></i></a>
           <div class="editor-tabs" role="tablist" aria-label="The editor" data-editor-tabs>
             <button type="button" role="tab" id="tab-review" aria-controls="editor-review" aria-selected="true" tabindex="0" data-editor-tab="review"><i data-lucide="sliders-horizontal" aria-hidden="true"></i>Review</button>
             <button type="button" role="tab" id="tab-export" aria-controls="editor-export" aria-selected="false" tabindex="-1" data-editor-tab="export"><i data-lucide="share-2" aria-hidden="true"></i>Export</button>
@@ -139,17 +140,35 @@
           <figure class="phone-stage"><div class="phone-device"><img class="phone-bezel" src="/assets/iphone-air-base-20260912.webp" width="960" height="2003" alt="" loading="lazy" decoding="async" /><img class="phone-screen" src="/assets/iphone-overview-20260912.webp" width="960" height="2086" alt="DeepSurfCut on a Space Black iPhone Air: nine rides grouped into three surfer tracks" loading="lazy" decoding="async" /></div><figcaption>DeepSurfCut on iPhone · Rider timeline</figcaption></figure>
         </div>
         <div class="editor-panel" role="tabpanel" id="editor-export" aria-labelledby="tab-export" hidden>
-          <div class="editor-detail"><h3>Their rides. Ready to go.</h3><p>Choose your surfers and export separate clips or a complete rider reel, with the context you want to keep.</p><ul><li><i data-lucide="check" aria-hidden="true"></i>Choose one or more surfers</li><li><i data-lucide="check" aria-hidden="true"></i>Keep time before and after each ride</li><li><i data-lucide="check" aria-hidden="true"></i>Preserve original orientation and audio</li></ul></div>
+          <div class="editor-detail"><h3>Their rides. Ready to go.</h3><p>Choose your surfers and export individual rides or a complete reel. Keep the original framing or switch to 9:16 Portrait Follow.</p><ul><li><i data-lucide="check" aria-hidden="true"></i>Choose one or more surfers</li><li><i data-lucide="check" aria-hidden="true"></i>Keep time before and after each ride</li><li><i data-lucide="check" aria-hidden="true"></i>Keep source audio and add an optional wave end card</li></ul></div>
           <figure class="phone-stage"><div class="phone-device"><img class="phone-bezel" src="/assets/iphone-air-base-20260912.webp" width="960" height="2003" alt="" loading="lazy" decoding="async" /><img class="phone-screen" src="/assets/iphone-export-20260912.webp" width="960" height="2086" alt="DeepSurfCut export settings with surfer selection and clip padding on a Space Black iPhone Air" loading="lazy" decoding="async" /></div><figcaption>DeepSurfCut on iPhone · Export settings</figcaption></figure>
         </div>
         <div class="editor-panel" role="tabpanel" id="editor-saved" aria-labelledby="tab-saved" hidden>
-          <div class="editor-detail"><h3>Saved. Ready to share.</h3><p>The export is done. Your video is saved to Photos, ready to watch again or send to the crew.</p><ul><li><i data-lucide="check" aria-hidden="true"></i>Save the finished video to Photos</li><li><i data-lucide="check" aria-hidden="true"></i>Open Photos straight from the app</li><li><i data-lucide="check" aria-hidden="true"></i>Share it with your crew</li></ul></div>
+          <div class="editor-detail"><h3>Saved. Ready to share.</h3><p>Save your finished videos to Photos and send them to the crew. If saving is interrupted, recover completed videos from Unsaved Exports.</p><ul><li><i data-lucide="check" aria-hidden="true"></i>Save the finished video to Photos</li><li><i data-lucide="check" aria-hidden="true"></i>Open Photos straight from the app</li><li><i data-lucide="check" aria-hidden="true"></i>Recover completed, unsaved exports</li></ul></div>
           <figure class="phone-stage"><div class="phone-device"><img class="phone-bezel" src="/assets/iphone-air-base-20260912.webp" width="960" height="2003" alt="" loading="lazy" decoding="async" /><img class="phone-screen" src="/assets/iphone-success-20260912.webp" width="960" height="2086" alt="DeepSurfCut export completed with one video saved to Photos and Share and Open buttons" loading="lazy" decoding="async" /></div><figcaption>DeepSurfCut on iPhone · Export complete</figcaption></figure>
         </div>
       </div></section>
 
+      <section class="section portrait-follow" id="portrait-follow" aria-labelledby="follow-title"><div class="wrap">
+        <div class="section-heading" data-reveal><div><p class="eyebrow">03 / PORTRAIT FOLLOW</p><h2 id="follow-title">Portrait Follow.<br>Made for your ride.</h2></div><p class="section-intro">Turn a wide session recording into a 9:16 video that follows your selected surfer. Export each ride on its own, or bring them together as a reel.</p></div>
+        <figure class="follow-figure" aria-describedby="follow-caption">
+          <div class="follow-comparison">
+            <div class="follow-source"><div class="follow-label"><span>Original recording</span><span>16:9</span></div><div class="follow-source-image"><img src="/assets/portrait-follow-frame-20261014.jpg" width="960" height="540" alt="A surfer riding a standing wave in a wide, fixed-camera recording" loading="lazy" decoding="async" /><div class="follow-crop" aria-hidden="true"><span>9:16</span></div></div></div>
+            <i class="follow-arrow" data-lucide="arrow-right" aria-hidden="true"></i>
+            <div class="follow-output"><div class="follow-label"><span>Portrait framing</span><span>9:16</span></div><div class="follow-portrait"><img src="/assets/portrait-follow-frame-20261014.jpg" width="960" height="540" alt="Illustrative 9:16 crop of the same frame, keeping the surfer and board in view" loading="lazy" decoding="async" /></div></div>
+          </div>
+          <figcaption id="follow-caption">Real session footage. Framing illustration, not an app export.</figcaption>
+        </figure>
+        <ul class="follow-benefits">
+          <li><i data-lucide="focus" aria-hidden="true"></i><div><h3>Follow your surfer</h3><p>The vertical framing follows your selection, with smoother transitions through brief tracking gaps.</p></div></li>
+          <li><i data-lucide="film" aria-hidden="true"></i><div><h3>One ride or a whole reel</h3><p>Export individual clips or combine your surfer's rides in a 9:16 video, ready to share.</p></div></li>
+          <li><i data-lucide="volume-2" aria-hidden="true"></i><div><h3>Keep the sound of the session</h3><p>Keep source audio and finish with an optional wave end card matched to portrait output.</p></div></li>
+        </ul>
+        <p class="follow-note">Framing depends on the source footage and tracking results. Older projects without follow data need to be analyzed again.</p>
+      </div></section>
+
       <section class="section platforms" id="platforms" aria-labelledby="platforms-title"><div class="wrap">
-        <div class="section-heading" data-reveal><div><p class="eyebrow">03 / ROOM TO WORK</p><h2 id="platforms-title">Beside the wave.<br>Across your Apple devices.</h2></div><p class="section-intro">Choose the screen that fits the session. The same focus on your footage, from a quick review to a longer edit.</p></div>
+        <div class="section-heading" data-reveal><div><p class="eyebrow">04 / ROOM TO WORK</p><h2 id="platforms-title">Beside the wave.<br>Across your Apple devices.</h2></div><p class="section-intro">Choose the screen that fits the session. The same focus on your footage, from a quick review to a longer edit.</p></div>
         <div class="workspace-toolbar"><span><i data-lucide="monitor" aria-hidden="true"></i>DeepSurfCut on Mac</span><div class="workspace-tabs" role="tablist" aria-label="Mac workspace" data-screenshot-tabs><button type="button" role="tab" id="tab-mac-timeline" aria-controls="mac-timeline" aria-selected="true" tabindex="0">Timeline</button><button type="button" role="tab" id="tab-mac-export" aria-controls="mac-export" aria-selected="false" tabindex="-1">Export</button></div></div>
         <div class="workspace-panels">
           <figure class="mac-stage" role="tabpanel" id="mac-timeline" aria-labelledby="tab-mac-timeline"><img src="/assets/mac-timeline.webp" width="2304" height="1445" alt="DeepSurfCut native Mac application showing the full video workspace and rider panel" loading="lazy" decoding="async" /></figure>
