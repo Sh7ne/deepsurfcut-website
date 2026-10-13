@@ -48,7 +48,9 @@ test('the verified public histories remain independent', () => {
 test('both generated pages are current, static, and honest about missing notes', async () => {
   await updatePages({ check: true });
   for (const language of ['en', 'zh']) {
-    const $ = load(renderUpdates(data, language));
+    const html = renderUpdates(data, language);
+    assert.doesNotMatch(html, /[\t ]+\n/, 'generated pages have no trailing whitespace');
+    const $ = load(html);
     assert.equal($('main h1').length, 1);
     assert.equal($('.missing-notes').length, 2);
     assert.equal($('main [hidden]').length, 0, 'both histories work without JavaScript');

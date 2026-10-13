@@ -66,8 +66,7 @@ export function renderUpdates(data, language) {
             <article id="${id}" class="release" aria-labelledby="title-${id}">
               <div class="release-meta">
                 <a class="release-version" href="#${id}" aria-label="${t.permalink} ${escape(release.version)}">${escape(release.version)}${icon('link')}</a>
-                <time datetime="${escape(release.releasedAt)}">${date(release.releasedAt)}</time>
-                ${index === 0 ? `<span class="latest-label">${t.latest}</span>` : ''}
+                <time datetime="${escape(release.releasedAt)}">${date(release.releasedAt)}</time>${index === 0 ? `\n                <span class="latest-label">${t.latest}</span>` : ''}
               </div>
               <div class="release-content">
                 <h3 id="title-${id}">${escape(release.title[language])}</h3>
