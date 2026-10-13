@@ -75,6 +75,7 @@ h3 { font-weight: 550; letter-spacing: 0; }
 .language-menu > nav a { display: block; padding: 10px 12px; font-size: 13px; white-space: nowrap; }
 .language-menu > nav a:hover, .language-menu > nav a[aria-current] { color: #151b20; background: #e6eff4; }
 .site-footer .language-menu > nav { top: auto; bottom: calc(100% + 6px); display: grid; gap: 0; }
+.site-footer .language-menu { margin-left: auto; }
 .surf-uses { border-top: 1px solid var(--line); }
 .surf-uses .section-heading { margin-bottom: 0; }
 .surf-guide-link { display: inline-flex; align-items: center; gap: 10px; margin-top: 22px; font-size: 14px; text-decoration: underline; text-underline-offset: 4px; }

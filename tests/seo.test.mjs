@@ -245,6 +245,11 @@ test('language navigation offers every locale on the equivalent page without Jav
     }
     assert.equal(menu.find('[aria-current]').attr('hreflang'), page.language);
     assert.equal(page.$('.language-menu .language-menu').length, 0);
+    page.$('.language-menu').each((_, element) => {
+      const links = page.$(element).find('nav > a');
+      assert.equal(links.length, 3, page.file + ': each menu contains only the three languages');
+      assert.ok(links.toArray().every(link => page.$(link).is('[data-language-link]')));
+    });
   }
 });
 
