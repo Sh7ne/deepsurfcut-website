@@ -48,7 +48,7 @@ test('Pages deployment and Apple verification run in the Cloudflare runtime', { 
   });
 
   await t.test('existing pages and assets are preserved and private files are excluded', async () => {
-    for (const [url, file] of [['/', 'index.html'], ['/zh/', 'zh/index.html'], ['/privacy/', 'privacy/index.html'], ['/home.css', 'home.css'], ['/updates/', 'updates/index.html'], ['/zh/updates/', 'zh/updates/index.html']]) {
+    for (const [url, file] of [['/', 'index.html'], ['/zh/', 'zh/index.html'], ['/privacy/', 'privacy/index.html'], ['/home.css', 'home.css'], ['/updates/', 'updates/index.html'], ['/zh/updates/', 'zh/updates/index.html'], ['/de/', 'de/index.html'], ['/de/updates/', 'de/updates/index.html'], ['/de/surf-video-editing/', 'de/surf-video-editing/index.html']]) {
       const response = await deployed.fetch(url);
       assert.equal(response.status, 200);
       assert.equal(await response.text(), await readFile(file, 'utf8'));
@@ -64,7 +64,7 @@ test('Pages deployment and Apple verification run in the Cloudflare runtime', { 
   });
 
   await t.test('unknown pages do not return a successful copy of the homepage', async () => {
-    for (const path of ['/not-a-real-page/', '/zh/not-a-real-page/']) {
+    for (const path of ['/not-a-real-page/', '/zh/not-a-real-page/', '/de/not-a-real-page/']) {
       const response = await deployed.fetch(path);
       assert.equal(response.status, 404, path);
       assert.notEqual(await response.text(), await readFile('index.html', 'utf8'));

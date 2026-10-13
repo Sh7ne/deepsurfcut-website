@@ -66,6 +66,19 @@ h3 { font-weight: 550; letter-spacing: 0; }
 .header-download svg { width: 15px; height: 15px; }
 .header-download:hover { background: #ffffff1a; }
 .language-link { padding: 8px 0; }
+.language-menu { position: relative; flex-shrink: 0; }
+.language-menu summary { display: flex; align-items: center; gap: 7px; min-height: 40px; cursor: pointer; list-style: none; white-space: nowrap; }
+.language-menu summary::-webkit-details-marker { display: none; }
+.language-menu summary svg { width: 15px; height: 15px; }
+.language-menu summary svg:last-child { width: 12px; }
+.language-menu > nav { position: absolute; top: calc(100% + 6px); right: 0; z-index: 30; display: grid; gap: 0; min-width: 140px; padding: 6px; border: 1px solid #cbd4da; border-radius: 4px; color: #151b20; background: #fafbfc; box-shadow: 0 8px 24px #00000020; }
+.language-menu > nav a { display: block; padding: 10px 12px; font-size: 13px; white-space: nowrap; }
+.language-menu > nav a:hover, .language-menu > nav a[aria-current] { color: #151b20; background: #e6eff4; }
+.site-footer .language-menu > nav { top: auto; bottom: calc(100% + 6px); display: grid; gap: 0; }
+.surf-uses { border-top: 1px solid var(--line); }
+.surf-uses .section-heading { margin-bottom: 0; }
+.surf-guide-link { display: inline-flex; align-items: center; gap: 10px; margin-top: 22px; font-size: 14px; text-decoration: underline; text-underline-offset: 4px; }
+.surf-guide-link svg { width: 16px; height: 16px; }
 .menu-toggle { display: none; }
 .mobile-nav { background: #171a1c; padding: 15px 26px 24px; border-top: 1px solid #ffffff20; }
 .mobile-nav a { display: block; padding: 13px 0; }

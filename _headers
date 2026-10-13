@@ -16,6 +16,9 @@
 /zh/404.html
   X-Robots-Tag: noindex, follow
 
+/de/404.html
+  X-Robots-Tag: noindex, follow
+
 https://deepsurfcut.pages.dev/*
   X-Robots-Tag: noindex, follow
 

@@ -6,18 +6,27 @@ import { load } from 'cheerio';
 
 const root = new URL('../', import.meta.url);
 const origin = 'https://deepsurf.app';
-const pages = [
-  { file: 'updates/index.html', path: '/updates/', pair: '/zh/updates/', language: 'en', locale: 'en_US', content: "What's new" },
-  { file: 'zh/updates/index.html', path: '/zh/updates/', pair: '/updates/', language: 'zh-Hans', locale: 'zh_CN', content: '版本更新' },
-  { file: 'index.html', path: '/', pair: '/zh/', language: 'en', locale: 'en_US', content: 'standing waves' },
-  { file: 'zh/index.html', path: '/zh/', pair: '/', language: 'zh-Hans', locale: 'zh_CN', content: '\u6df1\u6c34\u51b2\u6d6a' },
-  { file: 'privacy/index.html', path: '/privacy/', pair: '/zh/privacy/', language: 'en', locale: 'en_US', content: 'Privacy Policy' },
-  { file: 'zh/privacy/index.html', path: '/zh/privacy/', pair: '/privacy/', language: 'zh-Hans', locale: 'zh_CN', content: '\u9690\u79c1\u653f\u7b56' },
-  { file: 'terms/index.html', path: '/terms/', pair: '/zh/terms/', language: 'en', locale: 'en_US', content: 'Terms of Use' },
-  { file: 'zh/terms/index.html', path: '/zh/terms/', pair: '/terms/', language: 'zh-Hans', locale: 'zh_CN', content: '\u4f7f\u7528\u6761\u6b3e' },
-  { file: 'support/index.html', path: '/support/', pair: '/zh/support/', language: 'en', locale: 'en_US', content: 'Supported workflow' },
-  { file: 'zh/support/index.html', path: '/zh/support/', pair: '/support/', language: 'zh-Hans', locale: 'zh_CN', content: '\u652f\u6301\u7684\u5de5\u4f5c\u6d41\u7a0b' },
+const groups = [
+  ['', ['standing waves', '深水冲浪', 'stehenden Wellen']],
+  ['support/', ['Supported workflow', '支持的工作流程', 'Unterstützter Workflow']],
+  ['privacy/', ['Privacy Policy', '隐私政策', 'Datenschutzerklärung']],
+  ['terms/', ['Terms of Use', '使用条款', 'Nutzungsbedingungen']],
+  ['updates/', ["What's new", '版本更新', 'Neu in DeepSurfCut']],
+  ['surf-video-editing/', ['FlowRider', 'FlowRider', 'FlowRider']],
 ];
+const languages = [
+  { prefix: '', language: 'en', locale: 'en_US' },
+  { prefix: 'zh/', language: 'zh-Hans', locale: 'zh_CN' },
+  { prefix: 'de/', language: 'de', locale: 'de_DE' },
+];
+const pages = groups.flatMap(([group, content]) => languages.map((language, index) => ({
+  ...language, group, file: language.prefix + group + 'index.html',
+  path: '/' + language.prefix + group, content: content[index],
+})));
+const alternativesFor = (page) => Object.fromEntries([
+  ...languages.map((language) => [language.language, origin + '/' + language.prefix + page.group]),
+  ['x-default', origin + '/' + page.group],
+]);
 
 const documents = await Promise.all(pages.map(async (page) => {
   const html = await readFile(new URL(page.file, root), 'utf8');
@@ -75,11 +84,9 @@ test('all public pages have unique titles, descriptions, and crawlable primary c
 test('each page declares its canonical URL and reciprocal language alternatives', () => {
   for (const page of documents) {
     assert.equal(canonical(page.$, page.file), page.url, page.file);
-    const english = page.language === 'en' ? page.path : page.pair;
-    const chinese = page.language === 'zh-Hans' ? page.path : page.pair;
-    const expected = { en: `${origin}${english}`, 'zh-Hans': `${origin}${chinese}`, 'x-default': `${origin}${english}` };
+    const expected = alternativesFor(page);
     const alternatives = page.$('head link[rel="alternate"][hreflang]');
-    assert.equal(alternatives.length, 3, `${page.file}: expected three language alternatives`);
+    assert.equal(alternatives.length, 4, `${page.file}: expected four language alternatives`);
     for (const [language, url] of Object.entries(expected)) {
       assert.equal(single(page.$, `head link[rel="alternate"][hreflang="${language}"]`, page.file).attr('href'), url, page.file);
       assert.ok(documents.some((target) => target.url === url), `${page.file}: alternative points to an unpublished page`);
@@ -128,7 +135,7 @@ test('structured data describes the real website and application without invente
     schemas.forEach((schema) => inspectClaims(schema, page.file));
     const nodes = schemas.flatMap((schema) => schema['@graph'] || [schema]);
     assert.ok(nodes.some((node) => hasType(node, 'WebPage') && node.url === page.url), `${page.file}: missing canonical WebPage entity`);
-    if (page.path === '/' || page.path === '/zh/') {
+    if (page.group === '') {
       assert.ok(schemas.some((schema) => Array.isArray(schema['@graph'])), `${page.file}: homepage entities must form a graph`);
       assert.ok(nodes.some((node) => hasType(node, 'WebSite')), `${page.file}: missing WebSite entity`);
       assert.ok(nodes.some((node) => hasType(node, 'SoftwareApplication') && node.name === 'DeepSurfCut'), `${page.file}: missing application entity`);
@@ -136,8 +143,8 @@ test('structured data describes the real website and application without invente
   }
 });
 
-test('both homepages expose Portrait Follow with an honest visual and matching metadata', async () => {
-  for (const page of documents.filter((candidate) => candidate.path === '/' || candidate.path === '/zh/')) {
+test('all three homepages expose Portrait Follow with an honest visual and matching metadata', async () => {
+  for (const page of documents.filter((candidate) => candidate.group === '')) {
     const $ = page.$;
     const section = single($, '#portrait-follow', page.file);
     assert.equal(section.attr('hidden'), undefined, 'the feature is not hidden behind a tab');
@@ -157,8 +164,8 @@ test('both homepages expose Portrait Follow with an honest visual and matching m
       await assertLocalFile(new URL(video.find('source').attr('src'), page.url), page.file);
       await assertLocalFile(new URL(video.attr('poster'), page.url), page.file);
     }
-    assert.match(section.find('figcaption').text(), page.language === 'en' ? /actual Portrait Follow export/ : /实际竖屏跟拍导出/);
-    assert.match(section.find('.follow-note').text(), page.language === 'en' ? /analyzed again/ : /重新分析/);
+    assert.match(section.find('figcaption').text(), page.language === 'en' ? /actual Portrait Follow export/ : page.language === 'de' ? /tatsächlicher Portrait-Follow-Export/ : /实际竖屏跟拍导出/);
+    assert.match(section.find('.follow-note').text(), page.language === 'en' ? /analyzed again/ : page.language === 'de' ? /erneut analysiert/ : /重新分析/);
     const schema = JSON.parse($('script[type="application/ld+json"]').text());
     const app = schema['@graph'].find((node) => node['@type'] === 'SoftwareApplication');
     assert.ok(app.featureList.some((feature) => feature.includes('9:16')));
@@ -181,11 +188,9 @@ test('the sitemap lists the canonical product pages and all language alternative
   for (const entry of entries) {
     const url = $(entry).children('loc').text().trim();
     const page = documents.find((candidate) => candidate.url === url);
-    const english = page.language === 'en' ? page.path : page.pair;
-    const chinese = page.language === 'zh-Hans' ? page.path : page.pair;
-    const expected = { en: `${origin}${english}`, 'zh-Hans': `${origin}${chinese}`, 'x-default': `${origin}${english}` };
+    const expected = alternativesFor(page);
     const alternatives = $(entry).children('[hreflang]');
-    assert.equal(alternatives.length, 3, `${url}: expected three sitemap alternatives`);
+    assert.equal(alternatives.length, 4, `${url}: expected four sitemap alternatives`);
     for (const [language, target] of Object.entries(expected)) {
       const link = alternatives.filter(`[hreflang="${language}"]`);
       assert.equal(link.length, 1, `${url}: missing or duplicate ${language}`);
@@ -206,7 +211,7 @@ test('robots allows the website and assets while excluding only API routes', asy
 });
 
 test('localized 404 pages are not indexable and are included in the public build', async () => {
-  for (const file of ['404.html', 'zh/404.html']) {
+  for (const file of ['404.html', 'zh/404.html', 'de/404.html']) {
     const $ = load(await readFile(new URL(file, root), 'utf8'));
     const robots = meta($, 'robots', file).toLowerCase().split(/[\s,]+/);
     assert.ok(robots.includes('noindex'), `${file}: must not be indexed`);
@@ -217,7 +222,7 @@ test('localized 404 pages are not indexable and are included in the public build
 });
 
 test('public pages reference only existing local navigation and static resources', async () => {
-  const notFound = await Promise.all(['404.html', 'zh/404.html'].map(async (file) => ({
+  const notFound = await Promise.all(['404.html', 'zh/404.html', 'de/404.html'].map(async (file) => ({
     file, url: `${origin}/${file}`, $: load(await readFile(new URL(file, root), 'utf8')),
   })));
   for (const page of [...documents, ...notFound]) {
@@ -227,5 +232,37 @@ test('public pages reference only existing local navigation and static resources
       if (!href || href.startsWith('#') || /^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(href)) continue;
       await assertLocalFile(new URL(href, page.url), `${page.file}: ${href}`);
     }
+  }
+});
+
+test('language navigation offers every locale on the equivalent page without JavaScript', () => {
+  for (const page of documents) {
+    const menu = single(page.$, 'header .language-menu', page.file);
+    assert.ok(menu.is('details') && menu.find('summary').length === 1);
+    assert.equal(menu.find('a[data-language-link]').length, 3);
+    for (const language of languages) {
+      assert.equal(menu.find(`a[hreflang="${language.language}"]`).attr('href'), '/' + language.prefix + page.group);
+    }
+    assert.equal(menu.find('[aria-current]').attr('hreflang'), page.language);
+    assert.equal(page.$('.language-menu .language-menu').length, 0);
+  }
+});
+
+test('broader surfing use cases have substantive localized content and contextual links', () => {
+  for (const language of languages) {
+    const home = documents.find(page => page.prefix === language.prefix && page.group === '');
+    const guide = documents.find(page => page.prefix === language.prefix && page.group === 'surf-video-editing/');
+    const support = documents.find(page => page.prefix === language.prefix && page.group === 'support/');
+    assert.match(home.$('#surf-video').text(), /FlowRider/);
+    assert.ok(home.$(`#surf-video a[href="/${language.prefix}surf-video-editing/"]`).length);
+    assert.ok(guide.$('main').text().length > (language.language === 'zh-Hans' ? 1000 : 2000));
+    assert.equal(guide.$('.legal-page > section').length, 7);
+    assert.match(guide.$('main').text(), /FlowRider/);
+    assert.match(guide.$('main').text(), /9:16/);
+    assert.equal(guide.$('#questions h3').length, 3);
+    assert.match(support.$('main').text(), /FlowRider/);
+    const schemas = JSON.parse(guide.$('script[type="application/ld+json"]').text());
+    assert.ok(schemas['@graph'].some(node => node['@type'] === 'BreadcrumbList'));
+    assert.equal(guide.$('.guide-breadcrumb a').attr('href'), '/' + language.prefix);
   }
 });

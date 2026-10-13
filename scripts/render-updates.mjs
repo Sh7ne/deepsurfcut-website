@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
+import { locales, languageMenu } from './locales.mjs';
 
 const root = new URL('../', import.meta.url);
 const appStore = 'https://apps.apple.com/app/deepsurfcut/id6776393723';
@@ -7,6 +8,19 @@ const escape = (text) => String(text).replace(/[&<>"']/g, (char) => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
 })[char]);
 const ui = {
+  de: {
+    lang: 'de', locale: 'de_DE', home: '/de/', title: 'App-Updates für iOS und macOS | DeepSurfCut',
+    description: 'DeepSurfCut-Updates für iOS und macOS: Verbesserungen bei Surfer-Tracking, Timeline-Bearbeitung, Portrait Follow und Videoexport.',
+    heading: 'Neu in DeepSurfCut', intro: 'Bessere Sessions, Update für Update.',
+    updates: 'Updates', workflow: 'So funktioniert’s', editor: 'Der Editor', devices: 'Deine Geräte',
+    download: 'App laden', skip: 'Zum Inhalt', menu: 'Menü öffnen', navigation: 'Hauptnavigation',
+    platform: 'Plattform', latest: 'Neueste Version', version: 'Version', ios: 'iOS & iPadOS', macos: 'macOS',
+    iosDetail: 'Für iPhone und iPad', macosDetail: 'Für Mac', history: 'Versionsverlauf',
+    source: 'Im App Store ansehen', dates: 'Veröffentlichungsdaten werden in UTC angezeigt.',
+    missing: 'Diese Version ist im App-Store-Verlauf aufgeführt, aber es sind keine Versionshinweise verfügbar.',
+    permalink: 'Link zur Version', privacy: 'Datenschutz', terms: 'Nutzungsbedingungen', support: 'Support',
+    imageAlt: 'DeepSurfCut auf dem Mac mit Surfergruppen und einer bearbeitbaren Timeline',
+  },
   en: {
     lang: 'en', locale: 'en_US', alternateLocale: 'zh_CN', home: '/', other: '/zh/updates/',
     otherLang: 'zh-Hans', otherLabel: '中文', title: 'App Updates for iOS and macOS | DeepSurfCut',
@@ -42,11 +56,11 @@ export function renderUpdates(data, language) {
   const path = `${t.home}updates/`;
   const url = `https://deepsurf.app${path}`;
   const icon = (name) => `<i data-lucide="${name}" aria-hidden="true"></i>`;
-  const languageLink = `<a class="language-link" data-updates-language href="${t.other}" lang="${t.otherLang}" hreflang="${t.otherLang}">${t.otherLabel}</a>`;
+  const languageLink = languageMenu(language, 'updates/', true);
   const navigation = `<a href="${t.home}#autocut">${t.workflow}</a><a href="${t.home}#product">${t.editor}</a><a href="${t.home}#platforms">${t.devices}</a><a href="${path}" aria-current="page">${t.updates}</a>`;
   const supporting = `<a href="${t.home}privacy/">${t.privacy}</a><a href="${t.home}terms/">${t.terms}</a><a href="${t.home}support/">${t.support}</a>`;
   const brand = `<a class="brand" href="${t.home}" aria-label="DeepSurfCut"><img src="/assets/app-icon-128.png" alt="" width="32" height="32" /><span>DeepSurfCut</span></a>`;
-  const date = (value) => new Intl.DateTimeFormat(language === 'en' ? 'en' : 'zh-Hans', {
+  const date = (value) => new Intl.DateTimeFormat(t.lang, {
     year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC',
   }).format(new Date(value));
   const tabs = Object.entries(data.platforms).map(([platform, releases]) => `
@@ -95,6 +109,7 @@ export function renderUpdates(data, language) {
     <link rel="canonical" href="${url}" />
     <link rel="alternate" hreflang="en" href="https://deepsurf.app/updates/" />
     <link rel="alternate" hreflang="zh-Hans" href="https://deepsurf.app/zh/updates/" />
+    <link rel="alternate" hreflang="de" href="https://deepsurf.app/de/updates/" />
     <link rel="alternate" hreflang="x-default" href="https://deepsurf.app/updates/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="DeepSurfCut" />
@@ -102,7 +117,7 @@ export function renderUpdates(data, language) {
     <meta property="og:description" content="${escape(t.description)}" />
     <meta property="og:url" content="${url}" />
     <meta property="og:locale" content="${t.locale}" />
-    <meta property="og:locale:alternate" content="${t.alternateLocale}" />
+    ${Object.values(locales).filter((value) => value.lang !== t.lang).map((value) => `<meta property="og:locale:alternate" content="${value.locale}" />`).join('\n    ')}
     <meta property="og:image" content="https://deepsurf.app/assets/social-preview-20260917.jpg" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
@@ -115,11 +130,11 @@ export function renderUpdates(data, language) {
     <meta name="twitter:image:alt" content="${escape(t.imageAlt)}" />
     <link rel="icon" href="/assets/favicon-96.png" type="image/png" sizes="96x96" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180" />
-    <link rel="stylesheet" href="/home.css?v=20261014-1" />
+    <link rel="stylesheet" href="/home.css?v=20261014-5" />
     <link rel="stylesheet" href="/legal.css?v=20260912-4" />
     <link rel="stylesheet" href="/updates.css?v=20261014-1" />
     <script src="/assets/lucide.min.js" defer></script>
-    <script src="/home.js?v=20260912-4" defer></script>
+    <script src="/home.js?v=20261014-5" defer></script>
     <script src="/updates.js?v=20261014-1" defer></script>
     <script type="application/ld+json">${JSON.stringify(schema).replaceAll('<', '\\u003c')}</script>
   </head>
@@ -151,7 +166,7 @@ export function renderUpdates(data, language) {
 
 export async function updatePages({ check = false } = {}) {
   const data = JSON.parse(await readFile(new URL('content/releases.json', root), 'utf8'));
-  for (const [language, path] of [['en', 'updates/'], ['zh', 'zh/updates/']]) {
+  for (const [language, path] of [['en', 'updates/'], ['zh', 'zh/updates/'], ['de', 'de/updates/']]) {
     const file = new URL(`${path}index.html`, root);
     const html = renderUpdates(data, language);
     if (check) {

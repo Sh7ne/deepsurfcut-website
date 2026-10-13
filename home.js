@@ -3,7 +3,34 @@
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const isChinese = document.documentElement.lang.toLowerCase().startsWith('zh');
+  const isGerman = document.documentElement.lang.toLowerCase().startsWith('de');
   const renderIcons = () => window.lucide?.createIcons();
+
+  const languageMenus = Array.from(document.querySelectorAll('[data-language-menu]'));
+  const syncLanguageAnchors = () => {
+    document.querySelectorAll('[data-language-link]').forEach((link) => {
+      const url = new URL(link.href, window.location.href);
+      url.hash = window.location.hash;
+      link.href = url.href;
+    });
+  };
+  syncLanguageAnchors();
+  window.addEventListener('hashchange', syncLanguageAnchors);
+  languageMenus.forEach((menu) => {
+    menu.addEventListener('toggle', () => {
+      if (menu.open) languageMenus.filter((other) => other !== menu).forEach((other) => { other.open = false; });
+    });
+    menu.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && menu.open) {
+        event.preventDefault();
+        menu.open = false;
+        menu.querySelector('summary').focus();
+      }
+    });
+  });
+  document.addEventListener('click', (event) => {
+    languageMenus.forEach((menu) => { if (!menu.contains(event.target)) menu.open = false; });
+  });
 
   document.querySelectorAll('[data-year]').forEach((element) => {
     element.textContent = String(new Date().getFullYear());
@@ -15,7 +42,7 @@
     const setMenuOpen = (open, restoreFocus = false) => {
       const label = isChinese
         ? (open ? '\u5173\u95ed\u83dc\u5355' : '\u6253\u5f00\u83dc\u5355')
-        : (open ? 'Close menu' : 'Open menu');
+        : isGerman ? (open ? 'Menü schließen' : 'Menü öffnen') : (open ? 'Close menu' : 'Open menu');
       menuToggle.setAttribute('aria-expanded', String(open));
       menuToggle.setAttribute('aria-label', label);
       menuToggle.setAttribute('title', label);
@@ -79,7 +106,7 @@
       const playing = !heroVideo.paused && !heroVideo.ended;
       const label = isChinese
         ? (playing ? '\u6682\u505c\u89c6\u9891' : '\u64ad\u653e\u89c6\u9891')
-        : (playing ? 'Pause video' : 'Play video');
+        : isGerman ? (playing ? 'Video pausieren' : 'Video abspielen') : (playing ? 'Pause video' : 'Play video');
       videoToggle.setAttribute('aria-label', label);
       videoToggle.setAttribute('title', label);
       videoToggle.dataset.videoState = playing ? 'playing' : 'paused';
@@ -177,9 +204,11 @@
       error: '\u89c6\u9891\u52a0\u8f7d\u5931\u8d25\uff0c\u8bf7\u91cd\u8bd5\u64ad\u653e\u3002',
       retry: '\u91cd\u8bd5\u64ad\u653e',
     } : {
-      play: 'Play both videos', pause: 'Pause both videos',
-      soundOn: 'Turn sound on', soundOff: 'Turn sound off',
-      loading: 'Loading videos...', error: 'Videos could not load. Try playing again.', retry: 'Retry videos',
+      play: isGerman ? 'Beide Videos abspielen' : 'Play both videos', pause: isGerman ? 'Beide Videos pausieren' : 'Pause both videos',
+      soundOn: isGerman ? 'Ton einschalten' : 'Turn sound on', soundOff: isGerman ? 'Ton ausschalten' : 'Turn sound off',
+      loading: isGerman ? 'Videos werden geladen...' : 'Loading videos...',
+      error: isGerman ? 'Videos konnten nicht geladen werden. Bitte erneut versuchen.' : 'Videos could not load. Try playing again.',
+      retry: isGerman ? 'Videos erneut laden' : 'Retry videos',
     };
     let visible = false;
     let loaded = false;
@@ -262,7 +291,7 @@
       if (!scrubbing) seek.value = String(current);
       const value = `${clock(current)} / ${clock(end)}`;
       if (time.textContent !== value) time.textContent = value;
-      seek.setAttribute('aria-valuetext', isChinese ? `${clock(current)}\uff0c\u5171 ${clock(end)}` : `${clock(current)} of ${clock(end)}`);
+      seek.setAttribute('aria-valuetext', isChinese ? `${clock(current)}\uff0c\u5171 ${clock(end)}` : `${clock(current)} ${isGerman ? 'von' : 'of'} ${clock(end)}`);
       // Browsers can suspend frame callbacks when the original scrolls out of view.
       if (!('requestVideoFrameCallback' in source) || performance.now() - cropFrameUpdatedAt > 50) updateCrop();
     };
@@ -415,6 +444,14 @@
       actionRun: '\u6574\u7406\u8fd9\u573a\u51b2\u6d6a',
       actionWorking: '\u6b63\u5728\u6574\u7406\u2026',
       actionReplay: '\u518d\u770b\u4e00\u6b21',
+    } : isGerman ? {
+      statusIdle: 'Deine Session ist bereit.',
+      statusScanning: 'Rides werden erkannt...',
+      statusDetected: 'Rides erkannt.',
+      statusSorted: 'Sortiert und bereit zum Prüfen.',
+      actionRun: 'Session analysieren',
+      actionWorking: 'Analyse läuft...',
+      actionReplay: 'Erneut abspielen',
     } : {
       statusIdle: 'Your session, ready to sort.',
       statusScanning: 'Finding the rides...',

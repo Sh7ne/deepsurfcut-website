@@ -21,8 +21,10 @@ preloaded at high priority. Original files remain for older cached pages.
 
 ## Editorial constraints
 
-- Describe fixed-camera deep-water standing-wave footage, not generic ocean-surf
-  tracking, action scoring, or automatic selection of the best maneuvers.
+- Keep fixed-camera deep-water standing-wave sessions as the primary use case.
+  Include FlowRider/flowboarding and other surfing footage as compatible use cases
+  with recording-dependent results; do not promise identical tracking performance,
+  action scoring, or automatic selection of the best maneuvers.
 - Use the user's established Chinese term for this sport in Chinese content.
 - Keep the app's English UI intact inside genuine screenshots.
 - Keep prices, ratings, and invented endorsements out of markup as well as copy.
@@ -86,3 +88,39 @@ internal implementation/model branding.
 - [Google: documentation updates](https://developers.google.com/search/updates)
 - [Cloudflare: 404 behavior](https://developers.cloudflare.com/pages/configuration/serving-pages/)
 - [Cloudflare: hostname-specific noindex headers](https://developers.cloudflare.com/pages/configuration/headers/)
+
+## October 14, 2026 multilingual expansion
+
+The product site now has complete English, Simplified Chinese and German versions
+of the homepage, support, privacy, terms, updates and surf-video-editing guide:
+18 indexable URLs in six reciprocal language groups. German release notes translate
+the existing, independently verified iOS/macOS public histories without adding
+versions or reconstructing unavailable notes. Screenshots retain the real app UI.
+
+Every group uses a self-canonical URL, en/zh-Hans/de/x-default alternates, localized
+titles/descriptions and social text, and matching sitemap alternatives. Language
+menus work without JavaScript and retain section/version fragments when enhanced.
+There is no forced language redirect. German targets the language, not a country.
+
+The surf-video-editing guide answers real recording and export questions, has
+visible breadcrumbs matching its BreadcrumbList entity, and is linked from the
+homepage and support. FlowRider is included as a compatible use case rather than
+excluded; its flowboarding vocabulary is distinguished from deep-water standing
+waves. Ocean and other artificial-wave footage is discussed without promising
+uniform automated results. These are three translations of one substantial guide,
+not keyword-swapped doorway pages. No FAQ search appearance or ranking is promised.
+
+Indexing still needs real crawling. Add /de/ and all three surf-video-editing URLs
+to the Search Console inspection workflow above, submit the expanded sitemap,
+and monitor queries by page and language. Publishing is not account verification
+or a Search Console submission. German legal pages translate the existing policy;
+this source update is not a legal compliance audit.
+
+Terminology references (no venue/location examples are published in site copy):
+- [FlowRider official product and flowboarding information](https://www.flowrider.com/)
+- [Citywave official standing-wave terminology](https://citywave.de/)
+
+Regression checks cover all 18 pages, three-language canonical/alternate/sitemap
+parity, static translated body content, contextual FlowRider coverage, real images,
+language menus, release-history isolation, Portrait Follow media and crop data.
+Runtime checks include German public pages and unknown German paths returning 404.

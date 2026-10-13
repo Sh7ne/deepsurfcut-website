@@ -7,7 +7,7 @@ import { renderUpdates, updatePages } from '../scripts/render-updates.mjs';
 const root = new URL('../', import.meta.url);
 const data = JSON.parse(await readFile(new URL('content/releases.json', root), 'utf8'));
 
-test('release data contains only reviewed, bilingual, platform-specific public fields', () => {
+test('release data contains only reviewed, trilingual, platform-specific public fields', () => {
   assert.deepEqual(Object.keys(data).sort(), ['platforms', 'updated']);
   assert.match(data.updated, /^\d{4}-\d{2}-\d{2}$/);
   assert.deepEqual(Object.keys(data.platforms).sort(), ['ios', 'macos']);
@@ -26,8 +26,8 @@ test('release data contains only reviewed, bilingual, platform-specific public f
       assert.ok(date < Date.parse(`${data.updated}T23:59:59Z`), 'no future releases');
       previousDate = date;
       for (const text of [release.title, ...release.notes]) {
-        assert.deepEqual(Object.keys(text).sort(), ['en', 'zh']);
-        assert.ok(text.en.trim() && text.zh.trim());
+        assert.deepEqual(Object.keys(text).sort(), ['de', 'en', 'zh']);
+        assert.ok(text.en.trim() && text.zh.trim() && text.de.trim());
         assert.doesNotMatch(JSON.stringify(text), /<[^>]+>|https?:\/\/|\b(?:build|pending|benchmark)\b/i);
       }
     }
@@ -49,7 +49,7 @@ test('the verified public histories remain independent', () => {
   assert.deepEqual(data.platforms.macos.at(-1).notes, []);
 });
 
-test('both generated pages are current, static, and honest about missing notes', async () => {
+test('all three generated pages are current, static, and honest about missing notes', async () => {
   await updatePages({ check: true });
   for (const language of ['en', 'zh']) {
     const html = renderUpdates(data, language);
@@ -85,7 +85,7 @@ test('release rendering escapes content rather than publishing markup', () => {
 });
 
 test('product pages expose a localized update-history link', async () => {
-  for (const prefix of ['', 'zh/']) {
+  for (const prefix of ['', 'zh/', 'de/']) {
     for (const path of ['index.html', 'support/index.html', 'privacy/index.html', 'terms/index.html']) {
       const $ = load(await readFile(new URL(prefix + path, root), 'utf8'));
       assert.ok($(`footer a[href="/${prefix}updates/"]`).length, prefix + path);
