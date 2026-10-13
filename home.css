@@ -211,15 +211,18 @@ html[lang="zh-CN"] h2 { line-height: 1.24; }
 .follow-comparison { display: grid; grid-template-columns: minmax(0, 1fr) 20px minmax(0, .31640625fr); gap: 28px; align-items: center; }
 .follow-label { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 12px; font-size: 12px; color: var(--muted); }
 .follow-label span:last-child { font-variant-numeric: tabular-nums; }
-.follow-source-image, .follow-portrait { position: relative; overflow: hidden; border-radius: 4px; background: #143c4c; }
-.follow-source-image { aspect-ratio: 16 / 9; }
-.follow-source-image > img { width: 100%; height: 100%; object-fit: cover; }
-/* Match the illustrative crop to the same source pixels in the portrait view. */
-.follow-crop { position: absolute; inset-block: 0; left: 10.5%; width: 31.640625%; border: 2px solid white; box-shadow: 0 0 0 100vmax #07182442; }
-.follow-crop span { position: absolute; top: 10px; left: 10px; padding: 2px 6px; color: white; background: #142a34; font-size: 11px; }
+.follow-source-video, .follow-portrait { position: relative; overflow: hidden; border-radius: 4px; background: #143c4c; }
+.follow-source-video { aspect-ratio: 16 / 9; }
 .follow-portrait { aspect-ratio: 9 / 16; }
-.follow-portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 15.36% 50%; }
+.follow-source-video video, .follow-portrait video { width: 100%; height: 100%; object-fit: contain; }
 .follow-arrow { margin-top: 28px; color: #4d7b91; }
+.follow-controls { display: flex; align-items: center; gap: 14px; margin-top: 18px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.follow-button { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; flex: 0 0 40px; border-radius: 4px; }
+.follow-button:hover { background: #eaf2f6; }
+.follow-button svg { width: 18px; height: 18px; }
+.follow-seek { min-width: 0; flex: 1; height: 32px; margin: 0; accent-color: #456f84; cursor: pointer; }
+.follow-time { flex: 0 0 88px; text-align: center; font-size: 12px; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--muted); }
+.follow-status { margin-top: 10px; font-size: 12px; color: var(--muted); }
 .follow-figure figcaption { margin-top: 16px; color: var(--muted); font-size: 11px; line-height: 1.7; }
 .follow-benefits { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 38px; margin-top: 38px; padding-top: 30px; border-top: 1px solid var(--line); }
 .follow-benefits li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 12px; }
@@ -340,7 +343,9 @@ html[lang="zh-CN"] h2 { line-height: 1.24; }
   .follow-output { width: 200px; max-width: 100%; justify-self: center; }
   .follow-arrow { margin: 0; justify-self: center; transform: rotate(90deg); }
   .follow-label { font-size: 11px; }
-  .follow-crop span { top: 6px; left: 6px; font-size: 9px; }
+  .follow-controls { display: grid; grid-template-columns: 40px minmax(0, 1fr) 40px 40px; gap: 6px 12px; }
+  .follow-time { grid-column: 2; grid-row: 1; }
+  .follow-seek { grid-column: 1 / -1; grid-row: 2; width: 100%; }
   .follow-benefits { grid-template-columns: minmax(0, 1fr); gap: 24px; margin-top: 28px; padding-top: 26px; }
   .follow-benefits li { grid-template-columns: 22px minmax(0, 1fr); gap: 12px; }
   :root { scroll-padding-top: 25px; }

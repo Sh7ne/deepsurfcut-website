@@ -152,6 +152,203 @@
     updateVideoControl();
   }
 
+  document.querySelectorAll('[data-follow-player]').forEach((player) => {
+    const source = player.querySelector('[data-follow-source]');
+    const portrait = player.querySelector('[data-follow-output]');
+    const controls = player.querySelector('[data-follow-controls]');
+    const toggle = player.querySelector('[data-follow-toggle]');
+    const mute = player.querySelector('[data-follow-mute]');
+    const replay = player.querySelector('[data-follow-replay]');
+    const seek = player.querySelector('[data-follow-seek]');
+    const time = player.querySelector('[data-follow-time]');
+    const status = player.querySelector('[data-follow-status]');
+    if (!source || !portrait || !controls || !toggle || !mute || !replay || !seek || !time || !status) return;
+
+    const videos = [source, portrait];
+    const connection = navigator.connection;
+    const copy = isChinese ? {
+      play: '\u540c\u65f6\u64ad\u653e\u4e24\u4e2a\u89c6\u9891',
+      pause: '\u540c\u65f6\u6682\u505c\u4e24\u4e2a\u89c6\u9891',
+      soundOn: '\u5f00\u542f\u58f0\u97f3',
+      soundOff: '\u5173\u95ed\u58f0\u97f3',
+      loading: '\u6b63\u5728\u52a0\u8f7d\u89c6\u9891...',
+      error: '\u89c6\u9891\u52a0\u8f7d\u5931\u8d25\uff0c\u8bf7\u91cd\u8bd5\u64ad\u653e\u3002',
+      retry: '\u91cd\u8bd5\u64ad\u653e',
+    } : {
+      play: 'Play both videos', pause: 'Pause both videos',
+      soundOn: 'Turn sound on', soundOff: 'Turn sound off',
+      loading: 'Loading videos...', error: 'Videos could not load. Try playing again.', retry: 'Retry videos',
+    };
+    let visible = false;
+    let loaded = false;
+    let userPaused = false;
+    let explicitPlayback = false;
+    let wanted = false;
+    let scrubbing = false;
+    let failed = false;
+    let starting = false;
+    let run = 0;
+    let frame = 0;
+    let pending = null;
+
+    const duration = () => Math.min(...videos.map((video) => Number.isFinite(video.duration) ? video.duration : 18));
+    const clock = (seconds) => `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
+    const setStatus = (message = '') => {
+      if (status.textContent !== message) status.textContent = message;
+      status.hidden = !message;
+    };
+    const setButton = (button, label, marker, name) => {
+      button.setAttribute('aria-label', label);
+      button.setAttribute('title', label);
+      const icon = button.querySelector(`[${marker}]`);
+      if (icon?.getAttribute('data-lucide') === name) return;
+      const replacement = document.createElement('i');
+      replacement.setAttribute(marker, '');
+      replacement.setAttribute('data-lucide', name);
+      replacement.setAttribute('aria-hidden', 'true');
+      icon?.replaceWith(replacement);
+      renderIcons();
+    };
+    const updateControls = () => {
+      setButton(toggle, failed ? copy.retry : (wanted ? copy.pause : copy.play), 'data-follow-play-icon', failed ? 'rotate-ccw' : (wanted ? 'pause' : 'play'));
+      setButton(mute, source.muted ? copy.soundOn : copy.soundOff, 'data-follow-sound-icon', source.muted ? 'volume-x' : 'volume-2');
+    };
+    const updateTime = () => {
+      const end = duration();
+      const current = Math.min(end, source.currentTime);
+      seek.max = String(end);
+      seek.disabled = !videos.every((video) => video.readyState >= 1);
+      if (!scrubbing) seek.value = String(current);
+      const value = `${clock(current)} / ${clock(end)}`;
+      if (time.textContent !== value) time.textContent = value;
+      seek.setAttribute('aria-valuetext', isChinese ? `${clock(current)}\uff0c\u5171 ${clock(end)}` : `${clock(current)} of ${clock(end)}`);
+    };
+    const load = (retry = false) => {
+      if (loaded && !retry) return;
+      loaded = true;
+      videos.forEach((video) => { video.preload = 'auto'; video.load(); });
+    };
+    const pausePair = () => {
+      run += 1;
+      pending?.abort();
+      pending = null;
+      starting = false;
+      window.cancelAnimationFrame(frame);
+      videos.forEach((video) => { video.pause(); video.playbackRate = 1; });
+    };
+    const seekPair = (value) => {
+      videos.forEach((video) => { if (video.readyState >= 1) video.currentTime = value; });
+      updateTime();
+    };
+    const ready = (video, signal) => new Promise((resolve, reject) => {
+      if (video.readyState >= 3 && !video.seeking) { resolve(); return; }
+      const cleanup = () => {
+        window.clearTimeout(timer);
+        video.removeEventListener('canplay', check);
+        video.removeEventListener('seeked', check);
+        video.removeEventListener('error', error);
+        signal.removeEventListener('abort', abort);
+      };
+      const check = () => { if (video.readyState >= 3 && !video.seeking) { cleanup(); resolve(); } };
+      const error = () => { cleanup(); reject(new Error('Video unavailable')); };
+      const abort = () => { cleanup(); reject(new DOMException('Playback cancelled', 'AbortError')); };
+      const timer = window.setTimeout(error, 15000);
+      video.addEventListener('canplay', check);
+      video.addEventListener('seeked', check);
+      video.addEventListener('error', error);
+      signal.addEventListener('abort', abort, { once: true });
+    });
+    const syncFrame = () => {
+      if (!wanted || source.paused || portrait.paused) return;
+      const drift = source.currentTime - portrait.currentTime;
+      // The original is the shared clock; correct small drift gently and large drift by seeking.
+      if (Math.abs(drift) > .12 && !portrait.seeking) portrait.currentTime = source.currentTime;
+      portrait.playbackRate = Math.abs(drift) > .035 && Math.abs(drift) <= .12 ? (drift > 0 ? 1.04 : .96) : 1;
+      updateTime();
+      frame = window.requestAnimationFrame(syncFrame);
+    };
+    const startPair = async () => {
+      if (!wanted || scrubbing || starting || (!source.paused && !portrait.paused)) return;
+      load();
+      starting = true;
+      const currentRun = ++run;
+      pending = new AbortController();
+      setStatus(copy.loading);
+      try {
+        await Promise.all(videos.map((video) => ready(video, pending.signal)));
+        if (currentRun !== run || !wanted) return;
+        if (source.ended || source.currentTime >= duration()) seekPair(0);
+        if (Math.abs(source.currentTime - portrait.currentTime) > .025) portrait.currentTime = source.currentTime;
+        await Promise.all(videos.map((video) => video.play()));
+        if (currentRun !== run || !wanted) { if (!wanted) videos.forEach((video) => video.pause()); return; }
+        setStatus();
+        frame = window.requestAnimationFrame(syncFrame);
+      } catch (error) {
+        if (currentRun !== run || error.name === 'AbortError') return;
+        wanted = false;
+        userPaused = true;
+        failed = error.name !== 'NotAllowedError';
+        pausePair();
+        setStatus(failed ? copy.error : '');
+        updateControls();
+      } finally {
+        if (currentRun === run) { starting = false; pending = null; }
+      }
+    };
+    const updatePlayback = () => {
+      wanted = visible && !document.hidden && !userPaused && (explicitPlayback || (!reducedMotion.matches && !connection?.saveData));
+      if (wanted) startPair();
+      else { pausePair(); if (!failed) setStatus(); }
+      updateControls();
+    };
+    const togglePlayback = () => {
+      if (failed) { failed = false; load(true); }
+      userPaused = wanted;
+      explicitPlayback = !userPaused;
+      updatePlayback();
+    };
+    toggle.addEventListener('click', togglePlayback);
+    videos.forEach((video) => video.addEventListener('click', togglePlayback));
+    mute.addEventListener('click', () => { source.muted = !source.muted; updateControls(); });
+    replay.addEventListener('click', () => {
+      pausePair();
+      if (failed) { failed = false; load(true); }
+      seekPair(0);
+      userPaused = false;
+      explicitPlayback = true;
+      updatePlayback();
+    });
+    seek.addEventListener('input', () => { scrubbing = true; pausePair(); seekPair(Number(seek.value)); });
+    const finishSeeking = () => { if (scrubbing) { scrubbing = false; updatePlayback(); } };
+    seek.addEventListener('change', finishSeeking);
+    seek.addEventListener('blur', finishSeeking);
+    videos.forEach((video) => {
+      video.controls = false;
+      video.addEventListener('loadedmetadata', updateTime);
+      video.addEventListener('waiting', () => { if (wanted && !scrubbing) { pausePair(); startPair(); } });
+      video.addEventListener('ended', () => {
+        if (wanted && source.currentTime >= duration() - .1) { pausePair(); seekPair(0); startPair(); }
+        else updateTime();
+      });
+    });
+    portrait.muted = true;
+    controls.hidden = false;
+    time.setAttribute('aria-live', 'off');
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting;
+        if (visible) load();
+        updatePlayback();
+      }, { threshold: .05 });
+      observer.observe(player);
+    } else { visible = true; updatePlayback(); }
+    document.addEventListener('visibilitychange', updatePlayback);
+    reducedMotion.addEventListener('change', () => { explicitPlayback = false; updatePlayback(); });
+    connection?.addEventListener?.('change', () => { explicitPlayback = false; updatePlayback(); });
+    updateControls();
+    updateTime();
+  });
+
   document.querySelectorAll('[data-demo]').forEach((demo) => {
     const runButton = demo.querySelector('[data-demo-run]');
     const action = demo.querySelector('[data-demo-action]');

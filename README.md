@@ -101,11 +101,15 @@ Apple bezel template is not redistributed in this repository.
 
 ## App screenshots
 
-The homepage's Portrait Follow comparison uses an unchanged frame from the
-existing public session video at 1.25 seconds. CSS shows a 9:16 crop of that same
-frame. Both languages explicitly label it as a framing illustration, not an app
-export or a newly captured interface. The phone screenshots retain the genuine
-iPhone Air bezel.
+The homepage's Portrait Follow comparison uses the first 18 seconds of the
+original Test2_Short recording and the matching Test2Short_surfer1_full_portrait
+app export. The portrait framing is already in the exported video. Both clips
+are converted from HDR to SDR and encoded as H.264 for the web, with matching
+30 fps timelines. The original provides the shared audio; the portrait web copy
+is silent to prevent doubled sound. Posters come from each video's first frame.
+The shared controls synchronize playback, seeking, buffering, and replay. Native
+video controls remain available without JavaScript. The phone screenshots retain
+the genuine iPhone Air bezel.
 
 The September 12 asset refresh uses genuine captures from the maintained App Store
 screenshot project, optimized as versioned WebP files for the website:

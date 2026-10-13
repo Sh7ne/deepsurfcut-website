@@ -148,11 +148,16 @@ test('both homepages expose Portrait Follow with an honest visual and matching m
     assert.match($('.hero-description').text(), /9:16/);
     assert.match($('#editor-export').text(), /9:16/);
     assert.ok($('.editor-follow-link[href="#portrait-follow"]').length);
-    const images = section.find('img');
-    assert.equal(images.length, 2);
-    assert.equal(images.eq(0).attr('src'), images.eq(1).attr('src'), 'comparison uses the same real frame');
-    await assertLocalFile(new URL(images.eq(0).attr('src'), page.url), page.file);
-    assert.match(section.find('figcaption').text(), page.language === 'en' ? /illustration, not an app export/ : /取景示意，非应用导出/);
+    const videos = section.find('video');
+    assert.equal(videos.length, 2);
+    assert.notEqual(videos.eq(0).find('source').attr('src'), videos.eq(1).find('source').attr('src'));
+    for (const element of videos.toArray()) {
+      const video = $(element);
+      assert.ok(video.is('[controls][playsinline]'), 'native playback is available without JavaScript');
+      await assertLocalFile(new URL(video.find('source').attr('src'), page.url), page.file);
+      await assertLocalFile(new URL(video.attr('poster'), page.url), page.file);
+    }
+    assert.match(section.find('figcaption').text(), page.language === 'en' ? /actual Portrait Follow export/ : /实际竖屏跟拍导出/);
     assert.match(section.find('.follow-note').text(), page.language === 'en' ? /analyzed again/ : /重新分析/);
     const schema = JSON.parse($('script[type="application/ld+json"]').text());
     const app = schema['@graph'].find((node) => node['@type'] === 'SoftwareApplication');
