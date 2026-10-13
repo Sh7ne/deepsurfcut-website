@@ -162,6 +162,8 @@
     const seek = player.querySelector('[data-follow-seek]');
     const time = player.querySelector('[data-follow-time]');
     const status = player.querySelector('[data-follow-status]');
+    const cropOverlay = player.querySelector('[data-follow-crop-overlay]');
+    const cropRect = player.querySelector('[data-follow-crop]');
     if (!source || !portrait || !controls || !toggle || !mute || !replay || !seek || !time || !status) return;
 
     const videos = [source, portrait];
@@ -190,9 +192,48 @@
     let run = 0;
     let frame = 0;
     let pending = null;
+    let cropTrack = null;
+    let cropFrameUpdatedAt = 0;
 
     const duration = () => Math.min(...videos.map((video) => Number.isFinite(video.duration) ? video.duration : 18));
     const clock = (seconds) => `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
+    const updateCrop = (seconds = source.currentTime) => {
+      if (!cropTrack || !cropRect || !cropOverlay) return;
+      const index = Math.min(cropTrack.positions.length - 1, Math.max(0, Math.round(seconds * cropTrack.fps)));
+      const [x, y] = cropTrack.positions[index];
+      cropRect.setAttribute('x', String(x * 1280));
+      cropRect.setAttribute('y', String(y * 720));
+      cropRect.setAttribute('width', String(cropTrack.width * 1280));
+      cropRect.setAttribute('height', String(cropTrack.height * 720));
+      cropOverlay.removeAttribute('hidden');
+    };
+    if (cropOverlay && cropRect && player.dataset.followCropUrl) {
+      fetch(player.dataset.followCropUrl).then((response) => {
+        if (!response.ok) throw new Error('Crop track unavailable');
+        return response.json();
+      }).then((track) => {
+        const valid = Number.isFinite(track.fps) && track.fps > 0
+          && Number.isFinite(track.width) && track.width > 0 && track.width <= 1
+          && Number.isFinite(track.height) && track.height > 0 && track.height <= 1
+          && Array.isArray(track.positions) && track.positions.length > 0
+          && track.positions.every((point) => Array.isArray(point) && point.length === 2
+            && point.every(Number.isFinite) && point[0] >= 0 && point[1] >= 0
+            && point[0] + track.width <= 1.000001 && point[1] + track.height <= 1.000001);
+        if (!valid) throw new Error('Invalid crop track');
+        cropTrack = track;
+        updateCrop();
+      }).catch(() => cropOverlay.setAttribute('hidden', ''));
+      if ('requestVideoFrameCallback' in source) {
+        // Use the displayed source frame, including paused seeks, as the crop frame's clock.
+        const drawCrop = (_now, metadata) => {
+          cropFrameUpdatedAt = performance.now();
+          updateCrop(metadata.mediaTime);
+          source.requestVideoFrameCallback(drawCrop);
+        };
+        source.requestVideoFrameCallback(drawCrop);
+      }
+      source.addEventListener('seeked', () => updateCrop());
+    }
     const setStatus = (message = '') => {
       if (status.textContent !== message) status.textContent = message;
       status.hidden = !message;
@@ -222,6 +263,8 @@
       const value = `${clock(current)} / ${clock(end)}`;
       if (time.textContent !== value) time.textContent = value;
       seek.setAttribute('aria-valuetext', isChinese ? `${clock(current)}\uff0c\u5171 ${clock(end)}` : `${clock(current)} of ${clock(end)}`);
+      // Browsers can suspend frame callbacks when the original scrolls out of view.
+      if (!('requestVideoFrameCallback' in source) || performance.now() - cropFrameUpdatedAt > 50) updateCrop();
     };
     const load = (retry = false) => {
       if (loaded && !retry) return;
@@ -278,7 +321,11 @@
         await Promise.all(videos.map((video) => ready(video, pending.signal)));
         if (currentRun !== run || !wanted) return;
         if (source.ended || source.currentTime >= duration()) seekPair(0);
-        if (Math.abs(source.currentTime - portrait.currentTime) > .025) portrait.currentTime = source.currentTime;
+        if (Math.abs(source.currentTime - portrait.currentTime) > .025) {
+          portrait.currentTime = source.currentTime;
+          await ready(portrait, pending.signal);
+          if (currentRun !== run || !wanted) return;
+        }
         await Promise.all(videos.map((video) => video.play()));
         if (currentRun !== run || !wanted) { if (!wanted) videos.forEach((video) => video.pause()); return; }
         setStatus();
@@ -325,7 +372,10 @@
     videos.forEach((video) => {
       video.controls = false;
       video.addEventListener('loadedmetadata', updateTime);
-      video.addEventListener('waiting', () => { if (wanted && !scrubbing) { pausePair(); startPair(); } });
+      video.addEventListener('playing', () => { if (!wanted || scrubbing) video.pause(); });
+      video.addEventListener('waiting', () => {
+        if (wanted && !scrubbing && !starting && !videos.some((item) => item.seeking)) { pausePair(); startPair(); }
+      });
       video.addEventListener('ended', () => {
         if (wanted && source.currentTime >= duration() - .1) { pausePair(); seekPair(0); startPair(); }
         else updateTime();
@@ -344,7 +394,7 @@
     } else { visible = true; updatePlayback(); }
     document.addEventListener('visibilitychange', updatePlayback);
     reducedMotion.addEventListener('change', () => { explicitPlayback = false; updatePlayback(); });
-    connection?.addEventListener?.('change', () => { explicitPlayback = false; updatePlayback(); });
+    connection?.addEventListener?.('change', updatePlayback);
     updateControls();
     updateTime();
   });

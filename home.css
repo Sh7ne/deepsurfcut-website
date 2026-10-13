@@ -208,13 +208,19 @@ html[lang="zh-CN"] h2 { line-height: 1.24; }
 
 .editor-follow-link { margin-top: 18px; font-size: 12px; }
 .portrait-follow { background: #fff; border-bottom: 1px solid var(--line); }
-.follow-comparison { display: grid; grid-template-columns: minmax(0, 1fr) 20px minmax(0, .31640625fr); gap: 28px; align-items: center; }
+.follow-comparison { display: grid; grid-template-columns: minmax(0, 1fr) 20px minmax(0, .26953125fr); gap: 28px; align-items: center; }
 .follow-label { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 12px; font-size: 12px; color: var(--muted); }
 .follow-label span:last-child { font-variant-numeric: tabular-nums; }
 .follow-source-video, .follow-portrait { position: relative; overflow: hidden; border-radius: 4px; background: #143c4c; }
 .follow-source-video { aspect-ratio: 16 / 9; }
 .follow-portrait { aspect-ratio: 9 / 16; }
 .follow-source-video video, .follow-portrait video { width: 100%; height: 100%; object-fit: contain; }
+.follow-crop-overlay { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.follow-crop-overlay rect { fill: none; stroke: #fff; stroke-width: 2; vector-effect: non-scaling-stroke; filter: drop-shadow(0 1px 1px #0009); }
+.follow-phone.phone-device { width: 100%; }
+.follow-phone-screen { display: flex; align-items: center; background: #08090a; }
+.follow-phone .follow-portrait { width: 100%; border-radius: 0; }
+.follow-phone-island { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; clip-path: inset(4.15% 36.8% 91.82% 36.8% round 999px); }
 .follow-arrow { margin-top: 28px; color: #4d7b91; }
 .follow-controls { display: flex; align-items: center; gap: 14px; margin-top: 18px; padding: 9px 0; border-bottom: 1px solid var(--line); }
 .follow-button { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; flex: 0 0 40px; border-radius: 4px; }
@@ -340,7 +346,7 @@ html[lang="zh-CN"] h2 { line-height: 1.24; }
 }
 @media (max-width: 600px) {
   .follow-comparison { grid-template-columns: minmax(0, 1fr); gap: 18px; }
-  .follow-output { width: 200px; max-width: 100%; justify-self: center; }
+  .follow-output { width: 180px; max-width: 100%; justify-self: center; }
   .follow-arrow { margin: 0; justify-self: center; transform: rotate(90deg); }
   .follow-label { font-size: 11px; }
   .follow-controls { display: grid; grid-template-columns: 40px minmax(0, 1fr) 40px 40px; gap: 6px 12px; }

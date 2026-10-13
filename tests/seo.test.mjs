@@ -162,7 +162,12 @@ test('both homepages expose Portrait Follow with an honest visual and matching m
     const schema = JSON.parse($('script[type="application/ld+json"]').text());
     const app = schema['@graph'].find((node) => node['@type'] === 'SoftwareApplication');
     assert.ok(app.featureList.some((feature) => feature.includes('9:16')));
-    assert.equal($('.phone-bezel[src="/assets/iphone-air-base-20260912.webp"]').length, 3);
+    assert.equal($('.editor .phone-bezel[src="/assets/iphone-air-base-20260912.webp"]').length, 3);
+    assert.equal(section.find('.follow-phone .phone-bezel[src="/assets/iphone-air-base-20260912.webp"]').length, 1);
+    const track = JSON.parse(await readFile(await assertLocalFile(new URL(section.find('[data-follow-player]').attr('data-follow-crop-url'), page.url), page.file), 'utf8'));
+    assert.equal(track.positions.length, 18 * track.fps);
+    assert.ok(Math.abs((track.width * 1280) / (track.height * 720) - 9 / 16) < .000001);
+    assert.ok(track.positions.every(([x, y]) => Number.isFinite(x) && Number.isFinite(y) && x >= 0 && y >= 0 && x + track.width <= 1 && y + track.height <= 1));
   }
 });
 

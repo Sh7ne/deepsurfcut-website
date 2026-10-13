@@ -37,9 +37,9 @@
     <link rel="icon" href="/assets/favicon-96.png" type="image/png" sizes="96x96" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180" />
     <link rel="preload" as="image" href="/assets/hero-poster-20260917.webp" type="image/webp" fetchpriority="high" />
-    <link rel="stylesheet" href="/home.css?v=20261014-3" />
+    <link rel="stylesheet" href="/home.css?v=20261014-4" />
     <script src="/assets/lucide.min.js" defer></script>
-    <script src="/home.js?v=20261014-3" defer></script>
+    <script src="/home.js?v=20261014-4" defer></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -151,11 +151,11 @@
 
       <section class="section portrait-follow" id="portrait-follow" aria-labelledby="follow-title"><div class="wrap">
         <div class="section-heading" data-reveal><div><p class="eyebrow">03 / PORTRAIT FOLLOW</p><h2 id="follow-title">Portrait Follow.<br>Made for your ride.</h2></div><p class="section-intro">Turn a wide session recording into a 9:16 video that follows your selected surfer. Export each ride on its own, or bring them together as a reel.</p></div>
-        <figure class="follow-figure" aria-describedby="follow-caption" data-follow-player>
+        <figure class="follow-figure" aria-describedby="follow-caption" data-follow-player data-follow-crop-url="/assets/follow-crop-20261014.json">
           <div class="follow-comparison">
-            <div class="follow-source"><div class="follow-label"><span id="follow-source-label">Original recording</span><span>16:9</span></div><div class="follow-source-video"><video data-follow-source controls muted playsinline preload="none" poster="/assets/follow-original-poster-20261014.jpg" width="1280" height="720" aria-labelledby="follow-source-label"><source src="/assets/follow-original-20261014.mp4" type="video/mp4" /></video></div></div>
+            <div class="follow-source"><div class="follow-label"><span id="follow-source-label">Original recording</span><span>16:9</span></div><div class="follow-source-video"><video data-follow-source controls muted playsinline preload="none" poster="/assets/follow-original-poster-20261014.jpg" width="1280" height="720" aria-labelledby="follow-source-label"><source src="/assets/follow-original-20261014.mp4" type="video/mp4" /></video><svg class="follow-crop-overlay" data-follow-crop-overlay viewBox="0 0 1280 720" aria-hidden="true" hidden><rect data-follow-crop x="0" y="0" width="360" height="640" /></svg></div></div>
             <i class="follow-arrow" data-lucide="arrow-right" aria-hidden="true"></i>
-            <div class="follow-output"><div class="follow-label"><span id="follow-output-label">Portrait Follow export</span><span>9:16</span></div><div class="follow-portrait"><video data-follow-output controls muted playsinline preload="none" poster="/assets/follow-export-poster-20261014.jpg" width="540" height="960" aria-labelledby="follow-output-label"><source src="/assets/follow-export-20261014.mp4" type="video/mp4" /></video></div></div>
+            <div class="follow-output"><div class="follow-label"><span id="follow-output-label">Portrait Follow export</span><span>9:16</span></div><div class="follow-phone phone-device"><img class="phone-bezel" src="/assets/iphone-air-base-20260912.webp" width="960" height="2003" alt="" loading="lazy" decoding="async" /><div class="phone-screen follow-phone-screen"><div class="follow-portrait"><video data-follow-output controls muted playsinline preload="none" poster="/assets/follow-export-poster-20261014.jpg" width="540" height="960" aria-labelledby="follow-output-label"><source src="/assets/follow-export-20261014.mp4" type="video/mp4" /></video></div></div><img class="follow-phone-island" src="/assets/iphone-air-base-20260912.webp" width="960" height="2003" alt="" loading="lazy" decoding="async" aria-hidden="true" /></div></div>
           </div>
           <div class="follow-controls" role="group" aria-label="Video comparison playback" data-follow-controls hidden>
             <button class="follow-button" type="button" data-follow-toggle aria-label="Play both videos" title="Play both videos"><i data-follow-play-icon data-lucide="play" aria-hidden="true"></i></button>

@@ -111,6 +111,13 @@ The shared controls synchronize playback, seeking, buffering, and replay. Native
 video controls remain available without JavaScript. The phone screenshots retain
 the genuine iPhone Air bezel.
 
+The moving crop outline uses 540 frame positions measured by matching the actual
+portrait export to the original recording. This export crops native 1080 x 1920
+pixels from a 3840 x 2160 source, including small vertical changes. The outline
+uses the displayed source frame's timestamp and also updates after paused seeks.
+The export plays inside the same Space Black iPhone Air bezel, with the entire
+9:16 picture visible and the original bezel's camera island retained.
+
 The September 12 asset refresh uses genuine captures from the maintained App Store
 screenshot project, optimized as versioned WebP files for the website:
 
