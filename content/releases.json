@@ -72,6 +72,18 @@
     ],
     "macos": [
       {
+        "version": "1.3.2",
+        "releasedAt": "2026-10-13T18:12:11Z",
+        "title": { "en": "More reliable grouping. Cleaner exports.", "zh": "人物归组更稳，片尾导出更完整" },
+        "notes": [
+          { "en": "More reliable surfer grouping when people cross paths or tracking switches between people, with better recovery of briefly observed rides at lower analysis frame rates.", "zh": "改善多人交错、追踪交接时的人物归组，以及较低分析帧率下稀疏上浪片段的身份恢复。" },
+          { "en": "End-card exports better preserve the selected opening and final frames, HDR appearance, and short audio endings.", "zh": "片尾导出更好地保留选段开头和最后画面，改善 HDR 显示及短音频结尾。" },
+          { "en": "Sound-reactive wave animation, fading ocean audio, and clearer titles give your reel a more polished ending.", "zh": "新增随声音变化的海浪片尾动画、渐弱的海浪声，以及更清晰的标题。" },
+          { "en": "Surfer previews follow the source video's frame cadence more closely. Remaining-time estimates include grouping and preview preparation until results are ready.", "zh": "人物预览更贴合原视频帧率；剩余时间估计包含人物归组和预览准备，直到结果就绪。" },
+          { "en": "Fewer unnecessary video copies and automatic limits on preview and end-card caches help manage storage.", "zh": "减少不必要的视频复制，自动限制预览和片尾缓存占用。" }
+        ]
+      },
+      {
         "version": "1.2.2",
         "releasedAt": "2026-10-09T00:59:17Z",
         "title": { "en": "Scan precision and refined end cards", "zh": "分析精度与片尾优化" },
