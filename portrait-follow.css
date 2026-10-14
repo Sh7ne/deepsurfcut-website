@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+.tutorial-toc {
+  margin-top: 30px;
+  padding: 20px 24px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.legal-page .tutorial-toc p { margin: 0; color: var(--ink); font-weight: 600; }
+.legal-page .tutorial-toc ol { margin-top: 8px; }
+.legal-page .tutorial-toc li { margin-top: 4px; }
+.tutorial-main section[id] { scroll-margin-top: 24px; }
+.legal-page .tutorial-note { padding-left: 16px; border-left: 2px solid #88b7ce; }
+.tutorial-comparison { margin-top: 22px; }
+.tutorial-video-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, .36fr);
+  gap: 24px;
+  align-items: start;
+}
+.tutorial-video-grid > div { min-width: 0; }
+.legal-page .tutorial-video-label { margin: 0 0 10px; font-size: 13px; line-height: 1.5; }
+.tutorial-video-grid video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  background: #143c4c;
+}
+.tutorial-comparison figcaption {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+.legal-page .tutorial-steps { padding-left: 26px; }
+.legal-page .tutorial-steps > li { margin-top: 28px; padding-left: 8px; }
+.legal-page .tutorial-steps h3 { margin-top: 0; color: var(--ink); }
+.legal-page .tutorial-steps p { margin-top: 10px; }
+.tutorial-screenshot { margin-top: 20px; }
+.tutorial-related {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 24px;
+  margin-top: 38px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  font-size: 15px;
+  line-height: 1.7;
+}
+@media (max-width: 600px) {
+  .tutorial-toc { padding: 16px 18px; }
+  .tutorial-video-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .tutorial-output { width: min(240px, 100%); justify-self: center; }
+  .legal-page .tutorial-steps { padding-left: 22px; }
+  .legal-page .tutorial-steps > li { padding-left: 3px; }
+}

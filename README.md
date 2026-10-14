@@ -57,8 +57,8 @@ Passing local tests does not replace Apple's required sandbox performance test.
 
 ## Search visibility
 
-The ten primary product pages use static, crawlable HTML, self-canonical URLs, reciprocal
-English/Simplified Chinese language links, descriptive metadata, and linked
+The 21 primary product pages use static, crawlable HTML, self-canonical URLs, reciprocal
+English/Simplified Chinese/German language links, descriptive metadata, and linked
 WebSite/WebPage/SoftwareApplication structured data. The sitemap lists only these
 canonical pages. Keep its `lastmod` dates tied to substantive content changes,
 not build dates. No prices or ratings are invented for search features.
@@ -69,6 +69,18 @@ the existing API tests. The runtime suite verifies missing-page 404 responses.
 See [SEO operations](docs/seo.md) for the audit, deployment checks, and the
 account-level Search Console and domain-redirect setup that remains separate
 from the website source.
+
+The Portrait Follow tutorial lives at `/portrait-follow/`, `/zh/portrait-follow/`,
+and `/de/portrait-follow/`. Keep its shared section IDs aligned so language switches
+preserve deep links. Real source/export videos use native controls and do not preload.
+Homepage, support, editing-guide and relevant generated release entries link to it.
+
+The site loads a small, local Lucide subset from `assets/icons-20261015.js`.
+After adding an icon, run `node scripts/build-icons.mjs`; both the build and tests
+reject a stale subset. Keep the original vendored library and license for rebuilds
+and cached pages. Performance tests exercise deferred autoplay and explicit playback
+under reduced-motion and constrained-network preferences; they are not a field
+Core Web Vitals measurement.
 
 ## App update history
 

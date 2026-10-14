@@ -124,3 +124,45 @@ Regression checks cover all 18 pages, three-language canonical/alternate/sitemap
 parity, static translated body content, contextual FlowRider coverage, real images,
 language menus, release-history isolation, Portrait Follow media and crop data.
 Runtime checks include German public pages and unknown German paths returning 404.
+
+## October 15, 2026 performance and tutorial update
+
+The three Portrait Follow tutorials add step-by-step, static instructions at
+`/portrait-follow/`, `/zh/portrait-follow/` and `/de/portrait-follow/`. The sitemap
+and SEO checks now cover 21 URLs. Each tutorial preserves shared section IDs,
+reciprocal language links and visible breadcrumbs; source and exported videos use
+native controls with `preload="none"`. Homepage, support, editing-guide and relevant
+generated release entries link to the localized tutorial. Release facts and
+timestamps are unchanged.
+
+The public icon bundle contains only the 27 used Lucide glyphs. Local gzip size
+falls from 93,324 to 2,047 bytes (the uncompressed files are 397,450 and 6,135
+bytes). This is a resource-size comparison, not a measured Core Web Vitals gain.
+The hero waits for initial loading and painting before autoplay; reduced motion,
+data saving and slow connections avoid automatic video playback/downloads.
+Deliberate playback remains available. Offscreen Portrait Follow crop data is
+deferred, and data saving no longer preloads the two demonstration videos.
+Run `node scripts/build-icons.mjs` after adding icons. Build and test checks reject
+a stale bundle. The full licensed library remains available for regeneration and
+cached older pages.
+
+### WWW redirect
+
+Cloudflare Single Redirect `Redirect www to deepsurf.app (website only)` is active.
+This is a zone-level rule, independent of the repository's Pages deployment:
+
+```text
+Match: (http.host eq "www.deepsurf.app" and not (http.request.uri.path eq "/api" or starts_with(http.request.uri.path, "/api/")))
+Target: concat("https://deepsurf.app", http.request.uri.path)
+Status: 301
+Preserve query string: enabled
+```
+
+The API namespace is excluded so Apple's existing callbacks are not redirected.
+Pages Function routes remain restricted to the retention API. Cloudflare Pages
+`_redirects` does not support domain matching, so the rule is maintained in the
+domain's Redirect Rules dashboard. Production checks must include both HTTP and
+HTTPS www URLs, nested language paths, query strings, the apex and the API.
+
+Search Console account verification, submission and real-user performance data
+still require separate account-level follow-through.

@@ -20,6 +20,7 @@ const ui = {
     missing: 'Diese Version ist im App-Store-Verlauf aufgeführt, aber es sind keine Versionshinweise verfügbar.',
     permalink: 'Link zur Version', privacy: 'Datenschutz', terms: 'Nutzungsbedingungen', support: 'Support',
     imageAlt: 'DeepSurfCut auf dem Mac mit Surfergruppen und einer bearbeitbaren Timeline',
+    followGuide: 'Portrait Follow: Anleitung für 9:16-Surfvideos',
   },
   en: {
     lang: 'en', locale: 'en_US', alternateLocale: 'zh_CN', home: '/', other: '/zh/updates/',
@@ -34,6 +35,7 @@ const ui = {
     missing: 'This version appears in the App Store history, but no release notes are available.',
     permalink: 'Link to version', privacy: 'Privacy', terms: 'Terms', support: 'Support',
     imageAlt: 'DeepSurfCut Mac video workspace with rider groups and an editable timeline',
+    followGuide: 'How to export 9:16 surf videos with Portrait Follow',
   },
   zh: {
     lang: 'zh-Hans', locale: 'zh_CN', alternateLocale: 'en_US', home: '/zh/', other: '/updates/',
@@ -48,6 +50,7 @@ const ui = {
     missing: 'App Store 历史中可查到此版本，但没有提供更新说明。',
     permalink: '此版本的链接', privacy: '隐私', terms: '条款', support: '支持',
     imageAlt: 'DeepSurfCut Mac 视频工作区，展示人物分组与可编辑的时间线',
+    followGuide: '竖屏跟拍教程：导出 9:16 冲浪视频',
   },
 };
 
@@ -84,7 +87,7 @@ export function renderUpdates(data, language) {
               </div>
               <div class="release-content">
                 <h3 id="title-${id}">${escape(release.title[language])}</h3>
-                ${release.notes.length ? `<ul>${release.notes.map((note) => `\n                  <li>${escape(note[language])}</li>`).join('')}\n                </ul>` : `<p class="missing-notes">${t.missing}</p>`}
+                ${release.notes.length ? `<ul>${release.notes.map((note) => `\n                  <li>${escape(note[language])}</li>`).join('')}\n                </ul>` : `<p class="missing-notes">${t.missing}</p>`}${release.notes.some((note) => /Portrait Follow/i.test(note.en)) ? `\n                <p><a href="${t.home}portrait-follow/">${t.followGuide}</a></p>` : ''}
               </div>
             </article>
           </li>`;
@@ -133,8 +136,8 @@ export function renderUpdates(data, language) {
     <link rel="stylesheet" href="/home.css?v=20261014-5" />
     <link rel="stylesheet" href="/legal.css?v=20260912-4" />
     <link rel="stylesheet" href="/updates.css?v=20261014-1" />
-    <script src="/assets/lucide.min.js" defer></script>
-    <script src="/home.js?v=20261014-5" defer></script>
+    <script src="/assets/icons-20261015.js" defer></script>
+    <script src="/home.js?v=20261015-1" defer></script>
     <script src="/updates.js?v=20261014-1" defer></script>
     <script type="application/ld+json">${JSON.stringify(schema).replaceAll('<', '\\u003c')}</script>
   </head>

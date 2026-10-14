@@ -48,7 +48,7 @@ test('Pages deployment and Apple verification run in the Cloudflare runtime', { 
   });
 
   await t.test('existing pages and assets are preserved and private files are excluded', async () => {
-    for (const [url, file] of [['/', 'index.html'], ['/zh/', 'zh/index.html'], ['/privacy/', 'privacy/index.html'], ['/home.css', 'home.css'], ['/updates/', 'updates/index.html'], ['/zh/updates/', 'zh/updates/index.html'], ['/de/', 'de/index.html'], ['/de/updates/', 'de/updates/index.html'], ['/de/surf-video-editing/', 'de/surf-video-editing/index.html']]) {
+    for (const [url, file] of [['/', 'index.html'], ['/zh/', 'zh/index.html'], ['/privacy/', 'privacy/index.html'], ['/home.css', 'home.css'], ['/updates/', 'updates/index.html'], ['/zh/updates/', 'zh/updates/index.html'], ['/de/', 'de/index.html'], ['/de/updates/', 'de/updates/index.html'], ['/de/surf-video-editing/', 'de/surf-video-editing/index.html'], ['/portrait-follow/', 'portrait-follow/index.html'], ['/zh/portrait-follow/', 'zh/portrait-follow/index.html'], ['/de/portrait-follow/', 'de/portrait-follow/index.html'], ['/portrait-follow.css', 'portrait-follow.css'], ['/assets/icons-20261015.js', 'assets/icons-20261015.js']]) {
       const response = await deployed.fetch(url);
       assert.equal(response.status, 200);
       assert.equal(await response.text(), await readFile(file, 'utf8'));

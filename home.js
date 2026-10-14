@@ -5,6 +5,8 @@
   const isChinese = document.documentElement.lang.toLowerCase().startsWith('zh');
   const isGerman = document.documentElement.lang.toLowerCase().startsWith('de');
   const renderIcons = () => window.lucide?.createIcons();
+  const automaticVideoAllowed = () => !reducedMotion.matches && !navigator.connection?.saveData
+    && !/^(slow-2g|2g|3g)$/.test(navigator.connection?.effectiveType || '');
 
   const languageMenus = Array.from(document.querySelectorAll('[data-language-menu]'));
   const syncLanguageAnchors = () => {
@@ -100,6 +102,7 @@
     let userPaused = false;
     let explicitPlayback = false;
     let shouldBePlaying = false;
+    let automaticPlaybackReady = false;
 
     const updateVideoControl = () => {
       if (!videoToggle) return;
@@ -123,7 +126,7 @@
     };
 
     const updatePlayback = () => {
-      const automaticPlayback = !reducedMotion.matches && !connection?.saveData;
+      const automaticPlayback = automaticPlaybackReady && automaticVideoAllowed();
       shouldBePlaying = videoIsVisible && !document.hidden && !userPaused
         && (explicitPlayback || automaticPlayback);
       if (shouldBePlaying) {
@@ -134,6 +137,17 @@
       }
       updateVideoControl();
     };
+
+    // Let the high-priority poster and initial page finish painting before the
+    // decorative video competes for bandwidth. A deliberate play stays immediate.
+    const afterInitialRender = () => {
+      window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+        automaticPlaybackReady = true;
+        updatePlayback();
+      }));
+    };
+    if (document.readyState === 'complete') afterInitialRender();
+    else window.addEventListener('load', afterInitialRender, { once: true });
 
     heroVideo.addEventListener('playing', () => {
       if (!shouldBePlaying) heroVideo.pause();
@@ -223,6 +237,7 @@
     let pending = null;
     let cropTrack = null;
     let cropFrameUpdatedAt = 0;
+    let cropRequested = false;
 
     const duration = () => Math.min(...videos.map((video) => Number.isFinite(video.duration) ? video.duration : 18));
     const clock = (seconds) => `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
@@ -236,7 +251,9 @@
       cropRect.setAttribute('height', String(cropTrack.height * 720));
       cropOverlay.removeAttribute('hidden');
     };
-    if (cropOverlay && cropRect && player.dataset.followCropUrl) {
+    const loadCropTrack = () => {
+      if (cropRequested || !cropOverlay || !cropRect || !player.dataset.followCropUrl) return;
+      cropRequested = true;
       fetch(player.dataset.followCropUrl).then((response) => {
         if (!response.ok) throw new Error('Crop track unavailable');
         return response.json();
@@ -252,6 +269,8 @@
         cropTrack = track;
         updateCrop();
       }).catch(() => cropOverlay.setAttribute('hidden', ''));
+    };
+    if (cropOverlay && cropRect && player.dataset.followCropUrl) {
       if ('requestVideoFrameCallback' in source) {
         // Use the displayed source frame, including paused seeks, as the crop frame's clock.
         const drawCrop = (_now, metadata) => {
@@ -298,6 +317,7 @@
     const load = (retry = false) => {
       if (loaded && !retry) return;
       loaded = true;
+      loadCropTrack();
       videos.forEach((video) => { video.preload = 'auto'; video.load(); });
     };
     const pausePair = () => {
@@ -372,7 +392,7 @@
       }
     };
     const updatePlayback = () => {
-      wanted = visible && !document.hidden && !userPaused && (explicitPlayback || (!reducedMotion.matches && !connection?.saveData));
+      wanted = visible && !document.hidden && !userPaused && (explicitPlayback || automaticVideoAllowed());
       if (wanted) startPair();
       else { pausePair(); if (!failed) setStatus(); }
       updateControls();
@@ -416,7 +436,7 @@
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver(([entry]) => {
         visible = entry.isIntersecting;
-        if (visible) load();
+        if (visible) loadCropTrack();
         updatePlayback();
       }, { threshold: .05 });
       observer.observe(player);

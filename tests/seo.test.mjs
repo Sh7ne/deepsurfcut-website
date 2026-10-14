@@ -13,6 +13,7 @@ const groups = [
   ['terms/', ['Terms of Use', '使用条款', 'Nutzungsbedingungen']],
   ['updates/', ["What's new", '版本更新', 'Neu in DeepSurfCut']],
   ['surf-video-editing/', ['FlowRider', 'FlowRider', 'FlowRider']],
+  ['portrait-follow/', ['Portrait Follow', '竖屏跟拍', 'Portrait Follow']],
 ];
 const languages = [
   { prefix: '', language: 'en', locale: 'en_US' },
@@ -229,8 +230,15 @@ test('public pages reference only existing local navigation and static resources
     const references = page.$('a[href], img[src], script[src], link[rel="stylesheet"][href]').toArray();
     for (const element of references) {
       const href = page.$(element).attr('href') || page.$(element).attr('src');
-      if (!href || href.startsWith('#') || /^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(href)) continue;
-      await assertLocalFile(new URL(href, page.url), `${page.file}: ${href}`);
+      if (!href) continue;
+      const url = new URL(href, page.url);
+      if (url.origin !== origin) continue;
+      const target = await assertLocalFile(url, `${page.file}: ${href}`);
+      if (url.hash && page.$(element).is('a')) {
+        const $target = load(await readFile(target, 'utf8'));
+        const ids = new Set($target('[id]').toArray().map(node => $target(node).attr('id')));
+        assert.ok(ids.has(decodeURIComponent(url.hash.slice(1))), `${page.file}: missing anchor ${href}`);
+      }
     }
   }
 });
@@ -269,5 +277,34 @@ test('broader surfing use cases have substantive localized content and contextua
     const schemas = JSON.parse(guide.$('script[type="application/ld+json"]').text());
     assert.ok(schemas['@graph'].some(node => node['@type'] === 'BreadcrumbList'));
     assert.equal(guide.$('.guide-breadcrumb a').attr('href'), '/' + language.prefix);
+  }
+});
+
+test('Portrait Follow tutorials work as static instructions with localized entry points and real media', async () => {
+  for (const language of languages) {
+    const guide = documents.find(page => page.prefix === language.prefix && page.group === 'portrait-follow/');
+    const $ = guide.$;
+    assert.equal($('#steps .tutorial-steps > li').length, 5);
+    for (const id of ['before-you-start', 'example', 'steps', 'check-your-export', 'questions']) {
+      assert.equal($(`section#${id}[hidden]`).length, 0);
+      assert.equal($(`section#${id}`).length, 1);
+      assert.equal($(`.tutorial-toc a[href="#${id}"]`).length, 1);
+    }
+    assert.match($('#before-you-start').text(), /DeepSurfCut Pro/);
+    assert.match($('#steps').text(), /iPhone/);
+    assert.match($('#steps').text(), /Mac/);
+    assert.equal($('#example video[controls][playsinline][preload="none"]').length, 2);
+    assert.equal($('#example video[autoplay]').length, 0);
+    for (const video of $('#example video').toArray()) {
+      await assertLocalFile(new URL($(video).attr('poster'), guide.url), guide.file);
+      await assertLocalFile(new URL($(video).find('source').attr('src'), guide.url), guide.file);
+    }
+    const graph = JSON.parse($('script[type="application/ld+json"]').text())['@graph'];
+    const breadcrumb = graph.find(node => node['@type'] === 'BreadcrumbList');
+    assert.equal(breadcrumb.itemListElement.at(-1).item, guide.url);
+    for (const group of ['', 'support/', 'surf-video-editing/', 'updates/']) {
+      const source = documents.find(page => page.prefix === language.prefix && page.group === group);
+      assert.ok(source.$(`main a[href="${guide.path}"]`).length, `${source.file}: tutorial must be discoverable in context`);
+    }
   }
 });

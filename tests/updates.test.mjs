@@ -51,7 +51,7 @@ test('the verified public histories remain independent', () => {
 
 test('all three generated pages are current, static, and honest about missing notes', async () => {
   await updatePages({ check: true });
-  for (const language of ['en', 'zh']) {
+  for (const language of ['en', 'zh', 'de']) {
     const html = renderUpdates(data, language);
     assert.doesNotMatch(html, /[\t ]+\n/, 'generated pages have no trailing whitespace');
     const $ = load(html);
