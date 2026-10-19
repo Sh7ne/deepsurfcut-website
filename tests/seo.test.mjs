@@ -6,6 +6,12 @@ import { load } from 'cheerio';
 
 const root = new URL('../', import.meta.url);
 const origin = 'https://deepsurf.app';
+
+test('footer navigation centers its controls without leaking layout into language menus', async () => {
+  const css = await readFile(new URL('home.css', root), 'utf8');
+  assert.match(css, /\.site-footer\s*>\s*nav\s*\{[^}]*align-items:\s*center/);
+  assert.doesNotMatch(css, /\.site-footer\s+nav\s*\{/, 'footer layout rules must target only its direct navigation');
+});
 const groups = [
   ['', ['standing waves', '深水冲浪', 'stehenden Wellen']],
   ['support/', ['Supported workflow', '支持的工作流程', 'Unterstützter Workflow']],

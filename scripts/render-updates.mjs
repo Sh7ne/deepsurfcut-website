@@ -133,7 +133,7 @@ export function renderUpdates(data, language) {
     <meta name="twitter:image:alt" content="${escape(t.imageAlt)}" />
     <link rel="icon" href="/assets/favicon-96.png" type="image/png" sizes="96x96" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180" />
-    <link rel="stylesheet" href="/home.css?v=20261014-5" />
+    <link rel="stylesheet" href="/home.css?v=20261019-footer-1" />
     <link rel="stylesheet" href="/legal.css?v=20260912-4" />
     <link rel="stylesheet" href="/updates.css?v=20261014-1" />
     <script src="/assets/icons-20261015.js" defer></script>
