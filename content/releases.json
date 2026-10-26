@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-14",
+  "updated": "2026-10-27",
   "platforms": {
     "ios": [
       {
@@ -199,6 +199,57 @@
       }
     ],
     "macos": [
+      {
+        "version": "1.4.0",
+        "releasedAt": "2026-10-26T22:49:20Z",
+        "title": {
+          "en": "Improved analysis and portrait editing",
+          "zh": "优化分析与竖屏编辑体验",
+          "de": "Verbesserte Analyse und Hochformat-Bearbeitung"
+        },
+        "notes": [
+          {
+            "en": "Improved analysis scheduling and surfer identity matching while retaining all scan-precision settings.",
+            "zh": "优化分析调度和冲浪者身份匹配，保留全部扫描精度选项。",
+            "de": "Verbesserte Analyseplanung und Surferzuordnung. Alle Einstellungen zur Analysegenauigkeit bleiben erhalten."
+          },
+          {
+            "en": "Better recognition-region fitting for portrait footage; the full portrait image stays visible during playback.",
+            "zh": "改进竖屏素材的识别区域拟合，播放时完整显示竖屏画面。",
+            "de": "Bessere Anpassung des Erkennungsbereichs bei Hochformat-Aufnahmen. Bei der Wiedergabe bleibt das gesamte Hochformat-Bild sichtbar."
+          },
+          {
+            "en": "A resizable portrait editing workspace with clearer separation between video, surfers, and timeline.",
+            "zh": "竖屏编辑工作区支持调整面板大小，更清楚地划分视频、冲浪者和时间轴。",
+            "de": "Ein Hochformat-Arbeitsbereich mit anpassbaren Panelgrößen und klarerer Aufteilung von Video, Surfern und Timeline."
+          },
+          {
+            "en": "Export controls remain accessible in smaller windows; trimming no longer accidentally starts quick export.",
+            "zh": "小窗口中仍能使用导出控件；裁剪操作不会再误触快速导出。",
+            "de": "Exportfunktionen bleiben auch in kleineren Fenstern erreichbar. Kürzen löst nicht mehr versehentlich den Schnellexport aus."
+          },
+          {
+            "en": "Opening a missing or unreadable project no longer discards the current editing session.",
+            "zh": "打开缺失或无法读取的项目时，不再丢失当前编辑会话。",
+            "de": "Beim Öffnen eines fehlenden oder nicht lesbaren Projekts bleibt die aktuelle Bearbeitungssitzung erhalten."
+          },
+          {
+            "en": "Clearer preview, feedback, and recovery messages, plus more reliable end-card export.",
+            "zh": "改进预览、反馈和恢复提示，提高片尾导出的可靠性。",
+            "de": "Klarere Hinweise zu Vorschau, Feedback und Wiederherstellung sowie zuverlässigerer Abspann-Export."
+          },
+          {
+            "en": "A short seasonal surprise that does not interrupt analysis.",
+            "zh": "增加不会打断分析的简短季节彩蛋。",
+            "de": "Eine kurze saisonale Überraschung, die die Analyse nicht unterbricht."
+          },
+          {
+            "en": "Performance varies with the device, footage, and operating conditions.",
+            "zh": "实际性能取决于设备、素材及运行状态。",
+            "de": "Die Leistung hängt vom Gerät, dem Ausgangsmaterial und den Betriebsbedingungen ab."
+          }
+        ]
+      },
       {
         "version": "1.3.2",
         "releasedAt": "2026-10-13T18:12:11Z",

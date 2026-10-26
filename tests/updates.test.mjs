@@ -36,11 +36,16 @@ test('release data contains only reviewed, trilingual, platform-specific public 
 
 test('the verified public histories remain independent', () => {
   assert.deepEqual(data.platforms.ios.map((release) => release.version), ['1.3.2', '1.2.2', '1.2.0', '1.0.1', '0.9.9', '0.9.3']);
-  assert.deepEqual(data.platforms.macos.map((release) => release.version), ['1.3.2', '1.2.2', '0.9.9']);
+  assert.deepEqual(data.platforms.macos.map((release) => release.version), ['1.4.0', '1.3.2', '1.2.2', '0.9.9']);
   const latestMac = data.platforms.macos[0];
-  assert.equal(latestMac.releasedAt, '2026-10-13T18:12:11Z');
+  assert.equal(latestMac.version, '1.4.0');
+  assert.equal(latestMac.releasedAt, '2026-10-26T22:49:20Z');
+  assert.equal(data.platforms.macos[1].releasedAt, '2026-10-13T18:12:11Z');
+  assert.ok(!data.platforms.ios.some((release) => release.version === '1.4.0'), 'do not publish the unreleased iOS update');
   assert.notEqual(latestMac.releasedAt, data.platforms.ios[0].releasedAt);
   assert.doesNotMatch(JSON.stringify(latestMac.notes), /Photos|interrupted|未保存的导出|分析中断/i);
+  assert.match(JSON.stringify(latestMac.notes), /resizable portrait editing workspace/);
+  assert.doesNotMatch(JSON.stringify(latestMac.notes), /foldable|thermal safeguards|background-continuation|重复保存/i);
   const ios = data.platforms.ios.find((release) => release.version === '1.2.2');
   const mac = data.platforms.macos.find((release) => release.version === '1.2.2');
   assert.notEqual(ios.releasedAt, mac.releasedAt);
@@ -58,7 +63,9 @@ test('all three generated pages are current, static, and honest about missing no
     assert.equal($('main h1').length, 1);
     assert.equal($('.missing-notes').length, 2);
     assert.equal($('main [hidden]').length, 0, 'both histories work without JavaScript');
-    assert.equal($('.release').length, 9);
+    assert.equal($('.release').length, 10);
+    assert.equal($('#macos-1\\.4\\.0').length, 1);
+    assert.equal($('#ios-1\\.4\\.0').length, 0);
     for (const [platform, releases] of Object.entries(data.platforms)) {
       assert.equal($(`#${platform} .release`).length, releases.length);
       assert.equal($(`#${platform} .latest-label`).length, 1);
