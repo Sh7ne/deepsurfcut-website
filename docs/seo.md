@@ -166,3 +166,20 @@ HTTPS www URLs, nested language paths, query strings, the apex and the API.
 
 Search Console account verification, submission and real-user performance data
 still require separate account-level follow-through.
+
+## October 26, 2026 Rapid Surfing terminology
+
+The three homepages, editing guides and support pages now include Rapid Surfing
+as a term for surfing natural or artificial standing waves. The editing guides
+also cover it in their titles, descriptions and matching social/structured data.
+German copy includes Rapidsurfen. The guides share a `#rapid-surfing` section;
+localized support answers link directly to that explanation.
+
+Fixed-camera deep-water standing-wave sessions remain the main product use case.
+Other recordings still require a representative check, and FlowRider/flowboarding
+retains its separate explanation. No new URLs or release-history entries were
+created. Sitemap modification dates change only for the nine edited pages.
+
+Terminology evidence:
+- [Rapid Surf League: definition of Rapid Surfing](https://rapidsurfleague.com/rapid-surfing/)
+- [Citywave: standing-wave technology](https://citywave.de/technology/)
