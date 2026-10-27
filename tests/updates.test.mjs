@@ -35,21 +35,23 @@ test('release data contains only reviewed, trilingual, platform-specific public 
 });
 
 test('the verified public histories remain independent', () => {
-  assert.deepEqual(data.platforms.ios.map((release) => release.version), ['1.4.0', '1.3.2', '1.2.2', '1.2.0', '1.0.1', '0.9.9', '0.9.3']);
-  assert.deepEqual(data.platforms.macos.map((release) => release.version), ['1.4.0', '1.3.2', '1.2.2', '0.9.9']);
-  const latestMac = data.platforms.macos[0];
+  const baselineIos = ['1.4.0', '1.3.2', '1.2.2', '1.2.0', '1.0.1', '0.9.9', '0.9.3'];
+  const baselineMac = ['1.4.0', '1.3.2', '1.2.2', '0.9.9'];
+  assert.deepEqual(data.platforms.ios.filter((release) => baselineIos.includes(release.version)).map((release) => release.version), baselineIos);
+  assert.deepEqual(data.platforms.macos.filter((release) => baselineMac.includes(release.version)).map((release) => release.version), baselineMac);
+  const latestMac = data.platforms.macos.find((release) => release.version === '1.4.0');
   assert.equal(latestMac.version, '1.4.0');
   assert.equal(latestMac.releasedAt, '2026-10-26T22:49:20Z');
-  assert.equal(data.platforms.macos[1].releasedAt, '2026-10-13T18:12:11Z');
-  const latestIos = data.platforms.ios[0];
+  assert.equal(data.platforms.macos.find((release) => release.version === '1.3.2').releasedAt, '2026-10-13T18:12:11Z');
+  const latestIos = data.platforms.ios.find((release) => release.version === '1.4.0');
   assert.equal(latestIos.version, '1.4.0');
   assert.equal(latestIos.releasedAt, '2026-10-27T00:13:19Z');
-  assert.equal(data.platforms.ios[1].releasedAt, '2026-10-12T18:44:22Z');
+  assert.equal(data.platforms.ios.find((release) => release.version === '1.3.2').releasedAt, '2026-10-12T18:44:22Z');
   assert.notDeepEqual(latestIos.notes, latestMac.notes);
   assert.match(JSON.stringify(latestIos.notes), /device and thermal safeguards/);
   assert.match(JSON.stringify(latestIos.notes), /background-continuation/);
   assert.doesNotMatch(JSON.stringify(latestIos.notes), /resizable portrait editing workspace|missing or unreadable project/);
-  assert.notEqual(latestMac.releasedAt, data.platforms.ios[0].releasedAt);
+  assert.notEqual(latestMac.releasedAt, latestIos.releasedAt);
   assert.doesNotMatch(JSON.stringify(latestMac.notes), /Photos|interrupted|未保存的导出|分析中断/i);
   assert.match(JSON.stringify(latestMac.notes), /resizable portrait editing workspace/);
   assert.doesNotMatch(JSON.stringify(latestMac.notes), /foldable|thermal safeguards|background-continuation|重复保存/i);
@@ -70,7 +72,9 @@ test('all three generated pages are current, static, and honest about missing no
     assert.equal($('main h1').length, 1);
     assert.equal($('.missing-notes').length, 2);
     assert.equal($('main [hidden]').length, 0, 'both histories work without JavaScript');
-    assert.equal($('.release').length, 11);
+    const total = Object.values(data.platforms).reduce((count, releases) => count + releases.length, 0);
+    assert.ok(total >= 11, 'the verified public baseline must be retained');
+    assert.equal($('.release').length, total);
     assert.equal($('#macos-1\\.4\\.0').length, 1);
     assert.equal($('#ios-1\\.4\\.0').length, 1);
     for (const [platform, releases] of Object.entries(data.platforms)) {

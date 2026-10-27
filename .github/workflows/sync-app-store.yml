@@ -1,0 +1,74 @@
+name: Sync public App Store releases
+
+on:
+  schedule:
+    - cron: '23 * * * *'
+  workflow_dispatch:
+  repository_dispatch:
+    types: [app-store-release-check]
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sync-app-store.yml'
+      - 'scripts/sync-app-store.mjs'
+      - 'scripts/commit-release-sync.mjs'
+      - 'scripts/verify-release-deployment.mjs'
+      - 'scripts/check-updates-browser.mjs'
+      - 'tests/app-store-sync.test.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+
+concurrency:
+  group: public-app-store-release-sync
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  checks: read
+
+jobs:
+  sync:
+    if: github.repository == 'Sh7ne/deepsurfcut-website'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: main
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Check public availability and localized copy
+        id: sync
+        run: |
+          node scripts/sync-app-store.mjs --apply > "$RUNNER_TEMP/release-sync.json"
+          node --input-type=module -e 'import{readFileSync,appendFileSync}from"node:fs";const r=JSON.parse(readFileSync(process.env.RUNNER_TEMP+"/release-sync.json","utf8"));appendFileSync(process.env.GITHUB_OUTPUT,"changed="+r.changed+"\n");console.log(JSON.stringify(r));'
+      - name: Validate source, generated pages and build
+        if: steps.sync.outputs.changed == 'true'
+        run: |
+          npm test
+          npm run build
+          npm run test:runtime
+      - name: Install browser for changed content
+        if: steps.sync.outputs.changed == 'true'
+        run: npx playwright install --with-deps chromium
+      - name: Check localized reading and interactions
+        if: steps.sync.outputs.changed == 'true'
+        run: node scripts/check-updates-browser.mjs
+      - name: Commit only verified release output
+        id: publish
+        if: steps.sync.outputs.changed == 'true'
+        run: node scripts/commit-release-sync.mjs
+      - name: Wait for Cloudflare and verify production
+        if: steps.sync.outputs.changed == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/verify-release-deployment.mjs '${{ steps.publish.outputs.sha }}'
+      - name: Check production interactions
+        if: steps.sync.outputs.changed == 'true'
+        env:
+          SITE_URL: https://deepsurf.app
+          SYNC_COMMIT: ${{ steps.publish.outputs.sha }}
+        run: node scripts/check-updates-browser.mjs
