@@ -3,6 +3,62 @@
   "platforms": {
     "ios": [
       {
+        "version": "1.4.0",
+        "releasedAt": "2026-10-27T00:13:19Z",
+        "title": {
+          "en": "Improved analysis, portrait layouts, and recovery",
+          "zh": "优化分析、竖屏布局与异常恢复",
+          "de": "Verbesserte Analyse, Hochformat-Layouts und Wiederherstellung"
+        },
+        "notes": [
+          {
+            "en": "Improved on-device analysis scheduling with device and thermal safeguards; all scan-precision settings remain available.",
+            "zh": "优化端侧分析调度，并结合设备能力与温度状态进行保护；保留全部扫描精度选项。",
+            "de": "Verbesserte lokale Analyseplanung unter Berücksichtigung der Geräteleistung und des Temperaturzustands. Alle Einstellungen zur Analysegenauigkeit bleiben verfügbar."
+          },
+          {
+            "en": "Improved surfer identity matching and recognition-region fitting for portrait footage.",
+            "zh": "改进冲浪者身份匹配与竖屏素材的识别区域拟合。",
+            "de": "Verbesserte Surferzuordnung und Anpassung des Erkennungsbereichs bei Hochformat-Aufnahmen."
+          },
+          {
+            "en": "Full portrait playback, improved iPhone/iPad workspace layouts, and adaptive editing on supported foldable devices.",
+            "zh": "完整显示竖屏播放画面，优化 iPhone/iPad 工作区，并适配支持的折叠设备。",
+            "de": "Vollständige Wiedergabe des Hochformat-Bildes, verbesserte Arbeitsbereiche auf iPhone und iPad sowie adaptive Bearbeitung auf unterstützten faltbaren Geräten."
+          },
+          {
+            "en": "More reliable timeline scrolling, trimming, and quick-export gestures.",
+            "zh": "改进时间轴滚动、裁剪和快速导出手势之间的配合。",
+            "de": "Zuverlässigeres Zusammenspiel von Timeline-Scrollen, Kürzen und Gesten für den Schnellexport."
+          },
+          {
+            "en": "Faster imports when the system can reuse the original file, with clearer progress, cancellation, and retry messages.",
+            "zh": "系统允许复用原文件时加快导入，并提供更清楚的进度、取消和重试提示。",
+            "de": "Schnellerer Import, wenn das System die Originaldatei wiederverwenden kann, mit klareren Hinweisen zu Fortschritt, Abbruch und erneutem Versuch."
+          },
+          {
+            "en": "Better reporting of interrupted-analysis recovery and background-continuation problems.",
+            "zh": "更清楚地报告中断分析恢复与后台继续处理的问题。",
+            "de": "Klarere Meldungen zur Wiederherstellung unterbrochener Analysen und zu Problemen beim Fortsetzen im Hintergrund."
+          },
+          {
+            "en": "Improved export recovery after saving problems, reducing accidental duplicate saves within the same session.",
+            "zh": "改进保存失败后的导出恢复，减少同一会话内的意外重复保存。",
+            "de": "Verbesserte Wiederherstellung fertiger Exporte nach Speicherproblemen und weniger versehentliche doppelte Speichervorgänge innerhalb derselben Sitzung."
+          },
+          {
+            "en": "More reliable end-card export and a short seasonal surprise that does not interrupt analysis.",
+            "zh": "提高片尾导出可靠性，并增加不会打断分析的简短季节彩蛋。",
+            "de": "Zuverlässigerer Abspann-Export und eine kurze saisonale Überraschung, die die Analyse nicht unterbricht."
+          },
+          {
+            "en": "Performance varies with the device, footage, and operating conditions.",
+            "zh": "实际性能取决于设备、素材及运行状态。",
+            "de": "Die Leistung hängt vom Gerät, dem Ausgangsmaterial und den Betriebsbedingungen ab."
+          }
+        ]
+      },
+      {
         "version": "1.3.2",
         "releasedAt": "2026-10-12T18:44:22Z",
         "title": {
