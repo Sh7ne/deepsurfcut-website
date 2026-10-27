@@ -2,8 +2,8 @@
 
 The maintained workflow is `.github/workflows/sync-app-store.yml` in the public
 website repository. It runs on GitHub-hosted Ubuntu runners, not on the owner's
-computer. The desktop follow-up must remain a fallback until the first real cloud
-run and bot-commit Cloudflare deployment have been verified.
+computer. The first real cloud run, bot-commit Cloudflare deployment and production
+browser checks passed on 2026-10-27. The desktop follow-up has been removed.
 
 ## Publication contract
 
@@ -51,39 +51,47 @@ Never report a green repository commit as a successful deployment without this.
 Failures are surfaced as GitHub Actions failures. GitHub's notification settings,
 not a permanently running desktop chat, determine email/mobile failure alerts.
 
-## Optional immediate wake-up from the app build
+## Immediate wake-up from the app build
 
 `workflow_dispatch` and `repository_dispatch` are enabled in the website workflow.
 The hourly cloud schedule is fully independent of this optional shortcut. A token
 in one repository cannot automatically write to another repository.
 
-To connect Xcode Cloud, create a fine-grained token restricted to the website
-repository with **Actions: write**. Store it as the secret environment variable
-`WEBSITE_SYNC_TOKEN` in the release workflow. Never paste it into chat, Git, a URL,
-the app bundle or build logs. Keep shell tracing off. After a successful protected
-archive audit, invoke the following static dispatch call:
+The app-side hook is `ci_scripts/ci_post_xcodebuild.sh`, calling
+`Tools/notify_website_release.py` only after the required archive audit succeeds.
+Until that app change is integrated and the secret below is saved, the immediate
+connection is not enabled. Do not report an offline hook test as a real Cloud run.
 
-```sh
-curl --fail --silent --show-error --max-time 20 \
-  --request POST \
-  --header "Authorization: Bearer $WEBSITE_SYNC_TOKEN" \
-  --header 'Accept: application/vnd.github+json' \
-  --header 'X-GitHub-Api-Version: 2022-11-28' \
-  --header 'Content-Type: application/json' \
-  --data '{"ref":"main"}' \
-  https://api.github.com/repos/Sh7ne/deepsurfcut-website/actions/workflows/sync-app-store.yml/dispatches
-```
+1. Open [GitHub fine-grained tokens](https://github.com/settings/personal-access-tokens/new).
+   Select owner `Sh7ne`, **Only select repositories**, then only
+   `deepsurfcut-website`. Grant **Actions: Read and write**; Metadata retains its
+   default read access. Do not grant Contents write or access to other repositories.
+2. In each Xcode Cloud release workflow that archives iOS or macOS, add environment
+   variable `WEBSITE_SYNC_TOKEN`. Enable **Secret / Keep value redacted**, paste
+   the token there and save the workflow. Do not add it to Xcode build settings.
+3. Confirm the live workflow start conditions before pushing the app-side hook.
+   A website hook change must not silently authorize a new app archive, upload,
+   version bump or review submission. Preserve all immutable release refs.
+4. After the next authorized archive audit passes, verify its post-build log says
+   the website public-store check was requested. On GitHub, verify a new
+   `workflow_dispatch` run and its source check. If there is a newly public
+   version, also verify the bot commit, Cloudflare deployment and real website.
 
-The app's current post-build script ends with `exec` into its required audit.
-Do not append code after `exec`, bypass that audit, weaken its failure exit, or
-fail an app release merely because this optional website wake-up failed. Hook
-installation is a separate app-CI change, not activated by adding this workflow.
-This migration does not change app source, signing, release refs, review settings,
-existing archive gates or Cloudflare's Apple callback routes.
+Never paste the token into chat, Git, a URL, the app bundle or build logs. Replace
+the secret before the token expires. A missing or expired token leaves the hourly
+cloud check working independently. The helper sends a fixed `main` dispatch with
+no build number, source path, release text or private metadata. It does not follow
+HTTP redirects or print response bodies, exceptions or credentials.
+
+The protected audit remains fatal on failure and is not bypassed by notification
+handling. Website authorization, network or dispatch failures only warn; they
+cannot turn a failed audit into success or fail an otherwise valid app archive.
+No app source, signing, version, release refs, review settings or Cloudflare Apple
+callback routes are changed by this connection.
 
 GitHub may delay scheduled jobs and disables public-repository schedules after
-long repository inactivity. Monitor the Actions page; the optional upstream hook
-can re-enable a disabled workflow through the GitHub API before dispatching it.
+long repository inactivity. The helper re-enables `disabled_inactivity` before
+dispatching, but respects a manually disabled workflow. Monitor the Actions page.
 No paid translation service, local SSH key, Cloudflare API token or App Store
 Connect credential is required for the hourly public-store importer.
 
