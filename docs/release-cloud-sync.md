@@ -59,8 +59,14 @@ in one repository cannot automatically write to another repository.
 
 The app-side hook is `ci_scripts/ci_post_xcodebuild.sh`, calling
 `Tools/notify_website_release.py` only after the required archive audit succeeds.
-Until that app change is integrated and the secret below is saved, the immediate
-connection is not enabled. Do not report an offline hook test as a real Cloud run.
+The hook is integrated on app `main`. Its redacted secret was saved and reopened
+in the release workflow on 2026-10-27, covering both platform Archive actions.
+The scoped credential successfully dispatched a real
+[website check](https://github.com/Sh7ne/deepsurfcut-website/actions/runs/40462122433).
+That check passed. No new app Archive, upload or review submission was started
+to test this connection; the first actual post-audit invocation belongs to the
+next separately authorized release containing the hook. Do not report this
+credential test or the offline hook tests as an Apple Archive result.
 
 1. Open [GitHub fine-grained tokens](https://github.com/settings/personal-access-tokens/new).
    Select owner `Sh7ne`, **Only select repositories**, then only
