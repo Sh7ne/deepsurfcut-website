@@ -104,9 +104,10 @@ This is not a general map-service proxy. Additional SDK features need an explici
 endpoint review. Config and proxy responses use `Cache-Control: no-store`; upstream
 errors and credentials are not reflected to the browser. Never place the security
 code in generated HTML, public JavaScript, `venues/data.json`, or client storage.
-Configure production variables separately in the existing Pages project before a
-future deployment. This provider integration has only been prepared locally; it
-does not by itself configure or publish the production site.
+Configure production map variables in the existing Cloudflare Pages project.
+After updating bindings, deploy the production site and verify `/api/maps/config`
+reports the expected provider availability. Local `.dev.vars` does not configure
+production. Keep `AMAP_MAP_ENABLED` unset or `false` while Amap is paused.
 
 OpenStreetMap requests ordinary tiles from
 `https://tile.openstreetmap.org/{z}/{x}/{y}.png` without an API key. Preserve each
