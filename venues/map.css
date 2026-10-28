@@ -73,7 +73,7 @@ dialog{color:var(--ink);border:1px solid white;background:var(--paper);border-ra
   .enhanced .explore-sheet[data-snap="low"] .active-filters { display: none; }
   .enhanced .sheet-handle { height: 44px; min-height: 44px; }
   .sheet-handle > span { width: 36px; height: 5px; }
-  .sheet-subtitle { font-size: 11px; line-height: 1.6; margin-left: 8px; }
+  .sheet-subtitle { display: block; font-size: 11px; line-height: 1.6; margin: 4px 0 0; }
   .sheet-header h2 { font-size: 22px; }
   .list-heading { padding-bottom: 4px; }
   .venue-card { padding-top: 16px; padding-bottom: 16px; }

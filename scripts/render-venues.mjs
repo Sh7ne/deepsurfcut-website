@@ -12,8 +12,8 @@ export const venueLabels = {
   zh: {
     lang: 'zh-Hans', locale: 'zh-CN', home: '/zh/', title: '中国深水冲浪场馆地图｜DeepSurfCut',
     description: '探索中国的深水固定浪与 Rapid Surfing 场馆：地图定位、城市筛选、场馆介绍、季节开放信息、收藏与导航。',
-    heading: '冲浪地图', edition: '中国版', eyebrow: '', intro: '探索场馆',
-    subtitle: '深水固定浪 · Rapid Surfing', skip: '跳转到场馆列表', homeLabel: '返回 DeepSurfCut 官网',
+    heading: '冲浪地图', edition: '中国版', eyebrow: '', intro: '探索深水冲浪场馆',
+    subtitle: 'Rapid Surfing Venues', skip: '跳转到场馆列表', homeLabel: '返回 DeepSurfCut 官网',
     about: '关于这份地图', search: '搜索城市或场馆', searchPlaceholder: '想去哪里冲浪？', clearSearch: '清除搜索',
     all: '全部', allCities: '全部城市', indoor: '室内', outdoor: '室外', seasonal: '季节开放', venues: '处浪点', saved: '已收藏', save: '收藏场馆', unsave: '取消收藏',
     savedToast: '已加入收藏', removedToast: '已取消收藏', mapLoading: '正在加载地图…', mapError: '地图暂时无法加载，仍可浏览场馆和打开导航。', retry: '重试',
@@ -166,7 +166,7 @@ export function renderVenues(data) {
     <aside id="explore-sheet" class="explore-sheet" aria-label="${t.listLabel}">
       <button id="sheet-handle" class="sheet-handle enhance-only" type="button" aria-label="${t.expandSheet}" aria-expanded="false" aria-controls="venue-list"><span></span></button>
       <div class="sheet-header">
-        <h2>${t.intro}</h2><p class="sheet-subtitle">${t.subtitle}</p>
+        <h2>${t.intro}</h2><p class="sheet-subtitle" lang="en">${t.subtitle}</p>
         <div class="search-row enhance-only"><div class="search-box">${icon('search')}<input id="search" type="search" placeholder="${t.searchPlaceholder}" aria-label="${t.search}" autocomplete="off" enterkeyhint="search"><button id="clear-search" class="icon-button" type="button" aria-label="${t.clearSearch}" hidden>${icon('close')}</button></div><button id="filter-open" class="filter-button icon-button" type="button" aria-label="${t.filters}" aria-haspopup="dialog">${icon('filters')}</button></div>
         <div id="city-filters" class="filter-chips enhance-only" aria-label="${t.allCities}"><button type="button" class="chip active" data-city="all" aria-pressed="true">${t.allCities}</button>${actualCities.map((city) => `<button type="button" class="chip" data-city="${escape(city)}" aria-pressed="false">${escape(cities[city] || city)}</button>`).join('')}</div>
         <div id="active-filters" class="active-filters" hidden></div>
