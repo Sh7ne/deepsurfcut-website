@@ -137,7 +137,7 @@ export function renderVenues(data) {
   <link rel="icon" href="/assets/favicon-96.png" sizes="96x96" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180">
   <link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css">
-  <link rel="stylesheet" href="/venues/map.css">
+  <link rel="stylesheet" href="/venues/map.css?v=20261028-heading-1">
   <script src="/assets/vendor/leaflet/leaflet.js" defer></script>
   <script type="module" src="/venues/map.js"></script>
   <script type="application/ld+json">${json(schemas)}</script>
