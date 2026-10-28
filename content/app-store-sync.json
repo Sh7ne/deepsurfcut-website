@@ -2,21 +2,21 @@
   "schemaVersion": 1,
   "platforms": {
     "ios": {
-      "version": "1.4.0",
-      "releasedAt": "2026-10-27T00:13:19Z",
+      "version": "1.4.2",
+      "releasedAt": "2026-10-28T16:56:38Z",
       "sourceHashes": {
-        "en": "4fd0105f6aefc8803e94110f42a89fe247e4320d990615253be49cbfee09503a",
-        "zh": "7f5d9a9997cb732dfc175e201a0dab1b3bf9acd42f212ff9de4fdffdcb159962",
-        "de": "8753b95b62754d9f74e943dbb998c34c6d0dd467afa57ff98dae8addf5bec564"
+        "en": "ce93702361d2ee1c36810e0852c36be6aecfe2db275cc653e7c844086abc04b0",
+        "zh": "a9e024190d2daaf6ed3e58b551bc078908df6517c60171ca738dc04cb337fb55",
+        "de": "580379b405dae83922d8c594827908e4cb55255baa89bcc0578a4f384936efe5"
       }
     },
     "macos": {
-      "version": "1.4.0",
-      "releasedAt": "2026-10-26T22:49:20Z",
+      "version": "1.4.2",
+      "releasedAt": "2026-10-28T19:39:03Z",
       "sourceHashes": {
-        "en": "97219558d9b9615fad4fbc688012dae0147f217724b89d03c3b3790d4cec4fea",
-        "zh": "296315e8510ba5fb3e1dbcb4642b88ef11d03f2d081cd848fce8e19ae19ec3b2",
-        "de": "f414620e9d2e222b3774b17688f2b4fb458711564f7fdf4b5e06848dd2482bb4"
+        "en": "4eae41df85632f1e122ccd2c9c85e59b94941a61685899b0353bb7ad9a601f0c",
+        "zh": "3378b2a752fa09871e4f62a7811dfc191239a42e34ccd013ced4c96cbb1c0a7e",
+        "de": "2cb6ee718d259363a2b484eedbbce808f1acd0366bc60ffe5f9e9dcb62683ded"
       }
     }
   }

@@ -1,7 +1,48 @@
 {
-  "updated": "2026-10-27",
+  "updated": "2026-10-28",
   "platforms": {
     "ios": [
+      {
+        "version": "1.4.2",
+        "releasedAt": "2026-10-28T16:56:38Z",
+        "title": {
+          "en": "Version 1.4.2",
+          "zh": "版本 1.4.2",
+          "de": "Version 1.4.2"
+        },
+        "notes": [
+          {
+            "en": "Clearer overall export progress, with distinct preparation, video creation and checking stages.",
+            "zh": "整体导出进度更清楚，区分准备片尾、生成视频和检查视频。",
+            "de": "Klarerer Gesamtfortschritt beim Export mit getrennten Phasen für Vorbereitung, Videoerstellung und Prüfung."
+          },
+          {
+            "en": "Prepare end cards for selected clips ahead of export and reuse matching results.",
+            "zh": "选段后可提前准备片尾，导出时复用匹配结果，减少重复准备。",
+            "de": "Abspann für ausgewählte Clips vorab vorbereiten und passende Ergebnisse beim Export wiederverwenden."
+          },
+          {
+            "en": "More reliable end-card timing and compatibility, including high-quality HEVC recordings and multi-clip videos.",
+            "zh": "改善片尾时间衔接与兼容性，包括高画质 HEVC 录像及多片段合并视频。",
+            "de": "Zuverlässigere Übergänge und höhere Abspann-Kompatibilität, auch bei hochwertigen HEVC-Aufnahmen und Videos aus mehreren Clips."
+          },
+          {
+            "en": "Preserve native 9:16 framing without a second portrait-follow crop.",
+            "zh": "原生 9:16 录像保留原始取景，不再重复竖屏跟拍裁切。",
+            "de": "Native 9:16-Aufnahmen behalten ihren Bildausschnitt ohne erneuten Hochformat-Folgeausschnitt."
+          },
+          {
+            "en": "Replay the portrait introduction in Quick Start, with clearer filming guidance that recommends including both banks whenever possible.",
+            "zh": "重看 Quick Start 也可看到竖屏介绍；拍摄指引更明确，并建议尽可能把两岸都纳入镜头。",
+            "de": "Die Hochformat-Einführung bleibt in Quick Start erneut abrufbar. Klarere Aufnahmetipps empfehlen, möglichst beide Ufer im Bild zu behalten."
+          },
+          {
+            "en": "Fix the iPhone editor background and keep Surfer cards visible in the fully open workspace.",
+            "zh": "修复 iPhone 编辑器底部背景，并让完全展开的工作区始终显示 Surfer 卡片。",
+            "de": "Korrigierter iPhone-Editorhintergrund und sichtbare Surfer-Karten im vollständig geöffneten Arbeitsbereich."
+          }
+        ]
+      },
       {
         "version": "1.4.0",
         "releasedAt": "2026-10-27T00:13:19Z",
@@ -255,6 +296,42 @@
       }
     ],
     "macos": [
+      {
+        "version": "1.4.2",
+        "releasedAt": "2026-10-28T19:39:03Z",
+        "title": {
+          "en": "Version 1.4.2",
+          "zh": "版本 1.4.2",
+          "de": "Version 1.4.2"
+        },
+        "notes": [
+          {
+            "en": "Clearer overall export progress, with distinct preparation, video creation and checking stages.",
+            "zh": "整体导出进度更清楚，区分准备片尾、生成视频和检查视频。",
+            "de": "Klarerer Gesamtfortschritt beim Export mit getrennten Phasen für Vorbereitung, Videoerstellung und Prüfung."
+          },
+          {
+            "en": "Prepare end cards for selected clips ahead of export and reuse matching results.",
+            "zh": "选段后可提前准备片尾，导出时复用匹配结果，减少重复准备。",
+            "de": "Abspann für ausgewählte Clips vorab vorbereiten und passende Ergebnisse beim Export wiederverwenden."
+          },
+          {
+            "en": "More reliable end-card timing and compatibility, including high-quality HEVC recordings and multi-clip videos.",
+            "zh": "改善片尾时间衔接与兼容性，包括高画质 HEVC 录像及多片段合并视频。",
+            "de": "Zuverlässigere Übergänge und höhere Abspann-Kompatibilität, auch bei hochwertigen HEVC-Aufnahmen und Videos aus mehreren Clips."
+          },
+          {
+            "en": "Preserve native 9:16 framing without a second portrait-follow crop.",
+            "zh": "原生 9:16 录像保留原始取景，不再重复竖屏跟拍裁切。",
+            "de": "Native 9:16-Aufnahmen behalten ihren Bildausschnitt ohne erneuten Hochformat-Folgeausschnitt."
+          },
+          {
+            "en": "Replay the portrait introduction in Quick Start, with clearer filming guidance that recommends including both banks whenever possible.",
+            "zh": "重看 Quick Start 也可看到竖屏介绍；拍摄指引更明确，并建议尽可能把两岸都纳入镜头。",
+            "de": "Die Hochformat-Einführung bleibt in Quick Start erneut abrufbar. Klarere Aufnahmetipps empfehlen, möglichst beide Ufer im Bild zu behalten."
+          }
+        ]
+      },
       {
         "version": "1.4.0",
         "releasedAt": "2026-10-26T22:49:20Z",
