@@ -7,13 +7,17 @@
   },
   "scripts": {
     "build": "node scripts/build.mjs",
-    "dev": "npm run build && wrangler pages dev",
-    "test": "node --test tests/retention.test.mjs tests/seo.test.mjs tests/updates.test.mjs tests/performance.test.mjs tests/app-store-sync.test.mjs tests/release-workflow.test.mjs",
+    "dev": "npm run build && node scripts/dev.mjs",
+    "test": "node --test tests/retention.test.mjs tests/seo.test.mjs tests/updates.test.mjs tests/performance.test.mjs tests/app-store-sync.test.mjs tests/release-workflow.test.mjs tests/venues.test.mjs tests/maps-server.test.mjs tests/map-providers.test.mjs",
+    "venues:generate": "node scripts/render-venues.mjs",
+    "test:venues": "node --test tests/venues.test.mjs",
     "updates:generate": "node scripts/render-updates.mjs",
     "updates:sync": "node scripts/sync-app-store.mjs",
     "test:updates-browser": "node scripts/check-updates-browser.mjs",
     "test:seo": "node --test tests/seo.test.mjs",
-    "test:runtime": "node --test tests/runtime.test.mjs"
+    "test:runtime": "node --test tests/runtime.test.mjs",
+    "test:venues-browser": "node scripts/check-venues-browser.mjs",
+    "test:map-switch-browser": "node scripts/check-map-switch-browser.mjs"
   },
   "dependencies": {
     "@apple/app-store-server-library": "3.1.0"

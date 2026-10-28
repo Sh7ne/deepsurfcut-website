@@ -1,0 +1,435 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-10-27",
+  "coordinateSystem": "WGS84",
+  "notice": "收录已确认的深水固定浪场馆；场馆资料不代表实时营业或余位。出发前请向场馆确认预约及开放安排。",
+  "venues": [
+    {
+      "id": "back-to-sea",
+      "name": "Back to sea 有浪岛",
+      "shortName": "有浪岛",
+      "city": "北京",
+      "province": "北京",
+      "environment": "indoor",
+      "seasonal": false,
+      "seasonNote": "室内冲浪；场次及预约以场馆安排为准。",
+      "summary": "旧仓库里的室内浪，与户外沙滩相连。",
+      "description": "位于东坝美捷 PARK 的室内深水冲浪空间，结合户外泳池与沙滩，适合把冲浪练习和休闲安排在同一次出行。冲浪项目位于室内，户外配套的开放安排请另行向场馆确认。",
+      "address": "朝阳区东坝平房路，美捷 PARK 内 7 号库",
+      "aliases": [
+        "BACK TO SEA",
+        "有浪岛",
+        "东坝",
+        "美捷PARK"
+      ],
+      "verifiedAt": "2026-10-16",
+      "sources": [
+        {
+          "label": "北京日报现场报道",
+          "url": "https://xinwen.bjd.com.cn/content/s67557a19d5deebfff5b25b73.html"
+        }
+      ],
+      "position": {
+        "lat": 39.952171,
+        "lng": 116.535415,
+        "accuracy": "venue",
+        "label": "场馆地图位置，位于美捷 PARK 园区内",
+        "sourceUrl": "https://ditu.amap.com/ssr/coordinate-picker",
+        "sourceCoordinateSystem": "GCJ02",
+        "sourceLat": 39.953294,
+        "sourceLng": 116.541301,
+        "checkedAt": "2026-10-27"
+      }
+    },
+    {
+      "id": "surfpark-chaoyang",
+      "name": "SURFPARK 朝阳店",
+      "shortName": "SURFPARK · 朝阳",
+      "city": "北京",
+      "province": "北京",
+      "environment": "indoor",
+      "seasonal": false,
+      "seasonNote": "室内冲浪；场次及预约以场馆安排为准。",
+      "summary": "双桥辰园里的室内深水固定浪。",
+      "description": "场馆位于双桥辰园文化创意产业园，以室内深水固定浪为核心。朝阳店与双桥店为同一场址；安排体验或训练前，建议确认适合自己水平的场次及教练安排。",
+      "address": "朝阳区双桥中路临甲 9 号院，辰园文化创意产业园",
+      "aliases": [
+        "SURF PARK",
+        "SURFPARK温泉冲浪",
+        "双桥店",
+        "冲浪公园朝阳店"
+      ],
+      "verifiedAt": "2026-10-16",
+      "sources": [
+        {
+          "label": "北京文旅场馆介绍",
+          "url": "https://www.visitbeijing.com.cn/article/4Nz1UaD8z6X"
+        }
+      ],
+      "position": {
+        "lat": 39.892879,
+        "lng": 116.592162,
+        "accuracy": "venue",
+        "label": "场馆地图位置，园区内入口请按现场指引",
+        "sourceUrl": "https://ditu.amap.com/ssr/coordinate-picker",
+        "sourceCoordinateSystem": "GCJ02",
+        "sourceLat": 39.893918,
+        "sourceLng": 116.597945,
+        "checkedAt": "2026-10-27"
+      }
+    },
+    {
+      "id": "surfpark-fengtai",
+      "name": "SURFPARK × TOSWIM 丰台店",
+      "shortName": "SURFPARK · 丰台",
+      "city": "北京",
+      "province": "北京",
+      "environment": "indoor",
+      "seasonal": false,
+      "seasonNote": "室内冲浪；场次及预约以场馆安排为准。",
+      "summary": "金岁运动广场里的深水冲浪体验。",
+      "description": "位于金岁运动广场 7 号馆，提供室内深水固定浪体验。园区汇集多种运动项目，冲浪场次、课程与入场安排需向场馆确认。与 SURFPARK 朝阳店是不同场址。",
+      "address": "丰台区葆台路 188 号，金岁运动广场 7 号馆",
+      "aliases": [
+        "TOSWIM",
+        "金岁运动广场",
+        "金岁广场店",
+        "丰台冲浪"
+      ],
+      "verifiedAt": "2026-10-16",
+      "sources": [
+        {
+          "label": "丰台区场馆报道",
+          "url": "https://www.bjft.gov.cn/fengtaishibao/html/2024-06/17/content_9499_17525105.htm"
+        }
+      ],
+      "position": {
+        "lat": 39.800052,
+        "lng": 116.276549,
+        "accuracy": "venue",
+        "label": "场馆地图位置，位于金岁运动广场 7 号馆",
+        "sourceUrl": "https://ditu.amap.com/ssr/coordinate-picker",
+        "sourceCoordinateSystem": "GCJ02",
+        "sourceLat": 39.801275,
+        "sourceLng": 116.282575,
+        "checkedAt": "2026-10-27"
+      }
+    },
+    {
+      "id": "igosurfing-seaworld",
+      "name": "iGOSURFING 海上世界店",
+      "shortName": "iGOSURFING",
+      "city": "上海",
+      "province": "上海",
+      "environment": "indoor",
+      "seasonal": false,
+      "seasonNote": "商场内冲浪；请提前确认当日开放场次。",
+      "summary": "海上世界购物中心里的 Deep Wave 真波。",
+      "description": "位于上海海上世界购物中心，设有 Deep Wave 深水固定浪体验。逛商场也可以安排一次板上练习；预订时请确认海上世界门店，避免与品牌其他浪型的分店混淆。",
+      "address": "宝山区吴淞口路 60 号，上海海上世界 2 层 L2-005",
+      "aliases": [
+        "iGo",
+        "Deep Wave",
+        "海上世界",
+        "北上海真波"
+      ],
+      "verifiedAt": "2026-10-16",
+      "sources": [
+        {
+          "label": "上海市政府项目介绍",
+          "url": "https://www.shanghai.gov.cn/nw4411/20240929/b688bb96988a426e90f1b8f8e6e1fb2b.html"
+        },
+        {
+          "label": "场馆位置资料",
+          "url": "https://www.trip.com/travel-guide/attraction/shanghai/igosurfing-deep-water-wake-surfing-152737530/"
+        }
+      ],
+      "position": {
+        "lat": 31.406537,
+        "lng": 121.497863,
+        "accuracy": "venue",
+        "label": "场馆地图位置，位于海上世界 2 层 L2-005",
+        "sourceUrl": "https://ditu.amap.com/ssr/coordinate-picker",
+        "sourceCoordinateSystem": "GCJ02",
+        "sourceLat": 31.40459,
+        "sourceLng": 121.502317,
+        "checkedAt": "2026-10-27"
+      }
+    },
+    {
+      "id": "rucker-fengqihui",
+      "name": "洛克公园 SSR · 凤起汇店",
+      "shortName": "洛克公园 · 凤起汇",
+      "city": "上海",
+      "province": "上海",
+      "environment": "indoor",
+      "seasonal": false,
+      "seasonNote": "室内综合场馆；冲浪与潜水请分别确认预约。",
+      "summary": "把真波冲浪、潜水和游泳放进同一天。",
+      "description": "位于青浦凤起汇商场的水上运动综合馆，集真波冲浪池、专业潜水池及恒温泳池于一体。不同项目使用独立设施，安排冲浪时请确认对应课程及场次。",
+      "address": "青浦区华新镇凤阁路 55 号，凤起汇商场 3 楼 308",
+      "aliases": [
+        "洛克SSR",
+        "Rucker Park",
+        "凤起汇",
+        "青浦"
+      ],
+      "verifiedAt": "2026-10-16",
+      "sources": [
+        {
+          "label": "PADI 场馆介绍",
+          "url": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park/"
+        },
+        {
+          "label": "青浦区项目介绍",
+          "url": "https://www.shqp.gov.cn/shqp/qpyw/20260427/1369845.html"
+        }
+      ],
+      "position": {
+        "lat": 31.188782,
+        "lng": 121.233259,
+        "accuracy": "venue",
+        "label": "场馆地图位置，位于凤起汇商场 3 层",
+        "sourceUrl": "https://ditu.amap.com/ssr/coordinate-picker",
+        "sourceCoordinateSystem": "GCJ02",
+        "sourceLat": 31.186744,
+        "sourceLng": 121.237685,
+        "checkedAt": "2026-10-27"
+      }
+    },
+    {
+      "id": "captain-wave-xueye",
+      "name": "世博雪野 × 维纳船长深水冲浪俱乐部",
+      "shortName": "世博雪野 · 维纳船长",
+      "city": "上海",
+      "province": "上海",
+      "environment": "indoor",
+      "seasonal": false,
+      "seasonNote": "场次及预约以场馆安排为准。",
+      "summary": "世博运动中心里的城市固定浪。",
+      "description": "位于世博浦东雪野运动中心，引入深水造浪设施与冲浪课程。世博雪野与维纳船长联名俱乐部按同一场址收录；可将冲浪与园区其他运动体验结合安排。",
+      "address": "浦东新区世博浦东雪野运动中心，国展路 1468 号园区",
+      "aliases": [
+        "世博雪野",
+        "维纳船长",
+        "雪野运动中心"
+      ],
+      "verifiedAt": "2026-10-16",
+      "sources": [
+        {
+          "label": "上海国资委项目介绍",
+          "url": "https://www.gzw.sh.gov.cn/shgzw_zxzx_gqdt/20240829/90ba5ea64b0748e4b7ed03763419e6a4.html"
+        }
+      ],
+      "position": {
+        "lat": 31.187718,
+        "lng": 121.494737,
+        "accuracy": "venue",
+        "label": "场馆地图位置，位于雪野运动中心内",
+        "sourceUrl": "https://ditu.amap.com/ssr/coordinate-picker",
+        "sourceCoordinateSystem": "GCJ02",
+        "sourceLat": 31.185694,
+        "sourceLng": 121.499184,
+        "checkedAt": "2026-10-27"
+      }
+    },
+    {
+      "id": "rucker-xindongli",
+      "name": "洛克公园水世界 · 新东里店",
+      "shortName": "洛克公园 · 新东里",
+      "city": "上海",
+      "province": "上海",
+      "environment": "indoor",
+      "seasonal": false,
+      "seasonNote": "室内综合场馆；冲浪场次请提前确认。",
+      "summary": "新东里都市运动中心里的冲浪与潜水馆。",
+      "description": "位于浦东西营南路 Young’s 新东里都市运动中心二层，提供冲浪、潜水与游泳等水上运动体验。与青浦凤起汇店为两个独立场址，预约前请核对门店名称。",
+      "address": "浦东新区西营南路 555 号，Young’s 新东里都市运动中心 2 层",
+      "aliases": [
+        "Young’s",
+        "Youngs",
+        "洛游水世界",
+        "洛克公园冲浪潜水馆",
+        "新东里"
+      ],
+      "verifiedAt": "2026-10-16",
+      "sources": [
+        {
+          "label": "PADI 场馆地址",
+          "url": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park-water-world/"
+        },
+        {
+          "label": "场馆地图",
+          "url": "https://www.amap.com/place/B0LGURFZ1M"
+        }
+      ],
+      "position": {
+        "lat": 31.152916,
+        "lng": 121.483939,
+        "accuracy": "venue",
+        "label": "场馆地图位置，入口位于 2 层",
+        "sourceUrl": "https://www.amap.com/place/B0LGURFZ1M",
+        "sourceCoordinateSystem": "GCJ02",
+        "sourceLat": 31.150907,
+        "sourceLng": 121.488421,
+        "checkedAt": "2026-10-27"
+      }
+    },
+    {
+      "id": "hala-huzhou",
+      "name": "哈啦水乐园 · 哈啦冲浪营地",
+      "shortName": "哈啦冲浪营地",
+      "city": "湖州",
+      "province": "浙江",
+      "environment": "outdoor",
+      "seasonal": true,
+      "seasonNote": "约 6 月底至 9 月初开放，冬季关闭；具体日期以当季公告为准。",
+      "summary": "南太湖畔的夏日室外固定浪。",
+      "description": "哈啦水乐园内的室外深水冲浪项目，随夏季运营季开放。适合在暖季安排冲浪行程；冲浪营地与乐园其他玩水项目的开放、预约安排可能不同，出发前请分别确认。",
+      "address": "南太湖新区滨湖大道 2001 号，哈啦水乐园内",
+      "aliases": [
+        "哈啦水乐园",
+        "哈啦冲浪营地",
+        "南太湖"
+      ],
+      "verifiedAt": "2026-10-20",
+      "sources": [
+        {
+          "label": "乐园地址资料",
+          "url": "https://you.ctrip.com/sight/huzhou68/2484402.html"
+        }
+      ],
+      "position": {
+        "lat": 30.942326,
+        "lng": 120.138928,
+        "accuracy": "site",
+        "label": "哈啦水乐园位置，冲浪营地位于园内",
+        "sourceUrl": "https://www.amap.com/place/B0FFHNR5UM",
+        "sourceCoordinateSystem": "GCJ02",
+        "sourceLat": 30.940281,
+        "sourceLng": 120.143724,
+        "checkedAt": "2026-10-27"
+      }
+    },
+    {
+      "id": "panda-chengdu",
+      "name": "熊猫极限运动公园",
+      "shortName": "熊猫极限运动公园",
+      "city": "成都",
+      "province": "四川",
+      "environment": "outdoor",
+      "seasonal": true,
+      "seasonNote": "约 3 月中旬至 10 月底开放，冬季休季；具体日期以当季公告为准。",
+      "summary": "凤凰湖旁，随季节开放的室外深水浪。",
+      "description": "位于青白江凤凰湖景区内的室外固定浪场地，曾举办城市冲浪赛事。按季节开放，通常于 10 月底结束当季营业，次年 3 月中旬重开。此处为青白江场馆，出行时请核对位置。",
+      "address": "青白江区凤凰湖景区内，熊猫极限运动公园",
+      "aliases": [
+        "青白江熊猫极限",
+        "凤凰湖深水冲浪",
+        "熊猫极限公园"
+      ],
+      "verifiedAt": "2026-10-20",
+      "sources": [
+        {
+          "label": "赛事现场报道",
+          "url": "https://sc.cri.cn/2024-03-31/7291be5e-8d54-1db0-64b8-1aca3529b1eb.html"
+        }
+      ],
+      "position": {
+        "lat": 30.891629,
+        "lng": 104.279443,
+        "accuracy": "site",
+        "label": "熊猫极限公园位置，冲浪区位于园内",
+        "sourceUrl": "https://ditu.amap.com/ssr/coordinate-picker",
+        "sourceCoordinateSystem": "GCJ02",
+        "sourceLat": 30.889185,
+        "sourceLng": 104.281858,
+        "checkedAt": "2026-10-27"
+      }
+    },
+    {
+      "id": "xwater-jiande",
+      "name": "水之极 X·WATER / HAPPYWAVE",
+      "shortName": "水之极 · HAPPYWAVE",
+      "city": "杭州·建德",
+      "province": "浙江",
+      "environment": "indoor",
+      "seasonal": false,
+      "seasonNote": "酒店附设冲浪场馆；课程及入场安排请提前确认。",
+      "summary": "新安江畔，潜水酒店里的深水冲浪馆。",
+      "description": "水之极以旧工业场地改造而成，结合潜水酒店与深水冲浪馆。HAPPYWAVE 与水之极按同一场址收录，冲浪及潜水是不同项目；预订时请说明所需体验。",
+      "address": "建德市洋安路 777 号，水之极潜水酒店",
+      "aliases": [
+        "X WATER",
+        "XWATER",
+        "HAPPYWAVE",
+        "水之极潜水酒店",
+        "建德",
+        "杭州"
+      ],
+      "verifiedAt": "2026-10-16",
+      "sources": [
+        {
+          "label": "浙江在线项目报道",
+          "url": "https://zjnews.zjol.com.cn/zjnews/202509/t20250910_31220831.shtml"
+        },
+        {
+          "label": "酒店地址资料",
+          "url": "https://hotels.ctrip.com/hotels/131705056.html"
+        }
+      ],
+      "position": {
+        "lat": 29.511465,
+        "lng": 119.331992,
+        "accuracy": "site",
+        "label": "水之极酒店位置，冲浪馆入口请按现场指引",
+        "sourceUrl": "https://ditu.amap.com/ssr/coordinate-picker",
+        "sourceCoordinateSystem": "GCJ02",
+        "sourceLat": 29.509008,
+        "sourceLng": 119.337134,
+        "checkedAt": "2026-10-27"
+      }
+    },
+    {
+      "id": "qingyuwan-kunming",
+      "name": "青鱼湾水上乐园 · 深水真波冲浪",
+      "shortName": "青鱼湾 · 深水真波",
+      "city": "昆明",
+      "province": "云南",
+      "environment": "outdoor",
+      "seasonal": true,
+      "seasonNote": "室外季节性项目；当季结束及次年重开日期需向场馆确认。",
+      "summary": "水上乐园里的独立深水真波项目。",
+      "description": "位于青鱼湾水上乐园内，是与大型造浪池、薄水层滑板冲浪不同的深水固定浪项目。场地位于室外，按运营季开放。预订时请明确询问深水真波冲浪，具体开放日期以园区安排为准。",
+      "address": "西山区海口街道青鱼社区小海口村，青鱼湾水上乐园内",
+      "aliases": [
+        "青鱼湾",
+        "Surfstage",
+        "青鱼湾深水冲浪",
+        "青鱼湾冲浪娜姐"
+      ],
+      "verifiedAt": "2026-10-19",
+      "sources": [
+        {
+          "label": "设备项目介绍",
+          "url": "https://yetass.com/unveiling-the-mastery-of-deep-water-surfing-surfstage-the-chinese-surfing-industry-trailblazer/"
+        },
+        {
+          "label": "乐园地图",
+          "url": "https://ditu.amap.com/place/B0FFHBLJ01"
+        }
+      ],
+      "position": {
+        "lat": 24.860117,
+        "lng": 102.525217,
+        "accuracy": "site",
+        "label": "青鱼湾水上乐园位置，深水冲浪区位于园内",
+        "sourceUrl": "https://ditu.amap.com/place/B0FFHBLJ01",
+        "sourceCoordinateSystem": "GCJ02",
+        "sourceLat": 24.857072,
+        "sourceLng": 102.526538,
+        "checkedAt": "2026-10-27"
+      }
+    }
+  ]
+}

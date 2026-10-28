@@ -48,7 +48,7 @@ test('Pages deployment and Apple verification run in the Cloudflare runtime', { 
   });
 
   await t.test('existing pages and assets are preserved and private files are excluded', async () => {
-    for (const [url, file] of [['/', 'index.html'], ['/zh/', 'zh/index.html'], ['/privacy/', 'privacy/index.html'], ['/home.css', 'home.css'], ['/updates/', 'updates/index.html'], ['/zh/updates/', 'zh/updates/index.html'], ['/de/', 'de/index.html'], ['/de/updates/', 'de/updates/index.html'], ['/de/surf-video-editing/', 'de/surf-video-editing/index.html'], ['/portrait-follow/', 'portrait-follow/index.html'], ['/zh/portrait-follow/', 'zh/portrait-follow/index.html'], ['/de/portrait-follow/', 'de/portrait-follow/index.html'], ['/portrait-follow.css', 'portrait-follow.css'], ['/assets/icons-20261015.js', 'assets/icons-20261015.js']]) {
+    for (const [url, file] of [['/', 'index.html'], ['/zh/', 'zh/index.html'], ['/privacy/', 'privacy/index.html'], ['/home.css', 'home.css'], ['/updates/', 'updates/index.html'], ['/zh/updates/', 'zh/updates/index.html'], ['/de/', 'de/index.html'], ['/de/updates/', 'de/updates/index.html'], ['/de/surf-video-editing/', 'de/surf-video-editing/index.html'], ['/portrait-follow/', 'portrait-follow/index.html'], ['/zh/portrait-follow/', 'zh/portrait-follow/index.html'], ['/de/portrait-follow/', 'de/portrait-follow/index.html'], ['/portrait-follow.css', 'portrait-follow.css'], ['/assets/icons-20261015.js', 'assets/icons-20261015.js'], ['/RapidSurfingMap', 'RapidSurfingMap.html'], ['/venues/map.js', 'venues/map.js'], ['/venues/map.css', 'venues/map.css'], ['/venues/data.json', 'venues/data.json']]) {
       const response = await deployed.fetch(url);
       assert.equal(response.status, 200);
       assert.equal(await response.text(), await readFile(file, 'utf8'));
@@ -57,9 +57,10 @@ test('Pages deployment and Apple verification run in the Cloudflare runtime', { 
     for (const name of output) {
       assert.ok(!/(^|\/)(server|tests|node_modules|functions|scripts|content|docs|\.git|\.DS_Store|\.dev\.vars)(\/|$)/.test(name), name);
       assert.ok(!['AGENTS.md', 'README.md', 'package.json', 'package-lock.json', 'wrangler.jsonc'].includes(name), name);
+      assert.ok(!['venues/index.html', 'zh/venues/index.html', 'de/venues/index.html'].includes(name), `${name}: legacy map pages must redirect instead`);
     }
     assert.deepEqual(JSON.parse(await readFile('dist/_routes.json', 'utf8')), {
-      version: 1, include: ['/api/retention', '/api/retention/*'], exclude: [],
+      version: 1, include: ['/api/retention', '/api/retention/*', '/api/maps/*'], exclude: [],
     });
   });
 
@@ -68,6 +69,31 @@ test('Pages deployment and Apple verification run in the Cloudflare runtime', { 
       const response = await deployed.fetch(path);
       assert.equal(response.status, 404, path);
       assert.notEqual(await response.text(), await readFile('index.html', 'utf8'));
+    }
+  });
+
+  await t.test('the standalone map has one effective tile policy and legacy maps redirect to it', async () => {
+    const response = await deployed.fetch('/RapidSurfingMap');
+    assert.equal(response.status, 200);
+    const policy = response.headers.get('Content-Security-Policy');
+    assert.ok(policy.includes('https://tile.openstreetmap.org'));
+    assert.equal(policy.match(/default-src/g).length, 1, 'inherited CSP must be replaced, not combined');
+    assert.equal(response.headers.get('Permissions-Policy'), 'camera=(), microphone=(), geolocation=(self)');
+    assert.match(await response.text(), /id="venue-back-to-sea"/);
+    const aliases = ['', 'zh/', 'de/'].flatMap((prefix) => ['', '/', '/index.html'].map((suffix) => `/${prefix}venues${suffix}`));
+    for (const path of [...aliases, '/RapidSurfingMap/', '/RapidSurfingMap.html']) {
+      const redirect = await deployed.fetch(path, { redirect: 'manual' });
+      assert.equal(redirect.status, 301, path);
+      assert.ok(redirect.headers.get('Location'), `${path}: redirect needs a destination`);
+      assert.equal(new URL(redirect.headers.get('Location'), 'https://deepsurf.app').pathname, '/RapidSurfingMap', path);
+    }
+    for (const path of ['/', '/zh/', '/de/', '/venues/map.js']) {
+      const ordinary = await deployed.fetch(path);
+      assert.equal(ordinary.headers.get('Permissions-Policy'), 'camera=(), microphone=(), geolocation=()', path);
+      assert.ok(!ordinary.headers.get('Content-Security-Policy').includes('tile.openstreetmap.org'), path);
+    }
+    for (const path of ['/content/venues.json', '/docs/venue-sources.md', '/scripts/render-venues.mjs', '/tests/venues.test.mjs']) {
+      assert.equal((await deployed.fetch(path)).status, 404, path);
     }
   });
 

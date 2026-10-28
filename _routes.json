@@ -1,5 +1,9 @@
 {
   "version": 1,
-  "include": ["/api/retention", "/api/retention/*"],
+  "include": [
+    "/api/retention",
+    "/api/retention/*",
+    "/api/maps/*"
+  ],
   "exclude": []
 }

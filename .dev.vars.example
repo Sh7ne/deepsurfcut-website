@@ -3,3 +3,11 @@
 # message UUIDs. Empty maps deliberately return 503, allowing Apple's fallback.
 RETENTION_MESSAGES_PRODUCTION='{}'
 RETENTION_MESSAGES_SANDBOX='{}'
+
+# Venue maps: enabled providers' browser keys are returned by /api/maps/config.
+# Keep the Amap security code server-side; never add it to public assets.
+BAIDU_MAP_AK=""
+# Amap is paused by default. Set true only when its quota is available.
+AMAP_MAP_ENABLED="false"
+AMAP_MAP_KEY=""
+AMAP_SECURITY_JSCODE=""

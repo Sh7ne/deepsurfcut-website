@@ -1,0 +1,12 @@
+# Keep previous map links and fragments pointing to the single Chinese page.
+/venues /RapidSurfingMap 301
+/venues/ /RapidSurfingMap 301
+/venues/index.html /RapidSurfingMap 301
+/zh/venues /RapidSurfingMap 301
+/zh/venues/ /RapidSurfingMap 301
+/zh/venues/index.html /RapidSurfingMap 301
+/de/venues /RapidSurfingMap 301
+/de/venues/ /RapidSurfingMap 301
+/de/venues/index.html /RapidSurfingMap 301
+/RapidSurfingMap/ /RapidSurfingMap 301
+/RapidSurfingMap.html /RapidSurfingMap 301

@@ -39,6 +39,11 @@ const documents = await Promise.all(pages.map(async (page) => {
   const html = await readFile(new URL(page.file, root), 'utf8');
   return { ...page, url: `${origin}${page.path}`, html, $: load(html) };
 }));
+const mapHTML = await readFile(new URL('RapidSurfingMap.html', root), 'utf8');
+const mapDocument = {
+  file: 'RapidSurfingMap.html', url: `${origin}/RapidSurfingMap`, locale: 'zh_CN',
+  html: mapHTML, $: load(mapHTML),
+};
 
 const single = ($, selector, label) => {
   const elements = $(selector);
@@ -58,7 +63,8 @@ const hasType = (node, type) => [node?.['@type']].flat().includes(type);
 const assertLocalFile = async (url, label) => {
   assert.equal(url.origin, origin, `${label}: expected a local website resource`);
   const path = decodeURIComponent(url.pathname).replace(/^\/+/, '');
-  const file = path.endsWith('/') || !path ? `${path}index.html` : path;
+  const file = path === 'RapidSurfingMap' ? 'RapidSurfingMap.html'
+    : path.endsWith('/') || !path ? `${path}index.html` : path;
   const location = new URL(file, root);
   assert.ok(location.href.startsWith(root.href), `${label}: resource must stay within the website`);
   const info = await stat(location).catch(() => null);
@@ -101,8 +107,45 @@ test('each page declares its canonical URL and reciprocal language alternatives'
   }
 });
 
-test('social metadata matches page identity and uses real local imagery and icons', async () => {
+test('the standalone Chinese map has one canonical identity and no language switch', () => {
+  const { $, file, url } = mapDocument;
+  assert.equal($('html').attr('lang'), 'zh-Hans');
+  assert.equal(canonical($, file), url);
+  assert.equal(meta($, 'og:url', file), url);
+  assert.equal($('head link[hreflang]').length, 0);
+  assert.equal($('.language-menu, [data-map-language], .detail-languages').length, 0);
+  assert.equal(single($, '.header-brand', file).attr('href'), '/zh/');
+  assert.match(single($, 'head title', file).text(), /中国深水冲浪场馆地图/);
+  const robots = meta($, 'robots', file).toLowerCase().split(/\s*,\s*/);
+  assert.ok(robots.includes('index') && robots.includes('follow') && !robots.includes('noindex'));
   for (const page of documents) {
+    assert.notEqual($('head title').text().trim(), page.$('head title').text().trim());
+    assert.notEqual(meta($, 'description', file), meta(page.$, 'description', page.file));
+  }
+});
+
+test('only the Chinese homepage footer exposes the standalone map entry', () => {
+  const mapPaths = new Set(['/RapidSurfingMap', '/RapidSurfingMap/', '/RapidSurfingMap.html',
+    '/venues', '/venues/', '/venues/index.html', '/zh/venues', '/zh/venues/', '/zh/venues/index.html',
+    '/de/venues', '/de/venues/', '/de/venues/index.html']);
+  for (const page of documents.filter((candidate) => candidate.group === '')) {
+    const mapLinks = page.$('a[href]').filter((_, element) => {
+      const url = new URL(page.$(element).attr('href'), page.url);
+      return url.origin === origin && mapPaths.has(url.pathname);
+    });
+    if (page.language === 'zh-Hans') {
+      assert.equal(mapLinks.length, 1, 'the Chinese homepage should have one low-key map entry');
+      const footerLink = single(page.$, '.site-footer > nav > a[href="/RapidSurfingMap"]', page.file);
+      assert.equal(footerLink.text().trim(), '冲浪地图');
+      assert.equal(mapLinks[0], footerLink[0]);
+    } else {
+      assert.equal(mapLinks.length, 0, `${page.file}: the map is a Chinese-only entry`);
+    }
+  }
+});
+
+test('social metadata matches page identity and uses real local imagery and icons', async () => {
+  for (const page of [...documents, mapDocument]) {
     const title = page.$('head title').text().trim();
     const description = meta(page.$, 'description', page.file);
     assert.equal(meta(page.$, 'og:title', page.file), title, page.file);
@@ -185,18 +228,23 @@ test('all three homepages expose Portrait Follow with an honest visual and match
   }
 });
 
-test('the sitemap lists the canonical product pages and all language alternatives', async () => {
+test('the sitemap lists localized product pages and the single canonical Chinese map', async () => {
   const $ = load(await readFile(new URL('sitemap.xml', root), 'utf8'), { xmlMode: true });
+  const sitemapPages = [...documents, { standalone: true, url: `${origin}/RapidSurfingMap` }];
   const entries = $('urlset > url').toArray();
-  assert.equal(entries.length, pages.length);
+  assert.equal(entries.length, sitemapPages.length);
   const urls = entries.map((entry) => $(entry).children('loc').text().trim());
-  assert.deepEqual([...urls].sort(), documents.map((page) => page.url).sort());
+  assert.deepEqual([...urls].sort(), sitemapPages.map((page) => page.url).sort());
   assert.ok(urls.every((url) => !/\/(404|device-preview|api)(\/|\.|$)/.test(new URL(url).pathname)));
   for (const entry of entries) {
     const url = $(entry).children('loc').text().trim();
-    const page = documents.find((candidate) => candidate.url === url);
-    const expected = alternativesFor(page);
+    const page = sitemapPages.find((candidate) => candidate.url === url);
     const alternatives = $(entry).children('[hreflang]');
+    if (page.standalone) {
+      assert.equal(alternatives.length, 0, 'the Chinese-only map must not advertise translated alternatives');
+      continue;
+    }
+    const expected = alternativesFor(page);
     assert.equal(alternatives.length, 4, `${url}: expected four sitemap alternatives`);
     for (const [language, target] of Object.entries(expected)) {
       const link = alternatives.filter(`[hreflang="${language}"]`);
@@ -232,7 +280,7 @@ test('public pages reference only existing local navigation and static resources
   const notFound = await Promise.all(['404.html', 'zh/404.html', 'de/404.html'].map(async (file) => ({
     file, url: `${origin}/${file}`, $: load(await readFile(new URL(file, root), 'utf8')),
   })));
-  for (const page of [...documents, ...notFound]) {
+  for (const page of [...documents, mapDocument, ...notFound]) {
     const references = page.$('a[href], img[src], script[src], link[rel="stylesheet"][href]').toArray();
     for (const element of references) {
       const href = page.$(element).attr('href') || page.$(element).attr('src');

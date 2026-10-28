@@ -11,7 +11,7 @@ python3 -m http.server 4173
 
 Open `http://localhost:4173` for English or `http://localhost:4173/zh/` for
 Simplified Chinese. This command previews only the static website. To run the
-retention endpoints as well, use Node.js 22 or later:
+retention and map endpoints as well, use Node.js 22 or later:
 
 ```bash
 npm ci
@@ -22,6 +22,16 @@ npm run dev
 The API preview uses Cloudflare's local runtime. Message configuration is optional
 for starting the server; an unconfigured endpoint cannot return a successful
 retention response. See [Retention messaging](docs/retention-messaging.md).
+The optional map keys and Amap server security code are documented in
+[Venue map maintenance](docs/venues.md). A static-only preview uses OpenStreetMap.
+With the simple Python server, open `/RapidSurfingMap.html`; use `npm run dev`
+for the canonical extensionless `/RapidSurfingMap` route and redirect behavior.
+
+`npm run dev -- --port 4173` binds the preview to `127.0.0.1`. After building, the
+launcher copies public assets to ignored `.wrangler/preview-assets/` and adds the
+two HTTP Baidu resource origins needed by its worker on localhost, only to the
+`/RapidSurfingMap` local script and connection policy. Production `dist/_headers`
+stays unchanged. Wrangler logs remain under `.wrangler/logs/` and telemetry is off.
 
 ## Cloudflare Pages
 
@@ -37,7 +47,7 @@ settings; Pages compiles the root `functions/` directory during deployment.
 
 The build copies the website into `dist/`, excluding server source, dependencies,
 tests, and local configuration from public assets. `_routes.json` limits Function
-invocations to `/api/retention` and its children. Cloudflare Pages automatically
+invocations to `/api/retention`, its children, and `/api/maps/*`. Cloudflare Pages automatically
 deploys the `main` branch to production and creates preview deployments for other
 branches.
 
@@ -57,9 +67,11 @@ Passing local tests does not replace Apple's required sandbox performance test.
 
 ## Search visibility
 
-The 21 primary product pages use static, crawlable HTML, self-canonical URLs, reciprocal
-English/Simplified Chinese/German language links, descriptive metadata, and linked
-WebSite/WebPage/SoftwareApplication structured data. The sitemap lists only these
+The 21 primary product pages use static, crawlable HTML, self-canonical URLs,
+reciprocal English/Simplified Chinese/German language links, descriptive metadata,
+and linked WebSite/WebPage/SoftwareApplication structured data. The separate
+Chinese venue map has one canonical `/RapidSurfingMap` page and its venue list
+structured data, with no alternate language pages. The sitemap lists only these
 canonical pages. Keep its `lastmod` dates tied to substantive content changes,
 not build dates. No prices or ratings are invented for search features.
 
@@ -145,3 +157,33 @@ Original app UI remains in English on both language versions of the website.
 No controls, results, or translations are painted into the captures.
 
 Lucide icons are distributed locally; their license is in `assets/lucide.LICENSE.txt`.
+
+## Surf venue map
+
+The Chinese venue map lives at `/RapidSurfingMap` without a trailing slash,
+generated as `RapidSurfingMap.html`. Its single homepage entry sits in the Chinese
+footer; English and German homepages do not link to it, and the map has no language
+switch. Old `/venues/`, `/zh/venues/`, and `/de/venues/` links redirect there. It currently
+prioritizes Baidu, with a local Leaflet client and OpenStreetMap tiles as an
+alternative. Amap support is retained but paused while its quota is unavailable.
+A static directory remains available without JavaScript. The current directory
+covers 11 deep-water standing-wave venues; it is
+not a live opening-hours service. Venue names and detailed descriptions remain in
+Chinese, together with navigation and controls.
+
+For a local Baidu preview, set `BAIDU_MAP_AK` in ignored `.dev.vars`, then run
+`npm run dev`. Amap requires `AMAP_MAP_ENABLED=true`, `AMAP_MAP_KEY`, and
+`AMAP_SECURITY_JSCODE`; leave the switch off until quota is available.
+`/api/maps/config` exposes enabled providers' browser keys only. A paused Amap
+returns no key and its proxy makes no upstream requests. Its security code stays in the
+server Function behind `/api/maps/amap/_AMapService`. Public positions remain
+WGS84; each provider uses its official coordinate conversion before map placement.
+Production configuration and deployment are separate from this local integration.
+
+Reviewed venue copy and position accuracy live in `content/venues.json`. Update
+that file, then run `npm run venues:generate`; do not edit `RapidSurfingMap.html` or
+`venues/data.json` directly. Shared map assets stay in `venues/`; the retired locale
+map HTML files remain absent. `npm run build` rejects stale generated outputs.
+Run `npm run test:venues` for map content and publication checks, followed by the
+site's existing suites. See [Venue map maintenance](docs/venues.md) for map-provider,
+coordinate, privacy, and update requirements.
