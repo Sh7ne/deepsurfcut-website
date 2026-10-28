@@ -22,7 +22,7 @@ dialog{color:var(--ink);border:1px solid white;background:var(--paper);border-ra
 .map-provider-control > svg { width: 18px; height: 18px; color: var(--accent); }
 .map-provider-control select { grid-column: 1 / -1; width: 100%; min-width: 0; min-height: 44px; border: 0; background: transparent; color: var(--ink); font: inherit; }
 .map-controls { top: max(16px, env(safe-area-inset-top)); }
-.map-about-control { position: fixed; z-index: 460; right: 14px; bottom: calc(var(--map-attribution-height, 0px) + 12px); width: 44px; height: 44px; border: 1px solid #fff; border-radius: 14px; background: #ffffffed; color: var(--accent); box-shadow: 0 3px 12px #00000018; }
+.map-about-control { position: fixed; z-index: 460; right: 14px; bottom: 48px; width: 44px; height: 44px; border: 1px solid #fff; border-radius: 14px; background: #ffffffed; color: var(--accent); box-shadow: 0 3px 12px #00000018; }
 .map-attribution { top: max(16px, env(safe-area-inset-top)); bottom: auto; left: 446px; right: auto; }
 .about-dialog > .about-home-link, .no-script-note > a { display: inline-flex; align-items: center; min-height: 44px; color: var(--muted); font-size: 13px; text-decoration: underline; text-underline-offset: 3px; }
 .provider-marker { position: relative; padding: 0; cursor: pointer; }
@@ -35,16 +35,15 @@ dialog{color:var(--ink);border:1px solid white;background:var(--paper);border-ra
 .provider-marker-label, .amap-marker-label { font-family: inherit; font-size: 12px; line-height: 1.5; color: var(--ink); background: #fffffff0; border: 0; border-radius: 8px; padding: 4px 8px; box-shadow: 0 2px 6px #00000015; white-space: nowrap; }
 .provider-links { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--accent); }
 .provider-links a { display: inline-flex; min-height: 44px; align-items: center; }
-.provider-attribution { position: fixed; z-index: 560; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: flex-end; gap: 8px; padding: 3px 8px calc(3px + var(--safe-bottom)); background: #fffffff2; color: #636366; font-size: 9px; line-height: 11px; }
+.provider-attribution { position: absolute; z-index: 450; right: 14px; bottom: 12px; display: flex; align-items: center; width: auto; height: auto; padding: 0; border: 0; background: transparent; box-shadow: none; line-height: 0; }
 .provider-legal-attribution { margin: 12px 0 4px; padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: #f7f7f9; color: var(--muted); font-size: 12px; line-height: 1.7; overflow-wrap: anywhere; }
 .provider-legal-attribution > .BMap_cpyCtrl, .provider-legal-attribution > .BMap_cpyCtrlV4 { position: static !important; inset: auto !important; min-width: 0; width: auto !important; max-width: 100%; height: auto !important; white-space: normal !important; color: inherit !important; font-size: inherit !important; line-height: inherit !important; text-align: left !important; }
 .provider-legal-attribution .BMap_cpyCtrl *, .provider-legal-attribution .BMap_cpyCtrlV4 * { font-size: inherit !important; line-height: inherit !important; height: auto !important; white-space: normal !important; background: transparent !important; }
 .provider-legal-attribution a { color: var(--accent) !important; text-decoration: underline; text-underline-offset: 2px; }
 .provider-legal-attribution a:focus-visible { outline-offset: 2px; }
-.provider-attribution > .anchorBL:has(> img) { position: static !important; inset: auto !important; flex: none; display: flex; align-items: center; }
+.provider-attribution > .anchorBL:has(> img) { position: static !important; inset: auto !important; width: auto !important; height: auto !important; flex: none; display: flex; align-items: center; padding: 0 !important; border: 0 !important; background: transparent !important; box-shadow: none !important; }
+.provider-attribution img { display: block; width: 68px !important; height: auto !important; }
 .provider-attribution a:focus-visible { outline-offset: 1px; outline-width: 2px; }
-.enhanced body.has-map-attribution .tab-bar { bottom: max(24px, calc(var(--map-attribution-height, 0px) + 8px)); }
-.enhanced body.has-map-attribution .explore-sheet { bottom: calc(85px + max(24px, calc(var(--map-attribution-height, 0px) + 8px))); }
 .sheet-subtitle, .directory-note, .detail-section .detail-note, .badge.precision { color: var(--muted); }
 .venue-meta { font-size: 12px; letter-spacing: 0; }
 .venue-copy h3 { font-size: 16px; }
@@ -64,10 +63,6 @@ dialog{color:var(--ink);border:1px solid white;background:var(--paper);border-ra
 @media (max-width: 767px) {
   .provider-amap .amap-logo { top: max(16px, env(safe-area-inset-top)) !important; bottom: auto !important; left: 14px !important; right: auto !important; }
   .provider-amap .amap-copyright { top: calc(max(16px, env(safe-area-inset-top)) + 24px) !important; bottom: auto !important; left: 14px !important; right: 85px !important; max-width: calc(100% - 100px); white-space: normal !important; font-size: 9px !important; line-height: 11px !important; }
-  .enhanced body.has-map-attribution .tab-bar { bottom: var(--map-attribution-height, 0px); height: 66px; padding: 5px 20px; }
-  .enhanced body.has-map-attribution .explore-sheet { bottom: calc(65px + var(--map-attribution-height, 0px)); max-height: calc(100dvh - 140px - env(safe-area-inset-top) - var(--map-attribution-height, 0px)); }
-  .enhanced body.has-map-attribution .explore-sheet[data-snap="full"] { height: calc(100dvh - 140px - env(safe-area-inset-top) - var(--map-attribution-height, 0px)); }
-  body.has-map-attribution .toast { bottom: calc(80px + var(--map-attribution-height, 0px)); }
   .header-actions > .icon-button, .language-menu summary { width: 44px; height: 44px; }
   .header-title h1 { font-size: 16px; }
   .enhanced .explore-sheet { height: max(47dvh, 320px); }
@@ -87,7 +82,9 @@ dialog{color:var(--ink);border:1px solid white;background:var(--paper);border-ra
   .badge { font-size: 11px; }
   .tab-bar button { font-size: 11px; color: #636366; }
   .map-controls { top: max(16px, env(safe-area-inset-top)); }
-  .enhanced .map-about-control { display: none; bottom: calc(164px + 66px + max(var(--safe-bottom), var(--map-attribution-height, 0px)) + 12px); }
+  .provider-attribution { display: none; bottom: calc(164px + 66px + var(--safe-bottom) + 8px); }
+  .enhanced body[data-view="map"][data-sheet-snap="low"] .provider-attribution { display: flex; }
+  .enhanced .map-about-control { display: none; bottom: calc(164px + 66px + var(--safe-bottom) + 40px); }
   .enhanced body[data-view="map"][data-sheet-snap="low"] .map-about-control { display: flex; }
   .map-controls > .icon-button { width: 44px; height: 44px; }
   .map-attribution { top: max(16px, env(safe-area-inset-top)); left: 16px; right: auto; font-size: 10px; }
@@ -109,5 +106,6 @@ dialog{color:var(--ink);border:1px solid white;background:var(--paper);border-ra
 }
 @media (max-width: 767px) and (max-height: 480px) {
   .enhanced body[data-view="map"] .explore-sheet { display: none; }
-  .enhanced body[data-view="map"] .map-about-control { display: flex; bottom: calc(66px + max(var(--safe-bottom), var(--map-attribution-height, 0px)) + 12px); }
+  .enhanced body[data-view="map"] .provider-attribution { display: flex; bottom: calc(66px + var(--safe-bottom) + 8px); }
+  .enhanced body[data-view="map"] .map-about-control { display: flex; bottom: calc(66px + var(--safe-bottom) + 40px); }
 }

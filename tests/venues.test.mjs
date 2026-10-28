@@ -95,6 +95,8 @@ test('the Chinese map exposes complete venue details and working deep links with
     assert.equal($('#about-dialog #map-provider').length, 1);
     assert.equal($('#about-dialog #provider-legal-attribution[hidden]').length, 1, 'native legal text belongs in the initially empty About host');
     assert.equal($('#provider-attribution').length, 1);
+    assert.equal($('.map-stage > div#provider-attribution[hidden]').length, 1, 'the floating map logo is hosted directly on the map');
+    assert.equal($('footer#provider-attribution, .tab-bar #provider-attribution').length, 0, 'the logo is outside the page footer and navigation row');
     assert.equal($('#about-dialog #provider-attribution').length, 0, 'the map logo keeps its independent map host');
     assert.equal($('#provider-legal-attribution').children().length, 0, 'provider legal text must come from the original SDK nodes');
     assert.equal($('#about-dialog .about-home-link').attr('href'), '/zh/');

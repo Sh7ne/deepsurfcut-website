@@ -43,25 +43,13 @@ import { createBaiduProvider } from './provider-baidu.js?v=20261028-map-about-cr
   const mapSnap = () => mobile() && window.innerHeight < 650 ? 'low' : 'half';
   const attribution = $('provider-attribution');
   const legalAttribution = $('provider-legal-attribution');
-  let attributionHeight = 0;
-  const updateAttributionLayout = () => {
+  const updateAttributionVisibility = () => {
     legalAttribution.hidden = legalAttribution.childElementCount === 0;
-    const visible = attribution.childElementCount > 0;
-    attribution.hidden = !visible;
-    document.body.classList.toggle('has-map-attribution', visible);
-    const height = visible ? Math.ceil(attribution.getBoundingClientRect().height) : 0;
-    if (height === attributionHeight) return;
-    attributionHeight = height;
-    document.documentElement.style.setProperty('--map-attribution-height', `${height}px`);
-    if (map) {
-      if (state.selected && byId.has(state.selected)) focusVenue(byId.get(state.selected));
-      else fitMap();
-    }
+    attribution.hidden = attribution.childElementCount === 0;
   };
-  const attributionObserver = new MutationObserver(updateAttributionLayout);
+  const attributionObserver = new MutationObserver(updateAttributionVisibility);
   attributionObserver.observe(attribution, { childList: true });
   attributionObserver.observe(legalAttribution, { childList: true });
-  new ResizeObserver(updateAttributionLayout).observe(attribution);
   const announce = (message) => {
     (document.querySelector('dialog[open]') || document.body).append($('toast'));
     $('toast').textContent = message;
@@ -154,7 +142,7 @@ import { createBaiduProvider } from './provider-baidu.js?v=20261028-map-about-cr
     if (refit && list.length) fitMap();
   }
   function padding() {
-    if (!mobile()) return { paddingTopLeft: [442, 64], paddingBottomRight: [65, 65] };
+    if (!mobile()) return { paddingTopLeft: [442, 64], paddingBottomRight: [96, 65] };
     const sheet = $('explore-sheet');
     let top = Math.max(48, document.querySelector('.map-controls').getBoundingClientRect().top + 32);
     for (const credits of document.querySelectorAll('.map-attribution, .provider-amap .amap-logo, .provider-amap .amap-copyright')) {
@@ -165,7 +153,7 @@ import { createBaiduProvider } from './provider-baidu.js?v=20261028-map-about-cr
     // A full directory can cover the map. Defer its camera update until the
     // visitor returns to Map instead of fitting into an obscured rectangle.
     if (bottom - top < 44) return null;
-    return { paddingTopLeft: [24, top], paddingBottomRight: [72, window.innerHeight - bottom] };
+    return { paddingTopLeft: [24, top], paddingBottomRight: [96, window.innerHeight - bottom] };
   }
   function frameMap(points, options = {}) {
     if (!map) return;
@@ -255,7 +243,7 @@ import { createBaiduProvider } from './provider-baidu.js?v=20261028-map-about-cr
     pendingMap?.destroy(); pendingMap = null;
     attribution.replaceChildren();
     legalAttribution.replaceChildren();
-    updateAttributionLayout();
+    updateAttributionVisibility();
     providerName = name;
     mapFailed = false;
     $('map-provider').value = name;

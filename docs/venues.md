@@ -5,7 +5,7 @@ and Cloudflare Pages project. Its only page is Chinese, at `/RapidSurfingMap`
 without a trailing slash, generated as the root `RapidSurfingMap.html`. The
 Chinese homepage footer has one unobtrusive entry. English and German homepages
 have no map entry, and the map has no language switch. The About dialog links back
-to `/zh/`; the map retains a compact provider-logo footer. Existing links to
+to `/zh/`; the map retains a compact provider-logo overlay. Existing links to
 `/venues/`, `/zh/venues/`, and `/de/venues/` redirect permanently to the single page.
 
 ## Data and generated pages
@@ -143,10 +143,11 @@ Official references:
 ## Browser policy and privacy
 
 Baidu's original copyright statement and filing links are displayed inside the
-About dialog, with its native logo retained in a compact footer. The adapter
-moves the original SDK nodes into these two containers and restores them before
-retry or destruction. The logo footer's measured height keeps mobile tabs and
-venue lists clear of it; do not replace the statement with a hard-coded copy.
+About dialog. Its native logo floats without a background at the map's lower
+right; on mobile it appears when the venue panel is collapsed, above the panel
+and separate from the bottom navigation. The adapter moves the original SDK
+nodes into these two containers and restores them before retry or destruction.
+Do not replace the statement with a hard-coded copy.
 
 Map pages allow the selected providers' JavaScript, tile, and supporting resource
 origins in `_headers`, including the exact OpenStreetMap tile origin. They allow

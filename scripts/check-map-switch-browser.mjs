@@ -115,7 +115,7 @@ function nativeBaiduSDKFixture() {
       this.copyright.addEventListener('click', (event) => { if (event.target.closest('a')) { event.preventDefault(); probe.linkClicks++; } });
       this.logo = document.createElement('div'); this.logo.className = 'anchorBL';
       const image = document.createElement('img'); image.alt = 'Baidu map logo fixture'; image.width = 76; image.height = 24;
-      image.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="76" height="24"><rect width="76" height="24" fill="white"/><text x="2" y="17" font-size="12">Baidu logo</text></svg>');
+      image.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="76" height="24"><text x="2" y="17" font-size="12">Baidu logo</text></svg>');
       this.logo.append(image); Object.assign(this.logo.style, { position: 'absolute', left: '0px', bottom: '8px' });
       // Some native SDK versions put copyright inside the logo wrapper. This
       // deliberately exercises that nesting with the real adapter, not a clone.
@@ -216,8 +216,50 @@ try {
     await go(page); await ready(page, 'baidu');
     const legal = page.locator('#provider-legal-attribution .BMap_cpyCtrlV4');
     const logo = page.locator('#provider-attribution .anchorBL');
-    await logo.waitFor({ state: 'visible' });
+    await logo.waitFor({ state: 'attached' });
     await legal.waitFor({ state: 'attached' });
+    const phone = viewport.width < 768;
+    assert.equal(await logo.isVisible(), !phone || viewport.height < 650, 'the initial mobile half panel conceals the logo while an initially collapsed or absent panel exposes it');
+    if (phone && viewport.height >= 650) await page.locator('#sheet-handle').click();
+    await logo.waitFor({ state: 'visible' });
+    assert.ok(await page.locator('#provider-attribution').evaluate((node) => node.parentElement.classList.contains('map-stage') && !node.closest('.tab-bar, footer')), 'branding floats on the map outside the navigation row');
+    assert.ok(await page.locator('#provider-attribution').evaluate((node) => {
+      const style = getComputedStyle(node), box = node.getBoundingClientRect();
+      return box.width >= 40 && box.width <= 69 && style.backgroundColor === 'rgba(0, 0, 0, 0)' && style.backgroundImage === 'none'
+        && style.boxShadow === 'none' && parseFloat(style.borderTopWidth) === 0 && parseFloat(style.paddingTop) === 0 && parseFloat(style.paddingBottom) === 0;
+    }), 'the logo host is compact and transparent without a background strip, padding or card decoration');
+    assert.ok(await logo.locator('img').evaluate((image) => Math.abs(image.getBoundingClientRect().width - 68) <= 1), 'native logo is displayed at the compact 68px width');
+    assert.ok(await page.locator('#provider-attribution').evaluate((node) => {
+      const box = node.getBoundingClientRect();
+      if (Math.abs(innerWidth - box.right - 14) > 1) return false;
+      const sheet = document.getElementById('explore-sheet'), tabs = document.querySelector('.tab-bar');
+      const lowerBoundary = innerWidth < 768 ? (sheet.getClientRects().length ? sheet.getBoundingClientRect().top : tabs.getBoundingClientRect().top) : innerHeight;
+      const gap = lowerBoundary - box.bottom;
+      if (gap < 7 || gap > 17) return false;
+      return [tabs, document.getElementById('about-open')].every((control) => {
+        const rect = control.getBoundingClientRect();
+        return !rect.width || !rect.height || box.right <= rect.left || box.left >= rect.right || box.bottom <= rect.top || box.top >= rect.bottom;
+      });
+    }), 'the floating logo stays just above the sheet/tabs or desktop bottom, separate from About and navigation');
+    if (phone && viewport.height > 480) {
+      await page.locator('#sheet-handle').click();
+      assert.equal(await page.locator('#explore-sheet').getAttribute('data-snap'), 'half');
+      assert.equal(await logo.isVisible(), false, 'expanding to half hides the floating logo');
+      await page.locator('#sheet-handle').press('ArrowUp');
+      assert.equal(await logo.isVisible(), false, 'the full panel hides the floating logo');
+      await page.locator('#sheet-handle').click();
+      assert.ok(await logo.isVisible());
+    }
+    if (phone) {
+      await page.locator('.tab-bar [data-view="list"]').click();
+      assert.equal(await logo.isVisible(), false, 'List hides the floating logo');
+      await page.locator('.tab-bar [data-view="saved"]').click();
+      assert.equal(await logo.isVisible(), false, 'Saved hides the floating logo');
+      await page.locator('.tab-bar [data-view="map"]').click();
+      if (!await logo.isVisible() && await page.locator('#sheet-handle').isVisible()) await page.locator('#sheet-handle').click();
+      await logo.waitFor({ state: 'visible' });
+    }
+    const tabsBeforeSwitch = await page.locator('.tab-bar').boundingBox();
     assert.equal(await legal.isVisible(), false, 'closed About must not expose detailed legal text on the map');
     assert.equal(await page.locator('#provider-attribution .BMap_cpyCtrl, #provider-attribution .BMap_cpyCtrlV4').count(), 0);
     assert.doesNotMatch(await page.locator('#provider-attribution').textContent(), /©2026|审图号|ICP|公网安备/);
@@ -256,6 +298,8 @@ try {
     assert.ok(await page.locator('#about-open').evaluate((node) => node === document.activeElement));
 
     await select(page, 'osm');
+    const tabsAfterSwitch = await page.locator('.tab-bar').boundingBox();
+    assert.equal(tabsAfterSwitch.y, tabsBeforeSwitch.y, 'the floating logo does not reserve or shift the navigation row');
     assert.equal(await page.locator('.BMap_cpyCtrlV4, .anchorBL').count(), 0, 'switching away removes both native hosts without residual nodes');
     assert.equal(await page.locator('#provider-legal-attribution').getAttribute('hidden'), '');
     assert.equal(await page.locator('#provider-attribution').getAttribute('hidden'), '');
@@ -279,7 +323,7 @@ try {
     assert.deepEqual(await page.evaluate(() => window.__nativeBaiduProbe.restoreErrors), []);
     await context.close();
   }
-  console.log('PASS real Baidu adapter moves original legal nodes and links only into About, keeps the map logo visible, and restores/clears both hosts on switch and retry across desktop, phone and landscape');
+  console.log('PASS real Baidu adapter preserves About legal nodes/links and compact transparent map branding, follows mobile panel visibility, avoids About/navigation overlap, and restores/clears both hosts on switch and retry');
 
   for (const [config, expected, preference] of [
     [configuration(false, false), 'osm', undefined],

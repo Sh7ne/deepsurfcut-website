@@ -137,9 +137,9 @@ export function renderVenues(data) {
   <link rel="icon" href="/assets/favicon-96.png" sizes="96x96" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180">
   <link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css">
-  <link rel="stylesheet" href="/venues/map.css?v=20261028-map-about-credits-1">
+  <link rel="stylesheet" href="/venues/map.css?v=20261028-map-floating-brand-1">
   <script src="/assets/vendor/leaflet/leaflet.js" defer></script>
-  <script type="module" src="/venues/map.js?v=20261028-map-about-credits-1"></script>
+  <script type="module" src="/venues/map.js?v=20261028-map-floating-brand-1"></script>
   <script type="application/ld+json">${json(schemas)}</script>
 </head>
 <body data-lang="zh">
@@ -156,6 +156,7 @@ export function renderVenues(data) {
         <div class="zoom-controls"><button id="zoom-in" class="icon-button" type="button" aria-label="${t.zoomIn}">${icon('plus')}</button><button id="zoom-out" class="icon-button" type="button" aria-label="${t.zoomOut}">${icon('minus')}</button></div>
       </div>
       <div class="map-attribution"><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap</a></div>
+      <div id="provider-attribution" class="provider-attribution" aria-label="${t.mapServiceMark}" hidden></div>
     </section>
     <aside id="explore-sheet" class="explore-sheet" aria-label="${t.listLabel}">
       <button id="sheet-handle" class="sheet-handle enhance-only" type="button" aria-label="${t.expandSheet}" aria-expanded="false" aria-controls="venue-list"><span></span></button>
@@ -174,7 +175,6 @@ export function renderVenues(data) {
     </aside>
   </main>
   <nav class="tab-bar enhance-only" aria-label="${t.heading}"><button type="button" data-view="map" aria-current="page">${icon('map')}<span>${t.mapView}</span></button><button type="button" data-view="list">${icon('list')}<span>${t.listView}</span></button><button type="button" data-view="saved">${icon('bookmark')}<span>${t.savedView}</span><span id="saved-count" class="saved-count" hidden>0</span></button></nav>
-  <footer id="provider-attribution" class="provider-attribution" aria-label="${t.mapServiceMark}" hidden></footer>
   <dialog id="venue-detail" class="venue-detail" aria-label="${t.details}"><button id="detail-close" class="dialog-close icon-button" type="button" aria-label="${t.close}">${icon('close')}</button><div id="detail-content"></div></dialog>
   <dialog id="filter-dialog" class="filter-dialog" aria-labelledby="filter-title"><form method="dialog">
     <div class="dialog-heading"><div><p class="sheet-kicker">${t.heading}</p><h2 id="filter-title">${t.filters}</h2></div><button class="icon-button" type="submit" value="cancel" aria-label="${t.close}">${icon('close')}</button></div>
