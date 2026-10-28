@@ -37,7 +37,7 @@ export const venueLabels = {
     aboutPositions: '地图区分场馆、所在园区和大致位置。标注不能代替入口确认；导航时请再次核对场馆名称与地址。',
     aboutPrivacy: '收藏和地图选择保存在当前浏览器。只有轻点定位按钮后才会请求你的位置。所选地图服务会接收加载地图及转换坐标所需的数据；网站不保存你的位置。',
     aboutMap: '使用百度地图浏览场馆，也可通过地图菜单切换备用地图。地图加载失败时，仍可阅读场馆资料并打开导航。',
-    mapProvider: '地图服务', mapAttribution: '地图版权信息', providerUnavailable: '未配置',
+    mapProvider: '地图服务', mapServiceMark: '地图服务标识', mapAttribution: '地图版权信息', providerUnavailable: '未配置',
     attribution: '地图数据', noScript: '启用 JavaScript 可使用互动地图、筛选与收藏；以下场馆资料仍可直接阅读。',
   },
 
@@ -137,9 +137,9 @@ export function renderVenues(data) {
   <link rel="icon" href="/assets/favicon-96.png" sizes="96x96" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180">
   <link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css">
-  <link rel="stylesheet" href="/venues/map.css?v=20261028-map-controls-1">
+  <link rel="stylesheet" href="/venues/map.css?v=20261028-map-about-credits-1">
   <script src="/assets/vendor/leaflet/leaflet.js" defer></script>
-  <script type="module" src="/venues/map.js?v=20261028-map-controls-1"></script>
+  <script type="module" src="/venues/map.js?v=20261028-map-about-credits-1"></script>
   <script type="application/ld+json">${json(schemas)}</script>
 </head>
 <body data-lang="zh">
@@ -174,7 +174,7 @@ export function renderVenues(data) {
     </aside>
   </main>
   <nav class="tab-bar enhance-only" aria-label="${t.heading}"><button type="button" data-view="map" aria-current="page">${icon('map')}<span>${t.mapView}</span></button><button type="button" data-view="list">${icon('list')}<span>${t.listView}</span></button><button type="button" data-view="saved">${icon('bookmark')}<span>${t.savedView}</span><span id="saved-count" class="saved-count" hidden>0</span></button></nav>
-  <footer id="provider-attribution" class="provider-attribution" aria-label="${t.mapAttribution}" hidden></footer>
+  <footer id="provider-attribution" class="provider-attribution" aria-label="${t.mapServiceMark}" hidden></footer>
   <dialog id="venue-detail" class="venue-detail" aria-label="${t.details}"><button id="detail-close" class="dialog-close icon-button" type="button" aria-label="${t.close}">${icon('close')}</button><div id="detail-content"></div></dialog>
   <dialog id="filter-dialog" class="filter-dialog" aria-labelledby="filter-title"><form method="dialog">
     <div class="dialog-heading"><div><p class="sheet-kicker">${t.heading}</p><h2 id="filter-title">${t.filters}</h2></div><button class="icon-button" type="submit" value="cancel" aria-label="${t.close}">${icon('close')}</button></div>
@@ -183,7 +183,7 @@ export function renderVenues(data) {
     <label class="switch-row"><span>${t.seasonalOnly}</span><input id="seasonal-only" type="checkbox"><span class="switch-track" aria-hidden="true"></span></label>
     <div class="dialog-actions"><button id="filter-reset" class="secondary-button" type="button">${t.reset}</button><button id="filter-apply" class="primary-button" type="submit" value="apply">${t.apply}</button></div>
   </form></dialog>
-  <dialog id="about-dialog" class="about-dialog" aria-labelledby="about-title"><button id="about-close" class="dialog-close icon-button" type="button" aria-label="${t.close}">${icon('close')}</button><h2 id="about-title">${t.aboutHeading}</h2><p class="about-intro">${t.aboutIntro}</p><label class="map-provider-control">${icon('map')}<span>${t.mapProvider}</span><select id="map-provider" disabled><option value="baidu" hidden>${t.baidu}</option><option value="amap" hidden>${t.amap}</option><option value="osm" selected>OpenStreetMap</option></select></label><p>${t.aboutScope}</p><p>${t.aboutDates}</p><p>${t.aboutPositions}</p><p>${t.aboutPrivacy}</p><p>${t.aboutMap}</p><div class="provider-links"><a data-provider-info="amap" hidden href="https://lbs.amap.com/" target="_blank" rel="noopener noreferrer">${t.amap}</a><a href="https://lbs.baidu.com/" target="_blank" rel="noopener noreferrer">${t.baidu}</a><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a></div><a class="about-home-link" href="${t.home}">${t.homeLabel}</a></dialog>
+  <dialog id="about-dialog" class="about-dialog" aria-labelledby="about-title"><button id="about-close" class="dialog-close icon-button" type="button" aria-label="${t.close}">${icon('close')}</button><h2 id="about-title">${t.aboutHeading}</h2><p class="about-intro">${t.aboutIntro}</p><label class="map-provider-control">${icon('map')}<span>${t.mapProvider}</span><select id="map-provider" disabled><option value="baidu" hidden>${t.baidu}</option><option value="amap" hidden>${t.amap}</option><option value="osm" selected>OpenStreetMap</option></select></label><p>${t.aboutScope}</p><p>${t.aboutDates}</p><p>${t.aboutPositions}</p><p>${t.aboutPrivacy}</p><p>${t.aboutMap}</p><div class="provider-links"><a data-provider-info="amap" hidden href="https://lbs.amap.com/" target="_blank" rel="noopener noreferrer">${t.amap}</a><a href="https://lbs.baidu.com/" target="_blank" rel="noopener noreferrer">${t.baidu}</a><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a></div><section id="provider-legal-attribution" class="provider-legal-attribution" aria-label="${t.mapAttribution}" hidden></section><a class="about-home-link" href="${t.home}">${t.homeLabel}</a></dialog>
   <div id="toast" class="toast" role="status" hidden></div>
   <script type="application/json" id="map-config">${json({ lang: 'zh', locale: t.locale, home: t.home, url, labels: t, cities, venues: data.venues })}</script>
 </body>

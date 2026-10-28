@@ -99,7 +99,51 @@ export async function ${factory}(options) {
 }`;
 }
 
-async function newCase(config, { preference, viewport = { width: 1280, height: 900 } } = {}) {
+// Exercise the real Baidu adapter with real browser DOM, while providing only a
+// deterministic SDK boundary. Native legal nodes, links and listeners must survive
+// relocation, and SDK destruction verifies they were restored first.
+function nativeBaiduSDKFixture() {
+  const probe = window.__nativeBaiduProbe = { maps: [], restoreErrors: [], linkClicks: 0 };
+  class Point { constructor(lng, lat) { Object.assign(this, { lng, lat }); } }
+  class NativeMap {
+    constructor(container) {
+      this.container = container; this.listeners = new Map(); this.overlays = []; this.zoom = 5;
+      this.controls = document.createElement('div');
+      this.copyright = document.createElement('div'); this.copyright.className = 'BMap_cpyCtrlV4';
+      this.copyright.innerHTML = '©2026 Baidu - <a href="https://map.baidu.com/">百度地图</a> - <a href="https://example.test/map-review">审图号 GS(2025)1234号</a> - <a href="https://beian.miit.gov.cn/">京ICP证030173号</a> - <a href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11000002000001">京公网安备11000002000001号</a>';
+      Object.assign(this.copyright.style, { position: 'absolute', left: '0px', bottom: '0px', width: '600px', whiteSpace: 'nowrap', fontSize: '10px', lineHeight: '12px' });
+      this.copyright.addEventListener('click', (event) => { if (event.target.closest('a')) { event.preventDefault(); probe.linkClicks++; } });
+      this.logo = document.createElement('div'); this.logo.className = 'anchorBL';
+      const image = document.createElement('img'); image.alt = 'Baidu map logo fixture'; image.width = 76; image.height = 24;
+      image.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="76" height="24"><rect width="76" height="24" fill="white"/><text x="2" y="17" font-size="12">Baidu logo</text></svg>');
+      this.logo.append(image); Object.assign(this.logo.style, { position: 'absolute', left: '0px', bottom: '8px' });
+      // Some native SDK versions put copyright inside the logo wrapper. This
+      // deliberately exercises that nesting with the real adapter, not a clone.
+      this.logo.append(this.copyright); this.controls.append(this.logo); container.append(this.controls); probe.maps.push(this);
+    }
+    addEventListener(name, listener) { this.listeners.set(name, listener); }
+    removeEventListener(name) { this.listeners.delete(name); }
+    centerAndZoom(center, zoom) { this.center = center; this.zoom = zoom; queueMicrotask(() => this.listeners.get('tilesloaded')?.()); }
+    disableContinuousZoom() {} disableInertialDragging() {} checkResize() {}
+    getZoom() { return this.zoom; }
+    pointToPixel(point) { return { x: point.lng * 2, y: point.lat * 2 }; }
+    getViewport(points, options = {}) { return { center: points[0], zoom: 5 + (options.zoomFactor || 0) }; }
+    setViewport(viewport) { this.center = viewport.center; this.zoom = viewport.zoom; }
+    setZoom(zoom) { this.zoom = zoom; }
+    addOverlay(overlay) { overlay.element = overlay.factory(); this.container.append(overlay.element); this.overlays.push(overlay); }
+    removeOverlay(overlay) { overlay.element?.remove(); this.overlays = this.overlays.filter((item) => item !== overlay); }
+    destroy() {
+      if (this.copyright.parentNode !== this.logo || this.logo.parentNode !== this.controls) probe.restoreErrors.push('native controls were not restored before SDK destruction');
+      this.destroyed = true; this.container.replaceChildren();
+    }
+  }
+  window.BMap = { Map: NativeMap, Point,
+    CustomOverlay: class { constructor(factory) { this.factory = factory; } },
+    Convertor: class { translate(points, _from, _to, callback) { queueMicrotask(() => callback({ status: 0, points })); } },
+  };
+}
+
+async function newCase(config, { preference, viewport = { width: 1280, height: 900 }, nativeBaidu = false } = {}) {
   const context = await browser.newContext({ viewport, reducedMotion: 'reduce' });
   context.on('page', (page) => page.on('pageerror', (error) => errors.push(error.message)));
   await context.addInitScript(({ preference }) => {
@@ -114,8 +158,11 @@ async function newCase(config, { preference, viewport = { width: 1280, height: 9
     if (url.origin === new URL(base).origin) {
       if (url.pathname === '/api/maps/config') return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(config) });
       const provider = url.pathname.match(/^\/venues\/provider-(amap|baidu)\.js$/)?.[1];
-      if (provider) return route.fulfill({ status: 200, contentType: 'text/javascript', body: providerModule(provider) });
+      if (provider && !(nativeBaidu && provider === 'baidu')) return route.fulfill({ status: 200, contentType: 'text/javascript', body: providerModule(provider) });
       return route.continue();
+    }
+    if (nativeBaidu && url.origin === 'https://api.map.baidu.com' && url.pathname === '/api') {
+      return route.fulfill({ status: 200, contentType: 'text/javascript', body: `(${nativeBaiduSDKFixture.toString()})();window[${JSON.stringify(url.searchParams.get('callback'))}]();` });
     }
     if (url.origin === 'https://tile.openstreetmap.org') return route.fulfill({ status: 200, contentType: 'image/png', body: pixel });
     unexpectedRequests.push(url.origin + url.pathname);
@@ -164,6 +211,76 @@ async function count(page, expected) {
 }
 
 try {
+  for (const viewport of [{ width: 1280, height: 900 }, { width: 390, height: 844 }, { width: 320, height: 568 }, { width: 667, height: 375 }]) {
+    const { context, page } = await newCase(configuration(false, true), { viewport, nativeBaidu: true });
+    await go(page); await ready(page, 'baidu');
+    const legal = page.locator('#provider-legal-attribution .BMap_cpyCtrlV4');
+    const logo = page.locator('#provider-attribution .anchorBL');
+    await logo.waitFor({ state: 'visible' });
+    await legal.waitFor({ state: 'attached' });
+    assert.equal(await legal.isVisible(), false, 'closed About must not expose detailed legal text on the map');
+    assert.equal(await page.locator('#provider-attribution .BMap_cpyCtrl, #provider-attribution .BMap_cpyCtrlV4').count(), 0);
+    assert.doesNotMatch(await page.locator('#provider-attribution').textContent(), /©2026|审图号|ICP|公网安备/);
+    assert.ok(await logo.evaluate((node) => {
+      const box = node.getBoundingClientRect();
+      return box.width > 0 && box.height > 0 && box.left >= 0 && box.top >= 0 && box.right <= innerWidth && box.bottom <= innerHeight;
+    }), 'the original map logo remains visible inside the viewport');
+    assert.ok(await page.evaluate(() => window.__nativeBaiduProbe.maps[0].copyright === document.querySelector('#provider-legal-attribution .BMap_cpyCtrlV4')
+      && window.__nativeBaiduProbe.maps[0].logo === document.querySelector('#provider-attribution .anchorBL')), 'the adapter moves the original nodes');
+
+    await openAbout(page);
+    await legal.scrollIntoViewIfNeeded();
+    assert.ok(await legal.isVisible());
+    assert.match(await legal.textContent(), /©2026 Baidu.*审图号 GS\(2025\)1234号.*京ICP证030173号.*京公网安备11000002000001号/);
+    assert.deepEqual(await legal.locator('a').evaluateAll((nodes) => nodes.map((node) => node.getAttribute('href'))), [
+      'https://map.baidu.com/', 'https://example.test/map-review', 'https://beian.miit.gov.cn/',
+      'https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11000002000001',
+    ]);
+    assert.ok(await legal.evaluate((node) => {
+      const box = node.getBoundingClientRect(), dialog = document.getElementById('about-dialog').getBoundingClientRect();
+      return box.width > 0 && box.height > 0 && box.left >= dialog.left && box.right <= dialog.right && node.scrollWidth <= node.clientWidth + 1;
+    }), 'the complete legal notice wraps within About rather than clipping horizontally');
+    for (const link of await legal.locator('a').all()) {
+      await link.scrollIntoViewIfNeeded();
+      assert.ok(await link.isVisible(), 'every original legal link is readable');
+    }
+    await legal.locator('a').first().focus();
+    await page.keyboard.press('Tab');
+    assert.ok(await legal.locator('a').nth(1).evaluate((node) => node === document.activeElement), 'legal links retain their normal keyboard sequence');
+    await legal.locator('a').first().click();
+    assert.equal(await page.evaluate(() => window.__nativeBaiduProbe.linkClicks), 1, 'the original legal-node listener remains attached');
+    await page.keyboard.press('Escape');
+    await page.locator('#about-dialog[open]').waitFor({ state: 'hidden' });
+    assert.equal(await legal.isVisible(), false);
+    assert.ok(await logo.isVisible());
+    assert.ok(await page.locator('#about-open').evaluate((node) => node === document.activeElement));
+
+    await select(page, 'osm');
+    assert.equal(await page.locator('.BMap_cpyCtrlV4, .anchorBL').count(), 0, 'switching away removes both native hosts without residual nodes');
+    assert.equal(await page.locator('#provider-legal-attribution').getAttribute('hidden'), '');
+    assert.equal(await page.locator('#provider-attribution').getAttribute('hidden'), '');
+    assert.deepEqual(await page.evaluate(() => window.__nativeBaiduProbe.restoreErrors), []);
+    await select(page, 'baidu');
+    await logo.waitFor({ state: 'visible' });
+    assert.equal(await legal.count(), 1); assert.equal(await logo.count(), 1);
+    await page.locator('#map-message').evaluate((node) => { node.hidden = false; });
+    await page.locator('#map-retry').evaluate((node) => { node.hidden = false; });
+    await page.locator('#map-retry').click(); await ready(page, 'baidu');
+    await logo.waitFor({ state: 'visible' });
+    assert.equal(await legal.count(), 1); assert.equal(await logo.count(), 1, 'retry must not duplicate native nodes');
+    await select(page, 'osm');
+    await page.evaluate(() => {
+      const old = window.__nativeBaiduProbe.maps[0];
+      old.controls.append(old.copyright.cloneNode(true), old.logo.cloneNode(true));
+    });
+    await page.waitForTimeout(30);
+    assert.equal(await page.locator('#provider-legal-attribution, #provider-attribution').evaluateAll((nodes) => nodes.reduce((count, node) => count + node.childElementCount, 0)), 0, 'late mutations from a destroyed map cannot repopulate either host');
+    assert.ok(await page.evaluate(() => window.__nativeBaiduProbe.maps.every((map) => map.destroyed)));
+    assert.deepEqual(await page.evaluate(() => window.__nativeBaiduProbe.restoreErrors), []);
+    await context.close();
+  }
+  console.log('PASS real Baidu adapter moves original legal nodes and links only into About, keeps the map logo visible, and restores/clears both hosts on switch and retry across desktop, phone and landscape');
+
   for (const [config, expected, preference] of [
     [configuration(false, false), 'osm', undefined],
     [configuration(false, true), 'baidu', 'amap'],

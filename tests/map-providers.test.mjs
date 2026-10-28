@@ -6,13 +6,22 @@ import { test } from 'node:test';
 let importSequence = 0;
 const tick = () => new Promise((resolve) => setImmediate(resolve));
 
-async function harness(t, name, { reducedMotion = true, bootstrapResult } = {}) {
+async function harness(t, name, { reducedMotion = true, bootstrapResult, nativeAttribution = false, splitAttribution = true, sharedAttributionWrapper = false } = {}) {
   const originals = new Map();
   const replaceGlobal = (key, value) => {
     originals.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
     Object.defineProperty(globalThis, key, { value, writable: true, configurable: true });
   };
   let document;
+  const observers = new Set();
+  const mutation = (target) => {
+    for (const observer of observers) {
+      if (!observer.target || (observer.target !== target && !(observer.subtree && observer.target.contains(target)))) continue;
+      if (observer.queued) continue;
+      observer.queued = true;
+      queueMicrotask(() => { observer.queued = false; if (observer.target) observer.callback([]); });
+    }
+  };
   class Element extends EventTarget {
     nodeType = 1;
     parent = null;
@@ -30,19 +39,31 @@ async function harness(t, name, { reducedMotion = true, bootstrapResult } = {}) 
       };
     }
     get isConnected() { return this.root === true || Boolean(this.parent?.isConnected); }
+    get parentNode() { return this.parent; }
+    get nextSibling() { return this.parent?.children[this.parent.children.indexOf(this) + 1] || null; }
     setAttribute(key, value) { this.attributes[key] = String(value); }
-    append(...elements) { for (const element of elements) { element.remove(); element.parent = this; this.children.push(element); } }
+    append(...elements) { for (const element of elements) { element.remove(); element.parent = this; this.children.push(element); } mutation(this); }
+    insertBefore(element, sibling) { element.remove(); element.parent = this; const index = this.children.indexOf(sibling); this.children.splice(index < 0 ? this.children.length : index, 0, element); mutation(this); }
     remove() {
       if (!this.parent) return;
       if (document.activeElement === this || this.descendants().includes(document.activeElement)) document.activeElement = document.body;
+      const parent = this.parent;
       this.parent.children = this.parent.children.filter((element) => element !== this);
       this.parent = null;
+      mutation(parent);
     }
     replaceChildren(...elements) { [...this.children].forEach((element) => element.remove()); this.append(...elements); }
     descendants() { return this.children.flatMap((element) => [element, ...element.descendants()]); }
+    contains(element) { return element === this || this.descendants().includes(element); }
+    matches(selector) {
+      if (selector.includes(',')) return selector.split(',').some((part) => this.matches(part.trim()));
+      if (selector === '.anchorBL:has(> img)') return this.className.split(' ').includes('anchorBL') && this.children.some((element) => element.tagName === 'IMG');
+      return selector.startsWith('.') && this.className.split(' ').includes(selector.slice(1));
+    }
+    querySelector(selector) { return this.querySelectorAll(selector)[0] || null; }
     querySelectorAll(selector) {
       if (selector === '[data-marker-key]') return this.descendants().filter((element) => element.dataset.markerKey);
-      return [];
+      return this.descendants().filter((element) => selector.split(',').some((part) => element.matches(part.trim())));
     }
     closest(selector) { return selector === '[data-marker-key]' && this.dataset.markerKey ? this : this.parent?.closest(selector) || null; }
     focus() { document.activeElement = this; }
@@ -50,6 +71,8 @@ async function harness(t, name, { reducedMotion = true, bootstrapResult } = {}) 
   const container = new Element(); container.root = true;
   const body = new Element('body'); body.root = true;
   const head = new Element('head'); head.root = true;
+  const attributionContainer = new Element('section'); attributionContainer.root = true;
+  const brandingContainer = new Element('footer'); brandingContainer.root = true;
   document = { body, head, activeElement: body, createElement: (tag) => new Element(tag), querySelector: () => null };
   const scripts = [], maps = [], markers = [], conversions = [], deferred = [];
   const control = { fail: false, hold: false };
@@ -59,7 +82,22 @@ async function harness(t, name, { reducedMotion = true, bootstrapResult } = {}) 
     fitCalls = [];
     viewportCalls = [];
     destroyed = false;
-    constructor(element, options) { this.container = element; this.options = options; this.zoom = options.zoom ?? 5; this.center = options.center; maps.push(this); if (name === 'amap') queueMicrotask(() => this.emit('complete')); }
+    constructor(element, options) {
+      this.container = element; this.options = options; this.zoom = options.zoom ?? 5; this.center = options.center; maps.push(this);
+      if (name === 'amap') queueMicrotask(() => this.emit('complete'));
+      if (name === 'baidu' && nativeAttribution) {
+        this.copyright = new Element(); this.copyright.className = 'BMap_cpyCtrlV4';
+        this.copyright.textContent = '©2026 Baidu - 审图号 GS(2025)1234号 - 京ICP证030173号';
+        this.links = ['https://map.baidu.com/', 'https://example.test/map-review', 'https://beian.miit.gov.cn/'].map((href) => {
+          const link = new Element('a'); link.setAttribute('href', href); this.copyright.append(link); return link;
+        });
+        this.logo = new Element(); this.logo.className = 'anchorBL'; this.logo.append(new Element('img'));
+        this.controlsParent = new Element();
+        if (sharedAttributionWrapper) { this.logo.append(this.copyright); this.controlsParent.append(this.logo); }
+        else this.controlsParent.append(this.copyright, this.logo);
+        element.append(this.controlsParent);
+      }
+    }
     on(event, callback) { this.handlers.set(event, callback); }
     off(event) { this.handlers.delete(event); }
     addEventListener(event, callback) { this.on(event, callback); }
@@ -82,7 +120,10 @@ async function harness(t, name, { reducedMotion = true, bootstrapResult } = {}) 
     checkResize() { this.resize(); }
     disableContinuousZoom() { this.continuousZoomDisabled = true; }
     disableInertialDragging() { this.inertialDraggingDisabled = true; }
-    destroy() { this.destroyed = true; this.container.replaceChildren(); }
+    destroy() {
+      if (this.copyright) this.attributionRestoredAtDestroy = this.copyright.parentNode === (sharedAttributionWrapper ? this.logo : this.controlsParent) && this.logo.parentNode === this.controlsParent;
+      this.destroyed = true; this.container.replaceChildren();
+    }
   }
   class Point { constructor(lng, lat) { this.lng = lng; this.lat = lat; } getLng() { return this.lng; } getLat() { return this.lat; } }
   const convert = (points, from, to, callback) => {
@@ -119,6 +160,11 @@ async function harness(t, name, { reducedMotion = true, bootstrapResult } = {}) 
   replaceGlobal('window', window); replaceGlobal('document', document); replaceGlobal('HTMLElement', Element);
   replaceGlobal('requestAnimationFrame', (callback) => setTimeout(callback, 0));
   replaceGlobal('cancelAnimationFrame', clearTimeout);
+  replaceGlobal('MutationObserver', class {
+    constructor(callback) { this.callback = callback; observers.add(this); }
+    observe(target, options) { this.target = target; this.subtree = options.subtree; }
+    disconnect() { this.target = null; observers.delete(this); }
+  });
   let adapter;
   t.after(() => {
     adapter?.destroy();
@@ -129,9 +175,77 @@ async function harness(t, name, { reducedMotion = true, bootstrapResult } = {}) 
   const module = await import(`../venues/provider-${name}.js?contract-test=${++importSequence}`);
   const create = module[name === 'amap' ? 'createAmapProvider' : 'createBaiduProvider'];
   const errors = [], ready = [];
-  adapter = await create({ container, key: 'test-browser-key', ak: 'test-browser-key', serviceHost: '/api/maps/amap/_AMapService', reducedMotion, onMove() {}, onReady: () => ready.push(true), onError: (error) => errors.push(error) });
-  return { adapter, create, container, document, window, scripts, maps, markers, conversions, deferred, control, errors, ready };
+  adapter = await create({ container, key: 'test-browser-key', ak: 'test-browser-key', serviceHost: '/api/maps/amap/_AMapService', reducedMotion, onMove() {}, onReady: () => ready.push(true), onError: (error) => errors.push(error),
+    ...(nativeAttribution ? { attributionContainer, ...(splitAttribution ? { brandingContainer } : {}) } : {}) });
+  return { adapter, create, container, document, window, scripts, maps, markers, conversions, deferred, control, errors, ready, attributionContainer, brandingContainer };
 }
+
+const settleAttribution = async () => { await tick(); await new Promise((resolve) => setTimeout(resolve, 10)); await tick(); };
+
+test('baidu: original legal nodes and links move separately from the map logo and restore before retry/destroy', async (t) => {
+  const h = await harness(t, 'baidu', { nativeAttribution: true });
+  await settleAttribution();
+  const original = h.maps[0];
+  assert.deepEqual(h.attributionContainer.children, [original.copyright]);
+  assert.deepEqual(h.brandingContainer.children, [original.logo]);
+  assert.equal(h.container.contains(original.copyright), false);
+  assert.equal(h.container.contains(original.logo), false);
+  assert.match(original.copyright.textContent, /©2026.*审图号.*ICP/);
+  assert.deepEqual(original.links.map((link) => link.attributes.href), ['https://map.baidu.com/', 'https://example.test/map-review', 'https://beian.miit.gov.cn/']);
+  let activations = 0;
+  original.links[2].addEventListener('click', () => activations++);
+  original.links[2].dispatchEvent(new Event('click'));
+  assert.equal(activations, 1, 'moving the original control must preserve its listeners');
+  assert.equal(h.adapter.getAttributionElements().length, 2);
+
+  await h.adapter.retry(); await settleAttribution();
+  assert.equal(original.attributionRestoredAtDestroy, true, 'SDK cleanup must receive its original controls');
+  assert.deepEqual(h.attributionContainer.children, [h.maps[1].copyright]);
+  assert.deepEqual(h.brandingContainer.children, [h.maps[1].logo]);
+  assert.equal(original.copyright.isConnected, false);
+  assert.equal(original.logo.isConnected, false);
+
+  h.adapter.destroy(); await settleAttribution();
+  assert.equal(h.maps[1].attributionRestoredAtDestroy, true);
+  assert.equal(h.attributionContainer.children.length, 0);
+  assert.equal(h.brandingContainer.children.length, 0);
+  assert.deepEqual(h.errors, []);
+});
+
+test('baidu: omitting the optional branding host preserves the combined attribution behavior', async (t) => {
+  const h = await harness(t, 'baidu', { nativeAttribution: true, splitAttribution: false });
+  await settleAttribution();
+  assert.deepEqual(h.attributionContainer.children, [h.maps[0].copyright, h.maps[0].logo]);
+  assert.equal(h.brandingContainer.children.length, 0);
+  h.adapter.destroy(); await settleAttribution();
+  assert.equal(h.maps[0].attributionRestoredAtDestroy, true);
+  assert.equal(h.attributionContainer.children.length, 0);
+});
+
+test('baidu: a shared native logo/copyright wrapper splits original nodes and restores its nesting', async (t) => {
+  const h = await harness(t, 'baidu', { nativeAttribution: true, sharedAttributionWrapper: true });
+  await settleAttribution();
+  assert.deepEqual(h.attributionContainer.children, [h.maps[0].copyright]);
+  assert.deepEqual(h.brandingContainer.children, [h.maps[0].logo]);
+  assert.equal(h.maps[0].logo.contains(h.maps[0].copyright), false, 'legal text must not remain beside the map logo');
+  await h.adapter.retry(); await settleAttribution();
+  assert.equal(h.maps[0].attributionRestoredAtDestroy, true);
+  assert.equal(h.attributionContainer.children.length, 1);
+  assert.equal(h.brandingContainer.children.length, 1);
+  h.adapter.destroy(); await settleAttribution();
+  assert.equal(h.maps[1].attributionRestoredAtDestroy, true);
+  assert.equal(h.attributionContainer.children.length, 0);
+  assert.equal(h.brandingContainer.children.length, 0);
+});
+
+test('baidu: a shared wrapper remains intact for callers using the original single host', async (t) => {
+  const h = await harness(t, 'baidu', { nativeAttribution: true, sharedAttributionWrapper: true, splitAttribution: false });
+  await settleAttribution();
+  assert.deepEqual(h.attributionContainer.children, [h.maps[0].logo]);
+  assert.equal(h.maps[0].copyright.parentNode, h.maps[0].logo);
+  h.adapter.destroy(); await settleAttribution();
+  assert.equal(h.maps[0].attributionRestoredAtDestroy, true);
+});
 
 for (const name of ['amap', 'baidu']) {
   test(`${name}: only the selected official SDK loads and native coordinates are prepared before projection`, async (t) => {

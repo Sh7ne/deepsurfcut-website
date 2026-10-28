@@ -1,6 +1,6 @@
 import { createOsmProvider } from './provider-osm.js';
 import { createAmapProvider } from './provider-amap.js';
-import { createBaiduProvider } from './provider-baidu.js';
+import { createBaiduProvider } from './provider-baidu.js?v=20261028-map-about-credits-1';
 
 /* Progressive enhancement for the public venue directory. */
 (() => {
@@ -42,8 +42,10 @@ import { createBaiduProvider } from './provider-baidu.js';
   const mobile = () => matchMedia('(max-width: 767px)').matches;
   const mapSnap = () => mobile() && window.innerHeight < 650 ? 'low' : 'half';
   const attribution = $('provider-attribution');
+  const legalAttribution = $('provider-legal-attribution');
   let attributionHeight = 0;
   const updateAttributionLayout = () => {
+    legalAttribution.hidden = legalAttribution.childElementCount === 0;
     const visible = attribution.childElementCount > 0;
     attribution.hidden = !visible;
     document.body.classList.toggle('has-map-attribution', visible);
@@ -56,7 +58,9 @@ import { createBaiduProvider } from './provider-baidu.js';
       else fitMap();
     }
   };
-  new MutationObserver(updateAttributionLayout).observe(attribution, { childList: true });
+  const attributionObserver = new MutationObserver(updateAttributionLayout);
+  attributionObserver.observe(attribution, { childList: true });
+  attributionObserver.observe(legalAttribution, { childList: true });
   new ResizeObserver(updateAttributionLayout).observe(attribution);
   const announce = (message) => {
     (document.querySelector('dialog[open]') || document.body).append($('toast'));
@@ -250,6 +254,7 @@ import { createBaiduProvider } from './provider-baidu.js';
     map?.destroy(); map = null;
     pendingMap?.destroy(); pendingMap = null;
     attribution.replaceChildren();
+    legalAttribution.replaceChildren();
     updateAttributionLayout();
     providerName = name;
     mapFailed = false;
@@ -292,7 +297,7 @@ import { createBaiduProvider } from './provider-baidu.js';
         candidate = await createAmapProvider({ ...options, ...providerConfig.amap });
       } else if (name === 'baidu') {
         if (!providerConfig.baidu?.enabled) throw new Error('Provider unavailable');
-        candidate = await createBaiduProvider({ ...options, ...providerConfig.baidu, attributionContainer: attribution });
+        candidate = await createBaiduProvider({ ...options, ...providerConfig.baidu, attributionContainer: legalAttribution, brandingContainer: attribution });
       } else candidate = await createOsmProvider(options);
       if (request !== providerRequest) { candidate.destroy(); return; }
       pendingMap = candidate;

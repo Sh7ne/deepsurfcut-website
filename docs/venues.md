@@ -4,8 +4,8 @@ The map is published through the existing `Sh7ne/deepsurfcut-website` repository
 and Cloudflare Pages project. Its only page is Chinese, at `/RapidSurfingMap`
 without a trailing slash, generated as the root `RapidSurfingMap.html`. The
 Chinese homepage footer has one unobtrusive entry. English and German homepages
-have no map entry, and the map has no language switch. The map's header links back
-to `/zh/`; its provider-attribution footer remains visible. Existing links to
+have no map entry, and the map has no language switch. The About dialog links back
+to `/zh/`; the map retains a compact provider-logo footer. Existing links to
 `/venues/`, `/zh/venues/`, and `/de/venues/` redirect permanently to the single page.
 
 ## Data and generated pages
@@ -142,10 +142,11 @@ Official references:
 
 ## Browser policy and privacy
 
-Baidu's original copyright, filing links, and logo are kept in a compact footer
-at the bottom of the page. The adapter moves the original SDK nodes and restores
-them before retry or destruction. The footer's measured height keeps mobile tabs
-and venue lists clear of it; do not replace the text with a hard-coded copy.
+Baidu's original copyright statement and filing links are displayed inside the
+About dialog, with its native logo retained in a compact footer. The adapter
+moves the original SDK nodes into these two containers and restores them before
+retry or destruction. The logo footer's measured height keeps mobile tabs and
+venue lists clear of it; do not replace the statement with a hard-coded copy.
 
 Map pages allow the selected providers' JavaScript, tile, and supporting resource
 origins in `_headers`, including the exact OpenStreetMap tile origin. They allow

@@ -54,7 +54,7 @@ function loadSDK(ak) {
  * for the provider's tilesloaded event. prepare/setMarkers/setUserLocation are
  * asynchronous; project and fitBounds require prepared WGS84 coordinates.
  */
-export async function createBaiduProvider({ container, attributionContainer, ak, reducedMotion = false, onMove, onReady, onError, locationLabel = 'Current location' }) {
+export async function createBaiduProvider({ container, attributionContainer, brandingContainer = attributionContainer, ak, reducedMotion = false, onMove, onReady, onError, locationLabel = 'Current location' }) {
   if (!(container instanceof HTMLElement)) throw providerError('BAIDU_CONTAINER_MISSING');
   let BMap;
   try { BMap = await loadSDK(ak); }
@@ -154,15 +154,18 @@ export async function createBaiduProvider({ container, attributionContainer, ak,
     });
   }
 
+  const separateAttribution = attributionContainer && brandingContainer && attributionContainer !== brandingContainer;
+  const isCopyrightControl = (element) => element.matches('.BMap_cpyCtrl, .BMap_cpyCtrlV4');
   function nativeAttributionElements() {
     const elements = [...container.querySelectorAll('.BMap_cpyCtrl, .BMap_cpyCtrlV4, .anchorBL:has(> img)')];
-    // Some SDK versions nest a copyright control in an anchored wrapper. Move
-    // only its outermost matching node so its original DOM stays together.
-    return elements.filter((element) => !elements.some((other) => other !== element && other.contains(element)));
+    // A logo wrapper can also contain the copyright control. Separate hosts
+    // retain both controls, while a shared host keeps the native wrapper whole.
+    return elements.filter((element) => !elements.some((other) => other !== element && other.contains(element)
+      && (!separateAttribution || isCopyrightControl(other) === isCopyrightControl(element))));
   }
 
   function startAttribution(current) {
-    if (!attributionContainer) return;
+    if (!attributionContainer && !brandingContainer) return;
     const epoch = ++attributionEpoch;
     const relocate = () => {
       attributionFrame = undefined;
@@ -172,16 +175,17 @@ export async function createBaiduProvider({ container, attributionContainer, ak,
           attributionOrigins.set(element, { parent: element.parentNode, nextSibling: element.nextSibling });
         }
       }
-      const elements = [...attributionOrigins.keys()].sort((a, b) => {
-        const copyright = (element) => element.matches('.BMap_cpyCtrl, .BMap_cpyCtrlV4')
-          || Boolean(element.querySelector('.BMap_cpyCtrl, .BMap_cpyCtrlV4'));
-        return Number(copyright(b)) - Number(copyright(a));
-      });
-      const present = [...attributionContainer.children].filter((element) => attributionOrigins.has(element));
-      if (elements.some((element, index) => present[index] !== element)) {
-        // Reparent the native nodes, preserving their text, links and listeners.
-        // Copyright comes first; the provider logo remains after it.
-        attributionContainer.append(...elements);
+      const copyright = (element) => isCopyrightControl(element)
+        || (!separateAttribution && Boolean(element.querySelector('.BMap_cpyCtrl, .BMap_cpyCtrlV4')));
+      const elements = [...attributionOrigins.keys()].sort((a, b) => Number(copyright(b)) - Number(copyright(a)));
+      for (const target of new Set([attributionContainer, brandingContainer].filter(Boolean))) {
+        const assigned = elements.filter((element) => (copyright(element) ? attributionContainer : brandingContainer) === target);
+        const present = [...target.children].filter((element) => attributionOrigins.has(element));
+        if (assigned.some((element, index) => present[index] !== element)) {
+          // Reparent whole native controls, retaining wrappers, links and listeners.
+          // Shared legacy hosts keep copyright first, followed by the logo.
+          target.append(...assigned);
+        }
       }
     };
     const schedule = () => {

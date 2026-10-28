@@ -93,6 +93,10 @@ test('the Chinese map exposes complete venue details and working deep links with
     assert.equal($('h1.sr-only').text(), '中国深水冲浪场馆地图');
     assert.equal($('.map-stage #about-open').attr('aria-controls'), 'about-dialog');
     assert.equal($('#about-dialog #map-provider').length, 1);
+    assert.equal($('#about-dialog #provider-legal-attribution[hidden]').length, 1, 'native legal text belongs in the initially empty About host');
+    assert.equal($('#provider-attribution').length, 1);
+    assert.equal($('#about-dialog #provider-attribution').length, 0, 'the map logo keeps its independent map host');
+    assert.equal($('#provider-legal-attribution').children().length, 0, 'provider legal text must come from the original SDK nodes');
     assert.equal($('#about-dialog .about-home-link').attr('href'), '/zh/');
     assert.equal($('script:not([src]):not([type="application/json"]):not([type="application/ld+json"])').length, 0,
       'the strict local-script CSP must not require inline executable scripts');
