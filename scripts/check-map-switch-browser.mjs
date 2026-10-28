@@ -55,6 +55,20 @@ export async function ${factory}(options) {
   await wait(plan.loadDelay);
   if (plan.failLoad) { record.events.push('load-failed'); throw new Error('Simulated SDK load failure'); }
   const native = await createOsmProvider(options);
+  if ('${name}' === 'amap') {
+    // Match native credit classes, dimensions and default corner positioning;
+    // the SDK, logo image and all provider network traffic remain mocked.
+    const logo = document.createElement('a');
+    logo.className = 'amap-logo';
+    logo.href = '#';
+    logo.textContent = 'Map logo';
+    Object.assign(logo.style, { position: 'absolute', left: '0px', bottom: '0px', width: '73px', height: '20px', display: 'block', background: 'white', zIndex: '450' });
+    const copyright = document.createElement('div');
+    copyright.className = 'amap-copyright';
+    copyright.textContent = '© Map provider · attribution fixture';
+    Object.assign(copyright.style, { position: 'absolute', left: '0px', bottom: '0px', width: '200px', fontSize: '10px', lineHeight: '12px', background: 'white', zIndex: '450' });
+    options.container.append(logo, copyright);
+  }
   let destroyed = false, markerRequest = 0;
   record.events.push('created');
   return {
@@ -120,9 +134,27 @@ async function ready(page, provider, { markers = true } = {}) {
   assert.equal(await page.locator('#map-provider').inputValue(), provider);
   assert.equal(await page.locator('#map > .provider-canvas').count(), 1);
 }
+async function openAbout(page) {
+  if (await page.locator('#about-dialog').evaluate((node) => node.open)) return;
+  if (!await page.locator('#about-open').isVisible()) {
+    await page.locator('.tab-bar [data-view="map"]').click();
+    if (!await page.locator('#about-open').isVisible() && await page.locator('#sheet-handle').isVisible()) await page.locator('#sheet-handle').click();
+  }
+  await page.locator('#about-open').click();
+  await page.locator('#about-dialog[open]').waitFor();
+  assert.ok(await page.locator('#about-dialog #map-provider').isVisible());
+}
+async function closeAbout(page) {
+  await page.locator('#about-close').click();
+  await page.locator('#about-dialog[open]').waitFor({ state: 'hidden' });
+  assert.ok(await page.locator('#about-open').evaluate((node) => node === document.activeElement), 'closing provider settings returns focus to About');
+}
 async function select(page, provider, options) {
+  await openAbout(page);
   await page.locator('#map-provider').selectOption(provider);
+  assert.ok(await page.evaluate(() => document.getElementById('about-dialog').contains(document.activeElement)), 'provider selection keeps focus inside the settings dialog');
   await ready(page, provider, options);
+  await closeAbout(page);
 }
 const plan = (page, provider, settings) => page.evaluate(({ provider, settings }) => { window.__mapSwitchProbe.plans[provider] = settings; }, { provider, settings });
 const instanceEvent = (page, provider, event) => page.waitForFunction(({ provider, event }) => window.__mapSwitchProbe.instances.some((entry) => entry.provider === provider && entry.events.includes(event)), { provider, event });
@@ -140,6 +172,8 @@ try {
   ]) {
     const { context, page } = await newCase(config, { preference });
     await go(page); await ready(page, expected);
+    assert.equal(await page.locator('#map-provider').isVisible(), false);
+    await openAbout(page);
     assert.equal(await page.locator('#map-provider option[value="amap"]').evaluate((option) => option.disabled), !config.amap.enabled, await page.locator('#map-provider').evaluate((select) => select.outerHTML));
     assert.equal(await page.locator('#map-provider option[value="amap"]').evaluate((option) => option.hidden), !config.amap.enabled);
     if (!config.amap.enabled) {
@@ -148,10 +182,41 @@ try {
     }
     assert.equal(await page.locator('#map-provider option[value="baidu"]').evaluate((option) => option.disabled), !config.baidu.enabled);
     assert.equal(await page.locator('#map-provider option[value="osm"]').isDisabled(), false);
+    await closeAbout(page);
     await count(page, 11);
     await context.close();
   }
   console.log('PASS configured defaults, disabled unavailable providers, stale preference fallback');
+
+  for (const viewport of [{ width: 1280, height: 900 }, { width: 390, height: 844 }, { width: 320, height: 568 }, { width: 667, height: 375 }, { width: 844, height: 390 }]) {
+    const { context, page } = await newCase(configuration(true, false), { preference: 'amap', viewport });
+    await go(page); await ready(page, 'amap');
+    await openAbout(page); await closeAbout(page);
+    assert.ok(await page.locator('#about-open').isVisible());
+    await page.locator('#map-message').evaluate((node) => { node.hidden = false; node.classList.add('error'); });
+    for (const selector of ['.provider-amap .amap-logo', '.provider-amap .amap-copyright']) {
+      const credit = page.locator(selector);
+      assert.ok(await credit.isVisible(), `${selector}: native attribution remains visible`);
+      assert.ok(await credit.evaluate((node) => {
+        const rect = node.getBoundingClientRect();
+        if (!rect.width || !rect.height || rect.left < 0 || rect.top < 0 || rect.right > innerWidth || rect.bottom > innerHeight) return false;
+        const blockers = [...document.querySelectorAll('#about-open, .map-controls .icon-button, #map-message')];
+        return blockers.every((control) => {
+          const box = control.getBoundingClientRect();
+          if (!box.width || !box.height || getComputedStyle(control).visibility === 'hidden') return true;
+          return rect.right <= box.left || rect.left >= box.right || rect.bottom <= box.top || rect.top >= box.bottom;
+        });
+      }), `${viewport.width}×${viewport.height} ${selector}: credit must stay inside the viewport and clear of About, map controls and the visible status message`);
+    }
+    const logo = await page.locator('.provider-amap .amap-logo').boundingBox();
+    const copyright = await page.locator('.provider-amap .amap-copyright').boundingBox();
+    assert.equal(logo.width, 73);
+    assert.equal(logo.height, 20);
+    assert.ok(logo.x + logo.width <= copyright.x || logo.x >= copyright.x + copyright.width
+      || logo.y + logo.height <= copyright.y || logo.y >= copyright.y + copyright.height, 'logo and copyright must not overlap each other');
+    await context.close();
+  }
+  console.log('PASS native-size Amap logo/copyright stay onscreen and clear of About, controls and status messages on desktop, phones and landscape');
 
   {
     const { context, page } = await newCase(configuration(), { preference: 'amap' });
@@ -188,10 +253,38 @@ try {
   }
   console.log('PASS filters, search, sort, selected venue and favorites survive switching; provider preference survives reload');
 
+  {
+    const { context, page } = await newCase(configuration(), { viewport: { width: 390, height: 844 } });
+    await go(page); await ready(page, 'baidu');
+    assert.equal(await page.locator('#about-open').isVisible(), false);
+    await page.locator('.tab-bar [data-view="list"]').click();
+    await page.locator('#city-filters [data-city="北京"]').click();
+    await page.locator('#search').fill('SURFPARK'); await count(page, 2);
+    await page.locator('.venue-card [data-save="surfpark-chaoyang"]').click();
+    await openAbout(page);
+    assert.equal(await page.locator('#explore-sheet').getAttribute('data-snap'), 'low');
+    await page.locator('#map-provider').focus();
+    await page.keyboard.press('Tab');
+    assert.ok(await page.evaluate(() => document.getElementById('about-dialog').contains(document.activeElement)), 'mobile settings retain keyboard focus inside the modal');
+    await select(page, 'osm');
+    assert.equal(await page.locator('#search').inputValue(), 'SURFPARK');
+    assert.equal(await page.locator('#city-filters [data-city="北京"]').getAttribute('aria-pressed'), 'true');
+    assert.equal(await page.locator('.venue-card [data-save="surfpark-chaoyang"]').getAttribute('aria-pressed'), 'true');
+    await count(page, 2);
+    await page.keyboard.press('Enter');
+    await page.locator('#about-dialog[open]').waitFor();
+    await select(page, 'baidu');
+    await page.locator('.tab-bar [data-view="saved"]').click(); await count(page, 1);
+    assert.equal(await page.locator('#about-open').isVisible(), false);
+    await context.close();
+  }
+  console.log('PASS mobile About provider settings preserve search, city filters and saved venues with modal focus return');
+
   for (const phase of ['load', 'prepare', 'markers']) {
     const { context, page } = await newCase(configuration(), { preference: 'osm' });
     await go(page); await ready(page, 'osm');
     await plan(page, 'amap', phase === 'load' ? { loadDelay: 250 } : phase === 'prepare' ? { prepareDelay: 250 } : { markerDelay: 250 });
+    await openAbout(page);
     await page.locator('#map-provider').selectOption('amap');
     await instanceEvent(page, 'amap', phase === 'load' ? 'loading' : phase === 'prepare' ? 'preparing' : 'marking');
     await select(page, 'baidu');
@@ -213,7 +306,9 @@ try {
     await go(page); await ready(page, 'osm');
     await page.locator('#search').fill('TOSWIM'); await count(page, 1);
     await plan(page, 'amap', { failPrepare: true });
+    await openAbout(page);
     await page.locator('#map-provider').selectOption('amap');
+    await closeAbout(page);
     await page.locator('#map-message.error').waitFor();
     await count(page, 1);
     await page.locator('[data-open="surfpark-fengtai"]').click();

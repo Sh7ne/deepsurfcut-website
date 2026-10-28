@@ -69,7 +69,8 @@ import { createBaiduProvider } from './provider-baidu.js';
   const hasPosition = (v) => Number.isFinite(v.position?.lat) && Number.isFinite(v.position?.lng);
   const setSnap = (snap) => {
     $('explore-sheet').dataset.snap = snap;
-    $('sheet-handle').setAttribute('aria-expanded', String(snap === 'full'));
+    document.body.dataset.sheetSnap = snap;
+    $('sheet-handle').setAttribute('aria-expanded', String(snap !== 'low'));
   };
   function distance(v) {
     if (!state.user || !hasPosition(v)) return Infinity;
@@ -149,16 +150,18 @@ import { createBaiduProvider } from './provider-baidu.js';
     if (refit && list.length) fitMap();
   }
   function padding() {
-    if (!mobile()) return { paddingTopLeft: [442, 175], paddingBottomRight: [65, 65] };
+    if (!mobile()) return { paddingTopLeft: [442, 64], paddingBottomRight: [65, 65] };
     const sheet = $('explore-sheet');
-    const top = Math.max(document.querySelector('.app-header').getBoundingClientRect().bottom,
-      document.querySelector('.map-provider-control').getBoundingClientRect().bottom) + 15;
+    let top = Math.max(48, document.querySelector('.map-controls').getBoundingClientRect().top + 32);
+    for (const credits of document.querySelectorAll('.map-attribution, .provider-amap .amap-logo, .provider-amap .amap-copyright')) {
+      if (!credits.hidden && credits.getClientRects().length) top = Math.max(top, credits.getBoundingClientRect().bottom + 28);
+    }
     const tabsTop = document.querySelector('.tab-bar').getBoundingClientRect().top;
     const bottom = Math.min(sheet.getClientRects().length ? sheet.getBoundingClientRect().top : tabsTop, tabsTop) - 25;
     // A full directory can cover the map. Defer its camera update until the
     // visitor returns to Map instead of fitting into an obscured rectangle.
     if (bottom - top < 44) return null;
-    return { paddingTopLeft: [28, top], paddingBottomRight: [28, window.innerHeight - bottom] };
+    return { paddingTopLeft: [24, top], paddingBottomRight: [72, window.innerHeight - bottom] };
   }
   function frameMap(points, options = {}) {
     if (!map) return;
@@ -476,6 +479,11 @@ import { createBaiduProvider } from './provider-baidu.js';
   };
   $('about-open').onclick = () => $('about-dialog').showModal();
   $('about-close').onclick = () => $('about-dialog').close();
+  $('about-dialog').addEventListener('close', () => {
+    if (document.querySelector('dialog[open]')) return;
+    const opener = $('about-open'), handle = $('sheet-handle');
+    (opener.getClientRects().length ? opener : handle.getClientRects().length ? handle : $('map')).focus({ preventScroll: true });
+  });
   $('detail-close').onclick = () => closeVenue();
   $('venue-detail').addEventListener('cancel', (event) => { event.preventDefault(); closeVenue(); });
   document.querySelectorAll('dialog').forEach((dialog) => dialog.addEventListener('click', (event) => {
@@ -531,7 +539,7 @@ import { createBaiduProvider } from './provider-baidu.js';
   });
   handle.onclick = () => {
     if (dragged) { dragged = false; return; }
-    setSnap($('explore-sheet').dataset.snap === 'full' ? 'half' : 'full');
+    setSnap($('explore-sheet').dataset.snap === 'low' ? 'half' : 'low');
   };
   handle.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') { event.preventDefault(); setSnap(event.key === 'ArrowUp' ? 'full' : 'low'); }

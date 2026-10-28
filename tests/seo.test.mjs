@@ -114,7 +114,11 @@ test('the standalone Chinese map has one canonical identity and no language swit
   assert.equal(meta($, 'og:url', file), url);
   assert.equal($('head link[hreflang]').length, 0);
   assert.equal($('.language-menu, [data-map-language], .detail-languages').length, 0);
-  assert.equal(single($, '.header-brand', file).attr('href'), '/zh/');
+  const homeLink = single($, '#about-dialog .about-home-link', file);
+  assert.equal(homeLink.attr('href'), '/zh/');
+  assert.match(homeLink.text(), /返回 DeepSurfCut 官网/);
+  const withoutScripts = load(mapDocument.html, { scriptingEnabled: false });
+  assert.match(single(withoutScripts, 'noscript a[href="/zh/"]', file).text(), /返回 DeepSurfCut 官网/);
   assert.match(single($, 'head title', file).text(), /中国深水冲浪场馆地图/);
   const robots = meta($, 'robots', file).toLowerCase().split(/\s*,\s*/);
   assert.ok(robots.includes('index') && robots.includes('follow') && !robots.includes('noindex'));

@@ -89,6 +89,11 @@ test('the Chinese map exposes complete venue details and working deep links with
     assert.ok($('#filter-open').attr('aria-label'));
     assert.ok($('.map-attribution a[href="https://www.openstreetmap.org/copyright"]').length);
     assert.equal($('[data-map-language], .language-menu, .detail-languages').length, 0);
+    assert.equal($('header').length, 0);
+    assert.equal($('h1.sr-only').text(), '中国深水冲浪场馆地图');
+    assert.equal($('.map-stage #about-open').attr('aria-controls'), 'about-dialog');
+    assert.equal($('#about-dialog #map-provider').length, 1);
+    assert.equal($('#about-dialog .about-home-link').attr('href'), '/zh/');
     assert.equal($('script:not([src]):not([type="application/json"]):not([type="application/ld+json"])').length, 0,
       'the strict local-script CSP must not require inline executable scripts');
   }

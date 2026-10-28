@@ -137,24 +137,18 @@ export function renderVenues(data) {
   <link rel="icon" href="/assets/favicon-96.png" sizes="96x96" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180">
   <link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css">
-  <link rel="stylesheet" href="/venues/map.css?v=20261028-heading-1">
+  <link rel="stylesheet" href="/venues/map.css?v=20261028-map-controls-1">
   <script src="/assets/vendor/leaflet/leaflet.js" defer></script>
-  <script type="module" src="/venues/map.js"></script>
+  <script type="module" src="/venues/map.js?v=20261028-map-controls-1"></script>
   <script type="application/ld+json">${json(schemas)}</script>
 </head>
 <body data-lang="zh">
   <a class="skip-link" href="#venue-list">${t.skip}</a>
-  <header class="app-header">
-    <a class="header-brand" href="${t.home}" aria-label="${t.homeLabel}"><span class="brand-mark">${icon('wave')}</span><span class="brand-wordmark">DeepSurf<span>Cut</span></span></a>
-    <div class="header-title"><h1>${t.heading}</h1><span class="edition-label">${t.edition}</span></div>
-    <div class="header-actions">
-      <button id="about-open" class="icon-button enhance-only" type="button" aria-label="${t.about}">${icon('info')}</button>
-    </div>
-  </header>
   <main class="map-app">
+    <h1 class="sr-only">${t.mapLabel}</h1>
     <section class="map-stage enhance-only" aria-label="${t.mapLabel}">
       <div id="map" role="region" aria-label="${t.mapLabel}" tabindex="0"></div>
-      <label class="map-provider-control">${icon('map')}<span class="sr-only">${t.mapProvider}</span><select id="map-provider" disabled><option value="baidu" hidden>${t.baidu}</option><option value="amap" hidden>${t.amap}</option><option value="osm" selected>OpenStreetMap</option></select></label>
+      <button id="about-open" class="icon-button map-about-control enhance-only" type="button" aria-label="${t.about}" aria-haspopup="dialog" aria-controls="about-dialog">${icon('info')}</button>
       <div id="map-message" class="map-message" role="status"><span>${t.mapLoading}</span><button id="map-retry" type="button" hidden>${t.retry}</button></div>
       <div class="map-controls">
         <button id="locate" class="icon-button" type="button" aria-label="${t.locate}" title="${t.locate}">${icon('locate')}</button>
@@ -172,7 +166,7 @@ export function renderVenues(data) {
         <div id="active-filters" class="active-filters" hidden></div>
       </div>
       <div class="list-heading"><p><strong id="result-count" aria-live="polite">${count}</strong> <span id="result-label">${t.venues}</span></p><label class="sort-control enhance-only"><span class="sr-only">${t.sort}</span><select id="sort"><option value="recommended">${t.recommended}</option><option value="name">${t.nameSort}</option><option value="nearest">${t.nearestSort}</option></select></label></div>
-      <noscript><p class="no-script-note">${t.noScript}</p></noscript>
+      <noscript><p class="no-script-note">${t.noScript}<br><a href="${t.home}">${t.homeLabel}</a></p></noscript>
       <div id="venue-list" class="venue-list" tabindex="-1">${data.venues.map((venue, index) => venueCard(venue, index)).join('')}
         <div id="empty-state" class="empty-state" hidden>${icon('wave')}<h3>${t.noResults}</h3><p>${t.noResultsHint}</p><button id="reset-filters" type="button">${t.reset}</button></div>
       </div>
@@ -189,7 +183,7 @@ export function renderVenues(data) {
     <label class="switch-row"><span>${t.seasonalOnly}</span><input id="seasonal-only" type="checkbox"><span class="switch-track" aria-hidden="true"></span></label>
     <div class="dialog-actions"><button id="filter-reset" class="secondary-button" type="button">${t.reset}</button><button id="filter-apply" class="primary-button" type="submit" value="apply">${t.apply}</button></div>
   </form></dialog>
-  <dialog id="about-dialog" class="about-dialog" aria-labelledby="about-title"><button id="about-close" class="dialog-close icon-button" type="button" aria-label="${t.close}">${icon('close')}</button><h2 id="about-title">${t.aboutHeading}</h2><p class="about-intro">${t.aboutIntro}</p><p>${t.aboutScope}</p><p>${t.aboutDates}</p><p>${t.aboutPositions}</p><p>${t.aboutPrivacy}</p><p>${t.aboutMap}</p><div class="provider-links"><a data-provider-info="amap" hidden href="https://lbs.amap.com/" target="_blank" rel="noopener noreferrer">${t.amap}</a><a href="https://lbs.baidu.com/" target="_blank" rel="noopener noreferrer">${t.baidu}</a><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a></div></dialog>
+  <dialog id="about-dialog" class="about-dialog" aria-labelledby="about-title"><button id="about-close" class="dialog-close icon-button" type="button" aria-label="${t.close}">${icon('close')}</button><h2 id="about-title">${t.aboutHeading}</h2><p class="about-intro">${t.aboutIntro}</p><label class="map-provider-control">${icon('map')}<span>${t.mapProvider}</span><select id="map-provider" disabled><option value="baidu" hidden>${t.baidu}</option><option value="amap" hidden>${t.amap}</option><option value="osm" selected>OpenStreetMap</option></select></label><p>${t.aboutScope}</p><p>${t.aboutDates}</p><p>${t.aboutPositions}</p><p>${t.aboutPrivacy}</p><p>${t.aboutMap}</p><div class="provider-links"><a data-provider-info="amap" hidden href="https://lbs.amap.com/" target="_blank" rel="noopener noreferrer">${t.amap}</a><a href="https://lbs.baidu.com/" target="_blank" rel="noopener noreferrer">${t.baidu}</a><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a></div><a class="about-home-link" href="${t.home}">${t.homeLabel}</a></dialog>
   <div id="toast" class="toast" role="status" hidden></div>
   <script type="application/json" id="map-config">${json({ lang: 'zh', locale: t.locale, home: t.home, url, labels: t, cities, venues: data.venues })}</script>
 </body>

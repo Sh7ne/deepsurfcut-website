@@ -63,6 +63,30 @@ const count = async (page, expected) => {
   assert.equal(await page.locator('.venue-card:not([hidden])').count(), expected);
 };
 const noOverflow = async (page) => assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `horizontal overflow at ${page.url()}`);
+const mapPointIsVisible = (selector) => {
+  const point = document.querySelector(selector)?.getBoundingClientRect();
+  if (!point || point.width <= 0 || point.height <= 0 || point.top <= 1 || point.left < 0 || point.right > innerWidth || point.bottom >= innerHeight) return false;
+  return [...document.querySelectorAll('.map-controls, #explore-sheet, .tab-bar, #about-open, .map-attribution, #provider-attribution')].every((node) => {
+    const style = getComputedStyle(node), rect = node.getBoundingClientRect();
+    if (style.display === 'none' || style.visibility === 'hidden' || !rect.width || !rect.height) return true;
+    return point.right <= rect.left || point.left >= rect.right || point.bottom <= rect.top || point.top >= rect.bottom;
+  });
+};
+const openAbout = async (page) => {
+  if (await page.locator('#about-dialog').evaluate((node) => node.open)) return;
+  if (!await page.locator('#about-open').isVisible()) {
+    await page.locator('.tab-bar [data-view="map"]').click();
+    if (!await page.locator('#about-open').isVisible() && await page.locator('#sheet-handle').isVisible()) await page.locator('#sheet-handle').click();
+  }
+  await page.locator('#about-open').click();
+  await page.locator('#about-dialog[open]').waitFor();
+  assert.ok(await page.locator('#about-dialog #map-provider').isVisible());
+};
+const closeAbout = async (page) => {
+  await page.locator('#about-close').click();
+  await page.locator('#about-dialog[open]').waitFor({ state: 'hidden' });
+  assert.ok(await page.locator('#about-open').evaluate((node) => node === document.activeElement), 'closing settings returns focus to the visible About button');
+};
 const ready = async (page, path = mapPath) => {
   await page.goto(new URL(path, base).href, { waitUntil: 'domcontentloaded' });
   await page.locator('html.enhanced').waitFor();
@@ -97,11 +121,38 @@ try {
     await page.waitForURL((url) => url.pathname === mapPath && !url.hash);
     await page.locator('html.enhanced').waitFor();
     await page.locator('.surf-marker').first().waitFor();
+    assert.equal(await page.locator('header').count(), 0);
+    assert.equal(await page.locator('h1').textContent(), '中国深水冲浪场馆地图');
+    assert.equal(await page.locator('#map-provider').isVisible(), false, 'provider settings stay inside the closed About dialog');
+    assert.equal(await page.locator('#about-open').isVisible(), width >= 768);
+    await openAbout(page);
+    assert.equal(await page.locator('#about-dialog .about-home-link').getAttribute('href'), '/zh/');
+    const aboutTarget = await page.locator('#about-open').boundingBox();
+    assert.ok(aboutTarget && aboutTarget.width >= 44 && aboutTarget.height >= 44);
+    const providerTarget = await page.locator('#map-provider').boundingBox();
+    assert.ok(providerTarget && providerTarget.width >= 44 && providerTarget.height >= 44);
+    await page.locator('#map-provider').focus();
+    for (let step = 0; step < 8; step++) {
+      await page.keyboard.press('Tab');
+      const focus = await page.evaluate(() => ({
+        inside: document.getElementById('about-dialog').contains(document.activeElement),
+        browserChrome: document.activeElement === document.body && !document.hasFocus(),
+      }));
+      assert.ok(focus.inside || focus.browserChrome, 'the native modal prevents background page controls from receiving keyboard focus');
+      if (focus.browserChrome) {
+        // Native dialogs permit Chrome's own UI in the tab sequence; the next
+        // page target must still be in the modal, never a background control.
+        await page.keyboard.press('Tab');
+        assert.ok(await page.evaluate(() => document.getElementById('about-dialog').contains(document.activeElement)));
+      }
+    }
+    await closeAbout(page);
     await count(page, 11);
     await noOverflow(page);
     assert.ok(await page.locator('.map-attribution a[href="https://www.openstreetmap.org/copyright"]').isVisible());
 
     await page.locator('[data-view="list"]').click();
+    if (width < 768) assert.equal(await page.locator('#about-open').isVisible(), false, 'About stays hidden while browsing the full list');
     await page.locator('#city-filters [data-city="北京"]').click();
     await count(page, 3);
     await page.locator('#city-filters [data-city="all"]').click();
@@ -173,10 +224,20 @@ try {
     const phone = await interaction.newPage();
     await phone.goto(new URL('/zh/', base).href);
     await ready(phone);
+    assert.equal(await phone.locator('#about-open').isVisible(), false);
     await phone.locator('#sheet-handle').click();
+    assert.equal(await phone.locator('#explore-sheet').getAttribute('data-snap'), 'low');
+    assert.ok(await phone.locator('#about-open').isVisible());
+    await phone.locator('#sheet-handle').click();
+    assert.equal(await phone.locator('#explore-sheet').getAttribute('data-snap'), 'half');
+    assert.equal(await phone.locator('#about-open').isVisible(), false);
+    await phone.locator('#sheet-handle').press('ArrowUp');
     assert.equal(await phone.locator('#explore-sheet').getAttribute('data-snap'), 'full');
     await phone.locator('.sheet-header h2').click();
     assert.equal(await phone.locator('#explore-sheet').getAttribute('data-snap'), 'full', 'ordinary clicks do not switch tabs');
+    await phone.locator('#sheet-handle').click();
+    assert.equal(await phone.locator('#explore-sheet').getAttribute('data-snap'), 'low');
+    assert.ok(await phone.locator('#about-open').isVisible());
     await phone.locator('.tab-bar [data-view="map"]').click();
     await phone.locator('#search').click();
     assert.equal(await phone.locator('#explore-sheet').getAttribute('data-snap'), 'full', 'search keeps the list expanded');
@@ -184,19 +245,14 @@ try {
     await count(phone, 3);
     assert.equal(await phone.locator('#explore-sheet').getAttribute('data-snap'), 'full', 'city filtering preserves the panel position');
 
-    for (const selector of ['#sheet-handle', '#about-open', '#map-provider', '#filter-open', '#locate', '#fit-map', '.venue-card:not([hidden]) .save-button', '.chip']) {
+    for (const selector of ['#sheet-handle', '#filter-open', '#locate', '#fit-map', '.venue-card:not([hidden]) .save-button', '.chip']) {
       const size = await phone.locator(selector).first().boundingBox();
       assert.ok(size && size.width >= 44 && size.height >= 44, `${selector}: touch target is at least 44px`);
     }
     await phone.locator('[data-open="back-to-sea"]').click();
     await phone.locator('#show-on-map').click();
     await phone.waitForURL((url) => url.hash === '');
-    await phone.waitForFunction(() => {
-      const pin = document.querySelector('[data-marker-venue="back-to-sea"].selected')?.getBoundingClientRect();
-      const sheet = document.getElementById('explore-sheet').getBoundingClientRect();
-      const header = document.querySelector('.app-header').getBoundingClientRect();
-      return pin && pin.top > header.bottom && pin.bottom < sheet.top && pin.left >= 0 && pin.right <= innerWidth;
-    });
+    await phone.waitForFunction(mapPointIsVisible, '[data-marker-venue="back-to-sea"].selected');
     assert.equal(await phone.locator('#venue-back-to-sea').getAttribute('aria-current'), 'location');
     assert.equal(await phone.locator('#explore-sheet').getAttribute('data-snap'), 'half');
 
@@ -284,10 +340,7 @@ try {
   await locatedPage.locator('#locate').click();
   await locatedPage.waitForFunction(() => document.body.dataset.view === 'map');
   await count(locatedPage, 11);
-  await locatedPage.waitForFunction(() => {
-    const point = document.querySelector('.leaflet-overlay-pane path')?.getBoundingClientRect();
-    return point && point.top > document.querySelector('.app-header').getBoundingClientRect().bottom && point.bottom < document.getElementById('explore-sheet').getBoundingClientRect().top;
-  });
+  await locatedPage.waitForFunction(mapPointIsVisible, '.leaflet-overlay-pane path');
   await located.close();
   console.log('PASS denied location fallback and granted location/nearest sorting');
 
@@ -345,12 +398,7 @@ try {
   await shortPage.waitForURL((url) => !url.hash);
   assert.equal(await shortPage.locator('body').getAttribute('data-view'), 'map');
   assert.equal(await shortPage.locator('#explore-sheet').getAttribute('data-snap'), 'low');
-  await shortPage.waitForFunction(() => {
-    const pin = document.querySelector('[data-marker-venue="back-to-sea"].selected')?.getBoundingClientRect();
-    const header = document.querySelector('.app-header').getBoundingClientRect();
-    const sheet = document.getElementById('explore-sheet').getBoundingClientRect();
-    return pin && pin.top > header.bottom && pin.bottom < sheet.top && pin.left >= 0 && pin.right <= innerWidth;
-  });
+  await shortPage.waitForFunction(mapPointIsVisible, '[data-marker-venue="back-to-sea"].selected');
   await shortScreen.close();
   console.log('PASS 320×568 show-on-map closes details, lowers the panel, and keeps the selected pin fully visible');
 
@@ -365,14 +413,8 @@ try {
   await landscapeMapPage.waitForURL((url) => !url.hash);
   assert.equal(await landscapeMapPage.locator('body').getAttribute('data-view'), 'map');
   assert.equal(await landscapeMapPage.locator('#explore-sheet').evaluate((node) => getComputedStyle(node).display), 'none');
-  await landscapeMapPage.waitForFunction(() => {
-    const pin = document.querySelector('[data-marker-venue="back-to-sea"].selected')?.getBoundingClientRect();
-    const header = document.querySelector('.app-header').getBoundingClientRect();
-    const provider = document.querySelector('.map-provider-control').getBoundingClientRect();
-    const tabs = document.querySelector('.tab-bar').getBoundingClientRect();
-    return pin && pin.top > Math.max(header.bottom, provider.bottom)
-      && pin.bottom < tabs.top && pin.left >= 0 && pin.right <= innerWidth;
-  });
+  assert.ok(await landscapeMapPage.locator('#about-open').isVisible());
+  await landscapeMapPage.waitForFunction(mapPointIsVisible, '[data-marker-venue="back-to-sea"].selected');
   await landscapeMap.close();
   console.log('PASS 667×375 show-on-map hides the sheet and frames the selected pin between top controls and tabs');
 
