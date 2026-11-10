@@ -120,3 +120,9 @@ dialog{color:var(--ink);border:1px solid white;background:var(--paper);border-ra
   .enhanced .explore-sheet[data-snap=low] .edition-nav { margin-top: 3px; }
   .enhanced .explore-sheet[data-snap=low] .search-row { margin-top: 8px; }
 }
+.language-nav{margin-top:4px}
+.language-nav a{padding-block:3px}
+@media (max-width:767px){
+  .enhanced .explore-sheet[data-snap=low] .language-nav{margin-top:0}
+  .enhanced .explore-sheet[data-snap=low] .language-nav a{padding-block:1px}
+}

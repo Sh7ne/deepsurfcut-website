@@ -15,7 +15,7 @@ await rm(output, { recursive: true, force: true });
 await mkdir(output);
 for (const path of [
   'index.html', '404.html', 'home.css', 'home.js', 'legal.css', 'styles.css', 'script.js',
-  'updates', 'updates.css', 'updates.js', 'venues', 'RapidSurfingMap.html', 'RapidSurfingMap-Europe.html', 'RapidSurfingMap-USA.html',
+  'updates', 'updates.css', 'updates.js', 'venues', 'RapidSurfingMap.html',
   'robots.txt', 'sitemap.xml', '_headers', '_routes.json', '_redirects',
   'assets', 'privacy', 'support', 'terms', 'zh', 'de', 'surf-video-editing', 'portrait-follow', 'portrait-follow.css', 'device-preview', 'deepfollow',
 ]) {

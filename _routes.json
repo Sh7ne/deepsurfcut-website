@@ -3,7 +3,8 @@
   "include": [
     "/api/retention",
     "/api/retention/*",
-    "/api/maps/*"
+    "/api/maps/*",
+    "/RapidSurfingMap"
   ],
   "exclude": []
 }

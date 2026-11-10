@@ -232,9 +232,9 @@ test('all three homepages expose Portrait Follow with an honest visual and match
   }
 });
 
-test('the sitemap lists localized product pages and all three canonical surf maps', async () => {
+test('the sitemap lists localized product pages and one canonical surf map', async () => {
   const $ = load(await readFile(new URL('sitemap.xml', root), 'utf8'), { xmlMode: true });
-  const sitemapPages = [...documents, ...['', '-Europe', '-USA'].map(suffix => ({ standalone: true, url: `${origin}/RapidSurfingMap${suffix}` }))];
+  const sitemapPages = [...documents, { standalone: true, url: `${origin}/RapidSurfingMap` }];
   const entries = $('urlset > url').toArray();
   assert.equal(entries.length, sitemapPages.length);
   const urls = entries.map((entry) => $(entry).children('loc').text().trim());

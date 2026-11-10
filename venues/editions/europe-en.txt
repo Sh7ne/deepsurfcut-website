@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f2f2f7">
+  <meta name="description" content="Explore deep-water standing waves in Europe, with venue details, booking links and directions.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Rapid Surfing Map">
+  <title>Rapid Surfing Map · Europe | DeepSurfCut</title>
+  <link rel="canonical" href="https://deepsurf.app/RapidSurfingMap">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="DeepSurfCut">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Rapid Surfing Map · Europe | DeepSurfCut">
+  <meta property="og:description" content="Explore deep-water standing waves in Europe, with venue details, booking links and directions.">
+  <meta property="og:url" content="https://deepsurf.app/RapidSurfingMap">
+  <meta property="og:image" content="https://deepsurf.app/assets/social-preview-20260917.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="753">
+  <meta property="og:image:alt" content="DeepSurfCut">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Rapid Surfing Map · Europe | DeepSurfCut">
+  <meta name="twitter:description" content="Explore deep-water standing waves in Europe, with venue details, booking links and directions.">
+  <meta name="twitter:image" content="https://deepsurf.app/assets/social-preview-20260917.jpg">
+  <link rel="icon" href="/assets/favicon-96.png" sizes="96x96" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180">
+  <link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="/venues/map.css?v=20261110-unified-map-1">
+  <script src="/assets/vendor/leaflet/leaflet.js" defer></script>
+  <script type="module" src="/venues/map.js?v=20261110-unified-map-1"></script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","@id":"https://deepsurf.app/RapidSurfingMap#webpage","url":"https://deepsurf.app/RapidSurfingMap","name":"Rapid Surfing Map · Europe | DeepSurfCut","description":"Explore deep-water standing waves in Europe, with venue details, booking links and directions.","inLanguage":"en","dateModified":"2026-11-10","isPartOf":{"@id":"https://deepsurf.app/#website"},"mainEntity":{"@type":"ItemList","numberOfItems":14,"itemListElement":[{"@type":"ListItem","position":1,"name":"Wellenwerk","url":"https://deepsurf.app/RapidSurfingMap?region=europe#venue-wellenwerk-berlin"},{"@type":"ListItem","position":2,"name":"Jochen Schweizer Arena","url":"https://deepsurf.app/RapidSurfingMap?region=europe#venue-jochen-schweizer-arena"},{"@type":"ListItem","position":3,"name":"RheinRiff","url":"https://deepsurf.app/RapidSurfingMap?region=europe#venue-rheinriff"},{"@type":"ListItem","position":4,"name":"L&T Hasewelle","url":"https://deepsurf.app/RapidSurfingMap?region=europe#venue-hasewelle"},{"@type":"ListItem","position":5,"name":"irie surf","url":"https://deepsurf.app/RapidSurfingMap?region=europe#venue-irie-surf"},{"@type":"ListItem","position":6,"name":"Surf Langenfeld","url":"https://deepsurf.app/RapidSurfingMap?region=europe#venue-surf-langenfeld"},{"@type":"ListItem","position":7,"name":"OANA","url":"https://deepsurf.app/RapidSurfingMap?region=europe#venue-oana"},{"@type":"ListItem","position":8,"name":"Honna Surf Hub","url":"https://deepsurf.app/RapidSurfingMap?region=europe#venue-honna"},{"@type":"ListItem","position":9,"name":"City Surf Park","url":"https://deepsurf.app/RapidSurfingMap?region=europe#venue-city-surf-park"},{"@type":"ListItem","position":10,"name":"Wakeparadise Milano","url":"https://deepsurf.app/RapidSurfingMap?region=europe#venue-wakeparadise-milano"},{"@type":"ListItem","position":11,"name":"citywave Vilnius","url":"https://deepsurf.app/RapidSurfingMap?region=europe#venue-citywave-vilnius"},{"@type":"ListItem","position":12,"name":"Surflux / Surf Luxembourg","url":"https://deepsurf.app/RapidSurfingMap?region=europe#venue-surflux"},{"@type":"ListItem","position":13,"name":"Surf Brothers Skolkovo","url":"https://deepsurf.app/RapidSurfingMap?region=europe#venue-surf-brothers-skolkovo"},{"@type":"ListItem","position":14,"name":"Flow Moscow","url":"https://deepsurf.app/RapidSurfingMap?region=europe#venue-flow-moscow"}]}}</script>
+</head>
+<body data-lang="en">
+  <a class="skip-link" href="#venue-list">Skip to venue list</a>
+  <main class="map-app">
+    <h1 class="sr-only">Rapid surfing venues · Europe</h1>
+    <section class="map-stage enhance-only" aria-label="Rapid surfing venues · Europe">
+      <div id="map" role="region" aria-label="Rapid surfing venues · Europe" tabindex="0"></div>
+      <button id="about-open" class="icon-button map-about-control enhance-only" type="button" aria-label="About this map" aria-haspopup="dialog" aria-controls="about-dialog"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10h.01"/></svg></button>
+      <div id="map-message" class="map-message" role="status"><span>Loading map…</span><button id="map-retry" type="button" hidden>Retry</button></div>
+      <div class="map-controls">
+        <button id="locate" class="icon-button" type="button" aria-label="Find my location" title="Find my location"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg></button>
+        <button id="fit-map" class="icon-button" type="button" aria-label="Show all venues" title="Show all venues"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/><path d="m8 8 8 8m0-8-8 8"/></svg></button>
+        <div class="zoom-controls"><button id="zoom-in" class="icon-button" type="button" aria-label="Zoom in"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button><button id="zoom-out" class="icon-button" type="button" aria-label="Zoom out"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/></svg></button></div>
+      </div>
+      <div class="map-attribution"><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap</a></div>
+      <div id="provider-attribution" class="provider-attribution" aria-label="Map provider logo" hidden></div>
+    </section>
+    <aside id="explore-sheet" class="explore-sheet" aria-label="Venue list">
+      <button id="sheet-handle" class="sheet-handle enhance-only" type="button" aria-label="Expand or collapse the venue list" aria-expanded="false" aria-controls="venue-list"><span></span></button>
+      <div class="sheet-header">
+        <h2>Rapid surfing in Europe</h2><p class="sheet-subtitle" lang="en">Deep-water standing waves</p>
+        <nav class="edition-nav" aria-label="Map region"><a href="/RapidSurfingMap?region=china">China</a><a href="/RapidSurfingMap?region=europe" aria-current="page">Europe</a><a href="/RapidSurfingMap?region=usa">United States</a></nav><nav class="edition-nav language-nav" aria-label="Page language">
+    <a data-map-lang="en" lang="en" href="/RapidSurfingMap?region=europe" aria-current="page">English</a><a data-map-lang="de" lang="de" href="/RapidSurfingMap?region=europe&amp;lang=de">Deutsch</a></nav>
+        <div class="search-row enhance-only"><div class="search-box"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg><input id="search" type="search" placeholder="Where do you want to surf?" aria-label="Search cities or venues" autocomplete="off" enterkeyhint="search"><button id="clear-search" class="icon-button" type="button" aria-label="Clear search" hidden><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button></div><button id="filter-open" class="filter-button icon-button" type="button" aria-label="Filters" aria-haspopup="dialog"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h9m4 0h3M4 17h3m4 0h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></button></div>
+        <div id="city-filters" class="filter-chips enhance-only" aria-label="All cities"><button type="button" class="chip active" data-city="all" aria-pressed="true">All cities</button><button type="button" class="chip" data-city="Berlin" aria-pressed="false">Berlin</button><button type="button" class="chip" data-city="Taufkirchen (Munich area)" aria-pressed="false">Taufkirchen (Munich area)</button><button type="button" class="chip" data-city="Düsseldorf" aria-pressed="false">Düsseldorf</button><button type="button" class="chip" data-city="Osnabrück" aria-pressed="false">Osnabrück</button><button type="button" class="chip" data-city="Freiburg im Breisgau" aria-pressed="false">Freiburg im Breisgau</button><button type="button" class="chip" data-city="Langenfeld" aria-pressed="false">Langenfeld</button><button type="button" class="chip" data-city="Ebikon (Lucerne area)" aria-pressed="false">Ebikon (Lucerne area)</button><button type="button" class="chip" data-city="Alcorcón (Madrid area)" aria-pressed="false">Alcorcón (Madrid area)</button><button type="button" class="chip" data-city="Décines-Charpieu (Lyon area)" aria-pressed="false">Décines-Charpieu (Lyon area)</button><button type="button" class="chip" data-city="Peschiera Borromeo (Milan area)" aria-pressed="false">Peschiera Borromeo (Milan area)</button><button type="button" class="chip" data-city="Vilnius" aria-pressed="false">Vilnius</button><button type="button" class="chip" data-city="Arlon" aria-pressed="false">Arlon</button><button type="button" class="chip" data-city="Moscow" aria-pressed="false">Moscow</button></div>
+        <div id="active-filters" class="active-filters" hidden></div>
+      </div>
+      <div class="list-heading"><p><strong id="result-count" aria-live="polite">14</strong> <span id="result-label">venues</span></p><label class="sort-control enhance-only"><span class="sr-only">Sort</span><select id="sort"><option value="recommended">Featured</option><option value="name">Name</option><option value="nearest">Nearest</option></select></label></div>
+      <noscript><p class="no-script-note">Enable JavaScript for the interactive map, filters and favorites. The venue directory remains available below.<br><a href="/">Back to DeepSurfCut</a></p></noscript>
+      <div id="venue-list" class="venue-list" tabindex="-1">
+          <article class="venue-card" id="venue-wellenwerk-berlin" data-id="wellenwerk-berlin" aria-labelledby="title-wellenwerk-berlin">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-wellenwerk-berlin" data-open="wellenwerk-berlin">
+                <span class="venue-number" aria-hidden="true"><span>01</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Berlin</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-wellenwerk-berlin" lang="en">Wellenwerk</h3>
+                  <span class="venue-tags"><span class="badge badge-indoor">Indoor</span></span>
+                  <span class="venue-summary" lang="en">Indoor Citywave with a surfable width of about 8.5 m.</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="wellenwerk-berlin" aria-label="Save venue · Wellenwerk" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>Venue details</summary>
+              <p lang="en">Indoor Citywave with a surfable width of about 8.5 m.</p>
+              <h4>Address</h4><p lang="en">Landsberger Allee 270, 10367 Berlin, Germany</p>
+              <p class="position-note">Site location · <span lang="en">Site marker. Use the address for directions.</span></p>
+              <h4>Opening and booking</h4><p lang="en">Book a session or lesson for your skill level through the venue calendar.</p>
+              <p>Opening information is not live. Check session availability before you travel.</p>
+              <p>Checked: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>Sources</h4><ul class="source-links"><li><a href="https://wellenwerk-berlin.de/indoor-surfen/" target="_blank" rel="noopener noreferrer">Booking and opening information<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://wellenwerk-berlin.de/" target="_blank" rel="noopener noreferrer">Additional source<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=Wellenwerk%20Landsberger%20Allee%20270%2C%2010367%20Berlin%2C%20Germany" target="_blank" rel="noopener noreferrer">Google Maps<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-jochen-schweizer-arena" data-id="jochen-schweizer-arena" aria-labelledby="title-jochen-schweizer-arena">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-jochen-schweizer-arena" data-open="jochen-schweizer-arena">
+                <span class="venue-number" aria-hidden="true"><span>02</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Taufkirchen (Munich area)</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-jochen-schweizer-arena" lang="en">Jochen Schweizer Arena</h3>
+                  <span class="venue-tags"><span class="badge badge-indoor">Indoor</span></span>
+                  <span class="venue-summary" lang="en">Indoor Citywave with a surfable width of about 7.5 m.</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="jochen-schweizer-arena" aria-label="Save venue · Jochen Schweizer Arena" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>Venue details</summary>
+              <p lang="en">Indoor Citywave with a surfable width of about 7.5 m.</p>
+              <h4>Address</h4><p lang="en">Ludwig-Bölkow-Allee 1, 82024 Taufkirchen, Germany</p>
+              <p class="position-note">Site location · <span lang="en">Site marker. Use the address for directions.</span></p>
+              <h4>Opening and booking</h4><p lang="en">The venue offers indoor lessons and public bookings year-round.</p>
+              <p>Opening information is not live. Check session availability before you travel.</p>
+              <p>Checked: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>Sources</h4><ul class="source-links"><li><a href="https://shop.jochen-schweizer-arena.de/indoor-surfen" target="_blank" rel="noopener noreferrer">Booking and opening information<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://www.jochen-schweizer-arena.de/indoor-surfen/" target="_blank" rel="noopener noreferrer">Additional source<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=Jochen%20Schweizer%20Arena%20Ludwig-B%C3%B6lkow-Allee%201%2C%2082024%20Taufkirchen%2C%20Germany" target="_blank" rel="noopener noreferrer">Google Maps<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-rheinriff" data-id="rheinriff" aria-labelledby="title-rheinriff">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-rheinriff" data-open="rheinriff">
+                <span class="venue-number" aria-hidden="true"><span>03</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Düsseldorf</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-rheinriff" lang="en">RheinRiff</h3>
+                  <span class="venue-tags"><span class="badge badge-indoor">Indoor</span></span>
+                  <span class="venue-summary" lang="en">Indoor Citywave with a surfable width of about 9 m.</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="rheinriff" aria-label="Save venue · RheinRiff" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>Venue details</summary>
+              <p lang="en">Indoor Citywave with a surfable width of about 9 m.</p>
+              <h4>Address</h4><p lang="en">Hansaallee 321, 40549 Düsseldorf, Germany</p>
+              <p class="position-note">Site location · <span lang="en">Site marker. Use the address for directions.</span></p>
+              <h4>Opening and booking</h4><p lang="en">Beginner lessons and public sessions are available by skill level.</p>
+              <p>Opening information is not live. Check session availability before you travel.</p>
+              <p>Checked: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>Sources</h4><ul class="source-links"><li><a href="https://www.rheinriff.com/de/surf" target="_blank" rel="noopener noreferrer">Booking and opening information<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://www.rheinriff.com/de/faq" target="_blank" rel="noopener noreferrer">Additional source<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=RheinRiff%20Hansaallee%20321%2C%2040549%20D%C3%BCsseldorf%2C%20Germany" target="_blank" rel="noopener noreferrer">Google Maps<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-hasewelle" data-id="hasewelle" aria-labelledby="title-hasewelle">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-hasewelle" data-open="hasewelle">
+                <span class="venue-number" aria-hidden="true"><span>04</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Osnabrück</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-hasewelle" lang="en">L&amp;T Hasewelle</h3>
+                  <span class="venue-tags"><span class="badge badge-indoor">Indoor</span></span>
+                  <span class="venue-summary" lang="en">A roughly 7.5 m wide Citywave inside the L&amp;T department store.</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="hasewelle" aria-label="Save venue · L&amp;T Hasewelle" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>Venue details</summary>
+              <p lang="en">A roughly 7.5 m wide Citywave inside the L&amp;T department store.</p>
+              <h4>Address</h4><p lang="en">Große Straße 27–32, 49074 Osnabrück, Germany</p>
+              <p class="position-note">Site location · <span lang="en">Site marker. Use the address for directions.</span></p>
+              <h4>Opening and booking</h4><p lang="en">Book by skill level. Sessions may be cancelled if too few people sign up.</p>
+              <p>Opening information is not live. Check session availability before you travel.</p>
+              <p>Checked: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>Sources</h4><ul class="source-links"><li><a href="https://www.l-t.de/pages/hasewelle" target="_blank" rel="noopener noreferrer">Booking and opening information<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://www.citywaveusa.com/locations/" target="_blank" rel="noopener noreferrer">Additional source<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=L%26T%20Hasewelle%20Gro%C3%9Fe%20Stra%C3%9Fe%2027%E2%80%9332%2C%2049074%20Osnabr%C3%BCck%2C%20Germany" target="_blank" rel="noopener noreferrer">Google Maps<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-irie-surf" data-id="irie-surf" aria-labelledby="title-irie-surf">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-irie-surf" data-open="irie-surf">
+                <span class="venue-number" aria-hidden="true"><span>05</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Freiburg im Breisgau</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-irie-surf" lang="en">irie surf</h3>
+                  <span class="venue-tags"><span class="badge badge-outdoor">Outdoor</span></span>
+                  <span class="venue-summary" lang="en">An outdoor Citywave about 9 m wide near the Messe Freiburg tram stop.</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="irie-surf" aria-label="Save venue · irie surf" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>Venue details</summary>
+              <p lang="en">An outdoor Citywave about 9 m wide near the Messe Freiburg tram stop.</p>
+              <h4>Address</h4><p lang="en">Near the Messe Freiburg tram stop, 79108 Freiburg im Breisgau, Germany</p>
+              <p class="position-note">Approximate location · <span lang="en">Approximate location. Use the venue name for directions.</span></p>
+              <h4>Opening and booking</h4><p lang="en">The venue lists kids’, beginner and advanced sessions. Weather can affect opening.</p>
+              <p>Opening information is not live. Check session availability before you travel.</p>
+              <p>Checked: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>Sources</h4><ul class="source-links"><li><a href="https://iriesurf.de/activities/surf" target="_blank" rel="noopener noreferrer">Booking and opening information<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://citywave.de/blog/surfing-at-the-foot-of-the-black-forest-citywave-freiburg-and-irie-surf-open-in-may/" target="_blank" rel="noopener noreferrer">Additional source<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=irie%20surf%20Near%20the%20Messe%20Freiburg%20tram%20stop%2C%2079108%20Freiburg%20im%20Breisgau%2C%20Germany" target="_blank" rel="noopener noreferrer">Google Maps<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-surf-langenfeld" data-id="surf-langenfeld" aria-labelledby="title-surf-langenfeld">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-surf-langenfeld" data-open="surf-langenfeld">
+                <span class="venue-number" aria-hidden="true"><span>06</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Langenfeld</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-surf-langenfeld" lang="en">Surf Langenfeld</h3>
+                  <span class="venue-tags"><span class="badge badge-outdoor">Outdoor</span><span class="badge badge-seasonal">Seasonal</span></span>
+                  <span class="venue-summary" lang="en">An 8 m wide floating UNIT standing wave on a freshwater lake.</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="surf-langenfeld" aria-label="Save venue · Surf Langenfeld" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>Venue details</summary>
+              <p lang="en">An 8 m wide floating UNIT standing wave on a freshwater lake.</p>
+              <h4>Address</h4><p lang="en">Baumberger Str. 88, 40764 Langenfeld, Germany</p>
+              <p class="position-note">Site location · <span lang="en">Site marker. Use the address for directions.</span></p>
+              <h4>Opening and booking</h4><p lang="en">The operator lists weekend opening in November and December, with the 2026 season ending on December 6.</p>
+              <p>Opening information is not live. Check session availability before you travel.</p>
+              <p>Checked: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>Sources</h4><ul class="source-links"><li><a href="https://www.surf-langenfeld.de/en/opening-hours/" target="_blank" rel="noopener noreferrer">Booking and opening information<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://www.surf-pool.com/locations" target="_blank" rel="noopener noreferrer">Additional source<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=Surf%20Langenfeld%20Baumberger%20Str.%2088%2C%2040764%20Langenfeld%2C%20Germany" target="_blank" rel="noopener noreferrer">Google Maps<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-oana" data-id="oana" aria-labelledby="title-oana">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-oana" data-open="oana">
+                <span class="venue-number" aria-hidden="true"><span>07</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Ebikon (Lucerne area)</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-oana" lang="en">OANA</h3>
+                  <span class="venue-tags"><span class="badge badge-indoor">Indoor</span></span>
+                  <span class="venue-summary" lang="en">A heated indoor Citywave inside the Mall of Switzerland.</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="oana" aria-label="Save venue · OANA" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>Venue details</summary>
+              <p lang="en">A heated indoor Citywave inside the Mall of Switzerland.</p>
+              <h4>Address</h4><p lang="en">Ebisquare-Strasse 2, 6030 Ebikon, Switzerland</p>
+              <p class="position-note">Site location · <span lang="en">Site marker. Use the address for directions.</span></p>
+              <h4>Opening and booking</h4><p lang="en">The venue operates year-round and offers Basic sessions and private bookings.</p>
+              <p>Opening information is not live. Check session availability before you travel.</p>
+              <p>Checked: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>Sources</h4><ul class="source-links"><li><a href="https://www.oana.surf/" target="_blank" rel="noopener noreferrer">Booking and opening information<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://www.mallofswitzerland.ch/en/surfing-at-oana/" target="_blank" rel="noopener noreferrer">Additional source<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=OANA%20Ebisquare-Strasse%202%2C%206030%20Ebikon%2C%20Switzerland" target="_blank" rel="noopener noreferrer">Google Maps<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-honna" data-id="honna" aria-labelledby="title-honna">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-honna" data-open="honna">
+                <span class="venue-number" aria-hidden="true"><span>08</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Alcorcón (Madrid area)</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-honna" lang="en">Honna Surf Hub</h3>
+                  <span class="venue-tags"><span class="badge badge-outdoor">Outdoor</span></span>
+                  <span class="venue-summary" lang="en">The Citywave Madrid standing wave at X-Madrid.</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="honna" aria-label="Save venue · Honna Surf Hub" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>Venue details</summary>
+              <p lang="en">The Citywave Madrid standing wave at X-Madrid.</p>
+              <h4>Address</h4><p lang="en">X-Madrid, Calle Oslo 53, 28922 Alcorcón, Spain</p>
+              <p class="position-note">Site location · <span lang="en">Site marker. Use the address for directions.</span></p>
+              <h4>Opening and booking</h4><p lang="en">Book a first-timer, advanced or kids’ session by skill level.</p>
+              <p>Opening information is not live. Check session availability before you travel.</p>
+              <p>Checked: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>Sources</h4><ul class="source-links"><li><a href="https://booking.honnasurfhub.com/" target="_blank" rel="noopener noreferrer">Booking and opening information<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://x-madrid.com/ocioydeporte/honnasurfhub-madrid/" target="_blank" rel="noopener noreferrer">Additional source<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=Honna%20Surf%20Hub%20X-Madrid%2C%20Calle%20Oslo%2053%2C%2028922%20Alcorc%C3%B3n%2C%20Spain" target="_blank" rel="noopener noreferrer">Google Maps<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-city-surf-park" data-id="city-surf-park" aria-labelledby="title-city-surf-park">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-city-surf-park" data-open="city-surf-park">
+                <span class="venue-number" aria-hidden="true"><span>09</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Décines-Charpieu (Lyon area)</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-city-surf-park" lang="en">City Surf Park</h3>
+                  <span class="venue-tags"><span class="badge badge-indoor">Indoor</span></span>
+                  <span class="venue-summary" lang="en">An indoor standing wave at OL Vallée. The wave system was replaced in 2026.</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="city-surf-park" aria-label="Save venue · City Surf Park" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>Venue details</summary>
+              <p lang="en">An indoor standing wave at OL Vallée. The wave system was replaced in 2026.</p>
+              <h4>Address</h4><p lang="en">OL Vallée, Parking P7, Décines-Charpieu, France</p>
+              <p class="position-note">Site location · <span lang="en">Site marker. Use the address for directions.</span></p>
+              <h4>Opening and booking</h4><p lang="en">The venue offers public bookings and has announced a rapid surfing competition for December 2026.</p>
+              <p>Opening information is not live. Check session availability before you travel.</p>
+              <p>Checked: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>Sources</h4><ul class="source-links"><li><a href="https://www.city-surf-park.com/" target="_blank" rel="noopener noreferrer">Booking and opening information<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://www.city-surf-park.com/surfopenlyon-register" target="_blank" rel="noopener noreferrer">Additional source<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=City%20Surf%20Park%20OL%20Vall%C3%A9e%2C%20Parking%20P7%2C%20D%C3%A9cines-Charpieu%2C%20France" target="_blank" rel="noopener noreferrer">Google Maps<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-wakeparadise-milano" data-id="wakeparadise-milano" aria-labelledby="title-wakeparadise-milano">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-wakeparadise-milano" data-open="wakeparadise-milano">
+                <span class="venue-number" aria-hidden="true"><span>10</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Peschiera Borromeo (Milan area)</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-wakeparadise-milano" lang="en">Wakeparadise Milano</h3>
+                  <span class="venue-tags"><span class="badge badge-outdoor">Outdoor</span><span class="badge badge-seasonal">Seasonal</span></span>
+                  <span class="venue-summary" lang="en">A floating UNIT standing wave at Idroscalo, 10 m wide.</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="wakeparadise-milano" aria-label="Save venue · Wakeparadise Milano" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>Venue details</summary>
+              <p lang="en">A floating UNIT standing wave at Idroscalo, 10 m wide.</p>
+              <h4>Address</h4><p lang="en">Parco Idroscalo, South Entrance, Via Idroscalo, 20068 Peschiera Borromeo, Italy</p>
+              <p class="position-note">Site location · <span lang="en">Site marker. Use the address for directions.</span></p>
+              <h4>Opening and booking</h4><p lang="en">The operator lists Friday–Monday opening from November to March. Registration is required, and weekend visits need a confirmed booking. Check surf slots separately.</p>
+              <p>Opening information is not live. Check session availability before you travel.</p>
+              <p>Checked: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>Sources</h4><ul class="source-links"><li><a href="https://wakeparadise.it/milano/en/openinghoursaccess/" target="_blank" rel="noopener noreferrer">Booking and opening information<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://wakeparadise.it/milano/surf/" target="_blank" rel="noopener noreferrer">Additional source<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=Wakeparadise%20Milano%20Parco%20Idroscalo%2C%20South%20Entrance%2C%20Via%20Idroscalo%2C%2020068%20Peschiera%20Borromeo%2C%20Italy" target="_blank" rel="noopener noreferrer">Google Maps<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-citywave-vilnius" data-id="citywave-vilnius" aria-labelledby="title-citywave-vilnius">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-citywave-vilnius" data-open="citywave-vilnius">
+                <span class="venue-number" aria-hidden="true"><span>11</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Vilnius</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-citywave-vilnius" lang="en">citywave Vilnius</h3>
+                  <span class="venue-tags"><span class="badge badge-indoor">Indoor</span></span>
+                  <span class="venue-summary" lang="en">An indoor Citywave at Enefit Arena.</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="citywave-vilnius" aria-label="Save venue · citywave Vilnius" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>Venue details</summary>
+              <p lang="en">An indoor Citywave at Enefit Arena.</p>
+              <h4>Address</h4><p lang="en">Šv. Stepono g. 41, 03209 Vilnius, Lithuania</p>
+              <p class="position-note">Site location · <span lang="en">Site marker. Use the address for directions.</span></p>
+              <h4>Opening and booking</h4><p lang="en">Public bookings include first-timer and advanced sessions.</p>
+              <p>Opening information is not live. Check session availability before you travel.</p>
+              <p>Checked: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>Sources</h4><ul class="source-links"><li><a href="https://enefitarena.lt/en/city-wave/session/" target="_blank" rel="noopener noreferrer">Booking and opening information<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://www.govilnius.lt/meet-in-vilnius/venue-finder/enefit-arena-powered-by-citywave" target="_blank" rel="noopener noreferrer">Additional source<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=citywave%20Vilnius%20%C5%A0v.%20Stepono%20g.%2041%2C%2003209%20Vilnius%2C%20Lithuania" target="_blank" rel="noopener noreferrer">Google Maps<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-surflux" data-id="surflux" aria-labelledby="title-surflux">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-surflux" data-open="surflux">
+                <span class="venue-number" aria-hidden="true"><span>12</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Arlon</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-surflux" lang="en">Surflux / Surf Luxembourg</h3>
+                  <span class="venue-tags"><span class="badge badge-indoor">Indoor</span></span>
+                  <span class="venue-summary" lang="en">A deep-water FlowSurf standing wave at the Van der Valk hotel site in Arlon.</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="surflux" aria-label="Save venue · Surflux / Surf Luxembourg" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>Venue details</summary>
+              <p lang="en">A deep-water FlowSurf standing wave at the Van der Valk hotel site in Arlon.</p>
+              <h4>Address</h4><p lang="en">596 Route de Longwy, 6700 Arlon, Belgium</p>
+              <p class="position-note">Site location · <span lang="en">Site marker. Use the address for directions.</span></p>
+              <h4>Opening and booking</h4><p lang="en">The venue offers bookings year-round. The operator and club announced a standing-wave competition for November 2026.</p>
+              <p>Opening information is not live. Check session availability before you travel.</p>
+              <p>Checked: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>Sources</h4><ul class="source-links"><li><a href="https://surflux.eu/en/surfing-experience/" target="_blank" rel="noopener noreferrer">Booking and opening information<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://club.surflux.eu/competition" target="_blank" rel="noopener noreferrer">Additional source<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=Surflux%20%2F%20Surf%20Luxembourg%20596%20Route%20de%20Longwy%2C%206700%20Arlon%2C%20Belgium" target="_blank" rel="noopener noreferrer">Google Maps<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-surf-brothers-skolkovo" data-id="surf-brothers-skolkovo" aria-labelledby="title-surf-brothers-skolkovo">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-surf-brothers-skolkovo" data-open="surf-brothers-skolkovo">
+                <span class="venue-number" aria-hidden="true"><span>13</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Moscow</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-surf-brothers-skolkovo" lang="en">Surf Brothers Skolkovo</h3>
+                  <span class="venue-tags"><span class="badge badge-indoor">Indoor</span></span>
+                  <span class="venue-summary" lang="en">An indoor standing wave 9 m wide in the Skolkovo business district.</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="surf-brothers-skolkovo" aria-label="Save venue · Surf Brothers Skolkovo" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>Venue details</summary>
+              <p lang="en">An indoor standing wave 9 m wide in the Skolkovo business district.</p>
+              <h4>Address</h4><p lang="en">Bolshoy Boulevard 40, BC Amalthea, Skolkovo, Moscow, Russia</p>
+              <p class="position-note">Site location · <span lang="en">Site marker. Use the address for directions.</span></p>
+              <h4>Opening and booking</h4><p lang="en">The operator lists lessons and public booking.</p>
+              <p>Opening information is not live. Check session availability before you travel.</p>
+              <p>Checked: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>Sources</h4><ul class="source-links"><li><a href="https://skolkovo.surfbrothers.ru/" target="_blank" rel="noopener noreferrer">Booking and opening information<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://bookmaker-ratings.by/ru/news/v-surf-brothers-skolkovo-projdet-pervy-j-chempionat-rossii-po-serfingu-na-iskusstvennoj-volne/" target="_blank" rel="noopener noreferrer">Additional source<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=Surf%20Brothers%20Skolkovo%20Bolshoy%20Boulevard%2040%2C%20BC%20Amalthea%2C%20Skolkovo%2C%20Moscow%2C%20Russia" target="_blank" rel="noopener noreferrer">Google Maps<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-flow-moscow" data-id="flow-moscow" aria-labelledby="title-flow-moscow">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-flow-moscow" data-open="flow-moscow">
+                <span class="venue-number" aria-hidden="true"><span>14</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Moscow</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-flow-moscow" lang="en">Flow Moscow</h3>
+                  <span class="venue-tags"><span class="badge badge-indoor">Indoor</span></span>
+                  <span class="venue-summary" lang="en">An indoor Citywave with a surfable width of 7.5 m.</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="flow-moscow" aria-label="Save venue · Flow Moscow" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>Venue details</summary>
+              <p lang="en">An indoor Citywave with a surfable width of 7.5 m.</p>
+              <h4>Address</h4><p lang="en">Stavropolskaya ulitsa 43, Moscow, Russia</p>
+              <p class="position-note">Site location · <span lang="en">Site marker. Use the address for directions.</span></p>
+              <h4>Opening and booking</h4><p lang="en">The venue lists lessons and passes. Check booking rules for first-timers and children.</p>
+              <p>Opening information is not live. Check session availability before you travel.</p>
+              <p>Checked: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>Sources</h4><ul class="source-links"><li><a href="https://moscowflow.ru/volna/" target="_blank" rel="noopener noreferrer">Booking and opening information<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://topheats.ru/org/flowmoscow" target="_blank" rel="noopener noreferrer">Additional source<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=Flow%20Moscow%20Stavropolskaya%20ulitsa%2043%2C%20Moscow%2C%20Russia" target="_blank" rel="noopener noreferrer">Google Maps<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+        <div id="empty-state" class="empty-state" hidden><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg><h3>No matching venues</h3><p>Try a different name or city.</p><button id="reset-filters" type="button">Clear filters</button></div>
+      </div>
+      <p class="directory-note">Opening information is not live. Check session availability before you travel.</p>
+    </aside>
+  </main>
+  <nav class="tab-bar enhance-only" aria-label="Rapid Surfing Map"><button type="button" data-view="map" aria-current="page"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6Zm6-3v15m6-12v15"/></svg><span>Map</span></button><button type="button" data-view="list"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg><span>List</span></button><button type="button" data-view="saved"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg><span>Saved</span><span id="saved-count" class="saved-count" hidden>0</span></button></nav>
+  <dialog id="venue-detail" class="venue-detail" aria-label="Venue details"><button id="detail-close" class="dialog-close icon-button" type="button" aria-label="Close"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button><div id="detail-content"></div></dialog>
+  <dialog id="filter-dialog" class="filter-dialog" aria-labelledby="filter-title"><form method="dialog">
+    <div class="dialog-heading"><div><p class="sheet-kicker">Rapid Surfing Map</p><h2 id="filter-title">Filters</h2></div><button class="icon-button" type="submit" value="cancel" aria-label="Close"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button></div>
+    <p class="dialog-intro">Find a venue for your next session.</p>
+    <fieldset><legend>Venue setting</legend><div class="environment-options"><label><input type="radio" name="environment" value="all" checked><span>All</span></label><label><input type="radio" name="environment" value="indoor"><span>Indoor</span></label><label><input type="radio" name="environment" value="outdoor"><span>Outdoor</span></label></div></fieldset>
+    <label class="switch-row"><span>Seasonal venues only</span><input id="seasonal-only" type="checkbox"><span class="switch-track" aria-hidden="true"></span></label>
+    <div class="dialog-actions"><button id="filter-reset" class="secondary-button" type="button">Clear filters</button><button id="filter-apply" class="primary-button" type="submit" value="apply">Show venues</button></div>
+  </form></dialog>
+  <dialog id="about-dialog" class="about-dialog" aria-labelledby="about-title"><button id="about-close" class="dialog-close icon-button" type="button" aria-label="Close"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button><h2 id="about-title">About the Rapid Surfing Map</h2><p class="about-intro">A directory of deep-water standing waves in Europe, by DeepSurfCut.</p><label class="map-provider-control" hidden><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6Zm6-3v15m6-12v15"/></svg><span>Map provider</span><select id="map-provider" disabled><option value="osm" selected>OpenStreetMap</option></select></label><p>The directory covers commercial deep-water standing waves. It excludes thin-sheet simulators, natural river waves and unverified projects.</p><p>Each listing shows its last check. Check the operator for current hours, seasonal closures and bookings.</p><p>Pins show venue, site or approximate locations. Check the address and entrance before travelling.</p><p>Favorites are saved in this browser. Location is requested only when you select the location button. The site does not store your precise location.</p><p>The base map uses OpenStreetMap. Venue details link to Google Maps and Apple Maps.</p><div class="provider-links"><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a></div><section id="provider-legal-attribution" class="provider-legal-attribution" aria-label="Map attribution" hidden></section><a class="about-home-link" href="/">Back to DeepSurfCut</a></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <script type="application/json" id="map-config">{"lang":"en","locale":"en-US","home":"/","url":"https://deepsurf.app/RapidSurfingMap","viewUrl":"https://deepsurf.app/RapidSurfingMap?region=europe","edition":"europe","center":[49,12],"labels":{"lang":"en","locale":"en-US","home":"/","heading":"Rapid Surfing Map","subtitle":"Deep-water standing waves","regions":["China","Europe","United States"],"regionPicker":"Map region","languages":"Page language","skip":"Skip to venue list","homeLabel":"Back to DeepSurfCut","about":"About this map","search":"Search cities or venues","searchPlaceholder":"Where do you want to surf?","clearSearch":"Clear search","all":"All","allCities":"All cities","indoor":"Indoor","outdoor":"Outdoor","seasonal":"Seasonal","venues":"venues","saved":"Saved","save":"Save venue","unsave":"Remove saved venue","savedToast":"Venue saved","removedToast":"Venue removed","mapLoading":"Loading map…","mapError":"The map is unavailable. You can still browse venues and open directions.","retry":"Retry","noResults":"No matching venues","noResultsHint":"Try a different name or city.","noSaved":"No saved venues","noSavedHint":"Save a venue to find it here later.","reset":"Clear filters","results":"{count} venues","favoritesCount":"{count} saved","nearby":"Nearby","locationLoading":"Finding your location…","locationError":"Could not find your location.","locationDenied":"Location permission was denied. You can still browse by city.","locationUnsupported":"This browser does not support location.","locationFound":"Location found","locationTimeout":"Location timed out. Try again.","noPosition":"Location to be confirmed","approximate":"Approximate location","sitePosition":"Site location","exactPosition":"Venue location","source":"Source","sources":"Sources","updated":"Checked","address":"Address","opening":"Opening and booking","overview":"About the venue","directions":"Directions","google":"Google Maps","apple":"Apple Maps","share":"Share venue","copy":"Copy link","copyAddress":"Copy address","copied":"Link copied","shareCopied":"Venue link copied","shareTitle":"Go surfing here","shareError":"Could not share. Copy the address from your browser.","viewMap":"Show on map","close":"Close","kilometer":"km","filters":"Filters","filterCount":"{count} filters","clear":"Clear","details":"Venue details","dataNotice":"Opening information is not live. Check session availability before you travel.","loadingError":"Could not load venue information. Reload to try again.","unknownStatus":"Check session availability","nearestNeedsLocation":"Enable location to sort by distance.","listView":"List","mapView":"Map","savedView":"Saved","noSources":"No public sources linked.","copiedAddress":"Address copied","listLabel":"Venue list","locate":"Find my location","fitMap":"Show all venues","zoomIn":"Zoom in","zoomOut":"Zoom out","expandSheet":"Expand or collapse the venue list","sort":"Sort","recommended":"Featured","nameSort":"Name","nearestSort":"Nearest","environment":"Venue setting","seasonalOnly":"Seasonal venues only","apply":"Show venues","filterHint":"Find a venue for your next session.","aboutHeading":"About the Rapid Surfing Map","aboutScope":"The directory covers commercial deep-water standing waves. It excludes thin-sheet simulators, natural river waves and unverified projects.","aboutDates":"Each listing shows its last check. Check the operator for current hours, seasonal closures and bookings.","aboutPositions":"Pins show venue, site or approximate locations. Check the address and entrance before travelling.","aboutPrivacy":"Favorites are saved in this browser. Location is requested only when you select the location button. The site does not store your precise location.","aboutMap":"The base map uses OpenStreetMap. Venue details link to Google Maps and Apple Maps.","mapProvider":"Map provider","mapServiceMark":"Map provider logo","mapAttribution":"Map attribution","attribution":"Map data","noScript":"Enable JavaScript for the interactive map, filters and favorites. The venue directory remains available below.","title":"Rapid Surfing Map · Europe | DeepSurfCut","intro":"Rapid surfing in Europe","description":"Explore deep-water standing waves in Europe, with venue details, booking links and directions.","mapLabel":"Rapid surfing venues · Europe","aboutIntro":"A directory of deep-water standing waves in Europe, by DeepSurfCut."},"cities":{},"venues":[{"id":"wellenwerk-berlin","name":"Wellenwerk","shortName":"Wellenwerk","city":"Berlin","province":"Germany","environment":"indoor","seasonal":false,"seasonNote":"Book a session or lesson for your skill level through the venue calendar.","summary":"Indoor Citywave with a surfable width of about 8.5 m.","description":"Indoor Citywave with a surfable width of about 8.5 m.","address":"Landsberger Allee 270, 10367 Berlin, Germany","verifiedAt":"2026-11-10","sources":[{"url":"https://wellenwerk-berlin.de/indoor-surfen/","label":"Booking and opening information"},{"url":"https://wellenwerk-berlin.de/","label":"Additional source"}],"position":{"lat":52.5341,"lng":13.4946,"accuracy":"site","label":"Site marker. Use the address for directions.","sourceUrl":"https://www.ortsdienst.de/berlin/lichtenberg-hohenschoenhausen/lichtenberg/branchenbuch-diverse-freizeitanlagen/wellenwerk-berlin-gmbh-bid139041/"}},{"id":"jochen-schweizer-arena","name":"Jochen Schweizer Arena","shortName":"Jochen Schweizer Arena","city":"Taufkirchen (Munich area)","province":"Germany","environment":"indoor","seasonal":false,"seasonNote":"The venue offers indoor lessons and public bookings year-round.","summary":"Indoor Citywave with a surfable width of about 7.5 m.","description":"Indoor Citywave with a surfable width of about 7.5 m.","address":"Ludwig-Bölkow-Allee 1, 82024 Taufkirchen, Germany","verifiedAt":"2026-11-10","sources":[{"url":"https://shop.jochen-schweizer-arena.de/indoor-surfen","label":"Booking and opening information"},{"url":"https://www.jochen-schweizer-arena.de/indoor-surfen/","label":"Additional source"}],"position":{"lat":48.041847,"lng":11.653793,"accuracy":"site","label":"Site marker. Use the address for directions.","sourceUrl":"https://adresse.dastelefonbuch.de/Taufkirchen/1-Jochen-Schweizer-Arena-GmbH-Taufkirchen-Ludwig-B%C3%B6lkow-Allee.html"}},{"id":"rheinriff","name":"RheinRiff","shortName":"RheinRiff","city":"Düsseldorf","province":"Germany","environment":"indoor","seasonal":false,"seasonNote":"Beginner lessons and public sessions are available by skill level.","summary":"Indoor Citywave with a surfable width of about 9 m.","description":"Indoor Citywave with a surfable width of about 9 m.","address":"Hansaallee 321, 40549 Düsseldorf, Germany","verifiedAt":"2026-11-10","sources":[{"url":"https://www.rheinriff.com/de/surf","label":"Booking and opening information"},{"url":"https://www.rheinriff.com/de/faq","label":"Additional source"}],"position":{"lat":51.245342,"lng":6.712217,"accuracy":"site","label":"Site marker. Use the address for directions.","sourceUrl":"https://adresse.dastelefonbuch.de/D%C3%BCsseldorf/1-RheinRiff-GmbH-D%C3%BCsseldorf-Hansaallee.html"}},{"id":"hasewelle","name":"L&T Hasewelle","shortName":"L&T Hasewelle","city":"Osnabrück","province":"Germany","environment":"indoor","seasonal":false,"seasonNote":"Book by skill level. Sessions may be cancelled if too few people sign up.","summary":"A roughly 7.5 m wide Citywave inside the L&T department store.","description":"A roughly 7.5 m wide Citywave inside the L&T department store.","address":"Große Straße 27–32, 49074 Osnabrück, Germany","verifiedAt":"2026-11-10","sources":[{"url":"https://www.l-t.de/pages/hasewelle","label":"Booking and opening information"},{"url":"https://www.citywaveusa.com/locations/","label":"Additional source"}],"position":{"lat":52.27465,"lng":8.04688,"accuracy":"site","label":"Site marker. Use the address for directions.","sourceUrl":"https://germany.worldplaces.me/city/osnabruck/view-place/4010417-l-and-t-lengermann-und-trieschmann.html"}},{"id":"irie-surf","name":"irie surf","shortName":"irie surf","city":"Freiburg im Breisgau","province":"Germany","environment":"outdoor","seasonal":false,"seasonNote":"The venue lists kids’, beginner and advanced sessions. Weather can affect opening.","summary":"An outdoor Citywave about 9 m wide near the Messe Freiburg tram stop.","description":"An outdoor Citywave about 9 m wide near the Messe Freiburg tram stop.","address":"Near the Messe Freiburg tram stop, 79108 Freiburg im Breisgau, Germany","verifiedAt":"2026-11-10","sources":[{"url":"https://iriesurf.de/activities/surf","label":"Booking and opening information"},{"url":"https://citywave.de/blog/surfing-at-the-foot-of-the-black-forest-citywave-freiburg-and-irie-surf-open-in-may/","label":"Additional source"}],"position":{"lat":48.02,"lng":7.846,"accuracy":"approximate","label":"Approximate location. Use the venue name for directions.","sourceUrl":"https://mapcarta.com/W1489575776"}},{"id":"surf-langenfeld","name":"Surf Langenfeld","shortName":"Surf Langenfeld","city":"Langenfeld","province":"Germany","environment":"outdoor","seasonal":true,"seasonNote":"The operator lists weekend opening in November and December, with the 2026 season ending on December 6.","summary":"An 8 m wide floating UNIT standing wave on a freshwater lake.","description":"An 8 m wide floating UNIT standing wave on a freshwater lake.","address":"Baumberger Str. 88, 40764 Langenfeld, Germany","verifiedAt":"2026-11-10","sources":[{"url":"https://www.surf-langenfeld.de/en/opening-hours/","label":"Booking and opening information"},{"url":"https://www.surf-pool.com/locations","label":"Additional source"}],"position":{"lat":51.1131,"lng":6.913,"accuracy":"site","label":"Site marker. Use the address for directions.","sourceUrl":"https://spots.mywatersessions.com/spots/langenfeld"}},{"id":"oana","name":"OANA","shortName":"OANA","city":"Ebikon (Lucerne area)","province":"Switzerland","environment":"indoor","seasonal":false,"seasonNote":"The venue operates year-round and offers Basic sessions and private bookings.","summary":"A heated indoor Citywave inside the Mall of Switzerland.","description":"A heated indoor Citywave inside the Mall of Switzerland.","address":"Ebisquare-Strasse 2, 6030 Ebikon, Switzerland","verifiedAt":"2026-11-10","sources":[{"url":"https://www.oana.surf/","label":"Booking and opening information"},{"url":"https://www.mallofswitzerland.ch/en/surfing-at-oana/","label":"Additional source"}],"position":{"lat":47.09387,"lng":8.35823,"accuracy":"site","label":"Site marker. Use the address for directions.","sourceUrl":"https://en.wikipedia.org/wiki/Mall_of_Switzerland"}},{"id":"honna","name":"Honna Surf Hub","shortName":"Honna Surf Hub","city":"Alcorcón (Madrid area)","province":"Spain","environment":"outdoor","seasonal":false,"seasonNote":"Book a first-timer, advanced or kids’ session by skill level.","summary":"The Citywave Madrid standing wave at X-Madrid.","description":"The Citywave Madrid standing wave at X-Madrid.","address":"X-Madrid, Calle Oslo 53, 28922 Alcorcón, Spain","verifiedAt":"2026-11-10","sources":[{"url":"https://booking.honnasurfhub.com/","label":"Booking and opening information"},{"url":"https://x-madrid.com/ocioydeporte/honnasurfhub-madrid/","label":"Additional source"}],"position":{"lat":40.33985,"lng":-3.8482,"accuracy":"site","label":"Site marker. Use the address for directions.","sourceUrl":"https://mapcarta.com/W32013299"}},{"id":"city-surf-park","name":"City Surf Park","shortName":"City Surf Park","city":"Décines-Charpieu (Lyon area)","province":"France","environment":"indoor","seasonal":false,"seasonNote":"The venue offers public bookings and has announced a rapid surfing competition for December 2026.","summary":"An indoor standing wave at OL Vallée. The wave system was replaced in 2026.","description":"An indoor standing wave at OL Vallée. The wave system was replaced in 2026.","address":"OL Vallée, Parking P7, Décines-Charpieu, France","verifiedAt":"2026-11-10","sources":[{"url":"https://www.city-surf-park.com/","label":"Booking and opening information"},{"url":"https://www.city-surf-park.com/surfopenlyon-register","label":"Additional source"}],"position":{"lat":45.767096,"lng":4.980878,"accuracy":"site","label":"Site marker. Use the address for directions.","sourceUrl":"https://www.aleou.fr/salle-seminaire/29381-city-surf-park.html"}},{"id":"wakeparadise-milano","name":"Wakeparadise Milano","shortName":"Wakeparadise Milano","city":"Peschiera Borromeo (Milan area)","province":"Italy","environment":"outdoor","seasonal":true,"seasonNote":"The operator lists Friday–Monday opening from November to March. Registration is required, and weekend visits need a confirmed booking. Check surf slots separately.","summary":"A floating UNIT standing wave at Idroscalo, 10 m wide.","description":"A floating UNIT standing wave at Idroscalo, 10 m wide.","address":"Parco Idroscalo, South Entrance, Via Idroscalo, 20068 Peschiera Borromeo, Italy","verifiedAt":"2026-11-10","sources":[{"url":"https://wakeparadise.it/milano/en/openinghoursaccess/","label":"Booking and opening information"},{"url":"https://wakeparadise.it/milano/surf/","label":"Additional source"}],"position":{"lat":45.45317,"lng":9.2905,"accuracy":"site","label":"Site marker. Use the address for directions.","sourceUrl":"https://mapcarta.com/W721599110"}},{"id":"citywave-vilnius","name":"citywave Vilnius","shortName":"citywave Vilnius","city":"Vilnius","province":"Lithuania","environment":"indoor","seasonal":false,"seasonNote":"Public bookings include first-timer and advanced sessions.","summary":"An indoor Citywave at Enefit Arena.","description":"An indoor Citywave at Enefit Arena.","address":"Šv. Stepono g. 41, 03209 Vilnius, Lithuania","verifiedAt":"2026-11-10","sources":[{"url":"https://enefitarena.lt/en/city-wave/session/","label":"Booking and opening information"},{"url":"https://www.govilnius.lt/meet-in-vilnius/venue-finder/enefit-arena-powered-by-citywave","label":"Additional source"}],"position":{"lat":54.669314,"lng":25.276605,"accuracy":"site","label":"Site marker. Use the address for directions.","sourceUrl":"https://elektros-projektai.lt/projektai/jaunimo-centro-sv-stepono-g-41-vilniuje-rekonstravimo-sklypo-tvarkymo-sv-stepono-gatves-bei-vandentiekio-buitiniu-ir-pavirsiniu-nuoteku-tinklu-nuo-sopeno-g-iki-gelezinkelio-ir-algirdo-g-sankr"}},{"id":"surflux","name":"Surflux / Surf Luxembourg","shortName":"Surflux / Surf Luxembourg","city":"Arlon","province":"Belgium","environment":"indoor","seasonal":false,"seasonNote":"The venue offers bookings year-round. The operator and club announced a standing-wave competition for November 2026.","summary":"A deep-water FlowSurf standing wave at the Van der Valk hotel site in Arlon.","description":"A deep-water FlowSurf standing wave at the Van der Valk hotel site in Arlon.","address":"596 Route de Longwy, 6700 Arlon, Belgium","verifiedAt":"2026-11-10","sources":[{"url":"https://surflux.eu/en/surfing-experience/","label":"Booking and opening information"},{"url":"https://club.surflux.eu/competition","label":"Additional source"}],"position":{"lat":49.6481,"lng":5.8195,"accuracy":"site","label":"Site marker. Use the address for directions.","sourceUrl":"https://en.wikipedia.org/wiki/Hotel_Luxembourg-Arlon"}},{"id":"surf-brothers-skolkovo","name":"Surf Brothers Skolkovo","shortName":"Surf Brothers Skolkovo","city":"Moscow","province":"Russia","environment":"indoor","seasonal":false,"seasonNote":"The operator lists lessons and public booking.","summary":"An indoor standing wave 9 m wide in the Skolkovo business district.","description":"An indoor standing wave 9 m wide in the Skolkovo business district.","address":"Bolshoy Boulevard 40, BC Amalthea, Skolkovo, Moscow, Russia","verifiedAt":"2026-11-10","sources":[{"url":"https://skolkovo.surfbrothers.ru/","label":"Booking and opening information"},{"url":"https://bookmaker-ratings.by/ru/news/v-surf-brothers-skolkovo-projdet-pervy-j-chempionat-rossii-po-serfingu-na-iskusstvennoj-volne/","label":"Additional source"}],"position":{"lat":55.695256,"lng":37.347081,"accuracy":"site","label":"Site marker. Use the address for directions.","sourceUrl":"https://archi.ru/projects/russia/17689/klub-surf-brothers"}},{"id":"flow-moscow","name":"Flow Moscow","shortName":"Flow Moscow","city":"Moscow","province":"Russia","environment":"indoor","seasonal":false,"seasonNote":"The venue lists lessons and passes. Check booking rules for first-timers and children.","summary":"An indoor Citywave with a surfable width of 7.5 m.","description":"An indoor Citywave with a surfable width of 7.5 m.","address":"Stavropolskaya ulitsa 43, Moscow, Russia","verifiedAt":"2026-11-10","sources":[{"url":"https://moscowflow.ru/volna/","label":"Booking and opening information"},{"url":"https://topheats.ru/org/flowmoscow","label":"Additional source"}],"position":{"lat":55.683326,"lng":37.780922,"accuracy":"site","label":"Site marker. Use the address for directions.","sourceUrl":"https://www.axaa.ru/Professionalnaya-Gorodskaya-Volna-Dlya-Serfinga-Citywave.html"}}],"venueRegions":{"back-to-sea":"china","surfpark-chaoyang":"china","surfpark-fengtai":"china","igosurfing-seaworld":"china","rucker-fengqihui":"china","captain-wave-xueye":"china","rucker-xindongli":"china","hala-huzhou":"china","panda-chengdu":"china","xwater-jiande":"china","qingyuwan-kunming":"china","wellenwerk-berlin":"europe","jochen-schweizer-arena":"europe","rheinriff":"europe","hasewelle":"europe","irie-surf":"europe","surf-langenfeld":"europe","oana":"europe","honna":"europe","city-surf-park":"europe","wakeparadise-milano":"europe","citywave-vilnius":"europe","surflux":"europe","surf-brothers-skolkovo":"europe","flow-moscow":"europe","wai-kai":"usa","revel-surf":"usa","heroes-paradise":"usa","surfs-up-nashua":"usa","waco-shredmill":"usa"}}</script>
+</body>
+</html>

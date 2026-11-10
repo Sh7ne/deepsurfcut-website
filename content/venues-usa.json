@@ -32,6 +32,15 @@
         "accuracy": "site",
         "label": "场址标记。入口请按地址导航。",
         "sourceUrl": "https://www.indefiniteadventure.com/oahu-wai-kai-ultimate-pass/"
+      },
+      "i18n": {
+        "en": {
+          "city": "Ewa Beach (Oʻahu)",
+          "province": "Hawaii, United States",
+          "summary": "An outdoor Citywave up to 100 ft (30.48 m) wide.",
+          "description": "An outdoor Citywave up to 100 ft (30.48 m) wide.",
+          "seasonNote": "The operator lists weekly sessions. Beginner sessions and the 100 ft advanced wave are booked separately."
+        }
       }
     },
     {
@@ -63,6 +72,15 @@
         "accuracy": "site",
         "label": "场址标记。入口请按地址导航。",
         "sourceUrl": "https://mapcarta.com/W1372765269"
+      },
+      "i18n": {
+        "en": {
+          "city": "Mesa",
+          "province": "Arizona, United States",
+          "summary": "A dedicated 10 m wide deep-water UNIT standing wave.",
+          "description": "A dedicated 10 m wide deep-water UNIT standing wave.",
+          "seasonNote": "Select River Wave when booking. The park also has a separate traveling-wave lagoon."
+        }
       }
     },
     {
@@ -94,6 +112,15 @@
         "accuracy": "site",
         "label": "场址标记。入口请按地址导航。",
         "sourceUrl": "https://www.heroesparadise.com/epicsurfusa"
+      },
+      "i18n": {
+        "en": {
+          "city": "Brandon",
+          "province": "Florida, United States",
+          "summary": "A 46 ft (14.02 m) deep-water EpicSurf standing wave.",
+          "description": "A 46 ft (14.02 m) deep-water EpicSurf standing wave.",
+          "seasonNote": "The venue publishes EpicSurf hours and offers public bookings for different skill levels."
+        }
       }
     },
     {
@@ -125,6 +152,15 @@
         "accuracy": "site",
         "label": "场址标记。入口请按地址导航。",
         "sourceUrl": "https://poiexplorer.com/north-america/united-states/new-hampshire/hillsborough-county/nashua/recreation/skyventure-w54528138"
+      },
+      "i18n": {
+        "en": {
+          "city": "Nashua",
+          "province": "New Hampshire, United States",
+          "summary": "A 32 ft (9.75 m) indoor SurfStream at SkyVenture.",
+          "description": "A 32 ft (9.75 m) indoor SurfStream at SkyVenture.",
+          "seasonNote": "Finned boards and protective gear are provided. Select indoor surfing when booking. Outside equipment is not permitted."
+        }
       }
     },
     {
@@ -156,6 +192,15 @@
         "accuracy": "site",
         "label": "场址标记。入口请按地址导航。",
         "sourceUrl": "https://mapcarta.com/N12059589957"
+      },
+      "i18n": {
+        "en": {
+          "city": "Waco",
+          "province": "Texas, United States",
+          "summary": "A deep-water FlowSurf standing wave for finned surfboards.",
+          "description": "A deep-water FlowSurf standing wave for finned surfboards.",
+          "seasonNote": "The operator lists Shredmill hours separately from the water park. Choose Shredmill when booking."
+        }
       }
     }
   ]

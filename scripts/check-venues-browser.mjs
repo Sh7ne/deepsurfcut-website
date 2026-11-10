@@ -4,15 +4,16 @@ import { access, readFile } from 'node:fs/promises';
 import { resolve, sep, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
+import { onRequest as renderMapRequest } from '../functions/RapidSurfingMap.js';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const publicRoot = resolve(root, 'dist');
 const mapPath = '/RapidSurfingMap';
 const regionalMaps = [
-  { path: `${mapPath}-Europe`, label: '欧洲', id: 'wellenwerk-berlin', file: 'venues-europe.json' },
-  { path: `${mapPath}-USA`, label: '美国', id: 'wai-kai', file: 'venues-usa.json' },
+  { path: `${mapPath}?region=europe`, label: 'Europe', language: 'en', region: 'europe', id: 'wellenwerk-berlin', file: 'venues-europe.json' },
+  { path: `${mapPath}?region=europe&lang=de`, label: 'Europa', language: 'de', region: 'europe', id: 'wellenwerk-berlin', file: 'venues-europe.json' },
+  { path: `${mapPath}?region=usa`, label: 'United States', language: 'en', region: 'usa', id: 'wai-kai', file: 'venues-usa.json' },
 ];
-const mapPaths = new Set([mapPath, ...regionalMaps.map(region => region.path)]);
 for (const region of regionalMaps) {
   region.count = JSON.parse(await readFile(resolve(root, 'content', region.file), 'utf8')).venues.length;
 }
@@ -28,8 +29,20 @@ let server;
 const base = process.env.SITE_URL || await new Promise((done, reject) => {
   server = createServer(async (request, response) => {
     try {
-      const path = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
-      const file = resolve(publicRoot, '.' + (mapPaths.has(path) ? `${path}.html` : path.endsWith('/') ? path + 'index.html' : path));
+      const url = new URL(request.url, 'http://localhost');
+      const path = decodeURIComponent(url.pathname);
+      if (path === mapPath) {
+        const mapRequest = new Request(url);
+        mapRequest.cf = { country: request.headers['x-test-country'] || 'CN' };
+        const result = await renderMapRequest({ request: mapRequest, env: { ASSETS: { fetch: async asset => {
+          const name = asset.pathname === mapPath ? `${mapPath}.html` : asset.pathname;
+          return new Response(await readFile(resolve(publicRoot, '.' + name)));
+        } } } });
+        response.writeHead(result.status, Object.fromEntries(result.headers));
+        response.end(await result.text());
+        return;
+      }
+      const file = resolve(publicRoot, '.' + (path.endsWith('/') ? path + 'index.html' : path));
       if (!file.startsWith(publicRoot + sep)) throw new Error('outside preview');
       for (const rule of headerRules) {
         if (!rule.path.startsWith('/')) continue;
@@ -299,7 +312,7 @@ try {
   await page.locator('#venue-detail [data-save="back-to-sea"]').click();
   assert.equal(await page.locator('#venue-detail [data-save="back-to-sea"]').getAttribute('aria-pressed'), 'true');
   await page.locator('#share-venue').click();
-  assert.equal(await page.evaluate(() => window.testCopiedText), `https://deepsurf.app${mapPath}#venue-back-to-sea`);
+  assert.equal(await page.evaluate(() => window.testCopiedText), `https://deepsurf.app${mapPath}?region=china#venue-back-to-sea`);
   await page.locator('#copy-address').click();
   assert.equal(await page.evaluate(() => window.testCopiedText), data.venues.find((v) => v.id === 'back-to-sea').address);
   await page.keyboard.press('Escape');
@@ -463,7 +476,7 @@ try {
   for (const width of [390, 1440]) {
     const regional = await newContext({ viewport: { width, height: 844 } });
     const page = await regional.newPage();
-    for (const { path, label, id, count: total } of regionalMaps) {
+    for (const { path, label, language, region, id, count: total } of regionalMaps) {
       const requests = [];
       const observe = request => requests.push(new URL(request.url()).pathname);
       page.on('request', observe);
@@ -471,18 +484,32 @@ try {
       await page.locator('#venue-detail[open]').waitFor();
       assert.equal(await page.locator('#map').getAttribute('data-provider'), 'osm');
       assert.ok(!requests.includes('/api/maps/config'), 'international editions do not load domestic map configuration');
-      assert.equal(await page.locator('.edition-nav [aria-current]').textContent(), label);
+      assert.equal(await page.locator('.edition-nav:not(.language-nav) [aria-current]').textContent(), label);
+      assert.equal(await page.locator('html').getAttribute('lang'), language);
+      assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'), `https://deepsurf.app${mapPath}`);
+      assert.doesNotMatch(await page.locator('#detail-content').textContent(), /[\u3400-\u9fff]/u);
+      if (language === 'de') assert.match(await page.locator('#detail-content').textContent(), /Anfahrt/);
+      if (region === 'europe') assert.equal(await page.locator('.language-nav [aria-current]').getAttribute('lang'), language);
       await count(page, total);
       assert.equal(await page.locator('#venue-detail a[href^="https://www.google.com/maps/search/"]').count(), 1);
-      await page.locator('#venue-detail [data-save]').click();
+      if (await page.locator('#venue-detail [data-save]').getAttribute('aria-pressed') !== 'true') await page.locator('#venue-detail [data-save]').click();
       const stored = await page.evaluate(() => Object.keys(localStorage).filter(key => key.startsWith('deepsurf.venues.saved.v1')));
-      assert.ok(stored.includes(path.endsWith('Europe') ? 'deepsurf.venues.saved.v1.europe' : 'deepsurf.venues.saved.v1.usa'));
+      assert.ok(stored.includes(`deepsurf.venues.saved.v1.${region}`));
       assert.ok(!stored.includes('deepsurf.venues.saved.v1'));
       await noOverflow(page);
       page.off('request', observe);
     }
     await regional.close();
   }
+
+  const geo = await newContext({ extraHTTPHeaders: { 'x-test-country': 'US' } });
+  const geoPage = await geo.newPage();
+  await ready(geoPage);
+  await count(geoPage, regionalMaps.find(region => region.region === 'usa').count);
+  await ready(geoPage, `${mapPath}#venue-back-to-sea`);
+  await geoPage.waitForURL(url => url.searchParams.get('region') === 'china');
+  await geoPage.locator('#venue-detail[open]').waitFor();
+  await geo.close();
 
   const plain = await newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
   const plainPage = await plain.newPage();

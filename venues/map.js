@@ -8,7 +8,7 @@ import { createBaiduProvider } from './provider-baidu.js?v=20261028-map-about-cr
   const configNode = document.getElementById('map-config');
   if (!configNode) return;
   const config = JSON.parse(configNode.textContent);
-  const lang = 'zh';
+  const lang = config.lang || 'zh';
   const edition = config.edition || 'china';
   const international = edition !== 'china';
   const savedKey = international ? `deepsurf.venues.saved.v1.${edition}` : 'deepsurf.venues.saved.v1';
@@ -350,7 +350,7 @@ import { createBaiduProvider } from './provider-baidu.js?v=20261028-map-about-cr
   function detailMarkup(original) {
     const v = localized(original);
     const links = navLinks(original);
-    const contentLang = 'zh-Hans';
+    const contentLang = document.documentElement.lang;
     const accuracy = v.position?.accuracy === 'venue' ? 'exactPosition' : v.position?.accuracy === 'site' ? 'sitePosition' : 'approximate';
     const sources = (v.sources || []).filter((s) => /^https?:\/\//.test(s.url));
     return `<div class="detail-art" aria-hidden="true"><div class="detail-wave">${icon('wave')}</div><span>RAPID SURFING</span><div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div></div>
@@ -359,10 +359,10 @@ import { createBaiduProvider } from './provider-baidu.js?v=20261028-map-about-cr
       <div class="detail-badges"><span class="badge">${escape(t(v.environment))}</span>${v.seasonal ? `<span class="badge seasonal">${escape(t('seasonal'))}</span>` : ''}<span class="badge precision">${escape(t(accuracy))}</span></div>
       <p class="detail-description" lang="${contentLang}">${escape(v.description || v.summary)}</p>
       <div class="detail-tools"><button type="button" data-save="${escape(v.id)}">${icon('heart')}<span data-save-label>${escape(t('save'))}</span></button><button id="share-venue" type="button">${icon('share')}${escape(t('share'))}</button></div>
-      <section class="detail-section"><h3>${escape(t('address'))}</h3><p lang="zh-Hans">${escape(v.address)}</p><p class="detail-note" lang="zh-Hans">${escape(v.position?.label || '')}</p><button class="text-button" id="copy-address" type="button">${icon('copy')}${escape(labels.copyAddress || t('address'))}</button></section>
-      <section class="detail-section"><h3>${escape(t('opening'))}</h3><p lang="zh-Hans">${escape(v.seasonNote || '')}</p><p class="detail-note">${escape(t('dataNotice'))}</p></section>
+      <section class="detail-section"><h3>${escape(t('address'))}</h3><p lang="${contentLang}">${escape(v.address)}</p><p class="detail-note" lang="${contentLang}">${escape(v.position?.label || '')}</p><button class="text-button" id="copy-address" type="button">${icon('copy')}${escape(labels.copyAddress || t('address'))}</button></section>
+      <section class="detail-section"><h3>${escape(t('opening'))}</h3><p lang="${contentLang}">${escape(v.seasonNote || '')}</p><p class="detail-note">${escape(t('dataNotice'))}</p></section>
       <section class="detail-section"><h3>${escape(t('directions'))}</h3><div class="navigation-links">${Object.entries(links).map(([key, url]) => `<a href="${escape(url)}" target="_blank" rel="noopener noreferrer">${escape(t(key))}${icon('arrow')}</a>`).join('')}</div></section>
-      <section class="detail-section source-section"><h3>${escape(t('sources'))}</h3><p class="detail-note">${escape(t('updated'))} ${escape(v.verifiedAt || '')}</p>${sources.map((s) => `<a href="${escape(s.url)}" target="_blank" rel="noopener noreferrer" lang="zh-Hans">${escape(s.label)}${icon('arrow')}</a>`).join('')}</section>
+      <section class="detail-section source-section"><h3>${escape(t('sources'))}</h3><p class="detail-note">${escape(t('updated'))} ${escape(v.verifiedAt || '')}</p>${sources.map((s) => `<a href="${escape(s.url)}" target="_blank" rel="noopener noreferrer" lang="${contentLang}">${escape(s.label)}${icon('arrow')}</a>`).join('')}</section>
       <button class="primary-button" id="show-on-map" type="button">${icon('pin')}${escape(t('viewMap'))}</button></div>`;
   }
   function openVenue(id, push = true) {
@@ -424,7 +424,7 @@ import { createBaiduProvider } from './provider-baidu.js?v=20261028-map-about-cr
     }
   }
   async function share(v) {
-    const data = { title: v.name, text: v.summary, url: `${config.url || 'https://deepsurf.app/RapidSurfingMap'}#venue-${v.id}` };
+    const data = { title: v.name, text: v.summary, url: `${config.viewUrl || 'https://deepsurf.app/RapidSurfingMap'}#venue-${v.id}` };
     if (navigator.share) {
       try { await navigator.share(data); return; } catch (error) { if (error.name === 'AbortError') return; }
     }
@@ -437,6 +437,11 @@ import { createBaiduProvider } from './provider-baidu.js?v=20261028-map-about-cr
       // A history traversal emits both popstate and hashchange. Reopening an
       // already-current dialog would replace its content and lose return focus.
       if (!$('venue-detail').open || state.selected !== id) openVenue(id, false);
+    } else if (location.hash.startsWith('#venue-') && Object.hasOwn(config.venueRegions || {}, id)) {
+      const target = new URL(location.href);
+      target.searchParams.set('region', config.venueRegions[id]);
+      target.searchParams.delete('lang');
+      location.replace(target.href);
     } else if ($('venue-detail').open) closeVenue({ updateHistory: false });
   }
   document.addEventListener('click', (event) => {

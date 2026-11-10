@@ -1,13 +1,16 @@
 import { access, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
+import { regionalLabels } from './venue-map-labels.mjs';
 
 const root = new URL('../', import.meta.url);
 const origin = 'https://deepsurf.app';
+const mapPath = '/RapidSurfingMap';
 const editions = {
-  china: { path: '/RapidSurfingMap', label: '中国' },
-  europe: { path: '/RapidSurfingMap-Europe', label: '欧洲', center: [49, 12] },
-  usa: { path: '/RapidSurfingMap-USA', label: '美国', center: [37, -104] },
+  china: {},
+  europe: { center: [49, 12] },
+  usa: { center: [37, -104] },
 };
+const mapLink = (edition, language) => `${mapPath}?region=${edition}${language === 'de' ? '&lang=de' : ''}`;
 const googleMaps = (venue) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${venue.name} ${venue.address}`)}`;
 const escape = (value = '') => String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
 const json = (value) => JSON.stringify(value).replace(/</g, '\\u003c');
@@ -68,8 +71,8 @@ const iconPaths = {
 const icon = (name, className = '') => `<svg class="icon ${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${iconPaths[name] || iconPaths.wave}</svg>`;
 
 function venueCard(venue, index, t, international) {
-  const localized = { ...venue, ...venue.i18n?.zh };
-  const copyLang = 'zh-Hans';
+  const localized = venue;
+  const copyLang = t.lang;
   const positionLabel = venue.position?.accuracy === 'venue' ? t.exactPosition : venue.position?.accuracy === 'site' ? t.sitePosition : t.approximate;
   const sourceLinks = (venue.sources || []).map((source) => `<li><a href="${escape(source.url)}" target="_blank" rel="noopener noreferrer">${escape(source.label)}${icon('arrow')}</a></li>`).join('');
   return `
@@ -91,7 +94,7 @@ function venueCard(venue, index, t, international) {
               <summary>${t.details}</summary>
               <p lang="${copyLang}">${escape(localized.description)}</p>
               <h4>${t.address}</h4><p lang="${copyLang}">${escape(localized.address)}</p>
-              <p class="position-note">${positionLabel}${venue.position?.label ? ` · <span lang="zh-Hans">${escape(venue.position.label)}</span>` : ''}</p>
+              <p class="position-note">${positionLabel}${venue.position?.label ? ` · <span lang="${copyLang}">${escape(venue.position.label)}</span>` : ''}</p>
               <h4>${t.opening}</h4><p lang="${copyLang}">${escape(localized.seasonNote || t.unknownStatus)}</p>
               <p>${t.dataNotice}</p>
               <p>${t.updated}: <time datetime="${escape(venue.verifiedAt)}">${escape(venue.verifiedAt)}</time></p>
@@ -101,29 +104,59 @@ function venueCard(venue, index, t, international) {
           </article>`;
 }
 
-export function renderVenues(data, edition = 'china') {
-  const { path, label, center } = editions[edition];
+function localizedVenue(venue, language) {
+  const { i18n, ...base } = venue;
+  if (language === 'zh') return { ...base, ...i18n?.zh };
+  const copy = i18n?.[language];
+  if (!copy) throw new Error(`Missing ${language} translation for ${venue.id}`);
+  const german = language === 'de';
+  return {
+    ...base, ...copy,
+    position: {
+      ...base.position,
+      label: base.position.accuracy === 'approximate'
+        ? (german ? 'Ungefähre Position. Suche für die Anfahrt nach dem Namen der Anlage.' : 'Approximate location. Use the venue name for directions.')
+        : (german ? 'Markierung des Geländes. Nutze die Adresse für die Anfahrt.' : 'Site marker. Use the address for directions.'),
+    },
+    sources: base.sources.map((source, index) => ({
+      url: source.url,
+      label: index === 0 ? (german ? 'Buchung und Öffnung' : 'Booking and opening information')
+        : (german ? 'Weitere Quelle' : 'Additional source'),
+    })),
+  };
+}
+
+export function renderVenues(data, edition = 'china', language = 'zh', venueRegions = {}) {
+  const { center } = editions[edition];
   const international = edition !== 'china';
-  const t = international ? {
-    ...venueLabels.zh,
-    title: `${label}深水冲浪场馆地图｜DeepSurfCut`,
-    description: `查看${label}有公开运营证据的深水固定浪与 Rapid Surfing 场馆、预约入口和导航。`,
-    intro: `${label}深水冲浪场馆`,
-    mapLabel: `${label}深水冲浪场馆地图`,
-    aboutIntro: `一份持续整理的${label}深水固定浪场馆目录，由 DeepSurfCut 制作。`,
-    aboutMap: '底图由 OpenStreetMap 提供。场馆详情提供 Google 地图和 Apple 地图导航入口。',
-    google: 'Google 地图',
-  } : venueLabels.zh;
-  const url = origin + path;
-  const regionNav = `<nav class="edition-nav" aria-label="冲浪地图地区">${Object.entries(editions).map(([key, region]) =>
-    `<a href="${region.path}"${key === edition ? ' aria-current="page"' : ''}>${region.label}</a>`).join('')}</nav>`;
+  const base = regionalLabels[language] || venueLabels.zh;
+  const regionNames = base.regions || ['中国', '欧洲', '美国'];
+  const label = regionNames[Object.keys(editions).indexOf(edition)];
+  const t = !international ? base : language === 'de' ? {
+    ...base, title: 'Rapid-Surfing-Karte Europa | DeepSurfCut', intro: 'Rapid Surfing in Europa',
+    description: 'Stehende Tiefwasserwellen in Europa entdecken. Mit Karte, Standortdetails, Buchungslinks und Anfahrt.',
+    mapLabel: 'Karte der Rapid-Surfing-Standorte in Europa',
+    aboutIntro: 'Ein Verzeichnis stehender Tiefwasserwellen in Europa von DeepSurfCut.',
+  } : {
+    ...base, title: `Rapid Surfing Map · ${label} | DeepSurfCut`, intro: `Rapid surfing in ${edition === 'usa' ? 'the United States' : 'Europe'}`,
+    description: `Explore deep-water standing waves in ${edition === 'usa' ? 'the United States' : 'Europe'}, with venue details, booking links and directions.`,
+    mapLabel: `Rapid surfing venues · ${label}`,
+    aboutIntro: `A directory of deep-water standing waves in ${edition === 'usa' ? 'the United States' : 'Europe'}, by DeepSurfCut.`,
+  };
+  const url = origin + mapPath;
+  const viewUrl = origin + mapLink(edition, language);
+  const regionNav = `<nav class="edition-nav" aria-label="${base.regionPicker || '冲浪地图地区'}">${Object.keys(editions).map((key, index) =>
+    `<a href="${escape(mapLink(key, key === edition ? language : 'en'))}"${key === edition ? ' aria-current="page"' : ''}>${regionNames[index]}</a>`).join('')}</nav>`;
+  const languageNav = edition === 'europe' ? `<nav class="edition-nav language-nav" aria-label="${base.languages}">
+    ${[['en', 'English'], ['de', 'Deutsch']].map(([key, name]) => `<a data-map-lang="${key}" lang="${key}" href="${escape(mapLink(edition, key))}"${key === language ? ' aria-current="page"' : ''}>${name}</a>`).join('')}</nav>` : '';
+  data = { ...data, venues: data.venues.map(venue => localizedVenue(venue, language)) };
   const count = data.venues.length;
   const actualCities = [...new Set(data.venues.map((venue) => venue.city))];
   const schemas = {
     '@context': 'https://schema.org', '@type': 'CollectionPage', '@id': `${url}#webpage`,
     url, name: t.title, description: t.description, inLanguage: t.lang, dateModified: data.updatedAt,
     isPartOf: { '@id': `${origin}/#website` },
-    mainEntity: { '@type': 'ItemList', numberOfItems: count, itemListElement: data.venues.map((venue, i) => ({ '@type': 'ListItem', position: i + 1, name: venue.name, url: `${url}#venue-${venue.id}` })) },
+    mainEntity: { '@type': 'ItemList', numberOfItems: count, itemListElement: data.venues.map((venue, i) => ({ '@type': 'ListItem', position: i + 1, name: venue.name, url: `${viewUrl}#venue-${venue.id}` })) },
   };
   return `<!DOCTYPE html>
 <html lang="${t.lang}">
@@ -154,12 +187,12 @@ export function renderVenues(data, edition = 'china') {
   <link rel="icon" href="/assets/favicon-96.png" sizes="96x96" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180">
   <link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css">
-  <link rel="stylesheet" href="/venues/map.css?v=20261110-regional-maps-1">
+  <link rel="stylesheet" href="/venues/map.css?v=20261110-unified-map-1">
   <script src="/assets/vendor/leaflet/leaflet.js" defer></script>
-  <script type="module" src="/venues/map.js?v=20261110-regional-maps-1"></script>
+  <script type="module" src="/venues/map.js?v=20261110-unified-map-1"></script>
   <script type="application/ld+json">${json(schemas)}</script>
 </head>
-<body data-lang="zh">
+<body data-lang="${language}">
   <a class="skip-link" href="#venue-list">${t.skip}</a>
   <main class="map-app">
     <h1 class="sr-only">${t.mapLabel}</h1>
@@ -178,8 +211,8 @@ export function renderVenues(data, edition = 'china') {
     <aside id="explore-sheet" class="explore-sheet" aria-label="${t.listLabel}">
       <button id="sheet-handle" class="sheet-handle enhance-only" type="button" aria-label="${t.expandSheet}" aria-expanded="false" aria-controls="venue-list"><span></span></button>
       <div class="sheet-header">
-        <h2>${t.intro}</h2><p class="sheet-subtitle" lang="en">${t.subtitle}</p>
-        ${regionNav}
+        <h2>${t.intro}</h2><p class="sheet-subtitle" lang="${international ? t.lang : 'en'}">${t.subtitle}</p>
+        ${regionNav}${languageNav}
         <div class="search-row enhance-only"><div class="search-box">${icon('search')}<input id="search" type="search" placeholder="${t.searchPlaceholder}" aria-label="${t.search}" autocomplete="off" enterkeyhint="search"><button id="clear-search" class="icon-button" type="button" aria-label="${t.clearSearch}" hidden>${icon('close')}</button></div><button id="filter-open" class="filter-button icon-button" type="button" aria-label="${t.filters}" aria-haspopup="dialog">${icon('filters')}</button></div>
         <div id="city-filters" class="filter-chips enhance-only" aria-label="${t.allCities}"><button type="button" class="chip active" data-city="all" aria-pressed="true">${t.allCities}</button>${actualCities.map((city) => `<button type="button" class="chip" data-city="${escape(city)}" aria-pressed="false">${escape(cities[city] || city)}</button>`).join('')}</div>
         <div id="active-filters" class="active-filters" hidden></div>
@@ -201,9 +234,9 @@ export function renderVenues(data, edition = 'china') {
     <label class="switch-row"><span>${t.seasonalOnly}</span><input id="seasonal-only" type="checkbox"><span class="switch-track" aria-hidden="true"></span></label>
     <div class="dialog-actions"><button id="filter-reset" class="secondary-button" type="button">${t.reset}</button><button id="filter-apply" class="primary-button" type="submit" value="apply">${t.apply}</button></div>
   </form></dialog>
-  <dialog id="about-dialog" class="about-dialog" aria-labelledby="about-title"><button id="about-close" class="dialog-close icon-button" type="button" aria-label="${t.close}">${icon('close')}</button><h2 id="about-title">${t.aboutHeading}</h2><p class="about-intro">${t.aboutIntro}</p><label class="map-provider-control"${international ? ' hidden' : ''}>${icon('map')}<span>${t.mapProvider}</span><select id="map-provider" disabled><option value="baidu" hidden>${t.baidu}</option><option value="amap" hidden>${t.amap}</option><option value="osm" selected>OpenStreetMap</option></select></label><p>${t.aboutScope}</p><p>${t.aboutDates}</p><p>${t.aboutPositions}</p><p>${t.aboutPrivacy}</p><p>${t.aboutMap}</p><div class="provider-links"><a data-provider-info="amap" hidden href="https://lbs.amap.com/" target="_blank" rel="noopener noreferrer">${t.amap}</a><a${international ? ' hidden' : ''} href="https://lbs.baidu.com/" target="_blank" rel="noopener noreferrer">${t.baidu}</a><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a></div><section id="provider-legal-attribution" class="provider-legal-attribution" aria-label="${t.mapAttribution}" hidden></section><a class="about-home-link" href="${t.home}">${t.homeLabel}</a></dialog>
+  <dialog id="about-dialog" class="about-dialog" aria-labelledby="about-title"><button id="about-close" class="dialog-close icon-button" type="button" aria-label="${t.close}">${icon('close')}</button><h2 id="about-title">${t.aboutHeading}</h2><p class="about-intro">${t.aboutIntro}</p><label class="map-provider-control"${international ? ' hidden' : ''}>${icon('map')}<span>${t.mapProvider}</span><select id="map-provider" disabled>${international ? '' : `<option value="baidu" hidden>${t.baidu}</option><option value="amap" hidden>${t.amap}</option>`}<option value="osm" selected>OpenStreetMap</option></select></label><p>${t.aboutScope}</p><p>${t.aboutDates}</p><p>${t.aboutPositions}</p><p>${t.aboutPrivacy}</p><p>${t.aboutMap}</p><div class="provider-links">${international ? '' : `<a data-provider-info="amap" hidden href="https://lbs.amap.com/" target="_blank" rel="noopener noreferrer">${t.amap}</a><a href="https://lbs.baidu.com/" target="_blank" rel="noopener noreferrer">${t.baidu}</a>`}<a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a></div><section id="provider-legal-attribution" class="provider-legal-attribution" aria-label="${t.mapAttribution}" hidden></section><a class="about-home-link" href="${t.home}">${t.homeLabel}</a></dialog>
   <div id="toast" class="toast" role="status" hidden></div>
-  <script type="application/json" id="map-config">${json({ lang: 'zh', locale: t.locale, home: t.home, url, edition, center, labels: t, cities, venues: data.venues })}</script>
+  <script type="application/json" id="map-config">${json({ lang: language, locale: t.locale, home: t.home, url, viewUrl, edition, center, labels: t, cities: international ? {} : cities, venues: data.venues, venueRegions })}</script>
 </body>
 </html>
 `;
@@ -214,16 +247,25 @@ export async function renderVenuePages({ check = false } = {}) {
   if (!Array.isArray(data.venues) || !data.venues.length) throw new Error('Venue directory must not be empty.');
   const ids = data.venues.map((venue) => venue.id);
   if (new Set(ids).size !== ids.length || ids.some((id) => !/^[a-z0-9-]+$/.test(id))) throw new Error('Venue IDs must be unique URL-safe slugs.');
-  const outputs = [['venues/data.json', JSON.stringify(data, null, 2) + '\n'], ['RapidSurfingMap.html', renderVenues(data)]];
+  const allData = { china: data };
+  const outputs = [['venues/data.json', JSON.stringify(data, null, 2) + '\n']];
   for (const edition of ['europe', 'usa']) {
     const regional = JSON.parse(await readFile(new URL(`content/venues-${edition}.json`, root), 'utf8'));
     const regionalIds = regional.venues.map((venue) => venue.id);
     if (!regionalIds.length || new Set(regionalIds).size !== regionalIds.length || regionalIds.some((id) => !/^[a-z0-9-]+$/.test(id))) {
       throw new Error(`Invalid venue IDs for ${edition}.`);
     }
-    outputs.push([`${editions[edition].path.slice(1)}.html`, renderVenues(regional, edition)]);
+    allData[edition] = regional;
   }
-  const legacyPages = ['venues/index.html', 'zh/venues/index.html', 'de/venues/index.html'];
+  const venueRegions = Object.fromEntries(Object.entries(allData).flatMap(([region, { venues }]) => venues.map(({ id }) => [id, region])));
+  if (Object.keys(venueRegions).length !== Object.values(allData).reduce((count, { venues }) => count + venues.length, 0)) {
+    throw new Error('Venue IDs must be unique across regions.');
+  }
+  outputs.push(['RapidSurfingMap.html', renderVenues(data, 'china', 'zh', venueRegions)]);
+  for (const [region, language] of [['europe', 'en'], ['europe', 'de'], ['usa', 'en']]) {
+    outputs.push([`venues/editions/${region}-${language}.txt`, renderVenues(allData[region], region, language, venueRegions)]);
+  }
+  const legacyPages = ['venues/index.html', 'zh/venues/index.html', 'de/venues/index.html', 'RapidSurfingMap-Europe.html', 'RapidSurfingMap-USA.html'];
   for (const path of legacyPages) {
     const file = new URL(path, root);
     if (check) {

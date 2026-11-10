@@ -10,9 +10,9 @@
 /de/venues/index.html /RapidSurfingMap 301
 /RapidSurfingMap/ /RapidSurfingMap 301
 /RapidSurfingMap.html /RapidSurfingMap 301
-
-/RapidSurfingMap-Europe/ /RapidSurfingMap-Europe 301
-/RapidSurfingMap-Europe.html /RapidSurfingMap-Europe 301
-
-/RapidSurfingMap-USA/ /RapidSurfingMap-USA 301
-/RapidSurfingMap-USA.html /RapidSurfingMap-USA 301
+/RapidSurfingMap-Europe /RapidSurfingMap?region=europe 301
+/RapidSurfingMap-Europe/ /RapidSurfingMap?region=europe 301
+/RapidSurfingMap-Europe.html /RapidSurfingMap?region=europe 301
+/RapidSurfingMap-USA /RapidSurfingMap?region=usa 301
+/RapidSurfingMap-USA/ /RapidSurfingMap?region=usa 301
+/RapidSurfingMap-USA.html /RapidSurfingMap?region=usa 301

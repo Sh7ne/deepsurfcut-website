@@ -1,20 +1,25 @@
 # Venue map maintenance
 
 The map is published through the existing `Sh7ne/deepsurfcut-website` repository
-and Cloudflare Pages project. The China edition is at `/RapidSurfingMap`
+and Cloudflare Pages project. All editions use `/RapidSurfingMap`
 without a trailing slash, generated as the root `RapidSurfingMap.html`. The
 Chinese homepage footer has one unobtrusive entry. English and German homepages
 have no map entry, and the map has no language switch. The About dialog links back
 to `/zh/`; the map retains a compact provider-logo overlay. Existing links to
-`/venues/`, `/zh/venues/`, and `/de/venues/` redirect permanently to the China edition. The regional selector also links to
-`/RapidSurfingMap-Europe` and `/RapidSurfingMap-USA`.
+`/venues/`, `/zh/venues/`, and `/de/venues/` redirect permanently to the unified entry. The two retired regional paths redirect to
+the same entry with a region query. Pages Functions use Cloudflare's request
+country to choose an edition. China and the USA use their local editions, and
+other or missing country values default to Europe in English. A region query
+overrides that choice. Europe uses English unless `lang=de` is selected.
+All editions declare the same canonical URL. Share links include the region
+and, when selected, German, so the same venue opens for recipients elsewhere.
 
 ## Data and generated pages
 
 `content/venues.json` is the reviewed public source. The initial directory contains
 11 physical venues in China, including three seasonal outdoor venues. The Europe
 and USA editions use `content/venues-europe.json` and `content/venues-usa.json`
-respectively. Keep private follow-up research in the separate workbook. It excludes closed,
+respectively. English and German venue copy lives in each venue’s `i18n` object. Keep private follow-up research in the separate workbook. It excludes closed,
 unverified, non-deep-water, and natural-river entries from the earlier research.
 Do not claim that this is a live or exhaustive list of all operating venues.
 
@@ -39,10 +44,12 @@ centers the visitor's position even when the saved list is empty. Empty results
 and their reset button belong inside the scrollable list so they remain reachable
 on small screens.
 
-`scripts/render-venues.mjs` owns `RapidSurfingMap.html` and `venues/data.json`.
+`scripts/render-venues.mjs` owns `RapidSurfingMap.html`, `venues/editions/*.txt`,
+and `venues/data.json`. The edition files are static rendering inputs served
+through the Pages Function and marked noindex at their asset paths.
 Shared JavaScript, CSS, and provider assets remain under `venues/`; the three old
 locale `venues/index.html` files must remain absent. Canonical metadata and shared
-venue links use `https://deepsurf.app/RapidSurfingMap`, with the venue hash appended.
+venue links use `https://deepsurf.app/RapidSurfingMap`, with the selected view query and venue hash added to share links.
 The build checks generated output against the source. Public assets are copied
 through the existing allowlist; source data, research, scripts, tests, and local
 configuration remain outside `dist/`.
@@ -162,13 +169,13 @@ the inline styles and blob workers required by the SDKs. Baidu 4.0's official
 `_jsload` / `_evalModuleCode` module loader evaluates the downloaded modules, so
 `unsafe-eval` is permitted only on `/RapidSurfingMap`. Inline scripts remain
 blocked, and the rest of the site keeps its existing strict policy.
-The route-specific `_headers` rules first detach the inherited CSP and Permissions
+The fallback asset’s route-specific `_headers` rules first detach the inherited CSP and Permissions
 Policy, then replace them. Cloudflare otherwise combines matching header values.
 The venue policy upgrades document requests to HTTPS. Baidu's worker imports on
 HTTP localhost need the separate, local-only preview policy described above.
 Restart Wrangler after changing `_headers`; rebuilding assets alone does not
 necessarily replace the running preview's header policy.
-Check the final production response after a deployment; a second inherited CSP
+The Pages Function sends its own edition-specific CSP and disables shared HTML caching. Check the final production response after a deployment; a second inherited CSP
 would prevent provider resources from loading.
 
 Geolocation is allowed only on the map page and must be requested after an

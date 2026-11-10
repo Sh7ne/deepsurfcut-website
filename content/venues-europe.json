@@ -32,6 +32,22 @@
         "accuracy": "site",
         "label": "场址标记。入口请按地址导航。",
         "sourceUrl": "https://www.ortsdienst.de/berlin/lichtenberg-hohenschoenhausen/lichtenberg/branchenbuch-diverse-freizeitanlagen/wellenwerk-berlin-gmbh-bid139041/"
+      },
+      "i18n": {
+        "en": {
+          "city": "Berlin",
+          "province": "Germany",
+          "summary": "Indoor Citywave with a surfable width of about 8.5 m.",
+          "description": "Indoor Citywave with a surfable width of about 8.5 m.",
+          "seasonNote": "Book a session or lesson for your skill level through the venue calendar."
+        },
+        "de": {
+          "city": "Berlin",
+          "province": "Deutschland",
+          "summary": "Citywave in der Halle mit rund 8,5 m surfbarer Breite.",
+          "description": "Citywave in der Halle mit rund 8,5 m surfbarer Breite.",
+          "seasonNote": "Sessions und Kurse nach Könnensstufe stehen im Buchungskalender."
+        }
       }
     },
     {
@@ -63,6 +79,22 @@
         "accuracy": "site",
         "label": "场址标记。入口请按地址导航。",
         "sourceUrl": "https://adresse.dastelefonbuch.de/Taufkirchen/1-Jochen-Schweizer-Arena-GmbH-Taufkirchen-Ludwig-B%C3%B6lkow-Allee.html"
+      },
+      "i18n": {
+        "en": {
+          "city": "Taufkirchen (Munich area)",
+          "province": "Germany",
+          "summary": "Indoor Citywave with a surfable width of about 7.5 m.",
+          "description": "Indoor Citywave with a surfable width of about 7.5 m.",
+          "seasonNote": "The venue offers indoor lessons and public bookings year-round."
+        },
+        "de": {
+          "city": "Taufkirchen (bei München)",
+          "province": "Deutschland",
+          "summary": "Citywave in der Halle mit rund 7,5 m surfbarer Breite.",
+          "description": "Citywave in der Halle mit rund 7,5 m surfbarer Breite.",
+          "seasonNote": "Die Halle bietet ganzjährig Kurse und öffentlich buchbare Sessions."
+        }
       }
     },
     {
@@ -94,6 +126,22 @@
         "accuracy": "site",
         "label": "场址标记。入口请按地址导航。",
         "sourceUrl": "https://adresse.dastelefonbuch.de/D%C3%BCsseldorf/1-RheinRiff-GmbH-D%C3%BCsseldorf-Hansaallee.html"
+      },
+      "i18n": {
+        "en": {
+          "city": "Düsseldorf",
+          "province": "Germany",
+          "summary": "Indoor Citywave with a surfable width of about 9 m.",
+          "description": "Indoor Citywave with a surfable width of about 9 m.",
+          "seasonNote": "Beginner lessons and public sessions are available by skill level."
+        },
+        "de": {
+          "city": "Düsseldorf",
+          "province": "Deutschland",
+          "summary": "Citywave in der Halle mit rund 9 m surfbarer Breite.",
+          "description": "Citywave in der Halle mit rund 9 m surfbarer Breite.",
+          "seasonNote": "Es gibt Anfängerkurse und offene Sessions nach Könnensstufe."
+        }
       }
     },
     {
@@ -125,6 +173,22 @@
         "accuracy": "site",
         "label": "场址标记。入口请按地址导航。",
         "sourceUrl": "https://germany.worldplaces.me/city/osnabruck/view-place/4010417-l-and-t-lengermann-und-trieschmann.html"
+      },
+      "i18n": {
+        "en": {
+          "city": "Osnabrück",
+          "province": "Germany",
+          "summary": "A roughly 7.5 m wide Citywave inside the L&T department store.",
+          "description": "A roughly 7.5 m wide Citywave inside the L&T department store.",
+          "seasonNote": "Book by skill level. Sessions may be cancelled if too few people sign up."
+        },
+        "de": {
+          "city": "Osnabrück",
+          "province": "Deutschland",
+          "summary": "Rund 7,5 m breite Citywave im L&T Sporthaus.",
+          "description": "Rund 7,5 m breite Citywave im L&T Sporthaus.",
+          "seasonNote": "Die Buchung erfolgt nach Könnensstufe. Bei zu wenigen Anmeldungen kann eine Session ausfallen."
+        }
       }
     },
     {
@@ -138,7 +202,7 @@
       "seasonNote": "官网列有儿童、初学及进阶场次；天气可能影响开放。",
       "summary": "Messe Freiburg 电车站附近的户外 Citywave，浪面约 9 米。",
       "description": "Messe Freiburg 电车站附近的户外 Citywave，浪面约 9 米。",
-      "address": "Messe Freiburg 电车站附近, 79108 Freiburg im Breisgau, Germany",
+      "address": "Near the Messe Freiburg tram stop, 79108 Freiburg im Breisgau, Germany",
       "verifiedAt": "2026-11-10",
       "sources": [
         {
@@ -156,6 +220,23 @@
         "accuracy": "approximate",
         "label": "场址附近的大致位置。入口请按场馆名称导航。",
         "sourceUrl": "https://mapcarta.com/W1489575776"
+      },
+      "i18n": {
+        "en": {
+          "city": "Freiburg im Breisgau",
+          "province": "Germany",
+          "summary": "An outdoor Citywave about 9 m wide near the Messe Freiburg tram stop.",
+          "description": "An outdoor Citywave about 9 m wide near the Messe Freiburg tram stop.",
+          "seasonNote": "The venue lists kids’, beginner and advanced sessions. Weather can affect opening."
+        },
+        "de": {
+          "city": "Freiburg im Breisgau",
+          "province": "Deutschland",
+          "summary": "Rund 9 m breite Citywave im Freien an der Haltestelle Messe Freiburg.",
+          "description": "Rund 9 m breite Citywave im Freien an der Haltestelle Messe Freiburg.",
+          "seasonNote": "Es gibt Sessions für Kinder, Einsteiger und Fortgeschrittene. Das Wetter kann die Öffnungszeiten beeinflussen.",
+          "address": "An der Haltestelle Messe Freiburg, 79108 Freiburg im Breisgau, Germany"
+        }
       }
     },
     {
@@ -187,6 +268,22 @@
         "accuracy": "site",
         "label": "场址标记。入口请按地址导航。",
         "sourceUrl": "https://spots.mywatersessions.com/spots/langenfeld"
+      },
+      "i18n": {
+        "en": {
+          "city": "Langenfeld",
+          "province": "Germany",
+          "summary": "An 8 m wide floating UNIT standing wave on a freshwater lake.",
+          "description": "An 8 m wide floating UNIT standing wave on a freshwater lake.",
+          "seasonNote": "The operator lists weekend opening in November and December, with the 2026 season ending on December 6."
+        },
+        "de": {
+          "city": "Langenfeld",
+          "province": "Deutschland",
+          "summary": "Schwimmende UNIT-Welle mit 8 m Breite auf einem Süßwassersee.",
+          "description": "Schwimmende UNIT-Welle mit 8 m Breite auf einem Süßwassersee.",
+          "seasonNote": "Laut Betreiber ist im November und Dezember am Wochenende geöffnet. Die Saison 2026 endet am 6. Dezember."
+        }
       }
     },
     {
@@ -218,6 +315,22 @@
         "accuracy": "site",
         "label": "场址标记。入口请按地址导航。",
         "sourceUrl": "https://en.wikipedia.org/wiki/Mall_of_Switzerland"
+      },
+      "i18n": {
+        "en": {
+          "city": "Ebikon (Lucerne area)",
+          "province": "Switzerland",
+          "summary": "A heated indoor Citywave inside the Mall of Switzerland.",
+          "description": "A heated indoor Citywave inside the Mall of Switzerland.",
+          "seasonNote": "The venue operates year-round and offers Basic sessions and private bookings."
+        },
+        "de": {
+          "city": "Ebikon (bei Luzern)",
+          "province": "Schweiz",
+          "summary": "Beheizte Indoor-Citywave in der Mall of Switzerland.",
+          "description": "Beheizte Indoor-Citywave in der Mall of Switzerland.",
+          "seasonNote": "Die Anlage ist ganzjährig geöffnet und bietet Basic-Sessions und private Buchungen."
+        }
       }
     },
     {
@@ -249,6 +362,22 @@
         "accuracy": "site",
         "label": "场址标记。入口请按地址导航。",
         "sourceUrl": "https://mapcarta.com/W32013299"
+      },
+      "i18n": {
+        "en": {
+          "city": "Alcorcón (Madrid area)",
+          "province": "Spain",
+          "summary": "The Citywave Madrid standing wave at X-Madrid.",
+          "description": "The Citywave Madrid standing wave at X-Madrid.",
+          "seasonNote": "Book a first-timer, advanced or kids’ session by skill level."
+        },
+        "de": {
+          "city": "Alcorcón (bei Madrid)",
+          "province": "Spanien",
+          "summary": "Die stehende Citywave Madrid im X-Madrid.",
+          "description": "Die stehende Citywave Madrid im X-Madrid.",
+          "seasonNote": "Es gibt buchbare Sessions für Einsteiger, Fortgeschrittene und Kinder."
+        }
       }
     },
     {
@@ -280,6 +409,22 @@
         "accuracy": "site",
         "label": "场址标记。入口请按地址导航。",
         "sourceUrl": "https://www.aleou.fr/salle-seminaire/29381-city-surf-park.html"
+      },
+      "i18n": {
+        "en": {
+          "city": "Décines-Charpieu (Lyon area)",
+          "province": "France",
+          "summary": "An indoor standing wave at OL Vallée. The wave system was replaced in 2026.",
+          "description": "An indoor standing wave at OL Vallée. The wave system was replaced in 2026.",
+          "seasonNote": "The venue offers public bookings and has announced a rapid surfing competition for December 2026."
+        },
+        "de": {
+          "city": "Décines-Charpieu (bei Lyon)",
+          "province": "Frankreich",
+          "summary": "Stehende Hallenwelle in OL Vallée. Die Anlage erhielt 2026 ein neues Wellensystem.",
+          "description": "Stehende Hallenwelle in OL Vallée. Die Anlage erhielt 2026 ein neues Wellensystem.",
+          "seasonNote": "Die Anlage bietet öffentliche Buchungen und hat für Dezember 2026 einen Rapid-Surfing-Wettbewerb angekündigt."
+        }
       }
     },
     {
@@ -293,7 +438,7 @@
       "seasonNote": "官网列 11 至 3 月周五至周一开放。场地需注册会员，周末需确认预约；请查看实际冲浪档期。",
       "summary": "Idroscalo 湖上的 UNIT 浮动驻波，浪面 10 米。",
       "description": "Idroscalo 湖上的 UNIT 浮动驻波，浪面 10 米。",
-      "address": "Parco Idroscalo 南门, Via Idroscalo, 20068 Peschiera Borromeo, Italy",
+      "address": "Parco Idroscalo, South Entrance, Via Idroscalo, 20068 Peschiera Borromeo, Italy",
       "verifiedAt": "2026-11-10",
       "sources": [
         {
@@ -311,6 +456,23 @@
         "accuracy": "site",
         "label": "场址标记。入口请按地址导航。",
         "sourceUrl": "https://mapcarta.com/W721599110"
+      },
+      "i18n": {
+        "en": {
+          "city": "Peschiera Borromeo (Milan area)",
+          "province": "Italy",
+          "summary": "A floating UNIT standing wave at Idroscalo, 10 m wide.",
+          "description": "A floating UNIT standing wave at Idroscalo, 10 m wide.",
+          "seasonNote": "The operator lists Friday–Monday opening from November to March. Registration is required, and weekend visits need a confirmed booking. Check surf slots separately."
+        },
+        "de": {
+          "city": "Peschiera Borromeo (bei Mailand)",
+          "province": "Italien",
+          "summary": "Schwimmende UNIT-Welle mit 10 m Breite im Idroscalo.",
+          "description": "Schwimmende UNIT-Welle mit 10 m Breite im Idroscalo.",
+          "seasonNote": "Laut Betreiber von November bis März freitags bis montags geöffnet. Eine Mitgliedschaft ist nötig, am Wochenende zusätzlich eine bestätigte Buchung. Prüfe die Termine für die Surfwelle separat.",
+          "address": "Parco Idroscalo, Südeingang, Via Idroscalo, 20068 Peschiera Borromeo, Italy"
+        }
       }
     },
     {
@@ -342,6 +504,22 @@
         "accuracy": "site",
         "label": "场址标记。入口请按地址导航。",
         "sourceUrl": "https://elektros-projektai.lt/projektai/jaunimo-centro-sv-stepono-g-41-vilniuje-rekonstravimo-sklypo-tvarkymo-sv-stepono-gatves-bei-vandentiekio-buitiniu-ir-pavirsiniu-nuoteku-tinklu-nuo-sopeno-g-iki-gelezinkelio-ir-algirdo-g-sankr"
+      },
+      "i18n": {
+        "en": {
+          "city": "Vilnius",
+          "province": "Lithuania",
+          "summary": "An indoor Citywave at Enefit Arena.",
+          "description": "An indoor Citywave at Enefit Arena.",
+          "seasonNote": "Public bookings include first-timer and advanced sessions."
+        },
+        "de": {
+          "city": "Vilnius",
+          "province": "Litauen",
+          "summary": "Indoor-Citywave in der Enefit Arena.",
+          "description": "Indoor-Citywave in der Enefit Arena.",
+          "seasonNote": "Einsteiger und Fortgeschrittene können öffentliche Sessions buchen."
+        }
       }
     },
     {
@@ -373,6 +551,22 @@
         "accuracy": "site",
         "label": "场址标记。入口请按地址导航。",
         "sourceUrl": "https://en.wikipedia.org/wiki/Hotel_Luxembourg-Arlon"
+      },
+      "i18n": {
+        "en": {
+          "city": "Arlon",
+          "province": "Belgium",
+          "summary": "A deep-water FlowSurf standing wave at the Van der Valk hotel site in Arlon.",
+          "description": "A deep-water FlowSurf standing wave at the Van der Valk hotel site in Arlon.",
+          "seasonNote": "The venue offers bookings year-round. The operator and club announced a standing-wave competition for November 2026."
+        },
+        "de": {
+          "city": "Arlon",
+          "province": "Belgien",
+          "summary": "Stehende FlowSurf-Tiefwasserwelle am Hotel Van der Valk in Arlon.",
+          "description": "Stehende FlowSurf-Tiefwasserwelle am Hotel Van der Valk in Arlon.",
+          "seasonNote": "Buchungen sind ganzjährig möglich. Anlage und Verein haben für November 2026 einen Wettkampf auf der stehenden Welle angekündigt."
+        }
       }
     },
     {
@@ -404,6 +598,22 @@
         "accuracy": "site",
         "label": "场址标记。入口请按地址导航。",
         "sourceUrl": "https://archi.ru/projects/russia/17689/klub-surf-brothers"
+      },
+      "i18n": {
+        "en": {
+          "city": "Moscow",
+          "province": "Russia",
+          "summary": "An indoor standing wave 9 m wide in the Skolkovo business district.",
+          "description": "An indoor standing wave 9 m wide in the Skolkovo business district.",
+          "seasonNote": "The operator lists lessons and public booking."
+        },
+        "de": {
+          "city": "Moskau",
+          "province": "Russland",
+          "summary": "Stehende Hallenwelle mit 9 m Breite im Geschäftsviertel Skolkowo.",
+          "description": "Stehende Hallenwelle mit 9 m Breite im Geschäftsviertel Skolkowo.",
+          "seasonNote": "Der Betreiber bietet Kurse und öffentlich buchbare Sessions an."
+        }
       }
     },
     {
@@ -435,6 +645,22 @@
         "accuracy": "site",
         "label": "场址标记。入口请按地址导航。",
         "sourceUrl": "https://www.axaa.ru/Professionalnaya-Gorodskaya-Volna-Dlya-Serfinga-Citywave.html"
+      },
+      "i18n": {
+        "en": {
+          "city": "Moscow",
+          "province": "Russia",
+          "summary": "An indoor Citywave with a surfable width of 7.5 m.",
+          "description": "An indoor Citywave with a surfable width of 7.5 m.",
+          "seasonNote": "The venue lists lessons and passes. Check booking rules for first-timers and children."
+        },
+        "de": {
+          "city": "Moskau",
+          "province": "Russland",
+          "summary": "Citywave in der Halle mit 7,5 m surfbarer Breite.",
+          "description": "Citywave in der Halle mit 7,5 m surfbarer Breite.",
+          "seasonNote": "Die Anlage bietet Kurse und Mehrfachkarten. Für Einsteiger und Kinder gelten besondere Buchungsregeln."
+        }
       }
     }
   ]

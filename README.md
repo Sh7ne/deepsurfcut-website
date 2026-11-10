@@ -47,7 +47,7 @@ settings; Pages compiles the root `functions/` directory during deployment.
 
 The build copies the website into `dist/`, excluding server source, dependencies,
 tests, and local configuration from public assets. `_routes.json` limits Function
-invocations to `/api/retention`, its children, and `/api/maps/*`. Cloudflare Pages automatically
+invocations to `/api/retention`, its children, `/api/maps/*`, and `/RapidSurfingMap`. Cloudflare Pages automatically
 deploys the `main` branch to production and creates preview deployments for other
 branches.
 
@@ -160,14 +160,13 @@ Lucide icons are distributed locally; their license is in `assets/lucide.LICENSE
 
 ## Surf venue map
 
-The Chinese venue map lives at `/RapidSurfingMap` without a trailing slash,
+The surf venue map uses a single canonical `/RapidSurfingMap` path,
 generated as `RapidSurfingMap.html`. Its single homepage entry sits in the Chinese
-footer; English and German homepages do not link to it, and the map has no language
-switch. Old `/venues/`, `/zh/venues/`, and `/de/venues/` links redirect there. It currently
+footer; English and German homepages do not link to it. Old `/venues/`, `/zh/venues/`, and `/de/venues/` links redirect there. It currently
 prioritizes Baidu, with a local Leaflet client and OpenStreetMap tiles as an
 alternative. Amap support is retained but paused while its quota is unavailable.
 A static directory remains available without JavaScript. The current directory
-covers 11 deep-water standing-wave venues; it is
+covers 11 deep-water standing-wave venues in China; it is
 not a live opening-hours service. Venue names and detailed descriptions remain in
 Chinese, together with navigation and controls.
 
@@ -180,7 +179,9 @@ server Function behind `/api/maps/amap/_AMapService`. Public positions remain
 WGS84; each provider uses its official coordinate conversion before map placement.
 Production configuration and deployment are separate from this local integration.
 
-The regional selector also opens the Europe and USA editions, which use
+Cloudflare chooses the default region using the request country. The region
+selector uses `?region=china`, `?region=europe`, or `?region=usa`. Europe and the
+USA default to English, and Europe also offers German with `&lang=de`. Both use
 OpenStreetMap tiles and external Google Maps and Apple Maps navigation links.
 Their reviewed data lives in `content/venues-europe.json` and
 `content/venues-usa.json`. China uses `content/venues.json`. Update
