@@ -9,6 +9,9 @@ import { createBaiduProvider } from './provider-baidu.js?v=20261028-map-about-cr
   if (!configNode) return;
   const config = JSON.parse(configNode.textContent);
   const lang = 'zh';
+  const edition = config.edition || 'china';
+  const international = edition !== 'china';
+  const savedKey = international ? `deepsurf.venues.saved.v1.${edition}` : 'deepsurf.venues.saved.v1';
   const labels = config.labels || {};
   const t = (key, values = {}) => Object.entries(values).reduce((s, [k, v]) => s.replaceAll(`{${k}}`, String(v)), labels[key] || key);
   const $ = (id) => document.getElementById(id);
@@ -30,7 +33,7 @@ import { createBaiduProvider } from './provider-baidu.js?v=20261028-map-about-cr
     return `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${paths[name] || paths.wave}</svg>`;
   };
   let stored = [];
-  try { stored = JSON.parse(localStorage.getItem('deepsurf.venues.saved.v1') || '[]'); } catch { /* Private browsing can disable storage. */ }
+  try { stored = JSON.parse(localStorage.getItem(savedKey) || '[]'); } catch { /* Private browsing can disable storage. */ }
   const state = { query: '', city: 'all', environment: 'all', seasonal: false, view: 'map', sort: 'recommended', saved: new Set(Array.isArray(stored) ? stored.filter((id) => byId.has(id)) : []), selected: null, user: null, results: venues };
   let map, pendingMap, toastTimer, searchTimer, mapTimer, lastFocus;
   let providerRequest = 0, markerRequest = 0;
@@ -85,7 +88,7 @@ import { createBaiduProvider } from './provider-baidu.js?v=20261028-map-about-cr
   function save(id) {
     const wasSaved = state.saved.has(id);
     if (wasSaved) state.saved.delete(id); else state.saved.add(id);
-    try { localStorage.setItem('deepsurf.venues.saved.v1', JSON.stringify([...state.saved])); } catch { /* Retain session-only favorites. */ }
+    try { localStorage.setItem(savedKey, JSON.stringify([...state.saved])); } catch { /* Retain session-only favorites. */ }
     updateSaved();
     if (state.view === 'saved') filter(false);
     announce(t(wasSaved ? 'removedToast' : 'savedToast'));
@@ -177,12 +180,12 @@ import { createBaiduProvider } from './provider-baidu.js?v=20261028-map-about-cr
     if (!map) return;
     const points = state.results.filter(hasPosition).map((v) => [v.position.lat, v.position.lng]);
     if (!points.length) return;
-    frameMap(points, { maxZoom: points.length === 1 ? 14 : 11 });
+    frameMap(points, { maxZoom: points.length === 1 ? (international && state.results[0]?.position?.accuracy === 'approximate' ? 11 : 14) : 11 });
   }
   function focusVenue(v) {
     if (!map || !hasPosition(v)) return;
     const bounds = [[v.position.lat, v.position.lng]];
-    frameMap(bounds, { maxZoom: 14 });
+    frameMap(bounds, { maxZoom: international && v.position.accuracy === 'approximate' ? 11 : 14 });
   }
   async function drawMarkers() {
     cards.forEach((card, id) => {
@@ -278,7 +281,7 @@ import { createBaiduProvider } from './provider-baidu.js?v=20261028-map-about-cr
     mapTimer = setTimeout(onError, 20000);
     let candidate;
     try {
-      const options = { container, reducedMotion, onReady, onError,
+      const options = { container, center: config.center, reducedMotion, onReady, onError,
         onMove: () => { if (request === providerRequest && map) drawMarkers(); } };
       if (name === 'amap') {
         if (!providerConfig.amap?.enabled) throw new Error('Provider unavailable');
@@ -302,7 +305,7 @@ import { createBaiduProvider } from './provider-baidu.js?v=20261028-map-about-cr
       else fitMap();
       $('map').setAttribute('aria-busy', 'false');
       if (ready && !mapFailed) { clearTimeout(mapTimer); $('map-message').hidden = true; }
-      try { localStorage.setItem('deepsurf.venues.provider.v1', name); } catch { /* Session-only preference. */ }
+      try { if (!international) localStorage.setItem('deepsurf.venues.provider.v1', name); } catch { /* Session-only preference. */ }
     } catch (error) {
       if (pendingMap === candidate) pendingMap = null;
       if (request !== providerRequest) { candidate?.destroy(); return; }
@@ -312,6 +315,7 @@ import { createBaiduProvider } from './provider-baidu.js?v=20261028-map-about-cr
     }
   }
   async function initMap() {
+    if (international) return switchProvider('osm');
     try {
       const response = await fetch('/api/maps/config', { signal: AbortSignal.timeout(5000), cache: 'no-store' });
       if (response.ok) providerConfig = await response.json();
@@ -332,6 +336,10 @@ import { createBaiduProvider } from './provider-baidu.js?v=20261028-map-about-cr
   }
   function navLinks(v) {
     const query = `${v.city} ${v.name} ${v.address}`;
+    if (international) return {
+      google: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${v.name} ${v.address}`)}`,
+      apple: `https://maps.apple.com/?q=${encodeURIComponent(query)}`,
+    };
     const exact = hasPosition(v) && v.position.accuracy === 'venue';
     return {
       baidu: exact ? `https://api.map.baidu.com/marker?location=${v.position.lat},${v.position.lng}&title=${encodeURIComponent(v.name)}&content=${encodeURIComponent(v.address)}&coord_type=wgs84&output=html&src=webapp.deepsurf.venues` : `https://api.map.baidu.com/place/search?query=${encodeURIComponent(v.name)}&region=${encodeURIComponent(v.city)}&output=html&src=webapp.deepsurf.venues`,

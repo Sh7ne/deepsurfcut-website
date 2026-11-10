@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f2f2f7">
+  <meta name="description" content="查看欧洲有公开运营证据的深水固定浪与 Rapid Surfing 场馆、预约入口和导航。">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="冲浪地图">
+  <title>欧洲深水冲浪场馆地图｜DeepSurfCut</title>
+  <link rel="canonical" href="https://deepsurf.app/RapidSurfingMap-Europe">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="DeepSurfCut">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:title" content="欧洲深水冲浪场馆地图｜DeepSurfCut">
+  <meta property="og:description" content="查看欧洲有公开运营证据的深水固定浪与 Rapid Surfing 场馆、预约入口和导航。">
+  <meta property="og:url" content="https://deepsurf.app/RapidSurfingMap-Europe">
+  <meta property="og:image" content="https://deepsurf.app/assets/social-preview-20260917.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="753">
+  <meta property="og:image:alt" content="DeepSurfCut">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="欧洲深水冲浪场馆地图｜DeepSurfCut">
+  <meta name="twitter:description" content="查看欧洲有公开运营证据的深水固定浪与 Rapid Surfing 场馆、预约入口和导航。">
+  <meta name="twitter:image" content="https://deepsurf.app/assets/social-preview-20260917.jpg">
+  <link rel="icon" href="/assets/favicon-96.png" sizes="96x96" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180">
+  <link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="/venues/map.css?v=20261110-regional-maps-1">
+  <script src="/assets/vendor/leaflet/leaflet.js" defer></script>
+  <script type="module" src="/venues/map.js?v=20261110-regional-maps-1"></script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","@id":"https://deepsurf.app/RapidSurfingMap-Europe#webpage","url":"https://deepsurf.app/RapidSurfingMap-Europe","name":"欧洲深水冲浪场馆地图｜DeepSurfCut","description":"查看欧洲有公开运营证据的深水固定浪与 Rapid Surfing 场馆、预约入口和导航。","inLanguage":"zh-Hans","dateModified":"2026-11-10","isPartOf":{"@id":"https://deepsurf.app/#website"},"mainEntity":{"@type":"ItemList","numberOfItems":14,"itemListElement":[{"@type":"ListItem","position":1,"name":"Wellenwerk","url":"https://deepsurf.app/RapidSurfingMap-Europe#venue-wellenwerk-berlin"},{"@type":"ListItem","position":2,"name":"Jochen Schweizer Arena","url":"https://deepsurf.app/RapidSurfingMap-Europe#venue-jochen-schweizer-arena"},{"@type":"ListItem","position":3,"name":"RheinRiff","url":"https://deepsurf.app/RapidSurfingMap-Europe#venue-rheinriff"},{"@type":"ListItem","position":4,"name":"L&T Hasewelle","url":"https://deepsurf.app/RapidSurfingMap-Europe#venue-hasewelle"},{"@type":"ListItem","position":5,"name":"irie surf","url":"https://deepsurf.app/RapidSurfingMap-Europe#venue-irie-surf"},{"@type":"ListItem","position":6,"name":"Surf Langenfeld","url":"https://deepsurf.app/RapidSurfingMap-Europe#venue-surf-langenfeld"},{"@type":"ListItem","position":7,"name":"OANA","url":"https://deepsurf.app/RapidSurfingMap-Europe#venue-oana"},{"@type":"ListItem","position":8,"name":"Honna Surf Hub","url":"https://deepsurf.app/RapidSurfingMap-Europe#venue-honna"},{"@type":"ListItem","position":9,"name":"City Surf Park","url":"https://deepsurf.app/RapidSurfingMap-Europe#venue-city-surf-park"},{"@type":"ListItem","position":10,"name":"Wakeparadise Milano","url":"https://deepsurf.app/RapidSurfingMap-Europe#venue-wakeparadise-milano"},{"@type":"ListItem","position":11,"name":"citywave Vilnius","url":"https://deepsurf.app/RapidSurfingMap-Europe#venue-citywave-vilnius"},{"@type":"ListItem","position":12,"name":"Surflux / Surf Luxembourg","url":"https://deepsurf.app/RapidSurfingMap-Europe#venue-surflux"},{"@type":"ListItem","position":13,"name":"Surf Brothers Skolkovo","url":"https://deepsurf.app/RapidSurfingMap-Europe#venue-surf-brothers-skolkovo"},{"@type":"ListItem","position":14,"name":"Flow Moscow","url":"https://deepsurf.app/RapidSurfingMap-Europe#venue-flow-moscow"}]}}</script>
+</head>
+<body data-lang="zh">
+  <a class="skip-link" href="#venue-list">跳转到场馆列表</a>
+  <main class="map-app">
+    <h1 class="sr-only">欧洲深水冲浪场馆地图</h1>
+    <section class="map-stage enhance-only" aria-label="欧洲深水冲浪场馆地图">
+      <div id="map" role="region" aria-label="欧洲深水冲浪场馆地图" tabindex="0"></div>
+      <button id="about-open" class="icon-button map-about-control enhance-only" type="button" aria-label="关于这份地图" aria-haspopup="dialog" aria-controls="about-dialog"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10h.01"/></svg></button>
+      <div id="map-message" class="map-message" role="status"><span>正在加载地图…</span><button id="map-retry" type="button" hidden>重试</button></div>
+      <div class="map-controls">
+        <button id="locate" class="icon-button" type="button" aria-label="定位到我" title="定位到我"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg></button>
+        <button id="fit-map" class="icon-button" type="button" aria-label="显示全部场馆" title="显示全部场馆"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/><path d="m8 8 8 8m0-8-8 8"/></svg></button>
+        <div class="zoom-controls"><button id="zoom-in" class="icon-button" type="button" aria-label="放大地图"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button><button id="zoom-out" class="icon-button" type="button" aria-label="缩小地图"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/></svg></button></div>
+      </div>
+      <div class="map-attribution"><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap</a></div>
+      <div id="provider-attribution" class="provider-attribution" aria-label="地图服务标识" hidden></div>
+    </section>
+    <aside id="explore-sheet" class="explore-sheet" aria-label="场馆列表">
+      <button id="sheet-handle" class="sheet-handle enhance-only" type="button" aria-label="展开或收起场馆列表" aria-expanded="false" aria-controls="venue-list"><span></span></button>
+      <div class="sheet-header">
+        <h2>欧洲深水冲浪场馆</h2><p class="sheet-subtitle" lang="en">Rapid Surfing Venues</p>
+        <nav class="edition-nav" aria-label="冲浪地图地区"><a href="/RapidSurfingMap">中国</a><a href="/RapidSurfingMap-Europe" aria-current="page">欧洲</a><a href="/RapidSurfingMap-USA">美国</a></nav>
+        <div class="search-row enhance-only"><div class="search-box"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg><input id="search" type="search" placeholder="想去哪里冲浪？" aria-label="搜索城市或场馆" autocomplete="off" enterkeyhint="search"><button id="clear-search" class="icon-button" type="button" aria-label="清除搜索" hidden><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button></div><button id="filter-open" class="filter-button icon-button" type="button" aria-label="筛选" aria-haspopup="dialog"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h9m4 0h3M4 17h3m4 0h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></button></div>
+        <div id="city-filters" class="filter-chips enhance-only" aria-label="全部城市"><button type="button" class="chip active" data-city="all" aria-pressed="true">全部城市</button><button type="button" class="chip" data-city="柏林" aria-pressed="false">柏林</button><button type="button" class="chip" data-city="Taufkirchen（慕尼黑）" aria-pressed="false">Taufkirchen（慕尼黑）</button><button type="button" class="chip" data-city="杜塞尔多夫" aria-pressed="false">杜塞尔多夫</button><button type="button" class="chip" data-city="奥斯纳布吕克" aria-pressed="false">奥斯纳布吕克</button><button type="button" class="chip" data-city="弗赖堡" aria-pressed="false">弗赖堡</button><button type="button" class="chip" data-city="朗根费尔德" aria-pressed="false">朗根费尔德</button><button type="button" class="chip" data-city="Ebikon（卢塞恩）" aria-pressed="false">Ebikon（卢塞恩）</button><button type="button" class="chip" data-city="Alcorcón（马德里）" aria-pressed="false">Alcorcón（马德里）</button><button type="button" class="chip" data-city="Décines-Charpieu（里昂）" aria-pressed="false">Décines-Charpieu（里昂）</button><button type="button" class="chip" data-city="Peschiera Borromeo（米兰）" aria-pressed="false">Peschiera Borromeo（米兰）</button><button type="button" class="chip" data-city="维尔纽斯" aria-pressed="false">维尔纽斯</button><button type="button" class="chip" data-city="Arlon" aria-pressed="false">Arlon</button><button type="button" class="chip" data-city="莫斯科" aria-pressed="false">莫斯科</button></div>
+        <div id="active-filters" class="active-filters" hidden></div>
+      </div>
+      <div class="list-heading"><p><strong id="result-count" aria-live="polite">14</strong> <span id="result-label">处浪点</span></p><label class="sort-control enhance-only"><span class="sr-only">排序</span><select id="sort"><option value="recommended">推荐顺序</option><option value="name">名称</option><option value="nearest">距离最近</option></select></label></div>
+      <noscript><p class="no-script-note">启用 JavaScript 可使用互动地图、筛选与收藏；以下场馆资料仍可直接阅读。<br><a href="/zh/">返回 DeepSurfCut 官网</a></p></noscript>
+      <div id="venue-list" class="venue-list" tabindex="-1">
+          <article class="venue-card" id="venue-wellenwerk-berlin" data-id="wellenwerk-berlin" aria-labelledby="title-wellenwerk-berlin">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-wellenwerk-berlin" data-open="wellenwerk-berlin">
+                <span class="venue-number" aria-hidden="true"><span>01</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">柏林</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-wellenwerk-berlin" lang="zh-Hans">Wellenwerk</h3>
+                  <span class="venue-tags"><span class="badge badge-indoor">室内</span></span>
+                  <span class="venue-summary" lang="zh-Hans">Citywave 室内驻波，浪面约 8.5 米。</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="wellenwerk-berlin" aria-label="收藏场馆 · Wellenwerk" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>场馆详情</summary>
+              <p lang="zh-Hans">Citywave 室内驻波，浪面约 8.5 米。</p>
+              <h4>场馆地址</h4><p lang="zh-Hans">Landsberger Allee 270, 10367 Berlin, Germany</p>
+              <p class="position-note">场址位置 · <span lang="zh-Hans">场址标记。入口请按地址导航。</span></p>
+              <h4>开放安排</h4><p lang="zh-Hans">有分级课程及公开预约；以场馆日历为准。</p>
+              <p>开放安排并非实时营业状态，出发前请向场馆确认。</p>
+              <p>资料更新: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>参考资料</h4><ul class="source-links"><li><a href="https://wellenwerk-berlin.de/indoor-surfen/" target="_blank" rel="noopener noreferrer">场馆预约与开放信息<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://wellenwerk-berlin.de/" target="_blank" rel="noopener noreferrer">交叉核对资料<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=Wellenwerk%20Landsberger%20Allee%20270%2C%2010367%20Berlin%2C%20Germany" target="_blank" rel="noopener noreferrer">Google 地图<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-jochen-schweizer-arena" data-id="jochen-schweizer-arena" aria-labelledby="title-jochen-schweizer-arena">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-jochen-schweizer-arena" data-open="jochen-schweizer-arena">
+                <span class="venue-number" aria-hidden="true"><span>02</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Taufkirchen（慕尼黑）</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-jochen-schweizer-arena" lang="zh-Hans">Jochen Schweizer Arena</h3>
+                  <span class="venue-tags"><span class="badge badge-indoor">室内</span></span>
+                  <span class="venue-summary" lang="zh-Hans">Citywave 室内驻波，浪面约 7.5 米。</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="jochen-schweizer-arena" aria-label="收藏场馆 · Jochen Schweizer Arena" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>场馆详情</summary>
+              <p lang="zh-Hans">Citywave 室内驻波，浪面约 7.5 米。</p>
+              <h4>场馆地址</h4><p lang="zh-Hans">Ludwig-Bölkow-Allee 1, 82024 Taufkirchen, Germany</p>
+              <p class="position-note">场址位置 · <span lang="zh-Hans">场址标记。入口请按地址导航。</span></p>
+              <h4>开放安排</h4><p lang="zh-Hans">场馆提供全年室内课程及公开预约。</p>
+              <p>开放安排并非实时营业状态，出发前请向场馆确认。</p>
+              <p>资料更新: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>参考资料</h4><ul class="source-links"><li><a href="https://shop.jochen-schweizer-arena.de/indoor-surfen" target="_blank" rel="noopener noreferrer">场馆预约与开放信息<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://www.jochen-schweizer-arena.de/indoor-surfen/" target="_blank" rel="noopener noreferrer">交叉核对资料<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=Jochen%20Schweizer%20Arena%20Ludwig-B%C3%B6lkow-Allee%201%2C%2082024%20Taufkirchen%2C%20Germany" target="_blank" rel="noopener noreferrer">Google 地图<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-rheinriff" data-id="rheinriff" aria-labelledby="title-rheinriff">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-rheinriff" data-open="rheinriff">
+                <span class="venue-number" aria-hidden="true"><span>03</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">杜塞尔多夫</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-rheinriff" lang="zh-Hans">RheinRiff</h3>
+                  <span class="venue-tags"><span class="badge badge-indoor">室内</span></span>
+                  <span class="venue-summary" lang="zh-Hans">Citywave 室内驻波，浪面约 9 米。</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="rheinriff" aria-label="收藏场馆 · RheinRiff" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>场馆详情</summary>
+              <p lang="zh-Hans">Citywave 室内驻波，浪面约 9 米。</p>
+              <h4>场馆地址</h4><p lang="zh-Hans">Hansaallee 321, 40549 Düsseldorf, Germany</p>
+              <p class="position-note">场址位置 · <span lang="zh-Hans">场址标记。入口请按地址导航。</span></p>
+              <h4>开放安排</h4><p lang="zh-Hans">有初学课程和按水平划分的公开场次。</p>
+              <p>开放安排并非实时营业状态，出发前请向场馆确认。</p>
+              <p>资料更新: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>参考资料</h4><ul class="source-links"><li><a href="https://www.rheinriff.com/de/surf" target="_blank" rel="noopener noreferrer">场馆预约与开放信息<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://www.rheinriff.com/de/faq" target="_blank" rel="noopener noreferrer">交叉核对资料<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=RheinRiff%20Hansaallee%20321%2C%2040549%20D%C3%BCsseldorf%2C%20Germany" target="_blank" rel="noopener noreferrer">Google 地图<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-hasewelle" data-id="hasewelle" aria-labelledby="title-hasewelle">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-hasewelle" data-open="hasewelle">
+                <span class="venue-number" aria-hidden="true"><span>04</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">奥斯纳布吕克</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-hasewelle" lang="zh-Hans">L&amp;T Hasewelle</h3>
+                  <span class="venue-tags"><span class="badge badge-indoor">室内</span></span>
+                  <span class="venue-summary" lang="zh-Hans">L&amp;T 商场内的 Citywave，浪面约 7.5 米。</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="hasewelle" aria-label="收藏场馆 · L&amp;T Hasewelle" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>场馆详情</summary>
+              <p lang="zh-Hans">L&amp;T 商场内的 Citywave，浪面约 7.5 米。</p>
+              <h4>场馆地址</h4><p lang="zh-Hans">Große Straße 27–32, 49074 Osnabrück, Germany</p>
+              <p class="position-note">场址位置 · <span lang="zh-Hans">场址标记。入口请按地址导航。</span></p>
+              <h4>开放安排</h4><p lang="zh-Hans">官网提供分级预约；未达到场次最低人数可能取消。</p>
+              <p>开放安排并非实时营业状态，出发前请向场馆确认。</p>
+              <p>资料更新: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>参考资料</h4><ul class="source-links"><li><a href="https://www.l-t.de/pages/hasewelle" target="_blank" rel="noopener noreferrer">场馆预约与开放信息<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://www.citywaveusa.com/locations/" target="_blank" rel="noopener noreferrer">交叉核对资料<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=L%26T%20Hasewelle%20Gro%C3%9Fe%20Stra%C3%9Fe%2027%E2%80%9332%2C%2049074%20Osnabr%C3%BCck%2C%20Germany" target="_blank" rel="noopener noreferrer">Google 地图<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-irie-surf" data-id="irie-surf" aria-labelledby="title-irie-surf">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-irie-surf" data-open="irie-surf">
+                <span class="venue-number" aria-hidden="true"><span>05</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">弗赖堡</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-irie-surf" lang="zh-Hans">irie surf</h3>
+                  <span class="venue-tags"><span class="badge badge-outdoor">室外</span></span>
+                  <span class="venue-summary" lang="zh-Hans">Messe Freiburg 电车站附近的户外 Citywave，浪面约 9 米。</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="irie-surf" aria-label="收藏场馆 · irie surf" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>场馆详情</summary>
+              <p lang="zh-Hans">Messe Freiburg 电车站附近的户外 Citywave，浪面约 9 米。</p>
+              <h4>场馆地址</h4><p lang="zh-Hans">Messe Freiburg 电车站附近, 79108 Freiburg im Breisgau, Germany</p>
+              <p class="position-note">大致位置 · <span lang="zh-Hans">场址附近的大致位置。入口请按场馆名称导航。</span></p>
+              <h4>开放安排</h4><p lang="zh-Hans">官网列有儿童、初学及进阶场次；天气可能影响开放。</p>
+              <p>开放安排并非实时营业状态，出发前请向场馆确认。</p>
+              <p>资料更新: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>参考资料</h4><ul class="source-links"><li><a href="https://iriesurf.de/activities/surf" target="_blank" rel="noopener noreferrer">场馆预约与开放信息<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://citywave.de/blog/surfing-at-the-foot-of-the-black-forest-citywave-freiburg-and-irie-surf-open-in-may/" target="_blank" rel="noopener noreferrer">交叉核对资料<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=irie%20surf%20Messe%20Freiburg%20%E7%94%B5%E8%BD%A6%E7%AB%99%E9%99%84%E8%BF%91%2C%2079108%20Freiburg%20im%20Breisgau%2C%20Germany" target="_blank" rel="noopener noreferrer">Google 地图<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-surf-langenfeld" data-id="surf-langenfeld" aria-labelledby="title-surf-langenfeld">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-surf-langenfeld" data-open="surf-langenfeld">
+                <span class="venue-number" aria-hidden="true"><span>06</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">朗根费尔德</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-surf-langenfeld" lang="zh-Hans">Surf Langenfeld</h3>
+                  <span class="venue-tags"><span class="badge badge-outdoor">室外</span><span class="badge badge-seasonal">季节开放</span></span>
+                  <span class="venue-summary" lang="zh-Hans">淡水湖上的浮动 UNIT 驻波，浪面 8 米。</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="surf-langenfeld" aria-label="收藏场馆 · Surf Langenfeld" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>场馆详情</summary>
+              <p lang="zh-Hans">淡水湖上的浮动 UNIT 驻波，浪面 8 米。</p>
+              <h4>场馆地址</h4><p lang="zh-Hans">Baumberger Str. 88, 40764 Langenfeld, Germany</p>
+              <p class="position-note">场址位置 · <span lang="zh-Hans">场址标记。入口请按地址导航。</span></p>
+              <h4>开放安排</h4><p lang="zh-Hans">官网列 2026 年 11 至 12 月周末开放，本季至 12 月 6 日。</p>
+              <p>开放安排并非实时营业状态，出发前请向场馆确认。</p>
+              <p>资料更新: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>参考资料</h4><ul class="source-links"><li><a href="https://www.surf-langenfeld.de/en/opening-hours/" target="_blank" rel="noopener noreferrer">场馆预约与开放信息<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://www.surf-pool.com/locations" target="_blank" rel="noopener noreferrer">交叉核对资料<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=Surf%20Langenfeld%20Baumberger%20Str.%2088%2C%2040764%20Langenfeld%2C%20Germany" target="_blank" rel="noopener noreferrer">Google 地图<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-oana" data-id="oana" aria-labelledby="title-oana">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-oana" data-open="oana">
+                <span class="venue-number" aria-hidden="true"><span>07</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Ebikon（卢塞恩）</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-oana" lang="zh-Hans">OANA</h3>
+                  <span class="venue-tags"><span class="badge badge-indoor">室内</span></span>
+                  <span class="venue-summary" lang="zh-Hans">Mall of Switzerland 内的温水 Citywave。</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="oana" aria-label="收藏场馆 · OANA" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>场馆详情</summary>
+              <p lang="zh-Hans">Mall of Switzerland 内的温水 Citywave。</p>
+              <h4>场馆地址</h4><p lang="zh-Hans">Ebisquare-Strasse 2, 6030 Ebikon, Switzerland</p>
+              <p class="position-note">场址位置 · <span lang="zh-Hans">场址标记。入口请按地址导航。</span></p>
+              <h4>开放安排</h4><p lang="zh-Hans">室内全年运营，有 Basic 场和包场，按预约日历开放。</p>
+              <p>开放安排并非实时营业状态，出发前请向场馆确认。</p>
+              <p>资料更新: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>参考资料</h4><ul class="source-links"><li><a href="https://www.oana.surf/" target="_blank" rel="noopener noreferrer">场馆预约与开放信息<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://www.mallofswitzerland.ch/en/surfing-at-oana/" target="_blank" rel="noopener noreferrer">交叉核对资料<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=OANA%20Ebisquare-Strasse%202%2C%206030%20Ebikon%2C%20Switzerland" target="_blank" rel="noopener noreferrer">Google 地图<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-honna" data-id="honna" aria-labelledby="title-honna">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-honna" data-open="honna">
+                <span class="venue-number" aria-hidden="true"><span>08</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Alcorcón（马德里）</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-honna" lang="zh-Hans">Honna Surf Hub</h3>
+                  <span class="venue-tags"><span class="badge badge-outdoor">室外</span></span>
+                  <span class="venue-summary" lang="zh-Hans">X-Madrid 内的 Citywave Madrid。</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="honna" aria-label="收藏场馆 · Honna Surf Hub" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>场馆详情</summary>
+              <p lang="zh-Hans">X-Madrid 内的 Citywave Madrid。</p>
+              <h4>场馆地址</h4><p lang="zh-Hans">X-Madrid, Calle Oslo 53, 28922 Alcorcón, Spain</p>
+              <p class="position-note">场址位置 · <span lang="zh-Hans">场址标记。入口请按地址导航。</span></p>
+              <h4>开放安排</h4><p lang="zh-Hans">有首次体验、进阶及儿童场次，按级别预约。</p>
+              <p>开放安排并非实时营业状态，出发前请向场馆确认。</p>
+              <p>资料更新: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>参考资料</h4><ul class="source-links"><li><a href="https://booking.honnasurfhub.com/" target="_blank" rel="noopener noreferrer">场馆预约与开放信息<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://x-madrid.com/ocioydeporte/honnasurfhub-madrid/" target="_blank" rel="noopener noreferrer">交叉核对资料<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=Honna%20Surf%20Hub%20X-Madrid%2C%20Calle%20Oslo%2053%2C%2028922%20Alcorc%C3%B3n%2C%20Spain" target="_blank" rel="noopener noreferrer">Google 地图<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-city-surf-park" data-id="city-surf-park" aria-labelledby="title-city-surf-park">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-city-surf-park" data-open="city-surf-park">
+                <span class="venue-number" aria-hidden="true"><span>09</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Décines-Charpieu（里昂）</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-city-surf-park" lang="zh-Hans">City Surf Park</h3>
+                  <span class="venue-tags"><span class="badge badge-indoor">室内</span></span>
+                  <span class="venue-summary" lang="zh-Hans">OL Vallée 的室内人工驻波，2026 年更换造浪系统。</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="city-surf-park" aria-label="收藏场馆 · City Surf Park" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>场馆详情</summary>
+              <p lang="zh-Hans">OL Vallée 的室内人工驻波，2026 年更换造浪系统。</p>
+              <h4>场馆地址</h4><p lang="zh-Hans">OL Vallée, Parking P7, Décines-Charpieu, France</p>
+              <p class="position-note">场址位置 · <span lang="zh-Hans">场址标记。入口请按地址导航。</span></p>
+              <h4>开放安排</h4><p lang="zh-Hans">有公开预约，亦公布了 2026 年 12 月驻波赛事。</p>
+              <p>开放安排并非实时营业状态，出发前请向场馆确认。</p>
+              <p>资料更新: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>参考资料</h4><ul class="source-links"><li><a href="https://www.city-surf-park.com/" target="_blank" rel="noopener noreferrer">场馆预约与开放信息<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://www.city-surf-park.com/surfopenlyon-register" target="_blank" rel="noopener noreferrer">交叉核对资料<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=City%20Surf%20Park%20OL%20Vall%C3%A9e%2C%20Parking%20P7%2C%20D%C3%A9cines-Charpieu%2C%20France" target="_blank" rel="noopener noreferrer">Google 地图<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-wakeparadise-milano" data-id="wakeparadise-milano" aria-labelledby="title-wakeparadise-milano">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-wakeparadise-milano" data-open="wakeparadise-milano">
+                <span class="venue-number" aria-hidden="true"><span>10</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Peschiera Borromeo（米兰）</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-wakeparadise-milano" lang="zh-Hans">Wakeparadise Milano</h3>
+                  <span class="venue-tags"><span class="badge badge-outdoor">室外</span><span class="badge badge-seasonal">季节开放</span></span>
+                  <span class="venue-summary" lang="zh-Hans">Idroscalo 湖上的 UNIT 浮动驻波，浪面 10 米。</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="wakeparadise-milano" aria-label="收藏场馆 · Wakeparadise Milano" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>场馆详情</summary>
+              <p lang="zh-Hans">Idroscalo 湖上的 UNIT 浮动驻波，浪面 10 米。</p>
+              <h4>场馆地址</h4><p lang="zh-Hans">Parco Idroscalo 南门, Via Idroscalo, 20068 Peschiera Borromeo, Italy</p>
+              <p class="position-note">场址位置 · <span lang="zh-Hans">场址标记。入口请按地址导航。</span></p>
+              <h4>开放安排</h4><p lang="zh-Hans">官网列 11 至 3 月周五至周一开放。场地需注册会员，周末需确认预约；请查看实际冲浪档期。</p>
+              <p>开放安排并非实时营业状态，出发前请向场馆确认。</p>
+              <p>资料更新: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>参考资料</h4><ul class="source-links"><li><a href="https://wakeparadise.it/milano/en/openinghoursaccess/" target="_blank" rel="noopener noreferrer">场馆预约与开放信息<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://wakeparadise.it/milano/surf/" target="_blank" rel="noopener noreferrer">交叉核对资料<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=Wakeparadise%20Milano%20Parco%20Idroscalo%20%E5%8D%97%E9%97%A8%2C%20Via%20Idroscalo%2C%2020068%20Peschiera%20Borromeo%2C%20Italy" target="_blank" rel="noopener noreferrer">Google 地图<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-citywave-vilnius" data-id="citywave-vilnius" aria-labelledby="title-citywave-vilnius">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-citywave-vilnius" data-open="citywave-vilnius">
+                <span class="venue-number" aria-hidden="true"><span>11</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">维尔纽斯</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-citywave-vilnius" lang="zh-Hans">citywave Vilnius</h3>
+                  <span class="venue-tags"><span class="badge badge-indoor">室内</span></span>
+                  <span class="venue-summary" lang="zh-Hans">Enefit Arena 内的室内 Citywave。</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="citywave-vilnius" aria-label="收藏场馆 · citywave Vilnius" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>场馆详情</summary>
+              <p lang="zh-Hans">Enefit Arena 内的室内 Citywave。</p>
+              <h4>场馆地址</h4><p lang="zh-Hans">Šv. Stepono g. 41, 03209 Vilnius, Lithuania</p>
+              <p class="position-note">场址位置 · <span lang="zh-Hans">场址标记。入口请按地址导航。</span></p>
+              <h4>开放安排</h4><p lang="zh-Hans">公开预约有首次体验及进阶场次。</p>
+              <p>开放安排并非实时营业状态，出发前请向场馆确认。</p>
+              <p>资料更新: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>参考资料</h4><ul class="source-links"><li><a href="https://enefitarena.lt/en/city-wave/session/" target="_blank" rel="noopener noreferrer">场馆预约与开放信息<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://www.govilnius.lt/meet-in-vilnius/venue-finder/enefit-arena-powered-by-citywave" target="_blank" rel="noopener noreferrer">交叉核对资料<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=citywave%20Vilnius%20%C5%A0v.%20Stepono%20g.%2041%2C%2003209%20Vilnius%2C%20Lithuania" target="_blank" rel="noopener noreferrer">Google 地图<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-surflux" data-id="surflux" aria-labelledby="title-surflux">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-surflux" data-open="surflux">
+                <span class="venue-number" aria-hidden="true"><span>12</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Arlon</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-surflux" lang="zh-Hans">Surflux / Surf Luxembourg</h3>
+                  <span class="venue-tags"><span class="badge badge-indoor">室内</span></span>
+                  <span class="venue-summary" lang="zh-Hans">Arlon 的深水 FlowSurf 驻波，位于 Van der Valk 酒店场址。</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="surflux" aria-label="收藏场馆 · Surflux / Surf Luxembourg" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>场馆详情</summary>
+              <p lang="zh-Hans">Arlon 的深水 FlowSurf 驻波，位于 Van der Valk 酒店场址。</p>
+              <h4>场馆地址</h4><p lang="zh-Hans">596 Route de Longwy, 6700 Arlon, Belgium</p>
+              <p class="position-note">场址位置 · <span lang="zh-Hans">场址标记。入口请按地址导航。</span></p>
+              <h4>开放安排</h4><p lang="zh-Hans">官网提供全年预约。场馆与俱乐部分别公布了 2026 年 11 月驻波公开赛。</p>
+              <p>开放安排并非实时营业状态，出发前请向场馆确认。</p>
+              <p>资料更新: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>参考资料</h4><ul class="source-links"><li><a href="https://surflux.eu/en/surfing-experience/" target="_blank" rel="noopener noreferrer">场馆预约与开放信息<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://club.surflux.eu/competition" target="_blank" rel="noopener noreferrer">交叉核对资料<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=Surflux%20%2F%20Surf%20Luxembourg%20596%20Route%20de%20Longwy%2C%206700%20Arlon%2C%20Belgium" target="_blank" rel="noopener noreferrer">Google 地图<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-surf-brothers-skolkovo" data-id="surf-brothers-skolkovo" aria-labelledby="title-surf-brothers-skolkovo">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-surf-brothers-skolkovo" data-open="surf-brothers-skolkovo">
+                <span class="venue-number" aria-hidden="true"><span>13</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">莫斯科</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-surf-brothers-skolkovo" lang="zh-Hans">Surf Brothers Skolkovo</h3>
+                  <span class="venue-tags"><span class="badge badge-indoor">室内</span></span>
+                  <span class="venue-summary" lang="zh-Hans">Skolkovo 商务中心内的室内驻波，浪面 9 米。</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="surf-brothers-skolkovo" aria-label="收藏场馆 · Surf Brothers Skolkovo" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>场馆详情</summary>
+              <p lang="zh-Hans">Skolkovo 商务中心内的室内驻波，浪面 9 米。</p>
+              <h4>场馆地址</h4><p lang="zh-Hans">Bolshoy Boulevard 40, BC Amalthea, Skolkovo, Moscow, Russia</p>
+              <p class="position-note">场址位置 · <span lang="zh-Hans">场址标记。入口请按地址导航。</span></p>
+              <h4>开放安排</h4><p lang="zh-Hans">有公开课程及预约入口。</p>
+              <p>开放安排并非实时营业状态，出发前请向场馆确认。</p>
+              <p>资料更新: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>参考资料</h4><ul class="source-links"><li><a href="https://skolkovo.surfbrothers.ru/" target="_blank" rel="noopener noreferrer">场馆预约与开放信息<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://bookmaker-ratings.by/ru/news/v-surf-brothers-skolkovo-projdet-pervy-j-chempionat-rossii-po-serfingu-na-iskusstvennoj-volne/" target="_blank" rel="noopener noreferrer">2026 年 11 月人工浪赛事<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=Surf%20Brothers%20Skolkovo%20Bolshoy%20Boulevard%2040%2C%20BC%20Amalthea%2C%20Skolkovo%2C%20Moscow%2C%20Russia" target="_blank" rel="noopener noreferrer">Google 地图<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-flow-moscow" data-id="flow-moscow" aria-labelledby="title-flow-moscow">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-flow-moscow" data-open="flow-moscow">
+                <span class="venue-number" aria-hidden="true"><span>14</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">莫斯科</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-flow-moscow" lang="zh-Hans">Flow Moscow</h3>
+                  <span class="venue-tags"><span class="badge badge-indoor">室内</span></span>
+                  <span class="venue-summary" lang="zh-Hans">室内 Citywave，浪面 7.5 米。</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="flow-moscow" aria-label="收藏场馆 · Flow Moscow" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>场馆详情</summary>
+              <p lang="zh-Hans">室内 Citywave，浪面 7.5 米。</p>
+              <h4>场馆地址</h4><p lang="zh-Hans">Stavropolskaya ulitsa 43, Moscow, Russia</p>
+              <p class="position-note">场址位置 · <span lang="zh-Hans">场址标记。入口请按地址导航。</span></p>
+              <h4>开放安排</h4><p lang="zh-Hans">官网列课程和套票，首次入门及儿童场请查预约规则。</p>
+              <p>开放安排并非实时营业状态，出发前请向场馆确认。</p>
+              <p>资料更新: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>参考资料</h4><ul class="source-links"><li><a href="https://moscowflow.ru/volna/" target="_blank" rel="noopener noreferrer">场馆预约与开放信息<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://topheats.ru/org/flowmoscow" target="_blank" rel="noopener noreferrer">2026 年场馆赛事记录<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=Flow%20Moscow%20Stavropolskaya%20ulitsa%2043%2C%20Moscow%2C%20Russia" target="_blank" rel="noopener noreferrer">Google 地图<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+        <div id="empty-state" class="empty-state" hidden><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg><h3>还没有匹配的浪点</h3><p>换个关键词，或试试其他城市。</p><button id="reset-filters" type="button">清除筛选</button></div>
+      </div>
+      <p class="directory-note">开放安排并非实时营业状态，出发前请向场馆确认。</p>
+    </aside>
+  </main>
+  <nav class="tab-bar enhance-only" aria-label="冲浪地图"><button type="button" data-view="map" aria-current="page"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6Zm6-3v15m6-12v15"/></svg><span>地图</span></button><button type="button" data-view="list"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg><span>列表</span></button><button type="button" data-view="saved"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg><span>收藏</span><span id="saved-count" class="saved-count" hidden>0</span></button></nav>
+  <dialog id="venue-detail" class="venue-detail" aria-label="场馆详情"><button id="detail-close" class="dialog-close icon-button" type="button" aria-label="关闭"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button><div id="detail-content"></div></dialog>
+  <dialog id="filter-dialog" class="filter-dialog" aria-labelledby="filter-title"><form method="dialog">
+    <div class="dialog-heading"><div><p class="sheet-kicker">冲浪地图</p><h2 id="filter-title">筛选</h2></div><button class="icon-button" type="submit" value="cancel" aria-label="关闭"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button></div>
+    <p class="dialog-intro">找到适合你这一趟的浪点。</p>
+    <fieldset><legend>场馆环境</legend><div class="environment-options"><label><input type="radio" name="environment" value="all" checked><span>全部</span></label><label><input type="radio" name="environment" value="indoor"><span>室内</span></label><label><input type="radio" name="environment" value="outdoor"><span>室外</span></label></div></fieldset>
+    <label class="switch-row"><span>只看季节开放场馆</span><input id="seasonal-only" type="checkbox"><span class="switch-track" aria-hidden="true"></span></label>
+    <div class="dialog-actions"><button id="filter-reset" class="secondary-button" type="button">清除筛选</button><button id="filter-apply" class="primary-button" type="submit" value="apply">查看场馆</button></div>
+  </form></dialog>
+  <dialog id="about-dialog" class="about-dialog" aria-labelledby="about-title"><button id="about-close" class="dialog-close icon-button" type="button" aria-label="关闭"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button><h2 id="about-title">关于冲浪地图</h2><p class="about-intro">一份持续整理的欧洲深水固定浪场馆目录，由 DeepSurfCut 制作。</p><label class="map-provider-control" hidden><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6Zm6-3v15m6-12v15"/></svg><span>地图服务</span><select id="map-provider" disabled><option value="baidu" hidden>百度地图</option><option value="amap" hidden>高德地图</option><option value="osm" selected>OpenStreetMap</option></select></label><p>这份地图收录已整理的商业深水固定浪场馆。薄水层模拟冲浪、自然河流浪点以及尚待核实的项目不计入场馆数量。</p><p>资料日期见各场馆详情。目录记录不代表场馆此刻营业；季节安排、预约和场次请以场馆最新确认为准。</p><p>地图区分场馆、所在园区和大致位置。标注不能代替入口确认；导航时请再次核对场馆名称与地址。</p><p>收藏和地图选择保存在当前浏览器。只有轻点定位按钮后才会请求你的位置。所选地图服务会接收加载地图及转换坐标所需的数据；网站不保存你的位置。</p><p>底图由 OpenStreetMap 提供。场馆详情提供 Google 地图和 Apple 地图导航入口。</p><div class="provider-links"><a data-provider-info="amap" hidden href="https://lbs.amap.com/" target="_blank" rel="noopener noreferrer">高德地图</a><a hidden href="https://lbs.baidu.com/" target="_blank" rel="noopener noreferrer">百度地图</a><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a></div><section id="provider-legal-attribution" class="provider-legal-attribution" aria-label="地图版权信息" hidden></section><a class="about-home-link" href="/zh/">返回 DeepSurfCut 官网</a></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <script type="application/json" id="map-config">{"lang":"zh","locale":"zh-CN","home":"/zh/","url":"https://deepsurf.app/RapidSurfingMap-Europe","edition":"europe","center":[49,12],"labels":{"lang":"zh-Hans","locale":"zh-CN","home":"/zh/","title":"欧洲深水冲浪场馆地图｜DeepSurfCut","description":"查看欧洲有公开运营证据的深水固定浪与 Rapid Surfing 场馆、预约入口和导航。","heading":"冲浪地图","edition":"中国版","eyebrow":"","intro":"欧洲深水冲浪场馆","subtitle":"Rapid Surfing Venues","skip":"跳转到场馆列表","homeLabel":"返回 DeepSurfCut 官网","about":"关于这份地图","search":"搜索城市或场馆","searchPlaceholder":"想去哪里冲浪？","clearSearch":"清除搜索","all":"全部","allCities":"全部城市","indoor":"室内","outdoor":"室外","seasonal":"季节开放","venues":"处浪点","saved":"已收藏","save":"收藏场馆","unsave":"取消收藏","savedToast":"已加入收藏","removedToast":"已取消收藏","mapLoading":"正在加载地图…","mapError":"地图暂时无法加载，仍可浏览场馆和打开导航。","retry":"重试","noResults":"还没有匹配的浪点","noResultsHint":"换个关键词，或试试其他城市。","noSaved":"还没有收藏的场馆","noSavedHint":"轻点场馆旁的收藏按钮，把想去的浪点留在这里。","reset":"清除筛选","results":"{count} 处浪点","favoritesCount":"已收藏 {count} 处","nearby":"附近","locationLoading":"正在获取你的位置…","locationError":"暂时无法获取位置，请稍后重试。","locationDenied":"未获得定位权限。你仍可按城市查找场馆。","locationUnsupported":"当前浏览器不支持定位。","locationFound":"已定位到你附近","locationTimeout":"定位超时，请稍后重试。","noPosition":"位置待确认","approximate":"大致位置","sitePosition":"场址位置","exactPosition":"场馆位置","source":"资料来源","sources":"参考资料","updated":"资料更新","address":"场馆地址","opening":"开放安排","overview":"关于场馆","directions":"打开导航","amap":"高德地图","baidu":"百度地图","apple":"Apple 地图","share":"分享场馆","copy":"复制链接","copyAddress":"复制地址","copied":"链接已复制","shareCopied":"场馆链接已复制","shareTitle":"一起去这里冲浪","shareError":"暂时无法分享，请复制浏览器地址。","viewMap":"在地图上查看","close":"关闭","kilometer":"公里","filters":"筛选","filterCount":"{count} 项筛选","clear":"清除","details":"场馆详情","dataNotice":"开放安排并非实时营业状态，出发前请向场馆确认。","loadingError":"场馆资料加载失败，请刷新页面重试。","unknownStatus":"请提前确认场次","nearestNeedsLocation":"先开启定位，即可按距离排序。","listView":"列表","mapView":"地图","savedView":"收藏","noSources":"暂无可链接的公开来源。","copiedAddress":"地址已复制","listLabel":"场馆列表","mapLabel":"欧洲深水冲浪场馆地图","locate":"定位到我","fitMap":"显示全部场馆","zoomIn":"放大地图","zoomOut":"缩小地图","expandSheet":"展开或收起场馆列表","sort":"排序","recommended":"推荐顺序","nameSort":"名称","nearestSort":"距离最近","environment":"场馆环境","seasonalOnly":"只看季节开放场馆","apply":"查看场馆","filterHint":"找到适合你这一趟的浪点。","aboutHeading":"关于冲浪地图","aboutIntro":"一份持续整理的欧洲深水固定浪场馆目录，由 DeepSurfCut 制作。","aboutScope":"这份地图收录已整理的商业深水固定浪场馆。薄水层模拟冲浪、自然河流浪点以及尚待核实的项目不计入场馆数量。","aboutDates":"资料日期见各场馆详情。目录记录不代表场馆此刻营业；季节安排、预约和场次请以场馆最新确认为准。","aboutPositions":"地图区分场馆、所在园区和大致位置。标注不能代替入口确认；导航时请再次核对场馆名称与地址。","aboutPrivacy":"收藏和地图选择保存在当前浏览器。只有轻点定位按钮后才会请求你的位置。所选地图服务会接收加载地图及转换坐标所需的数据；网站不保存你的位置。","aboutMap":"底图由 OpenStreetMap 提供。场馆详情提供 Google 地图和 Apple 地图导航入口。","mapProvider":"地图服务","mapServiceMark":"地图服务标识","mapAttribution":"地图版权信息","providerUnavailable":"未配置","attribution":"地图数据","noScript":"启用 JavaScript 可使用互动地图、筛选与收藏；以下场馆资料仍可直接阅读。","google":"Google 地图"},"cities":{"北京":"北京","上海":"上海","杭州·建德":"杭州·建德","湖州":"湖州","成都":"成都","昆明":"昆明"},"venues":[{"id":"wellenwerk-berlin","name":"Wellenwerk","shortName":"Wellenwerk","city":"柏林","province":"德国","environment":"indoor","seasonal":false,"seasonNote":"有分级课程及公开预约；以场馆日历为准。","summary":"Citywave 室内驻波，浪面约 8.5 米。","description":"Citywave 室内驻波，浪面约 8.5 米。","address":"Landsberger Allee 270, 10367 Berlin, Germany","verifiedAt":"2026-11-10","sources":[{"label":"场馆预约与开放信息","url":"https://wellenwerk-berlin.de/indoor-surfen/"},{"label":"交叉核对资料","url":"https://wellenwerk-berlin.de/"}],"position":{"lat":52.5341,"lng":13.4946,"accuracy":"site","label":"场址标记。入口请按地址导航。","sourceUrl":"https://www.ortsdienst.de/berlin/lichtenberg-hohenschoenhausen/lichtenberg/branchenbuch-diverse-freizeitanlagen/wellenwerk-berlin-gmbh-bid139041/"}},{"id":"jochen-schweizer-arena","name":"Jochen Schweizer Arena","shortName":"Jochen Schweizer Arena","city":"Taufkirchen（慕尼黑）","province":"德国","environment":"indoor","seasonal":false,"seasonNote":"场馆提供全年室内课程及公开预约。","summary":"Citywave 室内驻波，浪面约 7.5 米。","description":"Citywave 室内驻波，浪面约 7.5 米。","address":"Ludwig-Bölkow-Allee 1, 82024 Taufkirchen, Germany","verifiedAt":"2026-11-10","sources":[{"label":"场馆预约与开放信息","url":"https://shop.jochen-schweizer-arena.de/indoor-surfen"},{"label":"交叉核对资料","url":"https://www.jochen-schweizer-arena.de/indoor-surfen/"}],"position":{"lat":48.041847,"lng":11.653793,"accuracy":"site","label":"场址标记。入口请按地址导航。","sourceUrl":"https://adresse.dastelefonbuch.de/Taufkirchen/1-Jochen-Schweizer-Arena-GmbH-Taufkirchen-Ludwig-B%C3%B6lkow-Allee.html"}},{"id":"rheinriff","name":"RheinRiff","shortName":"RheinRiff","city":"杜塞尔多夫","province":"德国","environment":"indoor","seasonal":false,"seasonNote":"有初学课程和按水平划分的公开场次。","summary":"Citywave 室内驻波，浪面约 9 米。","description":"Citywave 室内驻波，浪面约 9 米。","address":"Hansaallee 321, 40549 Düsseldorf, Germany","verifiedAt":"2026-11-10","sources":[{"label":"场馆预约与开放信息","url":"https://www.rheinriff.com/de/surf"},{"label":"交叉核对资料","url":"https://www.rheinriff.com/de/faq"}],"position":{"lat":51.245342,"lng":6.712217,"accuracy":"site","label":"场址标记。入口请按地址导航。","sourceUrl":"https://adresse.dastelefonbuch.de/D%C3%BCsseldorf/1-RheinRiff-GmbH-D%C3%BCsseldorf-Hansaallee.html"}},{"id":"hasewelle","name":"L&T Hasewelle","shortName":"L&T Hasewelle","city":"奥斯纳布吕克","province":"德国","environment":"indoor","seasonal":false,"seasonNote":"官网提供分级预约；未达到场次最低人数可能取消。","summary":"L&T 商场内的 Citywave，浪面约 7.5 米。","description":"L&T 商场内的 Citywave，浪面约 7.5 米。","address":"Große Straße 27–32, 49074 Osnabrück, Germany","verifiedAt":"2026-11-10","sources":[{"label":"场馆预约与开放信息","url":"https://www.l-t.de/pages/hasewelle"},{"label":"交叉核对资料","url":"https://www.citywaveusa.com/locations/"}],"position":{"lat":52.27465,"lng":8.04688,"accuracy":"site","label":"场址标记。入口请按地址导航。","sourceUrl":"https://germany.worldplaces.me/city/osnabruck/view-place/4010417-l-and-t-lengermann-und-trieschmann.html"}},{"id":"irie-surf","name":"irie surf","shortName":"irie surf","city":"弗赖堡","province":"德国","environment":"outdoor","seasonal":false,"seasonNote":"官网列有儿童、初学及进阶场次；天气可能影响开放。","summary":"Messe Freiburg 电车站附近的户外 Citywave，浪面约 9 米。","description":"Messe Freiburg 电车站附近的户外 Citywave，浪面约 9 米。","address":"Messe Freiburg 电车站附近, 79108 Freiburg im Breisgau, Germany","verifiedAt":"2026-11-10","sources":[{"label":"场馆预约与开放信息","url":"https://iriesurf.de/activities/surf"},{"label":"交叉核对资料","url":"https://citywave.de/blog/surfing-at-the-foot-of-the-black-forest-citywave-freiburg-and-irie-surf-open-in-may/"}],"position":{"lat":48.02,"lng":7.846,"accuracy":"approximate","label":"场址附近的大致位置。入口请按场馆名称导航。","sourceUrl":"https://mapcarta.com/W1489575776"}},{"id":"surf-langenfeld","name":"Surf Langenfeld","shortName":"Surf Langenfeld","city":"朗根费尔德","province":"德国","environment":"outdoor","seasonal":true,"seasonNote":"官网列 2026 年 11 至 12 月周末开放，本季至 12 月 6 日。","summary":"淡水湖上的浮动 UNIT 驻波，浪面 8 米。","description":"淡水湖上的浮动 UNIT 驻波，浪面 8 米。","address":"Baumberger Str. 88, 40764 Langenfeld, Germany","verifiedAt":"2026-11-10","sources":[{"label":"场馆预约与开放信息","url":"https://www.surf-langenfeld.de/en/opening-hours/"},{"label":"交叉核对资料","url":"https://www.surf-pool.com/locations"}],"position":{"lat":51.1131,"lng":6.913,"accuracy":"site","label":"场址标记。入口请按地址导航。","sourceUrl":"https://spots.mywatersessions.com/spots/langenfeld"}},{"id":"oana","name":"OANA","shortName":"OANA","city":"Ebikon（卢塞恩）","province":"瑞士","environment":"indoor","seasonal":false,"seasonNote":"室内全年运营，有 Basic 场和包场，按预约日历开放。","summary":"Mall of Switzerland 内的温水 Citywave。","description":"Mall of Switzerland 内的温水 Citywave。","address":"Ebisquare-Strasse 2, 6030 Ebikon, Switzerland","verifiedAt":"2026-11-10","sources":[{"label":"场馆预约与开放信息","url":"https://www.oana.surf/"},{"label":"交叉核对资料","url":"https://www.mallofswitzerland.ch/en/surfing-at-oana/"}],"position":{"lat":47.09387,"lng":8.35823,"accuracy":"site","label":"场址标记。入口请按地址导航。","sourceUrl":"https://en.wikipedia.org/wiki/Mall_of_Switzerland"}},{"id":"honna","name":"Honna Surf Hub","shortName":"Honna Surf Hub","city":"Alcorcón（马德里）","province":"西班牙","environment":"outdoor","seasonal":false,"seasonNote":"有首次体验、进阶及儿童场次，按级别预约。","summary":"X-Madrid 内的 Citywave Madrid。","description":"X-Madrid 内的 Citywave Madrid。","address":"X-Madrid, Calle Oslo 53, 28922 Alcorcón, Spain","verifiedAt":"2026-11-10","sources":[{"label":"场馆预约与开放信息","url":"https://booking.honnasurfhub.com/"},{"label":"交叉核对资料","url":"https://x-madrid.com/ocioydeporte/honnasurfhub-madrid/"}],"position":{"lat":40.33985,"lng":-3.8482,"accuracy":"site","label":"场址标记。入口请按地址导航。","sourceUrl":"https://mapcarta.com/W32013299"}},{"id":"city-surf-park","name":"City Surf Park","shortName":"City Surf Park","city":"Décines-Charpieu（里昂）","province":"法国","environment":"indoor","seasonal":false,"seasonNote":"有公开预约，亦公布了 2026 年 12 月驻波赛事。","summary":"OL Vallée 的室内人工驻波，2026 年更换造浪系统。","description":"OL Vallée 的室内人工驻波，2026 年更换造浪系统。","address":"OL Vallée, Parking P7, Décines-Charpieu, France","verifiedAt":"2026-11-10","sources":[{"label":"场馆预约与开放信息","url":"https://www.city-surf-park.com/"},{"label":"交叉核对资料","url":"https://www.city-surf-park.com/surfopenlyon-register"}],"position":{"lat":45.767096,"lng":4.980878,"accuracy":"site","label":"场址标记。入口请按地址导航。","sourceUrl":"https://www.aleou.fr/salle-seminaire/29381-city-surf-park.html"}},{"id":"wakeparadise-milano","name":"Wakeparadise Milano","shortName":"Wakeparadise Milano","city":"Peschiera Borromeo（米兰）","province":"意大利","environment":"outdoor","seasonal":true,"seasonNote":"官网列 11 至 3 月周五至周一开放。场地需注册会员，周末需确认预约；请查看实际冲浪档期。","summary":"Idroscalo 湖上的 UNIT 浮动驻波，浪面 10 米。","description":"Idroscalo 湖上的 UNIT 浮动驻波，浪面 10 米。","address":"Parco Idroscalo 南门, Via Idroscalo, 20068 Peschiera Borromeo, Italy","verifiedAt":"2026-11-10","sources":[{"label":"场馆预约与开放信息","url":"https://wakeparadise.it/milano/en/openinghoursaccess/"},{"label":"交叉核对资料","url":"https://wakeparadise.it/milano/surf/"}],"position":{"lat":45.45317,"lng":9.2905,"accuracy":"site","label":"场址标记。入口请按地址导航。","sourceUrl":"https://mapcarta.com/W721599110"}},{"id":"citywave-vilnius","name":"citywave Vilnius","shortName":"citywave Vilnius","city":"维尔纽斯","province":"立陶宛","environment":"indoor","seasonal":false,"seasonNote":"公开预约有首次体验及进阶场次。","summary":"Enefit Arena 内的室内 Citywave。","description":"Enefit Arena 内的室内 Citywave。","address":"Šv. Stepono g. 41, 03209 Vilnius, Lithuania","verifiedAt":"2026-11-10","sources":[{"label":"场馆预约与开放信息","url":"https://enefitarena.lt/en/city-wave/session/"},{"label":"交叉核对资料","url":"https://www.govilnius.lt/meet-in-vilnius/venue-finder/enefit-arena-powered-by-citywave"}],"position":{"lat":54.669314,"lng":25.276605,"accuracy":"site","label":"场址标记。入口请按地址导航。","sourceUrl":"https://elektros-projektai.lt/projektai/jaunimo-centro-sv-stepono-g-41-vilniuje-rekonstravimo-sklypo-tvarkymo-sv-stepono-gatves-bei-vandentiekio-buitiniu-ir-pavirsiniu-nuoteku-tinklu-nuo-sopeno-g-iki-gelezinkelio-ir-algirdo-g-sankr"}},{"id":"surflux","name":"Surflux / Surf Luxembourg","shortName":"Surflux / Surf Luxembourg","city":"Arlon","province":"比利时","environment":"indoor","seasonal":false,"seasonNote":"官网提供全年预约。场馆与俱乐部分别公布了 2026 年 11 月驻波公开赛。","summary":"Arlon 的深水 FlowSurf 驻波，位于 Van der Valk 酒店场址。","description":"Arlon 的深水 FlowSurf 驻波，位于 Van der Valk 酒店场址。","address":"596 Route de Longwy, 6700 Arlon, Belgium","verifiedAt":"2026-11-10","sources":[{"label":"场馆预约与开放信息","url":"https://surflux.eu/en/surfing-experience/"},{"label":"交叉核对资料","url":"https://club.surflux.eu/competition"}],"position":{"lat":49.6481,"lng":5.8195,"accuracy":"site","label":"场址标记。入口请按地址导航。","sourceUrl":"https://en.wikipedia.org/wiki/Hotel_Luxembourg-Arlon"}},{"id":"surf-brothers-skolkovo","name":"Surf Brothers Skolkovo","shortName":"Surf Brothers Skolkovo","city":"莫斯科","province":"俄罗斯","environment":"indoor","seasonal":false,"seasonNote":"有公开课程及预约入口。","summary":"Skolkovo 商务中心内的室内驻波，浪面 9 米。","description":"Skolkovo 商务中心内的室内驻波，浪面 9 米。","address":"Bolshoy Boulevard 40, BC Amalthea, Skolkovo, Moscow, Russia","verifiedAt":"2026-11-10","sources":[{"label":"场馆预约与开放信息","url":"https://skolkovo.surfbrothers.ru/"},{"label":"2026 年 11 月人工浪赛事","url":"https://bookmaker-ratings.by/ru/news/v-surf-brothers-skolkovo-projdet-pervy-j-chempionat-rossii-po-serfingu-na-iskusstvennoj-volne/"}],"position":{"lat":55.695256,"lng":37.347081,"accuracy":"site","label":"场址标记。入口请按地址导航。","sourceUrl":"https://archi.ru/projects/russia/17689/klub-surf-brothers"}},{"id":"flow-moscow","name":"Flow Moscow","shortName":"Flow Moscow","city":"莫斯科","province":"俄罗斯","environment":"indoor","seasonal":false,"seasonNote":"官网列课程和套票，首次入门及儿童场请查预约规则。","summary":"室内 Citywave，浪面 7.5 米。","description":"室内 Citywave，浪面 7.5 米。","address":"Stavropolskaya ulitsa 43, Moscow, Russia","verifiedAt":"2026-11-10","sources":[{"label":"场馆预约与开放信息","url":"https://moscowflow.ru/volna/"},{"label":"2026 年场馆赛事记录","url":"https://topheats.ru/org/flowmoscow"}],"position":{"lat":55.683326,"lng":37.780922,"accuracy":"site","label":"场址标记。入口请按地址导航。","sourceUrl":"https://www.axaa.ru/Professionalnaya-Gorodskaya-Volna-Dlya-Serfinga-Citywave.html"}}]}</script>
+</body>
+</html>

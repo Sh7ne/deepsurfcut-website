@@ -3,7 +3,12 @@ import { pathToFileURL } from 'node:url';
 
 const root = new URL('../', import.meta.url);
 const origin = 'https://deepsurf.app';
-const mapPath = '/RapidSurfingMap';
+const editions = {
+  china: { path: '/RapidSurfingMap', label: '中国' },
+  europe: { path: '/RapidSurfingMap-Europe', label: '欧洲', center: [49, 12] },
+  usa: { path: '/RapidSurfingMap-USA', label: '美国', center: [37, -104] },
+};
+const googleMaps = (venue) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${venue.name} ${venue.address}`)}`;
 const escape = (value = '') => String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
 const json = (value) => JSON.stringify(value).replace(/</g, '\\u003c');
 const cities = { '北京': '北京', '上海': '上海', '杭州·建德': '杭州·建德', '湖州': '湖州', '成都': '成都', '昆明': '昆明' };
@@ -62,8 +67,7 @@ const iconPaths = {
 };
 const icon = (name, className = '') => `<svg class="icon ${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${iconPaths[name] || iconPaths.wave}</svg>`;
 
-function venueCard(venue, index) {
-  const t = venueLabels.zh;
+function venueCard(venue, index, t, international) {
   const localized = { ...venue, ...venue.i18n?.zh };
   const copyLang = 'zh-Hans';
   const positionLabel = venue.position?.accuracy === 'venue' ? t.exactPosition : venue.position?.accuracy === 'site' ? t.sitePosition : t.approximate;
@@ -92,14 +96,27 @@ function venueCard(venue, index) {
               <p>${t.dataNotice}</p>
               <p>${t.updated}: <time datetime="${escape(venue.verifiedAt)}">${escape(venue.verifiedAt)}</time></p>
               <h4>${t.sources}</h4>${sourceLinks ? `<ul class="source-links">${sourceLinks}</ul>` : `<p>${t.noSources}</p>`}
-              <a class="external-navigation" href="https://api.map.baidu.com/place/search?query=${encodeURIComponent(venue.name)}&region=${encodeURIComponent(venue.city)}&output=html&src=webapp.deepsurf.venues" target="_blank" rel="noopener noreferrer">${t.baidu}${icon('arrow')}</a>
+              <a class="external-navigation" href="${escape(international ? googleMaps(venue) : `https://api.map.baidu.com/place/search?query=${encodeURIComponent(venue.name)}&region=${encodeURIComponent(venue.city)}&output=html&src=webapp.deepsurf.venues`)}" target="_blank" rel="noopener noreferrer">${international ? t.google : t.baidu}${icon('arrow')}</a>
             </details>
           </article>`;
 }
 
-export function renderVenues(data) {
-  const t = venueLabels.zh;
-  const url = origin + mapPath;
+export function renderVenues(data, edition = 'china') {
+  const { path, label, center } = editions[edition];
+  const international = edition !== 'china';
+  const t = international ? {
+    ...venueLabels.zh,
+    title: `${label}深水冲浪场馆地图｜DeepSurfCut`,
+    description: `查看${label}有公开运营证据的深水固定浪与 Rapid Surfing 场馆、预约入口和导航。`,
+    intro: `${label}深水冲浪场馆`,
+    mapLabel: `${label}深水冲浪场馆地图`,
+    aboutIntro: `一份持续整理的${label}深水固定浪场馆目录，由 DeepSurfCut 制作。`,
+    aboutMap: '底图由 OpenStreetMap 提供。场馆详情提供 Google 地图和 Apple 地图导航入口。',
+    google: 'Google 地图',
+  } : venueLabels.zh;
+  const url = origin + path;
+  const regionNav = `<nav class="edition-nav" aria-label="冲浪地图地区">${Object.entries(editions).map(([key, region]) =>
+    `<a href="${region.path}"${key === edition ? ' aria-current="page"' : ''}>${region.label}</a>`).join('')}</nav>`;
   const count = data.venues.length;
   const actualCities = [...new Set(data.venues.map((venue) => venue.city))];
   const schemas = {
@@ -137,9 +154,9 @@ export function renderVenues(data) {
   <link rel="icon" href="/assets/favicon-96.png" sizes="96x96" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180">
   <link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css">
-  <link rel="stylesheet" href="/venues/map.css?v=20261028-map-floating-brand-1">
+  <link rel="stylesheet" href="/venues/map.css?v=20261110-regional-maps-1">
   <script src="/assets/vendor/leaflet/leaflet.js" defer></script>
-  <script type="module" src="/venues/map.js?v=20261028-map-floating-brand-1"></script>
+  <script type="module" src="/venues/map.js?v=20261110-regional-maps-1"></script>
   <script type="application/ld+json">${json(schemas)}</script>
 </head>
 <body data-lang="zh">
@@ -162,13 +179,14 @@ export function renderVenues(data) {
       <button id="sheet-handle" class="sheet-handle enhance-only" type="button" aria-label="${t.expandSheet}" aria-expanded="false" aria-controls="venue-list"><span></span></button>
       <div class="sheet-header">
         <h2>${t.intro}</h2><p class="sheet-subtitle" lang="en">${t.subtitle}</p>
+        ${regionNav}
         <div class="search-row enhance-only"><div class="search-box">${icon('search')}<input id="search" type="search" placeholder="${t.searchPlaceholder}" aria-label="${t.search}" autocomplete="off" enterkeyhint="search"><button id="clear-search" class="icon-button" type="button" aria-label="${t.clearSearch}" hidden>${icon('close')}</button></div><button id="filter-open" class="filter-button icon-button" type="button" aria-label="${t.filters}" aria-haspopup="dialog">${icon('filters')}</button></div>
         <div id="city-filters" class="filter-chips enhance-only" aria-label="${t.allCities}"><button type="button" class="chip active" data-city="all" aria-pressed="true">${t.allCities}</button>${actualCities.map((city) => `<button type="button" class="chip" data-city="${escape(city)}" aria-pressed="false">${escape(cities[city] || city)}</button>`).join('')}</div>
         <div id="active-filters" class="active-filters" hidden></div>
       </div>
       <div class="list-heading"><p><strong id="result-count" aria-live="polite">${count}</strong> <span id="result-label">${t.venues}</span></p><label class="sort-control enhance-only"><span class="sr-only">${t.sort}</span><select id="sort"><option value="recommended">${t.recommended}</option><option value="name">${t.nameSort}</option><option value="nearest">${t.nearestSort}</option></select></label></div>
       <noscript><p class="no-script-note">${t.noScript}<br><a href="${t.home}">${t.homeLabel}</a></p></noscript>
-      <div id="venue-list" class="venue-list" tabindex="-1">${data.venues.map((venue, index) => venueCard(venue, index)).join('')}
+      <div id="venue-list" class="venue-list" tabindex="-1">${data.venues.map((venue, index) => venueCard(venue, index, t, international)).join('')}
         <div id="empty-state" class="empty-state" hidden>${icon('wave')}<h3>${t.noResults}</h3><p>${t.noResultsHint}</p><button id="reset-filters" type="button">${t.reset}</button></div>
       </div>
       <p class="directory-note">${t.dataNotice}</p>
@@ -183,9 +201,9 @@ export function renderVenues(data) {
     <label class="switch-row"><span>${t.seasonalOnly}</span><input id="seasonal-only" type="checkbox"><span class="switch-track" aria-hidden="true"></span></label>
     <div class="dialog-actions"><button id="filter-reset" class="secondary-button" type="button">${t.reset}</button><button id="filter-apply" class="primary-button" type="submit" value="apply">${t.apply}</button></div>
   </form></dialog>
-  <dialog id="about-dialog" class="about-dialog" aria-labelledby="about-title"><button id="about-close" class="dialog-close icon-button" type="button" aria-label="${t.close}">${icon('close')}</button><h2 id="about-title">${t.aboutHeading}</h2><p class="about-intro">${t.aboutIntro}</p><label class="map-provider-control">${icon('map')}<span>${t.mapProvider}</span><select id="map-provider" disabled><option value="baidu" hidden>${t.baidu}</option><option value="amap" hidden>${t.amap}</option><option value="osm" selected>OpenStreetMap</option></select></label><p>${t.aboutScope}</p><p>${t.aboutDates}</p><p>${t.aboutPositions}</p><p>${t.aboutPrivacy}</p><p>${t.aboutMap}</p><div class="provider-links"><a data-provider-info="amap" hidden href="https://lbs.amap.com/" target="_blank" rel="noopener noreferrer">${t.amap}</a><a href="https://lbs.baidu.com/" target="_blank" rel="noopener noreferrer">${t.baidu}</a><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a></div><section id="provider-legal-attribution" class="provider-legal-attribution" aria-label="${t.mapAttribution}" hidden></section><a class="about-home-link" href="${t.home}">${t.homeLabel}</a></dialog>
+  <dialog id="about-dialog" class="about-dialog" aria-labelledby="about-title"><button id="about-close" class="dialog-close icon-button" type="button" aria-label="${t.close}">${icon('close')}</button><h2 id="about-title">${t.aboutHeading}</h2><p class="about-intro">${t.aboutIntro}</p><label class="map-provider-control"${international ? ' hidden' : ''}>${icon('map')}<span>${t.mapProvider}</span><select id="map-provider" disabled><option value="baidu" hidden>${t.baidu}</option><option value="amap" hidden>${t.amap}</option><option value="osm" selected>OpenStreetMap</option></select></label><p>${t.aboutScope}</p><p>${t.aboutDates}</p><p>${t.aboutPositions}</p><p>${t.aboutPrivacy}</p><p>${t.aboutMap}</p><div class="provider-links"><a data-provider-info="amap" hidden href="https://lbs.amap.com/" target="_blank" rel="noopener noreferrer">${t.amap}</a><a${international ? ' hidden' : ''} href="https://lbs.baidu.com/" target="_blank" rel="noopener noreferrer">${t.baidu}</a><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a></div><section id="provider-legal-attribution" class="provider-legal-attribution" aria-label="${t.mapAttribution}" hidden></section><a class="about-home-link" href="${t.home}">${t.homeLabel}</a></dialog>
   <div id="toast" class="toast" role="status" hidden></div>
-  <script type="application/json" id="map-config">${json({ lang: 'zh', locale: t.locale, home: t.home, url, labels: t, cities, venues: data.venues })}</script>
+  <script type="application/json" id="map-config">${json({ lang: 'zh', locale: t.locale, home: t.home, url, edition, center, labels: t, cities, venues: data.venues })}</script>
 </body>
 </html>
 `;
@@ -197,6 +215,14 @@ export async function renderVenuePages({ check = false } = {}) {
   const ids = data.venues.map((venue) => venue.id);
   if (new Set(ids).size !== ids.length || ids.some((id) => !/^[a-z0-9-]+$/.test(id))) throw new Error('Venue IDs must be unique URL-safe slugs.');
   const outputs = [['venues/data.json', JSON.stringify(data, null, 2) + '\n'], ['RapidSurfingMap.html', renderVenues(data)]];
+  for (const edition of ['europe', 'usa']) {
+    const regional = JSON.parse(await readFile(new URL(`content/venues-${edition}.json`, root), 'utf8'));
+    const regionalIds = regional.venues.map((venue) => venue.id);
+    if (!regionalIds.length || new Set(regionalIds).size !== regionalIds.length || regionalIds.some((id) => !/^[a-z0-9-]+$/.test(id))) {
+      throw new Error(`Invalid venue IDs for ${edition}.`);
+    }
+    outputs.push([`${editions[edition].path.slice(1)}.html`, renderVenues(regional, edition)]);
+  }
   const legacyPages = ['venues/index.html', 'zh/venues/index.html', 'de/venues/index.html'];
   for (const path of legacyPages) {
     const file = new URL(path, root);
@@ -223,5 +249,5 @@ export async function renderVenuePages({ check = false } = {}) {
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   await renderVenuePages({ check: process.argv.includes('--check') });
-  console.log(process.argv.includes('--check') ? 'Venue pages are up to date.' : 'Generated the Chinese RapidSurfingMap page and public venue data.');
+  console.log(process.argv.includes('--check') ? 'Venue pages are up to date.' : 'Generated the three Rapid Surfing maps and public China venue data.');
 }

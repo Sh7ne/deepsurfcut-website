@@ -1,10 +1,10 @@
 // The existing Leaflet map, behind the same interface as the domestic providers.
-export async function createOsmProvider({ container, reducedMotion, onMove, onReady, onError }) {
+export async function createOsmProvider({ container, center, reducedMotion, onMove, onReady, onError }) {
   const L = window.L;
   if (!L) throw new Error('Map library unavailable');
   const map = L.map(container, { zoomControl: false, attributionControl: false,
     minZoom: 3, maxZoom: 18, worldCopyJump: true, zoomAnimation: !reducedMotion,
-    fadeAnimation: !reducedMotion }).setView([33, 113], 5);
+    fadeAnimation: !reducedMotion }).setView(center || [33, 113], center ? 4 : 5);
   const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19, detectRetina: false, keepBuffer: 2, crossOrigin: false,
   });

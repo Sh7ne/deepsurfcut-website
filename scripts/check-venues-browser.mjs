@@ -8,6 +8,14 @@ import { chromium } from 'playwright';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const publicRoot = resolve(root, 'dist');
 const mapPath = '/RapidSurfingMap';
+const regionalMaps = [
+  { path: `${mapPath}-Europe`, label: '欧洲', id: 'wellenwerk-berlin', file: 'venues-europe.json' },
+  { path: `${mapPath}-USA`, label: '美国', id: 'wai-kai', file: 'venues-usa.json' },
+];
+const mapPaths = new Set([mapPath, ...regionalMaps.map(region => region.path)]);
+for (const region of regionalMaps) {
+  region.count = JSON.parse(await readFile(resolve(root, 'content', region.file), 'utf8')).venues.length;
+}
 const data = JSON.parse(await readFile(resolve(root, 'content/venues.json'), 'utf8'));
 const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.json': 'application/json', '.png': 'image/png', '.svg': 'image/svg+xml', '.webp': 'image/webp' };
 const headerRules = (await readFile(resolve(publicRoot, '_headers'), 'utf8')).split(/\r?\n/).reduce((rules, line) => {
@@ -21,7 +29,7 @@ const base = process.env.SITE_URL || await new Promise((done, reject) => {
   server = createServer(async (request, response) => {
     try {
       const path = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
-      const file = resolve(publicRoot, '.' + (path === mapPath ? `${path}.html` : path.endsWith('/') ? path + 'index.html' : path));
+      const file = resolve(publicRoot, '.' + (mapPaths.has(path) ? `${path}.html` : path.endsWith('/') ? path + 'index.html' : path));
       if (!file.startsWith(publicRoot + sep)) throw new Error('outside preview');
       for (const rule of headerRules) {
         if (!rule.path.startsWith('/')) continue;
@@ -452,18 +460,42 @@ try {
   await landscapeList.close();
   console.log('PASS 844×390 list and saved venues scroll into an unclipped, clickable visible area');
 
+  for (const width of [390, 1440]) {
+    const regional = await newContext({ viewport: { width, height: 844 } });
+    const page = await regional.newPage();
+    for (const { path, label, id, count: total } of regionalMaps) {
+      const requests = [];
+      const observe = request => requests.push(new URL(request.url()).pathname);
+      page.on('request', observe);
+      await ready(page, `${path}#venue-${id}`);
+      await page.locator('#venue-detail[open]').waitFor();
+      assert.equal(await page.locator('#map').getAttribute('data-provider'), 'osm');
+      assert.ok(!requests.includes('/api/maps/config'), 'international editions do not load domestic map configuration');
+      assert.equal(await page.locator('.edition-nav [aria-current]').textContent(), label);
+      await count(page, total);
+      assert.equal(await page.locator('#venue-detail a[href^="https://www.google.com/maps/search/"]').count(), 1);
+      await page.locator('#venue-detail [data-save]').click();
+      const stored = await page.evaluate(() => Object.keys(localStorage).filter(key => key.startsWith('deepsurf.venues.saved.v1')));
+      assert.ok(stored.includes(path.endsWith('Europe') ? 'deepsurf.venues.saved.v1.europe' : 'deepsurf.venues.saved.v1.usa'));
+      assert.ok(!stored.includes('deepsurf.venues.saved.v1'));
+      await noOverflow(page);
+      page.off('request', observe);
+    }
+    await regional.close();
+  }
+
   const plain = await newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
   const plainPage = await plain.newPage();
-  for (const path of [mapPath]) {
+  for (const [path, total] of [[mapPath, 11], ...regionalMaps.map(region => [region.path, region.count])]) {
     await plainPage.goto(new URL(path, base).href, { waitUntil: 'domcontentloaded' });
-    assert.equal(await plainPage.locator('.venue-card:visible').count(), 11);
-    assert.equal(await plainPage.locator('.static-details').count(), 11);
+    assert.equal(await plainPage.locator('.venue-card:visible').count(), total);
+    assert.equal(await plainPage.locator('.static-details').count(), total);
     await plainPage.locator('.static-details summary').first().click();
     assert.ok(await plainPage.locator('.static-details[open] p').first().isVisible());
     await noOverflow(plainPage);
   }
   await plain.close();
-  for (const path of ['/content/venues.json', '/docs/venue-sources.md', '/tests/venues.test.mjs', '/scripts/render-venues.mjs']) {
+  for (const path of ['/content/venues.json', '/content/venues-europe.json', '/content/venues-usa.json', '/docs/venue-sources.md', '/tests/venues.test.mjs', '/scripts/render-venues.mjs']) {
     const response = await fetch(new URL(path, base));
     assert.equal(response.status, 404, `private source must not publish: ${path}`);
   }

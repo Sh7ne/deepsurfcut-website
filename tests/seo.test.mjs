@@ -63,7 +63,7 @@ const hasType = (node, type) => [node?.['@type']].flat().includes(type);
 const assertLocalFile = async (url, label) => {
   assert.equal(url.origin, origin, `${label}: expected a local website resource`);
   const path = decodeURIComponent(url.pathname).replace(/^\/+/, '');
-  const file = path === 'RapidSurfingMap' ? 'RapidSurfingMap.html'
+  const file = /^RapidSurfingMap(?:-Europe|-USA)?$/.test(path) ? 'RapidSurfingMap.html'
     : path.endsWith('/') || !path ? `${path}index.html` : path;
   const location = new URL(file, root);
   assert.ok(location.href.startsWith(root.href), `${label}: resource must stay within the website`);
@@ -232,9 +232,9 @@ test('all three homepages expose Portrait Follow with an honest visual and match
   }
 });
 
-test('the sitemap lists localized product pages and the single canonical Chinese map', async () => {
+test('the sitemap lists localized product pages and all three canonical surf maps', async () => {
   const $ = load(await readFile(new URL('sitemap.xml', root), 'utf8'), { xmlMode: true });
-  const sitemapPages = [...documents, { standalone: true, url: `${origin}/RapidSurfingMap` }];
+  const sitemapPages = [...documents, ...['', '-Europe', '-USA'].map(suffix => ({ standalone: true, url: `${origin}/RapidSurfingMap${suffix}` }))];
   const entries = $('urlset > url').toArray();
   assert.equal(entries.length, sitemapPages.length);
   const urls = entries.map((entry) => $(entry).children('loc').text().trim());
@@ -245,7 +245,7 @@ test('the sitemap lists localized product pages and the single canonical Chinese
     const page = sitemapPages.find((candidate) => candidate.url === url);
     const alternatives = $(entry).children('[hreflang]');
     if (page.standalone) {
-      assert.equal(alternatives.length, 0, 'the Chinese-only map must not advertise translated alternatives');
+      assert.equal(alternatives.length, 0, 'regional map editions are distinct directories');
       continue;
     }
     const expected = alternativesFor(page);

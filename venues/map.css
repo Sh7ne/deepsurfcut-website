@@ -109,3 +109,14 @@ dialog{color:var(--ink);border:1px solid white;background:var(--paper);border-ra
   .enhanced body[data-view="map"] .provider-attribution { display: flex; bottom: calc(66px + var(--safe-bottom) + 8px); }
   .enhanced body[data-view="map"] .map-about-control { display: flex; bottom: calc(66px + var(--safe-bottom) + 40px); }
 }
+
+.edition-nav{display:flex;gap:6px;margin:8px 0 0;font-size:12px}
+.edition-nav a{color:#424e5e;padding:5px 10px;border-radius:8px}
+.edition-nav a[aria-current]{background:#eaf3ff;color:#0058b6;font-weight:650}
+.edition-nav a:hover,.edition-nav a:focus-visible{background:#eaf3ff}
+.map-provider-control[hidden],.provider-links a[hidden]{display:none}
+@media (max-width: 767px) {
+  .enhanced .explore-sheet[data-snap=low] .sheet-subtitle { display: none; }
+  .enhanced .explore-sheet[data-snap=low] .edition-nav { margin-top: 3px; }
+  .enhanced .explore-sheet[data-snap=low] .search-row { margin-top: 8px; }
+}

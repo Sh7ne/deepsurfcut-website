@@ -1,0 +1,162 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-11-10",
+  "coordinateSystem": "WGS84",
+  "venues": [
+    {
+      "id": "wai-kai",
+      "name": "The LineUp at Wai Kai",
+      "shortName": "The LineUp at Wai Kai",
+      "city": "Ewa Beach（瓦胡岛）",
+      "province": "美国·夏威夷州",
+      "environment": "outdoor",
+      "seasonal": false,
+      "seasonNote": "官网列每周场次；初学场和 100 英尺高级场按产品分别预约。",
+      "summary": "户外 Citywave，最大配置宽 100 英尺（约 30.48 米）。",
+      "description": "户外 Citywave，最大配置宽 100 英尺（约 30.48 米）。",
+      "address": "91-1621 Keoneula Blvd, Ewa Beach, HI 96706, USA",
+      "verifiedAt": "2026-11-10",
+      "sources": [
+        {
+          "label": "场馆预约与开放信息",
+          "url": "https://waikai.com/surf"
+        },
+        {
+          "label": "交叉核对资料",
+          "url": "https://waikai.com/hours-of-operation"
+        }
+      ],
+      "position": {
+        "lat": 21.30866,
+        "lng": -158.041,
+        "accuracy": "site",
+        "label": "场址标记。入口请按地址导航。",
+        "sourceUrl": "https://www.indefiniteadventure.com/oahu-wai-kai-ultimate-pass/"
+      }
+    },
+    {
+      "id": "revel-surf",
+      "name": "Revel Surf · River Wave",
+      "shortName": "Revel Surf · River Wave",
+      "city": "Mesa",
+      "province": "美国·亚利桑那州",
+      "environment": "outdoor",
+      "seasonal": false,
+      "seasonNote": "预约请选择 River Wave。场内另有行进式浪池。",
+      "summary": "独立 UNIT 深水驻波，浪面 10 米。",
+      "description": "独立 UNIT 深水驻波，浪面 10 米。",
+      "address": "4503 S Power Rd, Mesa, AZ 85212, USA",
+      "verifiedAt": "2026-11-10",
+      "sources": [
+        {
+          "label": "场馆预约与开放信息",
+          "url": "https://revelsurf.com/river-wave/"
+        },
+        {
+          "label": "交叉核对资料",
+          "url": "https://www.surf-pool.com/locations"
+        }
+      ],
+      "position": {
+        "lat": 33.33449,
+        "lng": -111.68482,
+        "accuracy": "site",
+        "label": "场址标记。入口请按地址导航。",
+        "sourceUrl": "https://mapcarta.com/W1372765269"
+      }
+    },
+    {
+      "id": "heroes-paradise",
+      "name": "Heroes Paradise · EpicSurf",
+      "shortName": "Heroes Paradise · EpicSurf",
+      "city": "Brandon",
+      "province": "美国·佛罗里达州",
+      "environment": "outdoor",
+      "seasonal": false,
+      "seasonNote": "场馆列有 EpicSurf 专属营业时间和公开预约，提供分级体验。",
+      "summary": "EpicSurf 深水驻波，浪面 46 英尺（约 14.02 米）。",
+      "description": "EpicSurf 深水驻波，浪面 46 英尺（约 14.02 米）。",
+      "address": "733 Knowles Rd, Brandon, FL 33511, USA",
+      "verifiedAt": "2026-11-10",
+      "sources": [
+        {
+          "label": "场馆预约与开放信息",
+          "url": "https://www.heroesparadise.com/epicsurfusa"
+        },
+        {
+          "label": "交叉核对资料",
+          "url": "https://epic.surf/heroes-paradise-opens-their-brand-new-epicsurf-deep-water-standing-wave-today-the-first-standing-wave-on-the-east-coast/"
+        }
+      ],
+      "position": {
+        "lat": 27.89569,
+        "lng": -82.275,
+        "accuracy": "site",
+        "label": "场址标记。入口请按地址导航。",
+        "sourceUrl": "https://www.heroesparadise.com/epicsurfusa"
+      }
+    },
+    {
+      "id": "surfs-up-nashua",
+      "name": "Surf’s Up New Hampshire",
+      "shortName": "Surf’s Up New Hampshire",
+      "city": "Nashua",
+      "province": "美国·新罕布什尔州",
+      "environment": "indoor",
+      "seasonal": false,
+      "seasonNote": "运营方提供带鳍板与护具，禁止自带装备；预约选室内冲浪。",
+      "summary": "SkyVenture 内的 SurfStream，浪面 32 英尺（约 9.75 米）。",
+      "description": "SkyVenture 内的 SurfStream，浪面 32 英尺（约 9.75 米）。",
+      "address": "SkyVenture, 3 Poisson Ave, Nashua, NH 03060, USA",
+      "verifiedAt": "2026-11-10",
+      "sources": [
+        {
+          "label": "场馆预约与开放信息",
+          "url": "https://skyventurenh.com/indoor-surfing/"
+        },
+        {
+          "label": "交叉核对资料",
+          "url": "https://skyventurenh.com/online-booking/"
+        }
+      ],
+      "position": {
+        "lat": 42.71411,
+        "lng": -71.44086,
+        "accuracy": "site",
+        "label": "场址标记。入口请按地址导航。",
+        "sourceUrl": "https://poiexplorer.com/north-america/united-states/new-hampshire/hillsborough-county/nashua/recreation/skyventure-w54528138"
+      }
+    },
+    {
+      "id": "waco-shredmill",
+      "name": "Waco Surf · Shredmill",
+      "shortName": "Waco Surf · Shredmill",
+      "city": "Waco",
+      "province": "美国·德克萨斯州",
+      "environment": "outdoor",
+      "seasonal": false,
+      "seasonNote": "官网将 Shredmill 和水上乐园分开列时段。预约时请选择 Shredmill。",
+      "summary": "可使用带鳍板的深水 FlowSurf 驻波。",
+      "description": "可使用带鳍板的深水 FlowSurf 驻波。",
+      "address": "Waco Surf, Old Mexia Rd, Waco, TX, USA",
+      "verifiedAt": "2026-11-10",
+      "sources": [
+        {
+          "label": "场馆预约与开放信息",
+          "url": "https://wacosurf.com/surf-session/shredmill/"
+        },
+        {
+          "label": "交叉核对资料",
+          "url": "https://www.flowrider.com/location/waco-surf/"
+        }
+      ],
+      "position": {
+        "lat": 31.62136,
+        "lng": -97.00402,
+        "accuracy": "site",
+        "label": "场址标记。入口请按地址导航。",
+        "sourceUrl": "https://mapcarta.com/N12059589957"
+      }
+    }
+  ]
+}

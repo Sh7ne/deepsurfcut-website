@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f2f2f7">
+  <meta name="description" content="查看美国有公开运营证据的深水固定浪与 Rapid Surfing 场馆、预约入口和导航。">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="冲浪地图">
+  <title>美国深水冲浪场馆地图｜DeepSurfCut</title>
+  <link rel="canonical" href="https://deepsurf.app/RapidSurfingMap-USA">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="DeepSurfCut">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:title" content="美国深水冲浪场馆地图｜DeepSurfCut">
+  <meta property="og:description" content="查看美国有公开运营证据的深水固定浪与 Rapid Surfing 场馆、预约入口和导航。">
+  <meta property="og:url" content="https://deepsurf.app/RapidSurfingMap-USA">
+  <meta property="og:image" content="https://deepsurf.app/assets/social-preview-20260917.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="753">
+  <meta property="og:image:alt" content="DeepSurfCut">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="美国深水冲浪场馆地图｜DeepSurfCut">
+  <meta name="twitter:description" content="查看美国有公开运营证据的深水固定浪与 Rapid Surfing 场馆、预约入口和导航。">
+  <meta name="twitter:image" content="https://deepsurf.app/assets/social-preview-20260917.jpg">
+  <link rel="icon" href="/assets/favicon-96.png" sizes="96x96" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180">
+  <link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="/venues/map.css?v=20261110-regional-maps-1">
+  <script src="/assets/vendor/leaflet/leaflet.js" defer></script>
+  <script type="module" src="/venues/map.js?v=20261110-regional-maps-1"></script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","@id":"https://deepsurf.app/RapidSurfingMap-USA#webpage","url":"https://deepsurf.app/RapidSurfingMap-USA","name":"美国深水冲浪场馆地图｜DeepSurfCut","description":"查看美国有公开运营证据的深水固定浪与 Rapid Surfing 场馆、预约入口和导航。","inLanguage":"zh-Hans","dateModified":"2026-11-10","isPartOf":{"@id":"https://deepsurf.app/#website"},"mainEntity":{"@type":"ItemList","numberOfItems":5,"itemListElement":[{"@type":"ListItem","position":1,"name":"The LineUp at Wai Kai","url":"https://deepsurf.app/RapidSurfingMap-USA#venue-wai-kai"},{"@type":"ListItem","position":2,"name":"Revel Surf · River Wave","url":"https://deepsurf.app/RapidSurfingMap-USA#venue-revel-surf"},{"@type":"ListItem","position":3,"name":"Heroes Paradise · EpicSurf","url":"https://deepsurf.app/RapidSurfingMap-USA#venue-heroes-paradise"},{"@type":"ListItem","position":4,"name":"Surf’s Up New Hampshire","url":"https://deepsurf.app/RapidSurfingMap-USA#venue-surfs-up-nashua"},{"@type":"ListItem","position":5,"name":"Waco Surf · Shredmill","url":"https://deepsurf.app/RapidSurfingMap-USA#venue-waco-shredmill"}]}}</script>
+</head>
+<body data-lang="zh">
+  <a class="skip-link" href="#venue-list">跳转到场馆列表</a>
+  <main class="map-app">
+    <h1 class="sr-only">美国深水冲浪场馆地图</h1>
+    <section class="map-stage enhance-only" aria-label="美国深水冲浪场馆地图">
+      <div id="map" role="region" aria-label="美国深水冲浪场馆地图" tabindex="0"></div>
+      <button id="about-open" class="icon-button map-about-control enhance-only" type="button" aria-label="关于这份地图" aria-haspopup="dialog" aria-controls="about-dialog"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10h.01"/></svg></button>
+      <div id="map-message" class="map-message" role="status"><span>正在加载地图…</span><button id="map-retry" type="button" hidden>重试</button></div>
+      <div class="map-controls">
+        <button id="locate" class="icon-button" type="button" aria-label="定位到我" title="定位到我"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg></button>
+        <button id="fit-map" class="icon-button" type="button" aria-label="显示全部场馆" title="显示全部场馆"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/><path d="m8 8 8 8m0-8-8 8"/></svg></button>
+        <div class="zoom-controls"><button id="zoom-in" class="icon-button" type="button" aria-label="放大地图"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button><button id="zoom-out" class="icon-button" type="button" aria-label="缩小地图"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/></svg></button></div>
+      </div>
+      <div class="map-attribution"><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap</a></div>
+      <div id="provider-attribution" class="provider-attribution" aria-label="地图服务标识" hidden></div>
+    </section>
+    <aside id="explore-sheet" class="explore-sheet" aria-label="场馆列表">
+      <button id="sheet-handle" class="sheet-handle enhance-only" type="button" aria-label="展开或收起场馆列表" aria-expanded="false" aria-controls="venue-list"><span></span></button>
+      <div class="sheet-header">
+        <h2>美国深水冲浪场馆</h2><p class="sheet-subtitle" lang="en">Rapid Surfing Venues</p>
+        <nav class="edition-nav" aria-label="冲浪地图地区"><a href="/RapidSurfingMap">中国</a><a href="/RapidSurfingMap-Europe">欧洲</a><a href="/RapidSurfingMap-USA" aria-current="page">美国</a></nav>
+        <div class="search-row enhance-only"><div class="search-box"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg><input id="search" type="search" placeholder="想去哪里冲浪？" aria-label="搜索城市或场馆" autocomplete="off" enterkeyhint="search"><button id="clear-search" class="icon-button" type="button" aria-label="清除搜索" hidden><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button></div><button id="filter-open" class="filter-button icon-button" type="button" aria-label="筛选" aria-haspopup="dialog"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h9m4 0h3M4 17h3m4 0h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></button></div>
+        <div id="city-filters" class="filter-chips enhance-only" aria-label="全部城市"><button type="button" class="chip active" data-city="all" aria-pressed="true">全部城市</button><button type="button" class="chip" data-city="Ewa Beach（瓦胡岛）" aria-pressed="false">Ewa Beach（瓦胡岛）</button><button type="button" class="chip" data-city="Mesa" aria-pressed="false">Mesa</button><button type="button" class="chip" data-city="Brandon" aria-pressed="false">Brandon</button><button type="button" class="chip" data-city="Nashua" aria-pressed="false">Nashua</button><button type="button" class="chip" data-city="Waco" aria-pressed="false">Waco</button></div>
+        <div id="active-filters" class="active-filters" hidden></div>
+      </div>
+      <div class="list-heading"><p><strong id="result-count" aria-live="polite">5</strong> <span id="result-label">处浪点</span></p><label class="sort-control enhance-only"><span class="sr-only">排序</span><select id="sort"><option value="recommended">推荐顺序</option><option value="name">名称</option><option value="nearest">距离最近</option></select></label></div>
+      <noscript><p class="no-script-note">启用 JavaScript 可使用互动地图、筛选与收藏；以下场馆资料仍可直接阅读。<br><a href="/zh/">返回 DeepSurfCut 官网</a></p></noscript>
+      <div id="venue-list" class="venue-list" tabindex="-1">
+          <article class="venue-card" id="venue-wai-kai" data-id="wai-kai" aria-labelledby="title-wai-kai">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-wai-kai" data-open="wai-kai">
+                <span class="venue-number" aria-hidden="true"><span>01</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Ewa Beach（瓦胡岛）</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-wai-kai" lang="zh-Hans">The LineUp at Wai Kai</h3>
+                  <span class="venue-tags"><span class="badge badge-outdoor">室外</span></span>
+                  <span class="venue-summary" lang="zh-Hans">户外 Citywave，最大配置宽 100 英尺（约 30.48 米）。</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="wai-kai" aria-label="收藏场馆 · The LineUp at Wai Kai" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>场馆详情</summary>
+              <p lang="zh-Hans">户外 Citywave，最大配置宽 100 英尺（约 30.48 米）。</p>
+              <h4>场馆地址</h4><p lang="zh-Hans">91-1621 Keoneula Blvd, Ewa Beach, HI 96706, USA</p>
+              <p class="position-note">场址位置 · <span lang="zh-Hans">场址标记。入口请按地址导航。</span></p>
+              <h4>开放安排</h4><p lang="zh-Hans">官网列每周场次；初学场和 100 英尺高级场按产品分别预约。</p>
+              <p>开放安排并非实时营业状态，出发前请向场馆确认。</p>
+              <p>资料更新: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>参考资料</h4><ul class="source-links"><li><a href="https://waikai.com/surf" target="_blank" rel="noopener noreferrer">场馆预约与开放信息<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://waikai.com/hours-of-operation" target="_blank" rel="noopener noreferrer">交叉核对资料<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=The%20LineUp%20at%20Wai%20Kai%2091-1621%20Keoneula%20Blvd%2C%20Ewa%20Beach%2C%20HI%2096706%2C%20USA" target="_blank" rel="noopener noreferrer">Google 地图<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-revel-surf" data-id="revel-surf" aria-labelledby="title-revel-surf">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-revel-surf" data-open="revel-surf">
+                <span class="venue-number" aria-hidden="true"><span>02</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Mesa</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-revel-surf" lang="zh-Hans">Revel Surf · River Wave</h3>
+                  <span class="venue-tags"><span class="badge badge-outdoor">室外</span></span>
+                  <span class="venue-summary" lang="zh-Hans">独立 UNIT 深水驻波，浪面 10 米。</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="revel-surf" aria-label="收藏场馆 · Revel Surf · River Wave" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>场馆详情</summary>
+              <p lang="zh-Hans">独立 UNIT 深水驻波，浪面 10 米。</p>
+              <h4>场馆地址</h4><p lang="zh-Hans">4503 S Power Rd, Mesa, AZ 85212, USA</p>
+              <p class="position-note">场址位置 · <span lang="zh-Hans">场址标记。入口请按地址导航。</span></p>
+              <h4>开放安排</h4><p lang="zh-Hans">预约请选择 River Wave。场内另有行进式浪池。</p>
+              <p>开放安排并非实时营业状态，出发前请向场馆确认。</p>
+              <p>资料更新: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>参考资料</h4><ul class="source-links"><li><a href="https://revelsurf.com/river-wave/" target="_blank" rel="noopener noreferrer">场馆预约与开放信息<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://www.surf-pool.com/locations" target="_blank" rel="noopener noreferrer">交叉核对资料<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=Revel%20Surf%20%C2%B7%20River%20Wave%204503%20S%20Power%20Rd%2C%20Mesa%2C%20AZ%2085212%2C%20USA" target="_blank" rel="noopener noreferrer">Google 地图<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-heroes-paradise" data-id="heroes-paradise" aria-labelledby="title-heroes-paradise">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-heroes-paradise" data-open="heroes-paradise">
+                <span class="venue-number" aria-hidden="true"><span>03</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Brandon</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-heroes-paradise" lang="zh-Hans">Heroes Paradise · EpicSurf</h3>
+                  <span class="venue-tags"><span class="badge badge-outdoor">室外</span></span>
+                  <span class="venue-summary" lang="zh-Hans">EpicSurf 深水驻波，浪面 46 英尺（约 14.02 米）。</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="heroes-paradise" aria-label="收藏场馆 · Heroes Paradise · EpicSurf" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>场馆详情</summary>
+              <p lang="zh-Hans">EpicSurf 深水驻波，浪面 46 英尺（约 14.02 米）。</p>
+              <h4>场馆地址</h4><p lang="zh-Hans">733 Knowles Rd, Brandon, FL 33511, USA</p>
+              <p class="position-note">场址位置 · <span lang="zh-Hans">场址标记。入口请按地址导航。</span></p>
+              <h4>开放安排</h4><p lang="zh-Hans">场馆列有 EpicSurf 专属营业时间和公开预约，提供分级体验。</p>
+              <p>开放安排并非实时营业状态，出发前请向场馆确认。</p>
+              <p>资料更新: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>参考资料</h4><ul class="source-links"><li><a href="https://www.heroesparadise.com/epicsurfusa" target="_blank" rel="noopener noreferrer">场馆预约与开放信息<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://epic.surf/heroes-paradise-opens-their-brand-new-epicsurf-deep-water-standing-wave-today-the-first-standing-wave-on-the-east-coast/" target="_blank" rel="noopener noreferrer">交叉核对资料<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=Heroes%20Paradise%20%C2%B7%20EpicSurf%20733%20Knowles%20Rd%2C%20Brandon%2C%20FL%2033511%2C%20USA" target="_blank" rel="noopener noreferrer">Google 地图<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-surfs-up-nashua" data-id="surfs-up-nashua" aria-labelledby="title-surfs-up-nashua">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-surfs-up-nashua" data-open="surfs-up-nashua">
+                <span class="venue-number" aria-hidden="true"><span>04</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Nashua</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-surfs-up-nashua" lang="zh-Hans">Surf’s Up New Hampshire</h3>
+                  <span class="venue-tags"><span class="badge badge-indoor">室内</span></span>
+                  <span class="venue-summary" lang="zh-Hans">SkyVenture 内的 SurfStream，浪面 32 英尺（约 9.75 米）。</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="surfs-up-nashua" aria-label="收藏场馆 · Surf’s Up New Hampshire" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>场馆详情</summary>
+              <p lang="zh-Hans">SkyVenture 内的 SurfStream，浪面 32 英尺（约 9.75 米）。</p>
+              <h4>场馆地址</h4><p lang="zh-Hans">SkyVenture, 3 Poisson Ave, Nashua, NH 03060, USA</p>
+              <p class="position-note">场址位置 · <span lang="zh-Hans">场址标记。入口请按地址导航。</span></p>
+              <h4>开放安排</h4><p lang="zh-Hans">运营方提供带鳍板与护具，禁止自带装备；预约选室内冲浪。</p>
+              <p>开放安排并非实时营业状态，出发前请向场馆确认。</p>
+              <p>资料更新: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>参考资料</h4><ul class="source-links"><li><a href="https://skyventurenh.com/indoor-surfing/" target="_blank" rel="noopener noreferrer">场馆预约与开放信息<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://skyventurenh.com/online-booking/" target="_blank" rel="noopener noreferrer">交叉核对资料<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=Surf%E2%80%99s%20Up%20New%20Hampshire%20SkyVenture%2C%203%20Poisson%20Ave%2C%20Nashua%2C%20NH%2003060%2C%20USA" target="_blank" rel="noopener noreferrer">Google 地图<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+          <article class="venue-card" id="venue-waco-shredmill" data-id="waco-shredmill" aria-labelledby="title-waco-shredmill">
+            <div class="venue-card-main">
+              <a class="venue-open" href="#venue-waco-shredmill" data-open="waco-shredmill">
+                <span class="venue-number" aria-hidden="true"><span>05</span><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg></span>
+                <span class="venue-copy">
+                  <span class="venue-meta"><span class="venue-city">Waco</span><span class="venue-distance" hidden></span></span>
+                  <h3 id="title-waco-shredmill" lang="zh-Hans">Waco Surf · Shredmill</h3>
+                  <span class="venue-tags"><span class="badge badge-outdoor">室外</span></span>
+                  <span class="venue-summary" lang="zh-Hans">可使用带鳍板的深水 FlowSurf 驻波。</span>
+                </span>
+                <svg class="icon card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </a>
+              <button class="save-button icon-button enhance-only" type="button" data-save="waco-shredmill" aria-label="收藏场馆 · Waco Surf · Shredmill" aria-pressed="false"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+            </div>
+            <details class="static-details">
+              <summary>场馆详情</summary>
+              <p lang="zh-Hans">可使用带鳍板的深水 FlowSurf 驻波。</p>
+              <h4>场馆地址</h4><p lang="zh-Hans">Waco Surf, Old Mexia Rd, Waco, TX, USA</p>
+              <p class="position-note">场址位置 · <span lang="zh-Hans">场址标记。入口请按地址导航。</span></p>
+              <h4>开放安排</h4><p lang="zh-Hans">官网将 Shredmill 和水上乐园分开列时段。预约时请选择 Shredmill。</p>
+              <p>开放安排并非实时营业状态，出发前请向场馆确认。</p>
+              <p>资料更新: <time datetime="2026-11-10">2026-11-10</time></p>
+              <h4>参考资料</h4><ul class="source-links"><li><a href="https://wacosurf.com/surf-session/shredmill/" target="_blank" rel="noopener noreferrer">场馆预约与开放信息<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li><li><a href="https://www.flowrider.com/location/waco-surf/" target="_blank" rel="noopener noreferrer">交叉核对资料<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li></ul>
+              <a class="external-navigation" href="https://www.google.com/maps/search/?api=1&amp;query=Waco%20Surf%20%C2%B7%20Shredmill%20Waco%20Surf%2C%20Old%20Mexia%20Rd%2C%20Waco%2C%20TX%2C%20USA" target="_blank" rel="noopener noreferrer">Google 地图<svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+            </details>
+          </article>
+        <div id="empty-state" class="empty-state" hidden><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 14c3-7 6-10 10-8 3 1 3 5 1 6 4-1 7 1 9 4M2 19c3-2 5-2 8 0s5 2 8 0 4-1 4-1"/></svg><h3>还没有匹配的浪点</h3><p>换个关键词，或试试其他城市。</p><button id="reset-filters" type="button">清除筛选</button></div>
+      </div>
+      <p class="directory-note">开放安排并非实时营业状态，出发前请向场馆确认。</p>
+    </aside>
+  </main>
+  <nav class="tab-bar enhance-only" aria-label="冲浪地图"><button type="button" data-view="map" aria-current="page"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6Zm6-3v15m6-12v15"/></svg><span>地图</span></button><button type="button" data-view="list"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg><span>列表</span></button><button type="button" data-view="saved"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg><span>收藏</span><span id="saved-count" class="saved-count" hidden>0</span></button></nav>
+  <dialog id="venue-detail" class="venue-detail" aria-label="场馆详情"><button id="detail-close" class="dialog-close icon-button" type="button" aria-label="关闭"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button><div id="detail-content"></div></dialog>
+  <dialog id="filter-dialog" class="filter-dialog" aria-labelledby="filter-title"><form method="dialog">
+    <div class="dialog-heading"><div><p class="sheet-kicker">冲浪地图</p><h2 id="filter-title">筛选</h2></div><button class="icon-button" type="submit" value="cancel" aria-label="关闭"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button></div>
+    <p class="dialog-intro">找到适合你这一趟的浪点。</p>
+    <fieldset><legend>场馆环境</legend><div class="environment-options"><label><input type="radio" name="environment" value="all" checked><span>全部</span></label><label><input type="radio" name="environment" value="indoor"><span>室内</span></label><label><input type="radio" name="environment" value="outdoor"><span>室外</span></label></div></fieldset>
+    <label class="switch-row"><span>只看季节开放场馆</span><input id="seasonal-only" type="checkbox"><span class="switch-track" aria-hidden="true"></span></label>
+    <div class="dialog-actions"><button id="filter-reset" class="secondary-button" type="button">清除筛选</button><button id="filter-apply" class="primary-button" type="submit" value="apply">查看场馆</button></div>
+  </form></dialog>
+  <dialog id="about-dialog" class="about-dialog" aria-labelledby="about-title"><button id="about-close" class="dialog-close icon-button" type="button" aria-label="关闭"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button><h2 id="about-title">关于冲浪地图</h2><p class="about-intro">一份持续整理的美国深水固定浪场馆目录，由 DeepSurfCut 制作。</p><label class="map-provider-control" hidden><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6Zm6-3v15m6-12v15"/></svg><span>地图服务</span><select id="map-provider" disabled><option value="baidu" hidden>百度地图</option><option value="amap" hidden>高德地图</option><option value="osm" selected>OpenStreetMap</option></select></label><p>这份地图收录已整理的商业深水固定浪场馆。薄水层模拟冲浪、自然河流浪点以及尚待核实的项目不计入场馆数量。</p><p>资料日期见各场馆详情。目录记录不代表场馆此刻营业；季节安排、预约和场次请以场馆最新确认为准。</p><p>地图区分场馆、所在园区和大致位置。标注不能代替入口确认；导航时请再次核对场馆名称与地址。</p><p>收藏和地图选择保存在当前浏览器。只有轻点定位按钮后才会请求你的位置。所选地图服务会接收加载地图及转换坐标所需的数据；网站不保存你的位置。</p><p>底图由 OpenStreetMap 提供。场馆详情提供 Google 地图和 Apple 地图导航入口。</p><div class="provider-links"><a data-provider-info="amap" hidden href="https://lbs.amap.com/" target="_blank" rel="noopener noreferrer">高德地图</a><a hidden href="https://lbs.baidu.com/" target="_blank" rel="noopener noreferrer">百度地图</a><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a></div><section id="provider-legal-attribution" class="provider-legal-attribution" aria-label="地图版权信息" hidden></section><a class="about-home-link" href="/zh/">返回 DeepSurfCut 官网</a></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <script type="application/json" id="map-config">{"lang":"zh","locale":"zh-CN","home":"/zh/","url":"https://deepsurf.app/RapidSurfingMap-USA","edition":"usa","center":[37,-104],"labels":{"lang":"zh-Hans","locale":"zh-CN","home":"/zh/","title":"美国深水冲浪场馆地图｜DeepSurfCut","description":"查看美国有公开运营证据的深水固定浪与 Rapid Surfing 场馆、预约入口和导航。","heading":"冲浪地图","edition":"中国版","eyebrow":"","intro":"美国深水冲浪场馆","subtitle":"Rapid Surfing Venues","skip":"跳转到场馆列表","homeLabel":"返回 DeepSurfCut 官网","about":"关于这份地图","search":"搜索城市或场馆","searchPlaceholder":"想去哪里冲浪？","clearSearch":"清除搜索","all":"全部","allCities":"全部城市","indoor":"室内","outdoor":"室外","seasonal":"季节开放","venues":"处浪点","saved":"已收藏","save":"收藏场馆","unsave":"取消收藏","savedToast":"已加入收藏","removedToast":"已取消收藏","mapLoading":"正在加载地图…","mapError":"地图暂时无法加载，仍可浏览场馆和打开导航。","retry":"重试","noResults":"还没有匹配的浪点","noResultsHint":"换个关键词，或试试其他城市。","noSaved":"还没有收藏的场馆","noSavedHint":"轻点场馆旁的收藏按钮，把想去的浪点留在这里。","reset":"清除筛选","results":"{count} 处浪点","favoritesCount":"已收藏 {count} 处","nearby":"附近","locationLoading":"正在获取你的位置…","locationError":"暂时无法获取位置，请稍后重试。","locationDenied":"未获得定位权限。你仍可按城市查找场馆。","locationUnsupported":"当前浏览器不支持定位。","locationFound":"已定位到你附近","locationTimeout":"定位超时，请稍后重试。","noPosition":"位置待确认","approximate":"大致位置","sitePosition":"场址位置","exactPosition":"场馆位置","source":"资料来源","sources":"参考资料","updated":"资料更新","address":"场馆地址","opening":"开放安排","overview":"关于场馆","directions":"打开导航","amap":"高德地图","baidu":"百度地图","apple":"Apple 地图","share":"分享场馆","copy":"复制链接","copyAddress":"复制地址","copied":"链接已复制","shareCopied":"场馆链接已复制","shareTitle":"一起去这里冲浪","shareError":"暂时无法分享，请复制浏览器地址。","viewMap":"在地图上查看","close":"关闭","kilometer":"公里","filters":"筛选","filterCount":"{count} 项筛选","clear":"清除","details":"场馆详情","dataNotice":"开放安排并非实时营业状态，出发前请向场馆确认。","loadingError":"场馆资料加载失败，请刷新页面重试。","unknownStatus":"请提前确认场次","nearestNeedsLocation":"先开启定位，即可按距离排序。","listView":"列表","mapView":"地图","savedView":"收藏","noSources":"暂无可链接的公开来源。","copiedAddress":"地址已复制","listLabel":"场馆列表","mapLabel":"美国深水冲浪场馆地图","locate":"定位到我","fitMap":"显示全部场馆","zoomIn":"放大地图","zoomOut":"缩小地图","expandSheet":"展开或收起场馆列表","sort":"排序","recommended":"推荐顺序","nameSort":"名称","nearestSort":"距离最近","environment":"场馆环境","seasonalOnly":"只看季节开放场馆","apply":"查看场馆","filterHint":"找到适合你这一趟的浪点。","aboutHeading":"关于冲浪地图","aboutIntro":"一份持续整理的美国深水固定浪场馆目录，由 DeepSurfCut 制作。","aboutScope":"这份地图收录已整理的商业深水固定浪场馆。薄水层模拟冲浪、自然河流浪点以及尚待核实的项目不计入场馆数量。","aboutDates":"资料日期见各场馆详情。目录记录不代表场馆此刻营业；季节安排、预约和场次请以场馆最新确认为准。","aboutPositions":"地图区分场馆、所在园区和大致位置。标注不能代替入口确认；导航时请再次核对场馆名称与地址。","aboutPrivacy":"收藏和地图选择保存在当前浏览器。只有轻点定位按钮后才会请求你的位置。所选地图服务会接收加载地图及转换坐标所需的数据；网站不保存你的位置。","aboutMap":"底图由 OpenStreetMap 提供。场馆详情提供 Google 地图和 Apple 地图导航入口。","mapProvider":"地图服务","mapServiceMark":"地图服务标识","mapAttribution":"地图版权信息","providerUnavailable":"未配置","attribution":"地图数据","noScript":"启用 JavaScript 可使用互动地图、筛选与收藏；以下场馆资料仍可直接阅读。","google":"Google 地图"},"cities":{"北京":"北京","上海":"上海","杭州·建德":"杭州·建德","湖州":"湖州","成都":"成都","昆明":"昆明"},"venues":[{"id":"wai-kai","name":"The LineUp at Wai Kai","shortName":"The LineUp at Wai Kai","city":"Ewa Beach（瓦胡岛）","province":"美国·夏威夷州","environment":"outdoor","seasonal":false,"seasonNote":"官网列每周场次；初学场和 100 英尺高级场按产品分别预约。","summary":"户外 Citywave，最大配置宽 100 英尺（约 30.48 米）。","description":"户外 Citywave，最大配置宽 100 英尺（约 30.48 米）。","address":"91-1621 Keoneula Blvd, Ewa Beach, HI 96706, USA","verifiedAt":"2026-11-10","sources":[{"label":"场馆预约与开放信息","url":"https://waikai.com/surf"},{"label":"交叉核对资料","url":"https://waikai.com/hours-of-operation"}],"position":{"lat":21.30866,"lng":-158.041,"accuracy":"site","label":"场址标记。入口请按地址导航。","sourceUrl":"https://www.indefiniteadventure.com/oahu-wai-kai-ultimate-pass/"}},{"id":"revel-surf","name":"Revel Surf · River Wave","shortName":"Revel Surf · River Wave","city":"Mesa","province":"美国·亚利桑那州","environment":"outdoor","seasonal":false,"seasonNote":"预约请选择 River Wave。场内另有行进式浪池。","summary":"独立 UNIT 深水驻波，浪面 10 米。","description":"独立 UNIT 深水驻波，浪面 10 米。","address":"4503 S Power Rd, Mesa, AZ 85212, USA","verifiedAt":"2026-11-10","sources":[{"label":"场馆预约与开放信息","url":"https://revelsurf.com/river-wave/"},{"label":"交叉核对资料","url":"https://www.surf-pool.com/locations"}],"position":{"lat":33.33449,"lng":-111.68482,"accuracy":"site","label":"场址标记。入口请按地址导航。","sourceUrl":"https://mapcarta.com/W1372765269"}},{"id":"heroes-paradise","name":"Heroes Paradise · EpicSurf","shortName":"Heroes Paradise · EpicSurf","city":"Brandon","province":"美国·佛罗里达州","environment":"outdoor","seasonal":false,"seasonNote":"场馆列有 EpicSurf 专属营业时间和公开预约，提供分级体验。","summary":"EpicSurf 深水驻波，浪面 46 英尺（约 14.02 米）。","description":"EpicSurf 深水驻波，浪面 46 英尺（约 14.02 米）。","address":"733 Knowles Rd, Brandon, FL 33511, USA","verifiedAt":"2026-11-10","sources":[{"label":"场馆预约与开放信息","url":"https://www.heroesparadise.com/epicsurfusa"},{"label":"交叉核对资料","url":"https://epic.surf/heroes-paradise-opens-their-brand-new-epicsurf-deep-water-standing-wave-today-the-first-standing-wave-on-the-east-coast/"}],"position":{"lat":27.89569,"lng":-82.275,"accuracy":"site","label":"场址标记。入口请按地址导航。","sourceUrl":"https://www.heroesparadise.com/epicsurfusa"}},{"id":"surfs-up-nashua","name":"Surf’s Up New Hampshire","shortName":"Surf’s Up New Hampshire","city":"Nashua","province":"美国·新罕布什尔州","environment":"indoor","seasonal":false,"seasonNote":"运营方提供带鳍板与护具，禁止自带装备；预约选室内冲浪。","summary":"SkyVenture 内的 SurfStream，浪面 32 英尺（约 9.75 米）。","description":"SkyVenture 内的 SurfStream，浪面 32 英尺（约 9.75 米）。","address":"SkyVenture, 3 Poisson Ave, Nashua, NH 03060, USA","verifiedAt":"2026-11-10","sources":[{"label":"场馆预约与开放信息","url":"https://skyventurenh.com/indoor-surfing/"},{"label":"交叉核对资料","url":"https://skyventurenh.com/online-booking/"}],"position":{"lat":42.71411,"lng":-71.44086,"accuracy":"site","label":"场址标记。入口请按地址导航。","sourceUrl":"https://poiexplorer.com/north-america/united-states/new-hampshire/hillsborough-county/nashua/recreation/skyventure-w54528138"}},{"id":"waco-shredmill","name":"Waco Surf · Shredmill","shortName":"Waco Surf · Shredmill","city":"Waco","province":"美国·德克萨斯州","environment":"outdoor","seasonal":false,"seasonNote":"官网将 Shredmill 和水上乐园分开列时段。预约时请选择 Shredmill。","summary":"可使用带鳍板的深水 FlowSurf 驻波。","description":"可使用带鳍板的深水 FlowSurf 驻波。","address":"Waco Surf, Old Mexia Rd, Waco, TX, USA","verifiedAt":"2026-11-10","sources":[{"label":"场馆预约与开放信息","url":"https://wacosurf.com/surf-session/shredmill/"},{"label":"交叉核对资料","url":"https://www.flowrider.com/location/waco-surf/"}],"position":{"lat":31.62136,"lng":-97.00402,"accuracy":"site","label":"场址标记。入口请按地址导航。","sourceUrl":"https://mapcarta.com/N12059589957"}}]}</script>
+</body>
+</html>

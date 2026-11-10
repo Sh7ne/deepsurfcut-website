@@ -180,7 +180,10 @@ server Function behind `/api/maps/amap/_AMapService`. Public positions remain
 WGS84; each provider uses its official coordinate conversion before map placement.
 Production configuration and deployment are separate from this local integration.
 
-Reviewed venue copy and position accuracy live in `content/venues.json`. Update
+The regional selector also opens the Europe and USA editions, which use
+OpenStreetMap tiles and external Google Maps and Apple Maps navigation links.
+Their reviewed data lives in `content/venues-europe.json` and
+`content/venues-usa.json`. China uses `content/venues.json`. Update
 that file, then run `npm run venues:generate`; do not edit `RapidSurfingMap.html` or
 `venues/data.json` directly. Shared map assets stay in `venues/`; the retired locale
 map HTML files remain absent. `npm run build` rejects stale generated outputs.

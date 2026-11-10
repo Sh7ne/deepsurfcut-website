@@ -1,0 +1,441 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-11-10",
+  "coordinateSystem": "WGS84",
+  "venues": [
+    {
+      "id": "wellenwerk-berlin",
+      "name": "Wellenwerk",
+      "shortName": "Wellenwerk",
+      "city": "柏林",
+      "province": "德国",
+      "environment": "indoor",
+      "seasonal": false,
+      "seasonNote": "有分级课程及公开预约；以场馆日历为准。",
+      "summary": "Citywave 室内驻波，浪面约 8.5 米。",
+      "description": "Citywave 室内驻波，浪面约 8.5 米。",
+      "address": "Landsberger Allee 270, 10367 Berlin, Germany",
+      "verifiedAt": "2026-11-10",
+      "sources": [
+        {
+          "label": "场馆预约与开放信息",
+          "url": "https://wellenwerk-berlin.de/indoor-surfen/"
+        },
+        {
+          "label": "交叉核对资料",
+          "url": "https://wellenwerk-berlin.de/"
+        }
+      ],
+      "position": {
+        "lat": 52.5341,
+        "lng": 13.4946,
+        "accuracy": "site",
+        "label": "场址标记。入口请按地址导航。",
+        "sourceUrl": "https://www.ortsdienst.de/berlin/lichtenberg-hohenschoenhausen/lichtenberg/branchenbuch-diverse-freizeitanlagen/wellenwerk-berlin-gmbh-bid139041/"
+      }
+    },
+    {
+      "id": "jochen-schweizer-arena",
+      "name": "Jochen Schweizer Arena",
+      "shortName": "Jochen Schweizer Arena",
+      "city": "Taufkirchen（慕尼黑）",
+      "province": "德国",
+      "environment": "indoor",
+      "seasonal": false,
+      "seasonNote": "场馆提供全年室内课程及公开预约。",
+      "summary": "Citywave 室内驻波，浪面约 7.5 米。",
+      "description": "Citywave 室内驻波，浪面约 7.5 米。",
+      "address": "Ludwig-Bölkow-Allee 1, 82024 Taufkirchen, Germany",
+      "verifiedAt": "2026-11-10",
+      "sources": [
+        {
+          "label": "场馆预约与开放信息",
+          "url": "https://shop.jochen-schweizer-arena.de/indoor-surfen"
+        },
+        {
+          "label": "交叉核对资料",
+          "url": "https://www.jochen-schweizer-arena.de/indoor-surfen/"
+        }
+      ],
+      "position": {
+        "lat": 48.041847,
+        "lng": 11.653793,
+        "accuracy": "site",
+        "label": "场址标记。入口请按地址导航。",
+        "sourceUrl": "https://adresse.dastelefonbuch.de/Taufkirchen/1-Jochen-Schweizer-Arena-GmbH-Taufkirchen-Ludwig-B%C3%B6lkow-Allee.html"
+      }
+    },
+    {
+      "id": "rheinriff",
+      "name": "RheinRiff",
+      "shortName": "RheinRiff",
+      "city": "杜塞尔多夫",
+      "province": "德国",
+      "environment": "indoor",
+      "seasonal": false,
+      "seasonNote": "有初学课程和按水平划分的公开场次。",
+      "summary": "Citywave 室内驻波，浪面约 9 米。",
+      "description": "Citywave 室内驻波，浪面约 9 米。",
+      "address": "Hansaallee 321, 40549 Düsseldorf, Germany",
+      "verifiedAt": "2026-11-10",
+      "sources": [
+        {
+          "label": "场馆预约与开放信息",
+          "url": "https://www.rheinriff.com/de/surf"
+        },
+        {
+          "label": "交叉核对资料",
+          "url": "https://www.rheinriff.com/de/faq"
+        }
+      ],
+      "position": {
+        "lat": 51.245342,
+        "lng": 6.712217,
+        "accuracy": "site",
+        "label": "场址标记。入口请按地址导航。",
+        "sourceUrl": "https://adresse.dastelefonbuch.de/D%C3%BCsseldorf/1-RheinRiff-GmbH-D%C3%BCsseldorf-Hansaallee.html"
+      }
+    },
+    {
+      "id": "hasewelle",
+      "name": "L&T Hasewelle",
+      "shortName": "L&T Hasewelle",
+      "city": "奥斯纳布吕克",
+      "province": "德国",
+      "environment": "indoor",
+      "seasonal": false,
+      "seasonNote": "官网提供分级预约；未达到场次最低人数可能取消。",
+      "summary": "L&T 商场内的 Citywave，浪面约 7.5 米。",
+      "description": "L&T 商场内的 Citywave，浪面约 7.5 米。",
+      "address": "Große Straße 27–32, 49074 Osnabrück, Germany",
+      "verifiedAt": "2026-11-10",
+      "sources": [
+        {
+          "label": "场馆预约与开放信息",
+          "url": "https://www.l-t.de/pages/hasewelle"
+        },
+        {
+          "label": "交叉核对资料",
+          "url": "https://www.citywaveusa.com/locations/"
+        }
+      ],
+      "position": {
+        "lat": 52.27465,
+        "lng": 8.04688,
+        "accuracy": "site",
+        "label": "场址标记。入口请按地址导航。",
+        "sourceUrl": "https://germany.worldplaces.me/city/osnabruck/view-place/4010417-l-and-t-lengermann-und-trieschmann.html"
+      }
+    },
+    {
+      "id": "irie-surf",
+      "name": "irie surf",
+      "shortName": "irie surf",
+      "city": "弗赖堡",
+      "province": "德国",
+      "environment": "outdoor",
+      "seasonal": false,
+      "seasonNote": "官网列有儿童、初学及进阶场次；天气可能影响开放。",
+      "summary": "Messe Freiburg 电车站附近的户外 Citywave，浪面约 9 米。",
+      "description": "Messe Freiburg 电车站附近的户外 Citywave，浪面约 9 米。",
+      "address": "Messe Freiburg 电车站附近, 79108 Freiburg im Breisgau, Germany",
+      "verifiedAt": "2026-11-10",
+      "sources": [
+        {
+          "label": "场馆预约与开放信息",
+          "url": "https://iriesurf.de/activities/surf"
+        },
+        {
+          "label": "交叉核对资料",
+          "url": "https://citywave.de/blog/surfing-at-the-foot-of-the-black-forest-citywave-freiburg-and-irie-surf-open-in-may/"
+        }
+      ],
+      "position": {
+        "lat": 48.02,
+        "lng": 7.846,
+        "accuracy": "approximate",
+        "label": "场址附近的大致位置。入口请按场馆名称导航。",
+        "sourceUrl": "https://mapcarta.com/W1489575776"
+      }
+    },
+    {
+      "id": "surf-langenfeld",
+      "name": "Surf Langenfeld",
+      "shortName": "Surf Langenfeld",
+      "city": "朗根费尔德",
+      "province": "德国",
+      "environment": "outdoor",
+      "seasonal": true,
+      "seasonNote": "官网列 2026 年 11 至 12 月周末开放，本季至 12 月 6 日。",
+      "summary": "淡水湖上的浮动 UNIT 驻波，浪面 8 米。",
+      "description": "淡水湖上的浮动 UNIT 驻波，浪面 8 米。",
+      "address": "Baumberger Str. 88, 40764 Langenfeld, Germany",
+      "verifiedAt": "2026-11-10",
+      "sources": [
+        {
+          "label": "场馆预约与开放信息",
+          "url": "https://www.surf-langenfeld.de/en/opening-hours/"
+        },
+        {
+          "label": "交叉核对资料",
+          "url": "https://www.surf-pool.com/locations"
+        }
+      ],
+      "position": {
+        "lat": 51.1131,
+        "lng": 6.913,
+        "accuracy": "site",
+        "label": "场址标记。入口请按地址导航。",
+        "sourceUrl": "https://spots.mywatersessions.com/spots/langenfeld"
+      }
+    },
+    {
+      "id": "oana",
+      "name": "OANA",
+      "shortName": "OANA",
+      "city": "Ebikon（卢塞恩）",
+      "province": "瑞士",
+      "environment": "indoor",
+      "seasonal": false,
+      "seasonNote": "室内全年运营，有 Basic 场和包场，按预约日历开放。",
+      "summary": "Mall of Switzerland 内的温水 Citywave。",
+      "description": "Mall of Switzerland 内的温水 Citywave。",
+      "address": "Ebisquare-Strasse 2, 6030 Ebikon, Switzerland",
+      "verifiedAt": "2026-11-10",
+      "sources": [
+        {
+          "label": "场馆预约与开放信息",
+          "url": "https://www.oana.surf/"
+        },
+        {
+          "label": "交叉核对资料",
+          "url": "https://www.mallofswitzerland.ch/en/surfing-at-oana/"
+        }
+      ],
+      "position": {
+        "lat": 47.09387,
+        "lng": 8.35823,
+        "accuracy": "site",
+        "label": "场址标记。入口请按地址导航。",
+        "sourceUrl": "https://en.wikipedia.org/wiki/Mall_of_Switzerland"
+      }
+    },
+    {
+      "id": "honna",
+      "name": "Honna Surf Hub",
+      "shortName": "Honna Surf Hub",
+      "city": "Alcorcón（马德里）",
+      "province": "西班牙",
+      "environment": "outdoor",
+      "seasonal": false,
+      "seasonNote": "有首次体验、进阶及儿童场次，按级别预约。",
+      "summary": "X-Madrid 内的 Citywave Madrid。",
+      "description": "X-Madrid 内的 Citywave Madrid。",
+      "address": "X-Madrid, Calle Oslo 53, 28922 Alcorcón, Spain",
+      "verifiedAt": "2026-11-10",
+      "sources": [
+        {
+          "label": "场馆预约与开放信息",
+          "url": "https://booking.honnasurfhub.com/"
+        },
+        {
+          "label": "交叉核对资料",
+          "url": "https://x-madrid.com/ocioydeporte/honnasurfhub-madrid/"
+        }
+      ],
+      "position": {
+        "lat": 40.33985,
+        "lng": -3.8482,
+        "accuracy": "site",
+        "label": "场址标记。入口请按地址导航。",
+        "sourceUrl": "https://mapcarta.com/W32013299"
+      }
+    },
+    {
+      "id": "city-surf-park",
+      "name": "City Surf Park",
+      "shortName": "City Surf Park",
+      "city": "Décines-Charpieu（里昂）",
+      "province": "法国",
+      "environment": "indoor",
+      "seasonal": false,
+      "seasonNote": "有公开预约，亦公布了 2026 年 12 月驻波赛事。",
+      "summary": "OL Vallée 的室内人工驻波，2026 年更换造浪系统。",
+      "description": "OL Vallée 的室内人工驻波，2026 年更换造浪系统。",
+      "address": "OL Vallée, Parking P7, Décines-Charpieu, France",
+      "verifiedAt": "2026-11-10",
+      "sources": [
+        {
+          "label": "场馆预约与开放信息",
+          "url": "https://www.city-surf-park.com/"
+        },
+        {
+          "label": "交叉核对资料",
+          "url": "https://www.city-surf-park.com/surfopenlyon-register"
+        }
+      ],
+      "position": {
+        "lat": 45.767096,
+        "lng": 4.980878,
+        "accuracy": "site",
+        "label": "场址标记。入口请按地址导航。",
+        "sourceUrl": "https://www.aleou.fr/salle-seminaire/29381-city-surf-park.html"
+      }
+    },
+    {
+      "id": "wakeparadise-milano",
+      "name": "Wakeparadise Milano",
+      "shortName": "Wakeparadise Milano",
+      "city": "Peschiera Borromeo（米兰）",
+      "province": "意大利",
+      "environment": "outdoor",
+      "seasonal": true,
+      "seasonNote": "官网列 11 至 3 月周五至周一开放。场地需注册会员，周末需确认预约；请查看实际冲浪档期。",
+      "summary": "Idroscalo 湖上的 UNIT 浮动驻波，浪面 10 米。",
+      "description": "Idroscalo 湖上的 UNIT 浮动驻波，浪面 10 米。",
+      "address": "Parco Idroscalo 南门, Via Idroscalo, 20068 Peschiera Borromeo, Italy",
+      "verifiedAt": "2026-11-10",
+      "sources": [
+        {
+          "label": "场馆预约与开放信息",
+          "url": "https://wakeparadise.it/milano/en/openinghoursaccess/"
+        },
+        {
+          "label": "交叉核对资料",
+          "url": "https://wakeparadise.it/milano/surf/"
+        }
+      ],
+      "position": {
+        "lat": 45.45317,
+        "lng": 9.2905,
+        "accuracy": "site",
+        "label": "场址标记。入口请按地址导航。",
+        "sourceUrl": "https://mapcarta.com/W721599110"
+      }
+    },
+    {
+      "id": "citywave-vilnius",
+      "name": "citywave Vilnius",
+      "shortName": "citywave Vilnius",
+      "city": "维尔纽斯",
+      "province": "立陶宛",
+      "environment": "indoor",
+      "seasonal": false,
+      "seasonNote": "公开预约有首次体验及进阶场次。",
+      "summary": "Enefit Arena 内的室内 Citywave。",
+      "description": "Enefit Arena 内的室内 Citywave。",
+      "address": "Šv. Stepono g. 41, 03209 Vilnius, Lithuania",
+      "verifiedAt": "2026-11-10",
+      "sources": [
+        {
+          "label": "场馆预约与开放信息",
+          "url": "https://enefitarena.lt/en/city-wave/session/"
+        },
+        {
+          "label": "交叉核对资料",
+          "url": "https://www.govilnius.lt/meet-in-vilnius/venue-finder/enefit-arena-powered-by-citywave"
+        }
+      ],
+      "position": {
+        "lat": 54.669314,
+        "lng": 25.276605,
+        "accuracy": "site",
+        "label": "场址标记。入口请按地址导航。",
+        "sourceUrl": "https://elektros-projektai.lt/projektai/jaunimo-centro-sv-stepono-g-41-vilniuje-rekonstravimo-sklypo-tvarkymo-sv-stepono-gatves-bei-vandentiekio-buitiniu-ir-pavirsiniu-nuoteku-tinklu-nuo-sopeno-g-iki-gelezinkelio-ir-algirdo-g-sankr"
+      }
+    },
+    {
+      "id": "surflux",
+      "name": "Surflux / Surf Luxembourg",
+      "shortName": "Surflux / Surf Luxembourg",
+      "city": "Arlon",
+      "province": "比利时",
+      "environment": "indoor",
+      "seasonal": false,
+      "seasonNote": "官网提供全年预约。场馆与俱乐部分别公布了 2026 年 11 月驻波公开赛。",
+      "summary": "Arlon 的深水 FlowSurf 驻波，位于 Van der Valk 酒店场址。",
+      "description": "Arlon 的深水 FlowSurf 驻波，位于 Van der Valk 酒店场址。",
+      "address": "596 Route de Longwy, 6700 Arlon, Belgium",
+      "verifiedAt": "2026-11-10",
+      "sources": [
+        {
+          "label": "场馆预约与开放信息",
+          "url": "https://surflux.eu/en/surfing-experience/"
+        },
+        {
+          "label": "交叉核对资料",
+          "url": "https://club.surflux.eu/competition"
+        }
+      ],
+      "position": {
+        "lat": 49.6481,
+        "lng": 5.8195,
+        "accuracy": "site",
+        "label": "场址标记。入口请按地址导航。",
+        "sourceUrl": "https://en.wikipedia.org/wiki/Hotel_Luxembourg-Arlon"
+      }
+    },
+    {
+      "id": "surf-brothers-skolkovo",
+      "name": "Surf Brothers Skolkovo",
+      "shortName": "Surf Brothers Skolkovo",
+      "city": "莫斯科",
+      "province": "俄罗斯",
+      "environment": "indoor",
+      "seasonal": false,
+      "seasonNote": "有公开课程及预约入口。",
+      "summary": "Skolkovo 商务中心内的室内驻波，浪面 9 米。",
+      "description": "Skolkovo 商务中心内的室内驻波，浪面 9 米。",
+      "address": "Bolshoy Boulevard 40, BC Amalthea, Skolkovo, Moscow, Russia",
+      "verifiedAt": "2026-11-10",
+      "sources": [
+        {
+          "label": "场馆预约与开放信息",
+          "url": "https://skolkovo.surfbrothers.ru/"
+        },
+        {
+          "label": "2026 年 11 月人工浪赛事",
+          "url": "https://bookmaker-ratings.by/ru/news/v-surf-brothers-skolkovo-projdet-pervy-j-chempionat-rossii-po-serfingu-na-iskusstvennoj-volne/"
+        }
+      ],
+      "position": {
+        "lat": 55.695256,
+        "lng": 37.347081,
+        "accuracy": "site",
+        "label": "场址标记。入口请按地址导航。",
+        "sourceUrl": "https://archi.ru/projects/russia/17689/klub-surf-brothers"
+      }
+    },
+    {
+      "id": "flow-moscow",
+      "name": "Flow Moscow",
+      "shortName": "Flow Moscow",
+      "city": "莫斯科",
+      "province": "俄罗斯",
+      "environment": "indoor",
+      "seasonal": false,
+      "seasonNote": "官网列课程和套票，首次入门及儿童场请查预约规则。",
+      "summary": "室内 Citywave，浪面 7.5 米。",
+      "description": "室内 Citywave，浪面 7.5 米。",
+      "address": "Stavropolskaya ulitsa 43, Moscow, Russia",
+      "verifiedAt": "2026-11-10",
+      "sources": [
+        {
+          "label": "场馆预约与开放信息",
+          "url": "https://moscowflow.ru/volna/"
+        },
+        {
+          "label": "2026 年场馆赛事记录",
+          "url": "https://topheats.ru/org/flowmoscow"
+        }
+      ],
+      "position": {
+        "lat": 55.683326,
+        "lng": 37.780922,
+        "accuracy": "site",
+        "label": "场址标记。入口请按地址导航。",
+        "sourceUrl": "https://www.axaa.ru/Professionalnaya-Gorodskaya-Volna-Dlya-Serfinga-Citywave.html"
+      }
+    }
+  ]
+}

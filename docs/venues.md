@@ -1,17 +1,20 @@
 # Venue map maintenance
 
 The map is published through the existing `Sh7ne/deepsurfcut-website` repository
-and Cloudflare Pages project. Its only page is Chinese, at `/RapidSurfingMap`
+and Cloudflare Pages project. The China edition is at `/RapidSurfingMap`
 without a trailing slash, generated as the root `RapidSurfingMap.html`. The
 Chinese homepage footer has one unobtrusive entry. English and German homepages
 have no map entry, and the map has no language switch. The About dialog links back
 to `/zh/`; the map retains a compact provider-logo overlay. Existing links to
-`/venues/`, `/zh/venues/`, and `/de/venues/` redirect permanently to the single page.
+`/venues/`, `/zh/venues/`, and `/de/venues/` redirect permanently to the China edition. The regional selector also links to
+`/RapidSurfingMap-Europe` and `/RapidSurfingMap-USA`.
 
 ## Data and generated pages
 
 `content/venues.json` is the reviewed public source. The initial directory contains
-11 physical venues, including three seasonal outdoor venues. It excludes closed,
+11 physical venues in China, including three seasonal outdoor venues. The Europe
+and USA editions use `content/venues-europe.json` and `content/venues-usa.json`
+respectively. Keep private follow-up research in the separate workbook. It excludes closed,
 unverified, non-deep-water, and natural-river entries from the earlier research.
 Do not claim that this is a live or exhaustive list of all operating venues.
 
@@ -46,7 +49,7 @@ configuration remain outside `dist/`.
 
 ## Map providers and local configuration
 
-The map currently prioritizes Baidu JavaScript API 4.0, with a locally vendored
+China prioritizes Baidu JavaScript API 4.0, with a locally vendored
 Leaflet 1.9.4 client and OpenStreetMap tiles as an alternative. Amap JS API 2.0 is
 retained but paused until quota is available and it is explicitly enabled.
 The browser remembers a successful
@@ -108,6 +111,10 @@ Configure production map variables in the existing Cloudflare Pages project.
 After updating bindings, deploy the production site and verify `/api/maps/config`
 reports the expected provider availability. Local `.dev.vars` does not configure
 production. Keep `AMAP_MAP_ENABLED` unset or `false` while Amap is paused.
+
+Europe and USA use Leaflet and OpenStreetMap without fetching the domestic provider
+configuration. Google Maps and Apple Maps are external navigation links. Favorites
+are stored separately for each edition.
 
 OpenStreetMap requests ordinary tiles from
 `https://tile.openstreetmap.org/{z}/{x}/{y}.png` without an API key. Preserve each
