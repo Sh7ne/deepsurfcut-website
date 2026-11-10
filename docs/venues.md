@@ -64,6 +64,9 @@ Publish a local WebP in `venues/photos/` only when the photo depicts the venue
 or its actual host site and permission or a reuse license is documented. Keep
 the source, creator, license link, and the type of view in the record.
 Link to the original gallery when an image cannot be republished.
+List thumbnails live in `venues/thumbnails/` as small square WebP files. Record
+the source page and use photos that show the listed venue, its wave, or the
+building that contains it.
 
 ## Map providers and local configuration
 

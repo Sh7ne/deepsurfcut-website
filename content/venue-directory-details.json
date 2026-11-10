@@ -1,19 +1,35 @@
 {
   "back-to-sea": {
-    "photoPage": "https://xinwen.bjd.com.cn/content/s67557a19d5deebfff5b25b73.html"
+    "photoPage": "https://xinwen.bjd.com.cn/content/s67557a19d5deebfff5b25b73.html",
+    "thumbnail": {
+      "url": "/venues/thumbnails/back-to-sea.webp",
+      "source": "https://xinwen.bjd.com.cn/content/s67557a19d5deebfff5b25b73.html"
+    }
   },
   "surfpark-chaoyang": {
     "contact": {
       "phone": "+86 131 2671 5568",
       "source": "https://www.mmmiaomen.com/fitness/arena/464.html"
     },
-    "photoPage": "https://www.visitbeijing.com.cn/article/4Nz1UaD8z6X"
+    "photoPage": "https://www.visitbeijing.com.cn/article/4Nz1UaD8z6X",
+    "thumbnail": {
+      "url": "/venues/thumbnails/surfpark-chaoyang.webp",
+      "source": "https://sg.trip.com/travel-guide/attraction/beijing/surf-park-surfing-park-131893050?poiType=66"
+    }
   },
   "surfpark-fengtai": {
-    "photoPage": "https://www.bjft.gov.cn/fengtaishibao/html/2024-06/17/content_9499_17525105.htm"
+    "photoPage": "https://www.bjft.gov.cn/fengtaishibao/html/2024-06/17/content_9499_17525105.htm",
+    "thumbnail": {
+      "url": "/venues/thumbnails/surfpark-fengtai.webp",
+      "source": "https://www.bjft.gov.cn/fengtaishibao/html/2024-06/17/content_9499_17525105.htm"
+    }
   },
   "igosurfing-seaworld": {
-    "photoPage": "https://www.trip.com/travel-guide/attraction/shanghai/igosurfing-deep-water-wake-surfing-152737530/"
+    "photoPage": "https://www.trip.com/travel-guide/attraction/shanghai/igosurfing-deep-water-wake-surfing-152737530/",
+    "thumbnail": {
+      "url": "/venues/thumbnails/igosurfing-seaworld.webp",
+      "source": "https://www.10100.com/article/147204376"
+    }
   },
   "rucker-fengqihui": {
     "contact": {
@@ -21,17 +37,29 @@
       "phone": "+86 134 8227 0390",
       "source": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park/"
     },
-    "photoPage": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park/"
+    "photoPage": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park/",
+    "thumbnail": {
+      "url": "/venues/thumbnails/rucker-fengqihui.webp",
+      "source": "https://m.thepaper.cn/newsDetail_forward_31985399"
+    }
   },
   "captain-wave-xueye": {
-    "photoPage": "https://www.gzw.sh.gov.cn/shgzw_zxzx_gqdt/20240829/90ba5ea64b0748e4b7ed03763419e6a4.html"
+    "photoPage": "https://www.gzw.sh.gov.cn/shgzw_zxzx_gqdt/20240829/90ba5ea64b0748e4b7ed03763419e6a4.html",
+    "thumbnail": {
+      "url": "/venues/thumbnails/captain-wave-xueye.webp",
+      "source": "https://www.gzw.sh.gov.cn/shgzw_zxzx_gqdt/20240829/90ba5ea64b0748e4b7ed03763419e6a4.html"
+    }
   },
   "rucker-xindongli": {
     "contact": {
       "url": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park-water-world/",
       "source": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park-water-world/"
     },
-    "photoPage": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park-water-world/"
+    "photoPage": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park-water-world/",
+    "thumbnail": {
+      "url": "/venues/thumbnails/rucker-xindongli.webp",
+      "source": "https://finance.sina.com.cn/jjxw/2026-08-30/doc-iniqacxz8489109.shtml"
+    }
   },
   "hala-huzhou": {
     "contact": {
@@ -39,10 +67,18 @@
       "source": "https://www.amap.com/place/B0FFHNR5UM",
       "parkPhone": true
     },
-    "photoPage": "https://you.ctrip.com/sight/huzhou68/2484402.html"
+    "photoPage": "https://you.ctrip.com/sight/huzhou68/2484402.html",
+    "thumbnail": {
+      "url": "/venues/thumbnails/hala-huzhou.webp",
+      "source": "https://www.thepaper.cn/newsDetail_forward_28069945"
+    }
   },
   "panda-chengdu": {
-    "photoPage": "https://sc.cri.cn/2024-03-31/7291be5e-8d54-1db0-64b8-1aca3529b1eb.html"
+    "photoPage": "https://sc.cri.cn/2024-03-31/7291be5e-8d54-1db0-64b8-1aca3529b1eb.html",
+    "thumbnail": {
+      "url": "/venues/thumbnails/panda-chengdu.webp",
+      "source": "https://sc.cri.cn/2024-03-31/7291be5e-8d54-1db0-64b8-1aca3529b1eb.html"
+    }
   },
   "xwater-jiande": {
     "website": "https://www.xwaterdivinghotel.cn/",
@@ -51,7 +87,11 @@
       "source": "https://www.xwaterdivinghotel.cn/",
       "parkPhone": true
     },
-    "photoPage": "https://zjnews.zjol.com.cn/zjnews/202509/t20250910_31220831.shtml"
+    "photoPage": "https://zjnews.zjol.com.cn/zjnews/202509/t20250910_31220831.shtml",
+    "thumbnail": {
+      "url": "/venues/thumbnails/xwater-jiande.webp",
+      "source": "https://zjnews.zjol.com.cn/zjnews/202509/t20250910_31220831.shtml"
+    }
   },
   "qingyuwan-kunming": {
     "contact": {
@@ -59,7 +99,11 @@
       "source": "https://m.km.bendibao.com/tour/48598.shtm",
       "parkPhone": true
     },
-    "photoPage": "https://yetass.com/unveiling-the-mastery-of-deep-water-surfing-surfstage-the-chinese-surfing-industry-trailblazer/"
+    "photoPage": "https://yetass.com/unveiling-the-mastery-of-deep-water-surfing-surfstage-the-chinese-surfing-industry-trailblazer/",
+    "thumbnail": {
+      "url": "/venues/thumbnails/qingyuwan-kunming.webp",
+      "source": "https://xinwen.bjd.com.cn/content/s64d07305e4b03d11a64e4762.html"
+    }
   },
   "wellenwerk-berlin": {
     "website": "https://wellenwerk-berlin.de/",
@@ -69,7 +113,11 @@
       "email": "info@wellenwerk-berlin.de",
       "source": "https://wellenwerk-berlin.de/en/contact/"
     },
-    "photoPage": "https://wellenwerk-berlin.de/indoor-surfen/"
+    "photoPage": "https://wellenwerk-berlin.de/indoor-surfen/",
+    "thumbnail": {
+      "url": "/venues/thumbnails/wellenwerk-berlin.webp",
+      "source": "https://wellenwerk-berlin.de/indoor-surfen/"
+    }
   },
   "jochen-schweizer-arena": {
     "website": "https://www.jochen-schweizer-arena.de/",
@@ -89,6 +137,10 @@
       "width": 500,
       "height": 641,
       "kind": "venueExterior"
+    },
+    "thumbnail": {
+      "url": "/venues/thumbnails/jochen-schweizer-arena.webp",
+      "source": "https://commons.wikimedia.org/wiki/File:Jochen-Schweizer-Arena_Taufkirchen-4.jpg"
     }
   },
   "rheinriff": {
@@ -98,7 +150,11 @@
       "email": "info@rheinriff.de",
       "source": "https://www.rheinriff.com/de/kontakt"
     },
-    "photoPage": "https://www.rheinriff.com/de/surf"
+    "photoPage": "https://www.rheinriff.com/de/surf",
+    "thumbnail": {
+      "url": "/venues/thumbnails/rheinriff.webp",
+      "source": "https://www.rheinriff.com/"
+    }
   },
   "hasewelle": {
     "website": "https://www.l-t.de/pages/hasewelle",
@@ -116,6 +172,10 @@
       "width": 960,
       "height": 718,
       "kind": "hostExterior"
+    },
+    "thumbnail": {
+      "url": "/venues/thumbnails/hasewelle.webp",
+      "source": "https://commons.wikimedia.org/wiki/File:L%26T_Sporthaus.jpg"
     }
   },
   "irie-surf": {
@@ -126,7 +186,11 @@
       "email": "aloha@iriesurf.de",
       "source": "https://iriesurf.de/impressum"
     },
-    "photoPage": "https://iriesurf.de/activities/surf"
+    "photoPage": "https://iriesurf.de/activities/surf",
+    "thumbnail": {
+      "url": "/venues/thumbnails/irie-surf.webp",
+      "source": "https://iriesurf.de/activities/surf"
+    }
   },
   "surf-langenfeld": {
     "website": "https://www.surf-langenfeld.de/",
@@ -145,6 +209,10 @@
       "width": 960,
       "height": 720,
       "kind": "venueSite"
+    },
+    "thumbnail": {
+      "url": "/venues/thumbnails/surf-langenfeld.webp",
+      "source": "https://commons.wikimedia.org/wiki/File:Wasserskianlage_Langenfeld.JPG"
     }
   },
   "oana": {
@@ -164,6 +232,10 @@
       "width": 960,
       "height": 720,
       "kind": "hostExterior"
+    },
+    "thumbnail": {
+      "url": "/venues/thumbnails/oana.webp",
+      "source": "https://commons.wikimedia.org/wiki/File:Mall_of_Switzerland_2020.jpg"
     }
   },
   "honna": {
@@ -172,7 +244,11 @@
       "url": "https://www.honnasurfhub.com/contacto/",
       "source": "https://www.honnasurfhub.com/contacto/"
     },
-    "photoPage": "https://x-madrid.com/ocioydeporte/honnasurfhub-madrid/"
+    "photoPage": "https://x-madrid.com/ocioydeporte/honnasurfhub-madrid/",
+    "thumbnail": {
+      "url": "/venues/thumbnails/honna.webp",
+      "source": "https://x-madrid.com/ocioydeporte/honnasurfhub-madrid/"
+    }
   },
   "city-surf-park": {
     "website": "https://www.city-surf-park.com/",
@@ -182,7 +258,11 @@
       "email": "aloha@city-surf-park.com",
       "source": "https://www.city-surf-park.com/contact"
     },
-    "photoPage": "https://www.city-surf-park.com/"
+    "photoPage": "https://www.city-surf-park.com/",
+    "thumbnail": {
+      "url": "/venues/thumbnails/city-surf-park.webp",
+      "source": "https://www.city-surf-park.com/surfopenlyon-register"
+    }
   },
   "wakeparadise-milano": {
     "website": "https://wakeparadise.it/milano/en/milan/",
@@ -191,7 +271,11 @@
       "email": "milano@wakeparadise.it",
       "source": "https://wakeparadise.it/milano/en/contacts/"
     },
-    "photoPage": "https://wakeparadise.it/milano/surf/"
+    "photoPage": "https://wakeparadise.it/milano/surf/",
+    "thumbnail": {
+      "url": "/venues/thumbnails/wakeparadise-milano.webp",
+      "source": "https://wakeparadise.it/milano/en/milan/"
+    }
   },
   "citywave-vilnius": {
     "website": "https://enefitarena.lt/en/city-wave/",
@@ -201,7 +285,11 @@
       "email": "aloha@citywave.lt",
       "source": "https://enefitarena.lt/en/city-wave/"
     },
-    "photoPage": "https://enefitarena.lt/en/city-wave/"
+    "photoPage": "https://enefitarena.lt/en/city-wave/",
+    "thumbnail": {
+      "url": "/venues/thumbnails/citywave-vilnius.webp",
+      "source": "https://enefitarena.lt/en/city-wave/"
+    }
   },
   "surflux": {
     "website": "https://surflux.eu/en/",
@@ -211,7 +299,11 @@
       "email": "info@surflux.eu",
       "source": "https://surflux.eu/de/kontakt/"
     },
-    "photoPage": "https://surflux.eu/en/surfing-experience/"
+    "photoPage": "https://surflux.eu/en/surfing-experience/",
+    "thumbnail": {
+      "url": "/venues/thumbnails/surflux.webp",
+      "source": "https://surflux.eu/en/"
+    }
   },
   "surf-brothers-skolkovo": {
     "website": "https://skolkovo.surfbrothers.ru/",
@@ -231,6 +323,10 @@
       "width": 960,
       "height": 540,
       "kind": "hostExterior"
+    },
+    "thumbnail": {
+      "url": "/venues/thumbnails/surf-brothers-skolkovo.webp",
+      "source": "https://commons.wikimedia.org/wiki/File:RZD_Innovacionnyi_Center_2019-06_12.jpg"
     }
   },
   "flow-moscow": {
@@ -241,7 +337,11 @@
       "email": "info@moscowflow.ru",
       "source": "https://moscowflow.ru/directions"
     },
-    "photoPage": "https://moscowflow.ru/en/volna/"
+    "photoPage": "https://moscowflow.ru/en/volna/",
+    "thumbnail": {
+      "url": "/venues/thumbnails/flow-moscow.webp",
+      "source": "https://moscowflow.ru/en/volna/"
+    }
   },
   "wai-kai": {
     "website": "https://waikai.com/surf",
@@ -251,7 +351,11 @@
       "email": "aloha@waikaiexperience.com",
       "source": "https://waikai.com/about-wai-kai"
     },
-    "photoPage": "https://waikai.com/surf"
+    "photoPage": "https://waikai.com/surf",
+    "thumbnail": {
+      "url": "/venues/thumbnails/wai-kai.webp",
+      "source": "https://rsmdesign.com/work/wai-kai"
+    }
   },
   "revel-surf": {
     "website": "https://revelsurf.com/river-wave/",
@@ -260,7 +364,11 @@
       "email": "info@revelsurf.com",
       "source": "https://revelsurf.com/privacy-policy/"
     },
-    "photoPage": "https://revelsurf.com/river-wave/"
+    "photoPage": "https://revelsurf.com/river-wave/",
+    "thumbnail": {
+      "url": "/venues/thumbnails/revel-surf.webp",
+      "source": "https://revelsurf.com/river-wave/"
+    }
   },
   "heroes-paradise": {
     "website": "https://www.heroesparadise.com/epicsurfusa",
@@ -269,7 +377,11 @@
       "email": "theteam@heroesparadise.com",
       "source": "https://www.heroesparadise.com/epicsurfusa"
     },
-    "photoPage": "https://epic.surf/heroes-paradise-opens-their-brand-new-epicsurf-deep-water-standing-wave-today-the-first-standing-wave-on-the-east-coast/"
+    "photoPage": "https://epic.surf/heroes-paradise-opens-their-brand-new-epicsurf-deep-water-standing-wave-today-the-first-standing-wave-on-the-east-coast/",
+    "thumbnail": {
+      "url": "/venues/thumbnails/heroes-paradise.webp",
+      "source": "https://www.heroesparadise.com/epicsurfusa"
+    }
   },
   "surfs-up-nashua": {
     "website": "https://skyventurenh.com/indoor-surfing/",
@@ -279,7 +391,11 @@
       "email": "info@skyventurenh.com",
       "source": "https://skyventurenh.com/hours/"
     },
-    "photoPage": "https://skyventurenh.com/indoor-surfing/"
+    "photoPage": "https://skyventurenh.com/indoor-surfing/",
+    "thumbnail": {
+      "url": "/venues/thumbnails/surfs-up-nashua.webp",
+      "source": "https://skyventurenh.com/indoor-surfing/"
+    }
   },
   "waco-shredmill": {
     "website": "https://wacosurf.com/surf-session/shredmill/",
@@ -288,6 +404,10 @@
       "email": "info@wacosurf.com",
       "source": "https://wacosurf.com/first-time-waco-surf-guide/"
     },
-    "photoPage": "https://wacosurf.com/surf-session/shredmill/"
+    "photoPage": "https://wacosurf.com/surf-session/shredmill/",
+    "thumbnail": {
+      "url": "/venues/thumbnails/waco-shredmill.webp",
+      "source": "https://wacosurf.com/surf-session/shredmill/"
+    }
   }
 }

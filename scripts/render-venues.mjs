@@ -72,16 +72,17 @@ const iconPaths = {
 };
 const icon = (name, className = '') => `<svg class="icon ${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${iconPaths[name] || iconPaths.wave}</svg>`;
 
-function venueCard(venue, index, t, international) {
+function venueCard(venue, t, international) {
   const localized = venue;
   const copyLang = t.lang;
+  const thumbnail = venue.thumbnail?.url || venue.photo?.url;
   const positionLabel = venue.position?.accuracy === 'venue' ? t.exactPosition : venue.position?.accuracy === 'site' ? t.sitePosition : t.approximate;
   const sourceLinks = (venue.sources || []).map((source) => `<li><a href="${escape(source.url)}" target="_blank" rel="noopener noreferrer">${escape(source.label)}${icon('arrow')}</a></li>`).join('');
   return `
           <article class="venue-card" id="venue-${escape(venue.id)}" data-id="${escape(venue.id)}" aria-labelledby="title-${escape(venue.id)}">
             <div class="venue-card-main">
               <a class="venue-open" href="#venue-${escape(venue.id)}" data-open="${escape(venue.id)}">
-                <span class="venue-number" aria-hidden="true"><span>${String(index + 1).padStart(2, '0')}</span>${icon('wave')}</span>
+                <span class="venue-number" aria-hidden="true">${thumbnail ? `<img src="${escape(thumbnail)}" alt="" width="160" height="160" loading="lazy" decoding="async">` : icon('wave')}</span>
                 <span class="venue-copy">
                   <span class="venue-meta"><span class="venue-city">${escape(cities[venue.city] || venue.city)}</span><span class="venue-distance" hidden></span></span>
                   <h3 id="title-${escape(venue.id)}" lang="${copyLang}">${escape(localized.shortName || localized.name)}</h3>
@@ -189,9 +190,9 @@ export function renderVenues(data, edition = 'china', language = 'zh', venueRegi
   <link rel="icon" href="/assets/favicon-96.png" sizes="96x96" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180">
   <link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css">
-  <link rel="stylesheet" href="/venues/map.css?v=20261110-venue-details-1">
+  <link rel="stylesheet" href="/venues/map.css?v=20261110-venue-thumbnails-1">
   <script src="/assets/vendor/leaflet/leaflet.js" defer></script>
-  <script type="module" src="/venues/map.js?v=20261110-venue-details-1"></script>
+  <script type="module" src="/venues/map.js?v=20261110-venue-thumbnails-1"></script>
   <script type="application/ld+json">${json(schemas)}</script>
 </head>
 <body data-lang="${language}">
@@ -221,7 +222,7 @@ export function renderVenues(data, edition = 'china', language = 'zh', venueRegi
       </div>
       <div class="list-heading"><p><strong id="result-count" aria-live="polite">${count}</strong> <span id="result-label">${t.venues}</span></p><label class="sort-control enhance-only"><span class="sr-only">${t.sort}</span><select id="sort"><option value="recommended">${t.recommended}</option><option value="name">${t.nameSort}</option><option value="nearest">${t.nearestSort}</option></select></label></div>
       <noscript><p class="no-script-note">${t.noScript}<br><a href="${t.home}">${t.homeLabel}</a></p></noscript>
-      <div id="venue-list" class="venue-list" tabindex="-1">${data.venues.map((venue, index) => venueCard(venue, index, t, international)).join('')}
+      <div id="venue-list" class="venue-list" tabindex="-1">${data.venues.map(venue => venueCard(venue, t, international)).join('')}
         <div id="empty-state" class="empty-state" hidden>${icon('wave')}<h3>${t.noResults}</h3><p>${t.noResultsHint}</p><button id="reset-filters" type="button">${t.reset}</button></div>
       </div>
       <p class="directory-note">${t.dataNotice}</p>
@@ -266,11 +267,17 @@ export async function renderVenuePages({ check = false } = {}) {
   }
   for (const [id, entry] of Object.entries(extras)) {
     if (!Object.hasOwn(venueRegions, id)) throw new Error(`Unknown venue details: ${id}`);
-    for (const link of [entry.website, entry.contact?.url, entry.contact?.source, entry.photoPage, entry.photo?.source, entry.photo?.licenseUrl].filter(Boolean)) {
+    for (const link of [entry.website, entry.contact?.url, entry.contact?.source, entry.photoPage, entry.thumbnail?.source, entry.photo?.source, entry.photo?.licenseUrl].filter(Boolean)) {
       if (new URL(link).protocol !== 'https:') throw new Error(`Invalid venue details link: ${id}`);
     }
     if (entry.contact?.phone && !/^\+[0-9][0-9 ()-]+$/.test(entry.contact.phone)) throw new Error(`Invalid venue phone: ${id}`);
     if (entry.contact?.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(entry.contact.email)) throw new Error(`Invalid venue email: ${id}`);
+    if (entry.thumbnail) {
+      if (!/^\/venues\/thumbnails\/[a-z0-9-]+\.webp$/.test(entry.thumbnail.url) || !entry.thumbnail.source) {
+        throw new Error(`Invalid venue thumbnail: ${id}`);
+      }
+      await access(new URL(entry.thumbnail.url.slice(1), root));
+    }
     if (entry.photo) {
       if (!/^\/venues\/photos\/[a-z0-9-]+\.webp$/.test(entry.photo.url) || !entry.photo.credit || !entry.photo.license || !['venueExterior', 'hostExterior', 'venueSite', 'wavePhoto'].includes(entry.photo.kind) || ![entry.photo.width, entry.photo.height].every(n => Number.isInteger(n) && n > 0)) {
         throw new Error(`Invalid venue photo: ${id}`);

@@ -40,7 +40,11 @@
         "sourceLng": 116.541301,
         "checkedAt": "2026-10-27"
       },
-      "photoPage": "https://xinwen.bjd.com.cn/content/s67557a19d5deebfff5b25b73.html"
+      "photoPage": "https://xinwen.bjd.com.cn/content/s67557a19d5deebfff5b25b73.html",
+      "thumbnail": {
+        "url": "/venues/thumbnails/back-to-sea.webp",
+        "source": "https://xinwen.bjd.com.cn/content/s67557a19d5deebfff5b25b73.html"
+      }
     },
     {
       "id": "surfpark-chaoyang",
@@ -82,7 +86,11 @@
         "phone": "+86 131 2671 5568",
         "source": "https://www.mmmiaomen.com/fitness/arena/464.html"
       },
-      "photoPage": "https://www.visitbeijing.com.cn/article/4Nz1UaD8z6X"
+      "photoPage": "https://www.visitbeijing.com.cn/article/4Nz1UaD8z6X",
+      "thumbnail": {
+        "url": "/venues/thumbnails/surfpark-chaoyang.webp",
+        "source": "https://sg.trip.com/travel-guide/attraction/beijing/surf-park-surfing-park-131893050?poiType=66"
+      }
     },
     {
       "id": "surfpark-fengtai",
@@ -120,7 +128,11 @@
         "sourceLng": 116.282575,
         "checkedAt": "2026-10-27"
       },
-      "photoPage": "https://www.bjft.gov.cn/fengtaishibao/html/2024-06/17/content_9499_17525105.htm"
+      "photoPage": "https://www.bjft.gov.cn/fengtaishibao/html/2024-06/17/content_9499_17525105.htm",
+      "thumbnail": {
+        "url": "/venues/thumbnails/surfpark-fengtai.webp",
+        "source": "https://www.bjft.gov.cn/fengtaishibao/html/2024-06/17/content_9499_17525105.htm"
+      }
     },
     {
       "id": "igosurfing-seaworld",
@@ -162,7 +174,11 @@
         "sourceLng": 121.502317,
         "checkedAt": "2026-10-27"
       },
-      "photoPage": "https://www.trip.com/travel-guide/attraction/shanghai/igosurfing-deep-water-wake-surfing-152737530/"
+      "photoPage": "https://www.trip.com/travel-guide/attraction/shanghai/igosurfing-deep-water-wake-surfing-152737530/",
+      "thumbnail": {
+        "url": "/venues/thumbnails/igosurfing-seaworld.webp",
+        "source": "https://www.10100.com/article/147204376"
+      }
     },
     {
       "id": "rucker-fengqihui",
@@ -209,7 +225,11 @@
         "phone": "+86 134 8227 0390",
         "source": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park/"
       },
-      "photoPage": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park/"
+      "photoPage": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park/",
+      "thumbnail": {
+        "url": "/venues/thumbnails/rucker-fengqihui.webp",
+        "source": "https://m.thepaper.cn/newsDetail_forward_31985399"
+      }
     },
     {
       "id": "captain-wave-xueye",
@@ -246,7 +266,11 @@
         "sourceLng": 121.499184,
         "checkedAt": "2026-10-27"
       },
-      "photoPage": "https://www.gzw.sh.gov.cn/shgzw_zxzx_gqdt/20240829/90ba5ea64b0748e4b7ed03763419e6a4.html"
+      "photoPage": "https://www.gzw.sh.gov.cn/shgzw_zxzx_gqdt/20240829/90ba5ea64b0748e4b7ed03763419e6a4.html",
+      "thumbnail": {
+        "url": "/venues/thumbnails/captain-wave-xueye.webp",
+        "source": "https://www.gzw.sh.gov.cn/shgzw_zxzx_gqdt/20240829/90ba5ea64b0748e4b7ed03763419e6a4.html"
+      }
     },
     {
       "id": "rucker-xindongli",
@@ -293,7 +317,11 @@
         "url": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park-water-world/",
         "source": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park-water-world/"
       },
-      "photoPage": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park-water-world/"
+      "photoPage": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park-water-world/",
+      "thumbnail": {
+        "url": "/venues/thumbnails/rucker-xindongli.webp",
+        "source": "https://finance.sina.com.cn/jjxw/2026-08-30/doc-iniqacxz8489109.shtml"
+      }
     },
     {
       "id": "hala-huzhou",
@@ -335,7 +363,11 @@
         "source": "https://www.amap.com/place/B0FFHNR5UM",
         "parkPhone": true
       },
-      "photoPage": "https://you.ctrip.com/sight/huzhou68/2484402.html"
+      "photoPage": "https://you.ctrip.com/sight/huzhou68/2484402.html",
+      "thumbnail": {
+        "url": "/venues/thumbnails/hala-huzhou.webp",
+        "source": "https://www.thepaper.cn/newsDetail_forward_28069945"
+      }
     },
     {
       "id": "panda-chengdu",
@@ -372,7 +404,11 @@
         "sourceLng": 104.281858,
         "checkedAt": "2026-10-27"
       },
-      "photoPage": "https://sc.cri.cn/2024-03-31/7291be5e-8d54-1db0-64b8-1aca3529b1eb.html"
+      "photoPage": "https://sc.cri.cn/2024-03-31/7291be5e-8d54-1db0-64b8-1aca3529b1eb.html",
+      "thumbnail": {
+        "url": "/venues/thumbnails/panda-chengdu.webp",
+        "source": "https://sc.cri.cn/2024-03-31/7291be5e-8d54-1db0-64b8-1aca3529b1eb.html"
+      }
     },
     {
       "id": "xwater-jiande",
@@ -422,7 +458,11 @@
         "source": "https://www.xwaterdivinghotel.cn/",
         "parkPhone": true
       },
-      "photoPage": "https://zjnews.zjol.com.cn/zjnews/202509/t20250910_31220831.shtml"
+      "photoPage": "https://zjnews.zjol.com.cn/zjnews/202509/t20250910_31220831.shtml",
+      "thumbnail": {
+        "url": "/venues/thumbnails/xwater-jiande.webp",
+        "source": "https://zjnews.zjol.com.cn/zjnews/202509/t20250910_31220831.shtml"
+      }
     },
     {
       "id": "qingyuwan-kunming",
@@ -469,7 +509,11 @@
         "source": "https://m.km.bendibao.com/tour/48598.shtm",
         "parkPhone": true
       },
-      "photoPage": "https://yetass.com/unveiling-the-mastery-of-deep-water-surfing-surfstage-the-chinese-surfing-industry-trailblazer/"
+      "photoPage": "https://yetass.com/unveiling-the-mastery-of-deep-water-surfing-surfstage-the-chinese-surfing-industry-trailblazer/",
+      "thumbnail": {
+        "url": "/venues/thumbnails/qingyuwan-kunming.webp",
+        "source": "https://xinwen.bjd.com.cn/content/s64d07305e4b03d11a64e4762.html"
+      }
     }
   ]
 }
