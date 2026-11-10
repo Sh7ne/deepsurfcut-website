@@ -156,10 +156,11 @@ test('tile and location permissions are confined to map routes', async () => {
 test('the unified map respects country defaults and explicit regional and German links', async () => {
   const { mapEdition } = await import('../functions/RapidSurfingMap.js');
   const cases = [
-    ['', 'CN', 'china', 'zh'], ['', 'US', 'usa', 'en'], ['', 'DE', 'europe', 'en'],
+    ['', 'CN', 'china', 'zh'], ['', 'US', 'north-america', 'en'], ['', 'CA', 'north-america', 'en'], ['', 'DE', 'europe', 'en'],
     ['', undefined, 'europe', 'en'], ['region=europe&lang=de', 'US', 'europe', 'de'],
-    ['region=usa&lang=de', 'DE', 'usa', 'en'], ['region=china', 'US', 'china', 'zh'],
-    ['region=invalid', 'US', 'usa', 'en'],
+    ['region=north-america&lang=de', 'DE', 'north-america', 'en'],
+    ['region=usa', 'DE', 'north-america', 'en'], ['region=china', 'US', 'china', 'zh'],
+    ['region=invalid', 'US', 'north-america', 'en'],
   ];
   for (const [query, country, region, lang] of cases) {
     const result = mapEdition(new URLSearchParams(query), country);

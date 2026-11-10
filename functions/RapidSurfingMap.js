@@ -1,16 +1,17 @@
 const basePath = '/RapidSurfingMap';
 const chineseRegions = new Set(['CN', 'HK', 'MO', 'TW']);
-const usRegions = new Set(['US', 'AS', 'GU', 'MP', 'PR', 'VI', 'UM']);
-const editions = new Set(['china', 'europe', 'usa']);
+const northAmericaRegions = new Set(['CA', 'US', 'AS', 'GU', 'MP', 'PR', 'VI', 'UM']);
+const editions = new Set(['china', 'europe', 'north-america']);
 
 const internationalPolicy = "default-src 'self'; img-src 'self' data: https://tile.openstreetmap.org; script-src 'self'; style-src 'self' 'unsafe-inline'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'";
 const chinaPolicy = "default-src 'self'; img-src 'self' data: blob: https://tile.openstreetmap.org https://*.amap.com https://*.autonavi.com https://*.bdimg.com https://*.bdstatic.com https://api.map.baidu.com; media-src 'self'; script-src 'self' 'unsafe-eval' https://webapi.amap.com https://api.map.baidu.com https://*.bdimg.com https://dlswbr.baidu.com; style-src 'self' 'unsafe-inline' https://api.map.baidu.com; connect-src 'self' https://*.amap.com https://*.autonavi.com https://api.map.baidu.com https://*.bdimg.com https://*.bdstatic.com; upgrade-insecure-requests; worker-src 'self' blob:; font-src 'self' data: https://webapi.amap.com; base-uri 'self'; form-action 'self'; frame-ancestors 'none'";
 
 export function mapEdition(searchParams, country) {
-  const requested = searchParams.get('region');
+  const requestedRegion = searchParams.get('region');
+  const requested = requestedRegion === 'usa' ? 'north-america' : requestedRegion;
   const region = editions.has(requested) ? requested
     : searchParams.get('lang') === 'de' ? 'europe'
-      : chineseRegions.has(country) ? 'china' : usRegions.has(country) ? 'usa' : 'europe';
+      : chineseRegions.has(country) ? 'china' : northAmericaRegions.has(country) ? 'north-america' : 'europe';
   const lang = region === 'china' ? 'zh' : region === 'europe' && searchParams.get('lang') === 'de' ? 'de' : 'en';
   return { region, lang, asset: region === 'china' ? basePath : `/venues/editions/${region}-${lang}.txt` };
 }

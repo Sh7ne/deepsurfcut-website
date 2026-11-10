@@ -179,12 +179,13 @@ server Function behind `/api/maps/amap/_AMapService`. Public positions remain
 WGS84; each provider uses its official coordinate conversion before map placement.
 Production configuration and deployment are separate from this local integration.
 
-Cloudflare chooses the default region using the request country. The region
-selector uses `?region=china`, `?region=europe`, or `?region=usa`. Europe and the
-USA default to English, and Europe also offers German with `&lang=de`. Both use
+Cloudflare chooses the default region using the request country. Canada and the
+United States open the North America edition. The region
+selector uses `?region=china`, `?region=europe`, or `?region=north-america`. Europe and the
+North America default to English, and Europe also offers German with `&lang=de`. Both use
 OpenStreetMap tiles and external Google Maps and Apple Maps navigation links.
 Their reviewed data lives in `content/venues-europe.json` and
-`content/venues-usa.json`. China uses `content/venues.json`. Update
+`content/venues-north-america.json`. China uses `content/venues.json`. Update
 that file, then run `npm run venues:generate`; do not edit `RapidSurfingMap.html` or
 `venues/data.json` directly. Shared map assets stay in `venues/`; the retired locale
 map HTML files remain absent. `npm run build` rejects stale generated outputs.

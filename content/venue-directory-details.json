@@ -409,5 +409,31 @@
       "url": "/venues/thumbnails/waco-shredmill.webp",
       "source": "https://wacosurf.com/surf-session/shredmill/"
     }
+  },
+  "oasis-surf": {
+    "website": "https://oasissurf.com/en/",
+    "contact": {
+      "url": "https://oasissurf.com/en/pages/contact",
+      "phone": "+1 514 372 7873",
+      "email": "info@oasissurf.com",
+      "source": "https://oasissurf.com/en/pages/contact"
+    },
+    "photoPage": "https://www.mtl.org/en/what-to-do/sport-activities/oasis-surf-montreal",
+    "thumbnail": {
+      "url": "/venues/thumbnails/oasis-surf.webp",
+      "source": "https://www.mtl.org/en/what-to-do/sport-activities/oasis-surf-montreal"
+    }
+  },
+  "aloha-surf": {
+    "website": "https://alohasurf.ca/",
+    "contact": {
+      "phone": "+1 581 681 3826",
+      "source": "https://alohasurf.ca/"
+    },
+    "photoPage": "https://complexealoha.com/",
+    "thumbnail": {
+      "url": "/venues/thumbnails/aloha-surf.webp",
+      "source": "https://complexealoha.com/"
+    }
   }
 }

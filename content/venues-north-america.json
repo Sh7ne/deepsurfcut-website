@@ -202,6 +202,92 @@
           "seasonNote": "The operator lists Shredmill hours separately from the water park. Choose Shredmill when booking."
         }
       }
+    },
+    {
+      "id": "oasis-surf",
+      "name": "Oasis Surf",
+      "shortName": "Oasis Surf",
+      "city": "布罗萨尔",
+      "province": "加拿大·魁北克省",
+      "environment": "indoor",
+      "seasonal": false,
+      "seasonNote": "可预约公开场或包浪。场馆提供冲浪板和头盔。请自带防磨衣并提前 30 分钟抵达。",
+      "summary": "Quartier DIX30 内可用带鳍板的室内 SurfStream 驻波。",
+      "description": "Quartier DIX30 内的室内 SurfStream，提供从入门到进阶的场次。公开报道的浪宽上限为 7.7 米。",
+      "address": "9520 Boulevard Leduc, Suite 01, Brossard, QC J4Y 0B3, Canada",
+      "verifiedAt": "2026-11-10",
+      "sources": [
+        {
+          "label": "Surf sessions and reservations",
+          "url": "https://oasissurf.com/en/pages/forfaits-surf"
+        },
+        {
+          "label": "Tourisme Montréal · SurfStream",
+          "url": "https://www.mtl.org/en/what-to-do/sport-activities/oasis-surf-montreal"
+        },
+        {
+          "label": "Reported wave width",
+          "url": "https://www.narcity.com/fr/quebec/surf-interieur-quebec-plus-grosse-vague-canada"
+        }
+      ],
+      "position": {
+        "lat": 45.44458,
+        "lng": -73.43308,
+        "accuracy": "site",
+        "sourceUrl": "https://www.openstreetmap.org/node/7036092089"
+      },
+      "i18n": {
+        "en": {
+          "city": "Brossard",
+          "province": "Quebec, Canada",
+          "summary": "An indoor SurfStream standing wave for finned surfboards in Quartier DIX30.",
+          "description": "An indoor SurfStream at Quartier DIX30, with sessions for beginners through experienced surfers. Published reporting puts the wave at up to 7.7 m wide.",
+          "seasonNote": "Public sessions and private wave bookings are available. The venue provides boards and helmets. Bring a rash guard and arrive 30 minutes before the session."
+        }
+      }
+    },
+    {
+      "id": "aloha-surf",
+      "name": "Aloha Surf",
+      "shortName": "Aloha Surf",
+      "city": "魁北克市",
+      "province": "加拿大·魁北克省",
+      "environment": "indoor",
+      "seasonal": false,
+      "seasonNote": "全年开放。标准场包括 45 分钟共享浪面、15 分钟指导，以及冲浪板和湿衣。",
+      "summary": "10 米宽的室内深水 FlowSurf 驻波。",
+      "description": "Complexe Aloha 的 FlowSurf 驻波宽 10 米，高度可调，最高 1.5 米。可预约标准场或包浪。",
+      "address": "Complexe Aloha, 2205 Boulevard Wilfrid-Hamel, Québec, QC G1P 2H8, Canada",
+      "verifiedAt": "2026-11-10",
+      "sources": [
+        {
+          "label": "Public booking calendar",
+          "url": "https://alohabooking.ca/"
+        },
+        {
+          "label": "Session options and included equipment",
+          "url": "https://alohasurf.ca/forfaits"
+        },
+        {
+          "label": "Manufacturer specifications",
+          "url": "https://www.flowrider.com/aloha-quebec-meet-your-citys-new-home-to-flowsurf/"
+        }
+      ],
+      "position": {
+        "lat": 46.80611,
+        "lng": -71.2927,
+        "accuracy": "site",
+        "sourceUrl": "https://www.voilaquebec.com/en/listing/Aloha-Surf-Indoor-Complex/"
+      },
+      "i18n": {
+        "en": {
+          "city": "Québec City",
+          "province": "Quebec, Canada",
+          "summary": "An indoor deep-water FlowSurf standing wave, 10 m wide.",
+          "description": "Complexe Aloha’s 10 m wide FlowSurf standing wave can be adjusted to a height of up to 1.5 m. Standard and private sessions are available.",
+          "seasonNote": "Open year-round. A standard booking includes 45 minutes of shared wave time, 15 minutes of instruction, a board and a wetsuit."
+        }
+      }
     }
   ]
 }

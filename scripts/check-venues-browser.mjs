@@ -12,7 +12,7 @@ const mapPath = '/RapidSurfingMap';
 const regionalMaps = [
   { path: `${mapPath}?region=europe`, label: 'Europe', language: 'en', region: 'europe', id: 'wellenwerk-berlin', file: 'venues-europe.json' },
   { path: `${mapPath}?region=europe&lang=de`, label: 'Europa', language: 'de', region: 'europe', id: 'wellenwerk-berlin', file: 'venues-europe.json' },
-  { path: `${mapPath}?region=usa`, label: 'United States', language: 'en', region: 'usa', id: 'wai-kai', file: 'venues-usa.json' },
+  { path: `${mapPath}?region=north-america`, label: 'North America', language: 'en', region: 'north-america', id: 'wai-kai', file: 'venues-north-america.json' },
 ];
 for (const region of regionalMaps) {
   region.count = JSON.parse(await readFile(resolve(root, 'content', region.file), 'utf8')).venues.length;
@@ -498,7 +498,7 @@ try {
       assert.equal(await page.locator('#venue-detail a[href^="https://www.google.com/maps/search/"]').count(), 1);
       if (await page.locator('#venue-detail [data-save]').getAttribute('aria-pressed') !== 'true') await page.locator('#venue-detail [data-save]').click();
       const stored = await page.evaluate(() => Object.keys(localStorage).filter(key => key.startsWith('deepsurf.venues.saved.v1')));
-      assert.ok(stored.includes(`deepsurf.venues.saved.v1.${region}`));
+      assert.ok(stored.includes(`deepsurf.venues.saved.v1.${region === 'north-america' ? 'usa' : region}`));
       assert.ok(!stored.includes('deepsurf.venues.saved.v1'));
       await noOverflow(page);
       page.off('request', observe);
@@ -517,10 +517,16 @@ try {
   await noOverflow(photoPage);
   await photoContext.close();
 
-  const geo = await newContext({ extraHTTPHeaders: { 'x-test-country': 'US' } });
+  const geo = await newContext({ extraHTTPHeaders: { 'x-test-country': 'CA' } });
   const geoPage = await geo.newPage();
   await ready(geoPage);
-  await count(geoPage, regionalMaps.find(region => region.region === 'usa').count);
+  await count(geoPage, regionalMaps.find(region => region.region === 'north-america').count);
+  for (const id of ['oasis-surf', 'aloha-surf']) {
+    await ready(geoPage, `${mapPath}?region=usa#venue-${id}`);
+    await geoPage.locator('#venue-detail[open]').waitFor();
+    assert.equal(await geoPage.locator('#detail-content .venue-website').count(), 1);
+    assert.equal(await geoPage.locator('#detail-content a[href^="tel:"]').count(), 1);
+  }
   await ready(geoPage, `${mapPath}#venue-back-to-sea`);
   await geoPage.waitForURL(url => url.searchParams.get('region') === 'china');
   await geoPage.locator('#venue-detail[open]').waitFor();
@@ -537,7 +543,7 @@ try {
     await noOverflow(plainPage);
   }
   await plain.close();
-  for (const path of ['/content/venues.json', '/content/venues-europe.json', '/content/venues-usa.json', '/docs/venue-sources.md', '/tests/venues.test.mjs', '/scripts/render-venues.mjs']) {
+  for (const path of ['/content/venues.json', '/content/venues-europe.json', '/content/venues-north-america.json', '/docs/venue-sources.md', '/tests/venues.test.mjs', '/scripts/render-venues.mjs']) {
     const response = await fetch(new URL(path, base));
     assert.equal(response.status, 404, `private source must not publish: ${path}`);
   }

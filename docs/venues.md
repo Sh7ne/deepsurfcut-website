@@ -8,7 +8,7 @@ have no map entry, and the map has no language switch. The About dialog links ba
 to `/zh/`; the map retains a compact provider-logo overlay. Existing links to
 `/venues/`, `/zh/venues/`, and `/de/venues/` redirect permanently to the unified entry. The two retired regional paths redirect to
 the same entry with a region query. Pages Functions use Cloudflare's request
-country to choose an edition. China and the USA use their local editions, and
+country to choose an edition. China, Canada, and the United States use their local editions, and
 other or missing country values default to Europe in English. A region query
 overrides that choice. Europe uses English unless `lang=de` is selected.
 All editions declare the same canonical URL. Share links include the region
@@ -18,7 +18,7 @@ and, when selected, German, so the same venue opens for recipients elsewhere.
 
 `content/venues.json` is the reviewed public source. The initial directory contains
 11 physical venues in China, including three seasonal outdoor venues. The Europe
-and USA editions use `content/venues-europe.json` and `content/venues-usa.json`
+and North America editions use `content/venues-europe.json` and `content/venues-north-america.json`
 respectively. English and German venue copy lives in each venue’s `i18n` object. Keep private follow-up research in the separate workbook. It excludes closed,
 unverified, non-deep-water, and natural-river entries from the earlier research.
 Do not claim that this is a live or exhaustive list of all operating venues.
@@ -133,7 +133,7 @@ After updating bindings, deploy the production site and verify `/api/maps/config
 reports the expected provider availability. Local `.dev.vars` does not configure
 production. Keep `AMAP_MAP_ENABLED` unset or `false` while Amap is paused.
 
-Europe and USA use Leaflet and OpenStreetMap without fetching the domestic provider
+Europe and North America use Leaflet and OpenStreetMap without fetching the domestic provider
 configuration. Google Maps and Apple Maps are external navigation links. Favorites
 are stored separately for each edition.
 

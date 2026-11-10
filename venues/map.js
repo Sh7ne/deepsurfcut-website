@@ -12,7 +12,9 @@ import { createBaiduProvider } from './provider-baidu.js?v=20261028-map-about-cr
   const lang = config.lang || 'zh';
   const edition = config.edition || 'china';
   const international = edition !== 'china';
-  const savedKey = international ? `deepsurf.venues.saved.v1.${edition}` : 'deepsurf.venues.saved.v1';
+  // The North America edition extends the existing US favorites.
+  const savedEdition = edition === 'north-america' ? 'usa' : edition;
+  const savedKey = international ? `deepsurf.venues.saved.v1.${savedEdition}` : 'deepsurf.venues.saved.v1';
   const labels = config.labels || {};
   const t = (key, values = {}) => Object.entries(values).reduce((s, [k, v]) => s.replaceAll(`{${k}}`, String(v)), labels[key] || key);
   const $ = (id) => document.getElementById(id);

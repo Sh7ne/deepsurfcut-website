@@ -9,7 +9,7 @@ const mapPath = '/RapidSurfingMap';
 const editions = {
   china: {},
   europe: { center: [49, 12] },
-  usa: { center: [37, -104] },
+  'north-america': { center: [39, -104] },
 };
 const mapLink = (edition, language) => `${mapPath}?region=${edition}${language === 'de' ? '&lang=de' : ''}`;
 const googleMaps = (venue) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${venue.name} ${venue.address}`)}`;
@@ -133,7 +133,7 @@ export function renderVenues(data, edition = 'china', language = 'zh', venueRegi
   const { center } = editions[edition];
   const international = edition !== 'china';
   const base = regionalLabels[language] || venueLabels.zh;
-  const regionNames = base.regions || ['中国', '欧洲', '美国'];
+  const regionNames = base.regions || ['中国', '欧洲', '北美'];
   const label = regionNames[Object.keys(editions).indexOf(edition)];
   const t = !international ? base : language === 'de' ? {
     ...base, title: 'Rapid-Surfing-Karte Europa | DeepSurfCut', intro: 'Rapid Surfing in Europa',
@@ -141,10 +141,10 @@ export function renderVenues(data, edition = 'china', language = 'zh', venueRegi
     mapLabel: 'Karte der Rapid-Surfing-Standorte in Europa',
     aboutIntro: 'Ein Verzeichnis stehender Tiefwasserwellen in Europa von DeepSurfCut.',
   } : {
-    ...base, title: `Rapid Surfing Map · ${label} | DeepSurfCut`, intro: `Rapid surfing in ${edition === 'usa' ? 'the United States' : 'Europe'}`,
-    description: `Explore deep-water standing waves in ${edition === 'usa' ? 'the United States' : 'Europe'}, with venue details, booking links and directions.`,
+    ...base, title: `Rapid Surfing Map · ${label} | DeepSurfCut`, intro: `Rapid surfing in ${edition === 'north-america' ? 'North America' : 'Europe'}`,
+    description: `Explore deep-water standing waves in ${edition === 'north-america' ? 'North America' : 'Europe'}, with venue details, booking links and directions.`,
     mapLabel: `Rapid surfing venues · ${label}`,
-    aboutIntro: `A directory of deep-water standing waves in ${edition === 'usa' ? 'the United States' : 'Europe'}, by DeepSurfCut.`,
+    aboutIntro: `A directory of deep-water standing waves in ${edition === 'north-america' ? 'North America' : 'Europe'}, by DeepSurfCut.`,
   };
   const url = origin + mapPath;
   const viewUrl = origin + mapLink(edition, language);
@@ -192,7 +192,7 @@ export function renderVenues(data, edition = 'china', language = 'zh', venueRegi
   <link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css">
   <link rel="stylesheet" href="/venues/map.css?v=20261110-venue-thumbnails-1">
   <script src="/assets/vendor/leaflet/leaflet.js" defer></script>
-  <script type="module" src="/venues/map.js?v=20261110-venue-thumbnails-1"></script>
+  <script type="module" src="/venues/map.js?v=20261110-north-america-1"></script>
   <script type="application/ld+json">${json(schemas)}</script>
 </head>
 <body data-lang="${language}">
@@ -252,7 +252,7 @@ export async function renderVenuePages({ check = false } = {}) {
   if (new Set(ids).size !== ids.length || ids.some((id) => !/^[a-z0-9-]+$/.test(id))) throw new Error('Venue IDs must be unique URL-safe slugs.');
   const allData = { china: data };
   const outputs = [['venues/data.json', JSON.stringify(data, null, 2) + '\n']];
-  for (const edition of ['europe', 'usa']) {
+  for (const edition of ['europe', 'north-america']) {
     const regional = JSON.parse(await readFile(new URL(`content/venues-${edition}.json`, root), 'utf8'));
     const regionalIds = regional.venues.map((venue) => venue.id);
     if (!regionalIds.length || new Set(regionalIds).size !== regionalIds.length || regionalIds.some((id) => !/^[a-z0-9-]+$/.test(id))) {
@@ -290,10 +290,10 @@ export async function renderVenuePages({ check = false } = {}) {
   }
   outputs[0][1] = JSON.stringify(data, null, 2) + '\n';
   outputs.push(['RapidSurfingMap.html', renderVenues(data, 'china', 'zh', venueRegions)]);
-  for (const [region, language] of [['europe', 'en'], ['europe', 'de'], ['usa', 'en']]) {
+  for (const [region, language] of [['europe', 'en'], ['europe', 'de'], ['north-america', 'en']]) {
     outputs.push([`venues/editions/${region}-${language}.txt`, renderVenues(allData[region], region, language, venueRegions)]);
   }
-  const legacyPages = ['venues/index.html', 'zh/venues/index.html', 'de/venues/index.html', 'RapidSurfingMap-Europe.html', 'RapidSurfingMap-USA.html'];
+  const legacyPages = ['venues/index.html', 'zh/venues/index.html', 'de/venues/index.html', 'RapidSurfingMap-Europe.html', 'RapidSurfingMap-USA.html', 'venues/editions/usa-en.txt'];
   for (const path of legacyPages) {
     const file = new URL(path, root);
     if (check) {
