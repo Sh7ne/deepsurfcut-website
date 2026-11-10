@@ -488,7 +488,11 @@ try {
       assert.equal(await page.locator('html').getAttribute('lang'), language);
       assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'), `https://deepsurf.app${mapPath}`);
       assert.doesNotMatch(await page.locator('#detail-content').textContent(), /[\u3400-\u9fff]/u);
-      if (language === 'de') assert.match(await page.locator('#detail-content').textContent(), /Anfahrt/);
+      const detail = page.locator('#detail-content');
+      if (language === 'de') assert.match(await detail.textContent(), /Anfahrt|Offizielle Website/);
+      assert.equal(await detail.locator('.venue-website').count(), 1);
+      assert.equal(await detail.locator('a[href^="tel:"]').count(), 1);
+      assert.equal(await detail.locator('a[href^="mailto:"]').count(), 1);
       if (region === 'europe') assert.equal(await page.locator('.language-nav [aria-current]').getAttribute('lang'), language);
       await count(page, total);
       assert.equal(await page.locator('#venue-detail a[href^="https://www.google.com/maps/search/"]').count(), 1);
@@ -501,6 +505,17 @@ try {
     }
     await regional.close();
   }
+
+  const photoContext = await newContext({ viewport: { width: 390, height: 844 } });
+  const photoPage = await photoContext.newPage();
+  await ready(photoPage, `${mapPath}?region=europe&lang=de#venue-jochen-schweizer-arena`);
+  const photo = photoPage.locator('#venue-detail .venue-photo img');
+  await photo.waitFor();
+  await photoPage.waitForFunction(() => document.querySelector('#venue-detail .venue-photo img')?.naturalWidth > 0);
+  assert.match(await photo.getAttribute('alt'), /Außenansicht der Anlage/);
+  assert.equal(await photoPage.locator('#venue-detail .venue-photo figcaption a[href^="https://creativecommons.org/"]').count(), 1);
+  await noOverflow(photoPage);
+  await photoContext.close();
 
   const geo = await newContext({ extraHTTPHeaders: { 'x-test-country': 'US' } });
   const geoPage = await geo.newPage();

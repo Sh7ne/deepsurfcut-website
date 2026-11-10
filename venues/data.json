@@ -39,7 +39,8 @@
         "sourceLat": 39.953294,
         "sourceLng": 116.541301,
         "checkedAt": "2026-10-27"
-      }
+      },
+      "photoPage": "https://xinwen.bjd.com.cn/content/s67557a19d5deebfff5b25b73.html"
     },
     {
       "id": "surfpark-chaoyang",
@@ -76,7 +77,12 @@
         "sourceLat": 39.893918,
         "sourceLng": 116.597945,
         "checkedAt": "2026-10-27"
-      }
+      },
+      "contact": {
+        "phone": "+86 131 2671 5568",
+        "source": "https://www.mmmiaomen.com/fitness/arena/464.html"
+      },
+      "photoPage": "https://www.visitbeijing.com.cn/article/4Nz1UaD8z6X"
     },
     {
       "id": "surfpark-fengtai",
@@ -113,7 +119,8 @@
         "sourceLat": 39.801275,
         "sourceLng": 116.282575,
         "checkedAt": "2026-10-27"
-      }
+      },
+      "photoPage": "https://www.bjft.gov.cn/fengtaishibao/html/2024-06/17/content_9499_17525105.htm"
     },
     {
       "id": "igosurfing-seaworld",
@@ -154,7 +161,8 @@
         "sourceLat": 31.40459,
         "sourceLng": 121.502317,
         "checkedAt": "2026-10-27"
-      }
+      },
+      "photoPage": "https://www.trip.com/travel-guide/attraction/shanghai/igosurfing-deep-water-wake-surfing-152737530/"
     },
     {
       "id": "rucker-fengqihui",
@@ -195,7 +203,13 @@
         "sourceLat": 31.186744,
         "sourceLng": 121.237685,
         "checkedAt": "2026-10-27"
-      }
+      },
+      "contact": {
+        "url": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park/",
+        "phone": "+86 134 8227 0390",
+        "source": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park/"
+      },
+      "photoPage": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park/"
     },
     {
       "id": "captain-wave-xueye",
@@ -231,7 +245,8 @@
         "sourceLat": 31.185694,
         "sourceLng": 121.499184,
         "checkedAt": "2026-10-27"
-      }
+      },
+      "photoPage": "https://www.gzw.sh.gov.cn/shgzw_zxzx_gqdt/20240829/90ba5ea64b0748e4b7ed03763419e6a4.html"
     },
     {
       "id": "rucker-xindongli",
@@ -273,7 +288,12 @@
         "sourceLat": 31.150907,
         "sourceLng": 121.488421,
         "checkedAt": "2026-10-27"
-      }
+      },
+      "contact": {
+        "url": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park-water-world/",
+        "source": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park-water-world/"
+      },
+      "photoPage": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park-water-world/"
     },
     {
       "id": "hala-huzhou",
@@ -309,7 +329,13 @@
         "sourceLat": 30.940281,
         "sourceLng": 120.143724,
         "checkedAt": "2026-10-27"
-      }
+      },
+      "contact": {
+        "phone": "+86 572 257 5700",
+        "source": "https://www.amap.com/place/B0FFHNR5UM",
+        "parkPhone": true
+      },
+      "photoPage": "https://you.ctrip.com/sight/huzhou68/2484402.html"
     },
     {
       "id": "panda-chengdu",
@@ -345,7 +371,8 @@
         "sourceLat": 30.889185,
         "sourceLng": 104.281858,
         "checkedAt": "2026-10-27"
-      }
+      },
+      "photoPage": "https://sc.cri.cn/2024-03-31/7291be5e-8d54-1db0-64b8-1aca3529b1eb.html"
     },
     {
       "id": "xwater-jiande",
@@ -388,7 +415,14 @@
         "sourceLat": 29.509008,
         "sourceLng": 119.337134,
         "checkedAt": "2026-10-27"
-      }
+      },
+      "website": "https://www.xwaterdivinghotel.cn/",
+      "contact": {
+        "phone": "+86 571 5830 8880",
+        "source": "https://www.xwaterdivinghotel.cn/",
+        "parkPhone": true
+      },
+      "photoPage": "https://zjnews.zjol.com.cn/zjnews/202509/t20250910_31220831.shtml"
     },
     {
       "id": "qingyuwan-kunming",
@@ -429,7 +463,13 @@
         "sourceLat": 24.857072,
         "sourceLng": 102.526538,
         "checkedAt": "2026-10-27"
-      }
+      },
+      "contact": {
+        "phone": "+86 871 6857 0398",
+        "source": "https://m.km.bendibao.com/tour/48598.shtm",
+        "parkPhone": true
+      },
+      "photoPage": "https://yetass.com/unveiling-the-mastery-of-deep-water-surfing-surfstage-the-chinese-surfing-industry-trailblazer/"
     }
   ]
 }

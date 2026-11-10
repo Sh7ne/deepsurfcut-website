@@ -1,3 +1,4 @@
+import { venuePhoto, venueContact } from './detail-extras.js';
 import { createOsmProvider } from './provider-osm.js';
 import { createAmapProvider } from './provider-amap.js';
 import { createBaiduProvider } from './provider-baidu.js?v=20261028-map-about-credits-1';
@@ -353,12 +354,13 @@ import { createBaiduProvider } from './provider-baidu.js?v=20261028-map-about-cr
     const contentLang = document.documentElement.lang;
     const accuracy = v.position?.accuracy === 'venue' ? 'exactPosition' : v.position?.accuracy === 'site' ? 'sitePosition' : 'approximate';
     const sources = (v.sources || []).filter((s) => /^https?:\/\//.test(s.url));
-    return `<div class="detail-art" aria-hidden="true"><div class="detail-wave">${icon('wave')}</div><span>RAPID SURFING</span><div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div></div>
+    return `${venuePhoto(v, labels)}
       <div class="detail-body"><p class="detail-eyebrow">${escape(cityName(v.city))}<span>·</span>${escape(t(v.environment))}</p>
       <h2 id="detail-title" lang="${contentLang}">${escape(v.name)}</h2>
       <div class="detail-badges"><span class="badge">${escape(t(v.environment))}</span>${v.seasonal ? `<span class="badge seasonal">${escape(t('seasonal'))}</span>` : ''}<span class="badge precision">${escape(t(accuracy))}</span></div>
       <p class="detail-description" lang="${contentLang}">${escape(v.description || v.summary)}</p>
       <div class="detail-tools"><button type="button" data-save="${escape(v.id)}">${icon('heart')}<span data-save-label>${escape(t('save'))}</span></button><button id="share-venue" type="button">${icon('share')}${escape(t('share'))}</button></div>
+      ${venueContact(v, labels)}
       <section class="detail-section"><h3>${escape(t('address'))}</h3><p lang="${contentLang}">${escape(v.address)}</p><p class="detail-note" lang="${contentLang}">${escape(v.position?.label || '')}</p><button class="text-button" id="copy-address" type="button">${icon('copy')}${escape(labels.copyAddress || t('address'))}</button></section>
       <section class="detail-section"><h3>${escape(t('opening'))}</h3><p lang="${contentLang}">${escape(v.seasonNote || '')}</p><p class="detail-note">${escape(t('dataNotice'))}</p></section>
       <section class="detail-section"><h3>${escape(t('directions'))}</h3><div class="navigation-links">${Object.entries(links).map(([key, url]) => `<a href="${escape(url)}" target="_blank" rel="noopener noreferrer">${escape(t(key))}${icon('arrow')}</a>`).join('')}</div></section>

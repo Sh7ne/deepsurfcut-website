@@ -1,6 +1,7 @@
 import { access, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 import { regionalLabels } from './venue-map-labels.mjs';
+import { venuePhoto, venueContact } from '../venues/detail-extras.js';
 
 const root = new URL('../', import.meta.url);
 const origin = 'https://deepsurf.app';
@@ -18,6 +19,7 @@ const cities = { '北京': '北京', '上海': '上海', '杭州·建德': '杭�
 
 export const venueLabels = {
   zh: {
+    visitDetails: '官网与联系方式', website: '场馆官网', phone: '电话', parkPhone: '场地总机', contactSource: '联系方式来源', photoAdjusted: '已缩放为网页图', email: '邮箱', contactPage: '联系场馆', photoPage: '查看场馆照片', venueExterior: '场馆外观', hostExterior: '所在建筑外观', venueSite: '所在水上运动园区（旧照）', wavePhoto: '浪池实景',
     lang: 'zh-Hans', locale: 'zh-CN', home: '/zh/', title: '中国深水冲浪场馆地图｜DeepSurfCut',
     description: '探索中国的深水固定浪与 Rapid Surfing 场馆：地图定位、城市筛选、场馆介绍、季节开放信息、收藏与导航。',
     heading: '冲浪地图', edition: '中国版', eyebrow: '', intro: '探索深水冲浪场馆',
@@ -91,7 +93,7 @@ function venueCard(venue, index, t, international) {
               <button class="save-button icon-button enhance-only" type="button" data-save="${escape(venue.id)}" aria-label="${t.save} · ${escape(localized.name)}" aria-pressed="false">${icon('bookmark')}</button>
             </div>
             <details class="static-details">
-              <summary>${t.details}</summary>
+              <summary>${t.details}</summary>${venuePhoto(venue, t)}${venueContact(venue, t)}
               <p lang="${copyLang}">${escape(localized.description)}</p>
               <h4>${t.address}</h4><p lang="${copyLang}">${escape(localized.address)}</p>
               <p class="position-note">${positionLabel}${venue.position?.label ? ` · <span lang="${copyLang}">${escape(venue.position.label)}</span>` : ''}</p>
@@ -187,9 +189,9 @@ export function renderVenues(data, edition = 'china', language = 'zh', venueRegi
   <link rel="icon" href="/assets/favicon-96.png" sizes="96x96" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180">
   <link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css">
-  <link rel="stylesheet" href="/venues/map.css?v=20261110-unified-map-1">
+  <link rel="stylesheet" href="/venues/map.css?v=20261110-venue-details-1">
   <script src="/assets/vendor/leaflet/leaflet.js" defer></script>
-  <script type="module" src="/venues/map.js?v=20261110-unified-map-1"></script>
+  <script type="module" src="/venues/map.js?v=20261110-venue-details-1"></script>
   <script type="application/ld+json">${json(schemas)}</script>
 </head>
 <body data-lang="${language}">
@@ -257,10 +259,29 @@ export async function renderVenuePages({ check = false } = {}) {
     }
     allData[edition] = regional;
   }
+  const extras = JSON.parse(await readFile(new URL('content/venue-directory-details.json', root), 'utf8'));
   const venueRegions = Object.fromEntries(Object.entries(allData).flatMap(([region, { venues }]) => venues.map(({ id }) => [id, region])));
   if (Object.keys(venueRegions).length !== Object.values(allData).reduce((count, { venues }) => count + venues.length, 0)) {
     throw new Error('Venue IDs must be unique across regions.');
   }
+  for (const [id, entry] of Object.entries(extras)) {
+    if (!Object.hasOwn(venueRegions, id)) throw new Error(`Unknown venue details: ${id}`);
+    for (const link of [entry.website, entry.contact?.url, entry.contact?.source, entry.photoPage, entry.photo?.source, entry.photo?.licenseUrl].filter(Boolean)) {
+      if (new URL(link).protocol !== 'https:') throw new Error(`Invalid venue details link: ${id}`);
+    }
+    if (entry.contact?.phone && !/^\+[0-9][0-9 ()-]+$/.test(entry.contact.phone)) throw new Error(`Invalid venue phone: ${id}`);
+    if (entry.contact?.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(entry.contact.email)) throw new Error(`Invalid venue email: ${id}`);
+    if (entry.photo) {
+      if (!/^\/venues\/photos\/[a-z0-9-]+\.webp$/.test(entry.photo.url) || !entry.photo.credit || !entry.photo.license || !['venueExterior', 'hostExterior', 'venueSite', 'wavePhoto'].includes(entry.photo.kind) || ![entry.photo.width, entry.photo.height].every(n => Number.isInteger(n) && n > 0)) {
+        throw new Error(`Invalid venue photo: ${id}`);
+      }
+      await access(new URL(entry.photo.url.slice(1), root));
+    }
+  }
+  for (const edition of Object.values(allData)) {
+    edition.venues = edition.venues.map(venue => ({ ...venue, ...extras[venue.id] }));
+  }
+  outputs[0][1] = JSON.stringify(data, null, 2) + '\n';
   outputs.push(['RapidSurfingMap.html', renderVenues(data, 'china', 'zh', venueRegions)]);
   for (const [region, language] of [['europe', 'en'], ['europe', 'de'], ['usa', 'en']]) {
     outputs.push([`venues/editions/${region}-${language}.txt`, renderVenues(allData[region], region, language, venueRegions)]);

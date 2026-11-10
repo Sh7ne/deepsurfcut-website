@@ -1,0 +1,293 @@
+{
+  "back-to-sea": {
+    "photoPage": "https://xinwen.bjd.com.cn/content/s67557a19d5deebfff5b25b73.html"
+  },
+  "surfpark-chaoyang": {
+    "contact": {
+      "phone": "+86 131 2671 5568",
+      "source": "https://www.mmmiaomen.com/fitness/arena/464.html"
+    },
+    "photoPage": "https://www.visitbeijing.com.cn/article/4Nz1UaD8z6X"
+  },
+  "surfpark-fengtai": {
+    "photoPage": "https://www.bjft.gov.cn/fengtaishibao/html/2024-06/17/content_9499_17525105.htm"
+  },
+  "igosurfing-seaworld": {
+    "photoPage": "https://www.trip.com/travel-guide/attraction/shanghai/igosurfing-deep-water-wake-surfing-152737530/"
+  },
+  "rucker-fengqihui": {
+    "contact": {
+      "url": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park/",
+      "phone": "+86 134 8227 0390",
+      "source": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park/"
+    },
+    "photoPage": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park/"
+  },
+  "captain-wave-xueye": {
+    "photoPage": "https://www.gzw.sh.gov.cn/shgzw_zxzx_gqdt/20240829/90ba5ea64b0748e4b7ed03763419e6a4.html"
+  },
+  "rucker-xindongli": {
+    "contact": {
+      "url": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park-water-world/",
+      "source": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park-water-world/"
+    },
+    "photoPage": "https://www.padi.com/zh-hans/dive-center/zhong-guo/rucker-park-water-world/"
+  },
+  "hala-huzhou": {
+    "contact": {
+      "phone": "+86 572 257 5700",
+      "source": "https://www.amap.com/place/B0FFHNR5UM",
+      "parkPhone": true
+    },
+    "photoPage": "https://you.ctrip.com/sight/huzhou68/2484402.html"
+  },
+  "panda-chengdu": {
+    "photoPage": "https://sc.cri.cn/2024-03-31/7291be5e-8d54-1db0-64b8-1aca3529b1eb.html"
+  },
+  "xwater-jiande": {
+    "website": "https://www.xwaterdivinghotel.cn/",
+    "contact": {
+      "phone": "+86 571 5830 8880",
+      "source": "https://www.xwaterdivinghotel.cn/",
+      "parkPhone": true
+    },
+    "photoPage": "https://zjnews.zjol.com.cn/zjnews/202509/t20250910_31220831.shtml"
+  },
+  "qingyuwan-kunming": {
+    "contact": {
+      "phone": "+86 871 6857 0398",
+      "source": "https://m.km.bendibao.com/tour/48598.shtm",
+      "parkPhone": true
+    },
+    "photoPage": "https://yetass.com/unveiling-the-mastery-of-deep-water-surfing-surfstage-the-chinese-surfing-industry-trailblazer/"
+  },
+  "wellenwerk-berlin": {
+    "website": "https://wellenwerk-berlin.de/",
+    "contact": {
+      "url": "https://wellenwerk-berlin.de/en/contact/",
+      "phone": "+49 30 54452707",
+      "email": "info@wellenwerk-berlin.de",
+      "source": "https://wellenwerk-berlin.de/en/contact/"
+    },
+    "photoPage": "https://wellenwerk-berlin.de/indoor-surfen/"
+  },
+  "jochen-schweizer-arena": {
+    "website": "https://www.jochen-schweizer-arena.de/",
+    "contact": {
+      "url": "https://www.jochen-schweizer-arena.de/en/faq/",
+      "phone": "+49 89 452 44 55 995",
+      "email": "info@jochen-schweizer-arena.de",
+      "source": "https://www.jochen-schweizer-arena.de/faq/"
+    },
+    "photoPage": "https://www.jochen-schweizer-arena.de/indoor-surfen/",
+    "photo": {
+      "url": "/venues/photos/jochen-schweizer-arena.webp",
+      "source": "https://commons.wikimedia.org/wiki/File:Jochen-Schweizer-Arena_Taufkirchen-4.jpg",
+      "credit": "Rufus46",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "width": 500,
+      "height": 641,
+      "kind": "venueExterior"
+    }
+  },
+  "rheinriff": {
+    "website": "https://www.rheinriff.com/",
+    "contact": {
+      "url": "https://www.rheinriff.com/de/kontakt",
+      "email": "info@rheinriff.de",
+      "source": "https://www.rheinriff.com/de/kontakt"
+    },
+    "photoPage": "https://www.rheinriff.com/de/surf"
+  },
+  "hasewelle": {
+    "website": "https://www.l-t.de/pages/hasewelle",
+    "contact": {
+      "email": "hasewelle@l-t.de",
+      "source": "https://www.l-t.de/pages/hasewelle"
+    },
+    "photoPage": "https://www.l-t.de/pages/hasewelle",
+    "photo": {
+      "url": "/venues/photos/hasewelle.webp",
+      "source": "https://commons.wikimedia.org/wiki/File:L%26T_Sporthaus.jpg",
+      "credit": "N9713",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "width": 960,
+      "height": 718,
+      "kind": "hostExterior"
+    }
+  },
+  "irie-surf": {
+    "website": "https://iriesurf.de/",
+    "contact": {
+      "url": "https://iriesurf.de/impressum",
+      "phone": "+49 151 416 444 77",
+      "email": "aloha@iriesurf.de",
+      "source": "https://iriesurf.de/impressum"
+    },
+    "photoPage": "https://iriesurf.de/activities/surf"
+  },
+  "surf-langenfeld": {
+    "website": "https://www.surf-langenfeld.de/",
+    "contact": {
+      "url": "https://www.surf-langenfeld.de/en/contact/",
+      "email": "kontakt@wasserski-langenfeld.de",
+      "source": "https://www.surf-langenfeld.de/impressum/"
+    },
+    "photoPage": "https://www.surf-langenfeld.de/",
+    "photo": {
+      "url": "/venues/photos/surf-langenfeld.webp",
+      "source": "https://commons.wikimedia.org/wiki/File:Wasserskianlage_Langenfeld.JPG",
+      "credit": "noebse",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "width": 960,
+      "height": 720,
+      "kind": "venueSite"
+    }
+  },
+  "oana": {
+    "website": "https://www.oana.surf/",
+    "contact": {
+      "url": "https://www.oana.surf/impressum",
+      "email": "hello@oana.surf",
+      "source": "https://www.oana.surf/impressum"
+    },
+    "photoPage": "https://www.oana.surf/media",
+    "photo": {
+      "url": "/venues/photos/oana.webp",
+      "source": "https://commons.wikimedia.org/wiki/File:Mall_of_Switzerland_2020.jpg",
+      "credit": "Mall of Switzerland",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "width": 960,
+      "height": 720,
+      "kind": "hostExterior"
+    }
+  },
+  "honna": {
+    "website": "https://www.honnasurfhub.com/",
+    "contact": {
+      "url": "https://www.honnasurfhub.com/contacto/",
+      "source": "https://www.honnasurfhub.com/contacto/"
+    },
+    "photoPage": "https://x-madrid.com/ocioydeporte/honnasurfhub-madrid/"
+  },
+  "city-surf-park": {
+    "website": "https://www.city-surf-park.com/",
+    "contact": {
+      "url": "https://www.city-surf-park.com/contact",
+      "phone": "+33 4 78 58 38 61",
+      "email": "aloha@city-surf-park.com",
+      "source": "https://www.city-surf-park.com/contact"
+    },
+    "photoPage": "https://www.city-surf-park.com/"
+  },
+  "wakeparadise-milano": {
+    "website": "https://wakeparadise.it/milano/en/milan/",
+    "contact": {
+      "url": "https://wakeparadise.it/milano/en/contacts/",
+      "email": "milano@wakeparadise.it",
+      "source": "https://wakeparadise.it/milano/en/contacts/"
+    },
+    "photoPage": "https://wakeparadise.it/milano/surf/"
+  },
+  "citywave-vilnius": {
+    "website": "https://enefitarena.lt/en/city-wave/",
+    "contact": {
+      "url": "https://enefitarena.lt/en/contact/",
+      "phone": "+370 693 03 090",
+      "email": "aloha@citywave.lt",
+      "source": "https://enefitarena.lt/en/city-wave/"
+    },
+    "photoPage": "https://enefitarena.lt/en/city-wave/"
+  },
+  "surflux": {
+    "website": "https://surflux.eu/en/",
+    "contact": {
+      "url": "https://surflux.eu/en/contact/",
+      "phone": "+32 63 23 32 22",
+      "email": "info@surflux.eu",
+      "source": "https://surflux.eu/de/kontakt/"
+    },
+    "photoPage": "https://surflux.eu/en/surfing-experience/"
+  },
+  "surf-brothers-skolkovo": {
+    "website": "https://skolkovo.surfbrothers.ru/",
+    "contact": {
+      "url": "https://skolkovo.surfbrothers.ru/contacts",
+      "phone": "+7 495 241 24 44",
+      "email": "info@surfbrothers.ru",
+      "source": "https://skolkovo.surfbrothers.ru/contacts"
+    },
+    "photoPage": "https://skolkovo.surfbrothers.ru/",
+    "photo": {
+      "url": "/venues/photos/surf-brothers-skolkovo.webp",
+      "source": "https://commons.wikimedia.org/wiki/File:RZD_Innovacionnyi_Center_2019-06_12.jpg",
+      "credit": "Svetlov Artem",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "width": 960,
+      "height": 540,
+      "kind": "hostExterior"
+    }
+  },
+  "flow-moscow": {
+    "website": "https://moscowflow.ru/en/volna/",
+    "contact": {
+      "url": "https://moscowflow.ru/directions",
+      "phone": "+7 499 670 09 09",
+      "email": "info@moscowflow.ru",
+      "source": "https://moscowflow.ru/directions"
+    },
+    "photoPage": "https://moscowflow.ru/en/volna/"
+  },
+  "wai-kai": {
+    "website": "https://waikai.com/surf",
+    "contact": {
+      "url": "https://waikai.com/contact",
+      "phone": "+1 808 515 7873",
+      "email": "aloha@waikaiexperience.com",
+      "source": "https://waikai.com/about-wai-kai"
+    },
+    "photoPage": "https://waikai.com/surf"
+  },
+  "revel-surf": {
+    "website": "https://revelsurf.com/river-wave/",
+    "contact": {
+      "phone": "+1 480 944 7873",
+      "email": "info@revelsurf.com",
+      "source": "https://revelsurf.com/privacy-policy/"
+    },
+    "photoPage": "https://revelsurf.com/river-wave/"
+  },
+  "heroes-paradise": {
+    "website": "https://www.heroesparadise.com/epicsurfusa",
+    "contact": {
+      "phone": "+1 833 543 7637",
+      "email": "theteam@heroesparadise.com",
+      "source": "https://www.heroesparadise.com/epicsurfusa"
+    },
+    "photoPage": "https://epic.surf/heroes-paradise-opens-their-brand-new-epicsurf-deep-water-standing-wave-today-the-first-standing-wave-on-the-east-coast/"
+  },
+  "surfs-up-nashua": {
+    "website": "https://skyventurenh.com/indoor-surfing/",
+    "contact": {
+      "url": "https://skyventurenh.com/contact/",
+      "phone": "+1 603 897 0002",
+      "email": "info@skyventurenh.com",
+      "source": "https://skyventurenh.com/hours/"
+    },
+    "photoPage": "https://skyventurenh.com/indoor-surfing/"
+  },
+  "waco-shredmill": {
+    "website": "https://wacosurf.com/surf-session/shredmill/",
+    "contact": {
+      "url": "https://wacosurf.com/contact/",
+      "email": "info@wacosurf.com",
+      "source": "https://wacosurf.com/first-time-waco-surf-guide/"
+    },
+    "photoPage": "https://wacosurf.com/surf-session/shredmill/"
+  }
+}

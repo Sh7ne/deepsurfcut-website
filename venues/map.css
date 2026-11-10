@@ -126,3 +126,14 @@ dialog{color:var(--ink);border:1px solid white;background:var(--paper);border-ra
   .enhanced .explore-sheet[data-snap=low] .language-nav{margin-top:0}
   .enhanced .explore-sheet[data-snap=low] .language-nav a{padding-block:1px}
 }
+
+.venue-photo{margin:0;background:#f2f2f7}
+.venue-photo img{display:block;width:100%;height:auto;max-height:245px;object-fit:contain}
+.venue-photo figcaption{padding:6px 14px;color:#424e5e;font-size:11px;overflow-wrap:anywhere}
+.venue-photo figcaption a{text-decoration:underline}
+.static-details .venue-photo{margin:10px 0;border-radius:10px;overflow:hidden}
+.venue-contact{display:grid;gap:6px;margin:14px 0}
+.venue-contact a{display:block;padding:10px 12px;border-radius:9px;background:#f2f5fa;color:#0057a6;overflow-wrap:anywhere;font-size:13px}
+.venue-contact a:hover,.venue-contact a:focus-visible{background:#eaf3ff;text-decoration:underline}
+.venue-contact .venue-website{font-weight:650}
+.venue-contact .venue-contact-source{padding:1px 0;background:none;font-size:11px;text-decoration:underline}

@@ -54,6 +54,17 @@ The build checks generated output against the source. Public assets are copied
 through the existing allowlist; source data, research, scripts, tests, and local
 configuration remain outside `dist/`.
 
+
+## Websites, contacts, and photos
+
+Add verified operator websites, public business contact channels, and photo
+links to `content/venue-directory-details.json` by venue ID. A park or host
+reception number must be identified as such. Keep a source for each contact.
+Publish a local WebP in `venues/photos/` only when the photo depicts the venue
+or its actual host site and permission or a reuse license is documented. Keep
+the source, creator, license link, and the type of view in the record.
+Link to the original gallery when an image cannot be republished.
+
 ## Map providers and local configuration
 
 China prioritizes Baidu JavaScript API 4.0, with a locally vendored
