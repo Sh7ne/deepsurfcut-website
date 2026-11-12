@@ -311,7 +311,7 @@ html[lang="zh-CN"] h2 { line-height: 1.24; }
   .platforms h2 { font-size: 38px; }
   .closing h2 { font-size: 50px; }
 }
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .desktop-nav { display: none; }
   .header-actions { margin-left: auto; }
   .menu-toggle { display: inline-flex; }

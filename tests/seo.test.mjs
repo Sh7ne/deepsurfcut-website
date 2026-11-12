@@ -129,7 +129,7 @@ test('the standalone Chinese map has one canonical identity and no language swit
 });
 
 test('every homepage links to the map from desktop navigation, mobile navigation, and the footer', () => {
-  const labels = { en: 'Surf Map', 'zh-Hans': '冲浪地图', de: 'Surfkarte' };
+  const labels = { en: 'Rapid Surf Map', 'zh-Hans': '深水冲浪地图', de: 'Rapid Surf Map' };
   for (const page of documents.filter((candidate) => candidate.group === '')) {
     const links = page.$('a[href="/RapidSurfingMap"]');
     assert.equal(links.length, 3, page.file);
