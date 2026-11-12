@@ -128,22 +128,14 @@ test('the standalone Chinese map has one canonical identity and no language swit
   }
 });
 
-test('only the Chinese homepage footer exposes the standalone map entry', () => {
-  const mapPaths = new Set(['/RapidSurfingMap', '/RapidSurfingMap/', '/RapidSurfingMap.html',
-    '/venues', '/venues/', '/venues/index.html', '/zh/venues', '/zh/venues/', '/zh/venues/index.html',
-    '/de/venues', '/de/venues/', '/de/venues/index.html']);
+test('every homepage links to the map from desktop navigation, mobile navigation, and the footer', () => {
+  const labels = { en: 'Surf Map', 'zh-Hans': '冲浪地图', de: 'Surfkarte' };
   for (const page of documents.filter((candidate) => candidate.group === '')) {
-    const mapLinks = page.$('a[href]').filter((_, element) => {
-      const url = new URL(page.$(element).attr('href'), page.url);
-      return url.origin === origin && mapPaths.has(url.pathname);
-    });
-    if (page.language === 'zh-Hans') {
-      assert.equal(mapLinks.length, 1, 'the Chinese homepage should have one low-key map entry');
-      const footerLink = single(page.$, '.site-footer > nav > a[href="/RapidSurfingMap"]', page.file);
-      assert.equal(footerLink.text().trim(), '冲浪地图');
-      assert.equal(mapLinks[0], footerLink[0]);
-    } else {
-      assert.equal(mapLinks.length, 0, `${page.file}: the map is a Chinese-only entry`);
+    const links = page.$('a[href="/RapidSurfingMap"]');
+    assert.equal(links.length, 3, page.file);
+    for (const selector of ['.desktop-nav', '#mobile-nav', '.site-footer > nav']) {
+      const link = single(page.$, `${selector} > a[href="/RapidSurfingMap"]`, page.file);
+      assert.equal(link.text().trim(), labels[page.language], page.file);
     }
   }
 });

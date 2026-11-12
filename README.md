@@ -161,8 +161,8 @@ Lucide icons are distributed locally; their license is in `assets/lucide.LICENSE
 ## Surf venue map
 
 The surf venue map uses a single canonical `/RapidSurfingMap` path,
-generated as `RapidSurfingMap.html`. Its single homepage entry sits in the Chinese
-footer; English and German homepages do not link to it. Old `/venues/`, `/zh/venues/`, and `/de/venues/` links redirect there. It currently
+generated as `RapidSurfingMap.html`. English, Chinese, and German homepages link to it from
+the desktop navigation, mobile menu, and footer. Old `/venues/`, `/zh/venues/`, and `/de/venues/` links redirect there. It currently
 prioritizes Baidu, with a local Leaflet client and OpenStreetMap tiles as an
 alternative. Amap support is retained but paused while its quota is unavailable.
 A static directory remains available without JavaScript. The current directory

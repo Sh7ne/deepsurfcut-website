@@ -3,9 +3,9 @@
 The map is published through the existing `Sh7ne/deepsurfcut-website` repository
 and Cloudflare Pages project. All editions use `/RapidSurfingMap`
 without a trailing slash, generated as the root `RapidSurfingMap.html`. The
-Chinese homepage footer has one unobtrusive entry. English and German homepages
-have no map entry, and the map has no language switch. The About dialog links back
-to `/zh/`; the map retains a compact provider-logo overlay. Existing links to
+English, Chinese, and German homepages link to the map from desktop navigation,
+the mobile menu, and the footer. Europe offers an English/German language switch.
+The About dialog links back to the localized homepage; the map retains a compact provider-logo overlay. Existing links to
 `/venues/`, `/zh/venues/`, and `/de/venues/` redirect permanently to the unified entry. The two retired regional paths redirect to
 the same entry with a region query. Pages Functions use Cloudflare's request
 country to choose an edition. China, Canada, and the United States use their local editions, and

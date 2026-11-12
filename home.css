@@ -311,6 +311,11 @@ html[lang="zh-CN"] h2 { line-height: 1.24; }
   .platforms h2 { font-size: 38px; }
   .closing h2 { font-size: 50px; }
 }
+@media (max-width: 900px) {
+  .desktop-nav { display: none; }
+  .header-actions { margin-left: auto; }
+  .menu-toggle { display: inline-flex; }
+}
 @media (max-width: 820px) {
   .follow-comparison { gap: 16px; }
   .follow-label { font-size: 10px; }
@@ -318,9 +323,7 @@ html[lang="zh-CN"] h2 { line-height: 1.24; }
   .follow-benefits li { grid-template-columns: minmax(0, 1fr); gap: 10px; }
   .wrap { width: calc(100% - 48px); }
   .header-inner { width: calc(100% - 40px); height: 68px; }
-  .desktop-nav { display: none; }
-  .header-actions { margin-left: auto; gap: 15px; }
-  .menu-toggle { display: inline-flex; }
+  .header-actions { gap: 15px; }
   .hero { min-height: 650px; }
   .hero h1 { font-size: 66px; }
   .hero-headline { font-size: 34px; }
