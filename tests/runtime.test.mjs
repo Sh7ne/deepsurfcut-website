@@ -3,6 +3,7 @@ import { test } from 'node:test';
 import { execFileSync } from 'node:child_process';
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { createTestHarness } from 'wrangler';
+import { load } from 'cheerio';
 import { bindings, createTestChain, MESSAGE_ID, signedPayload } from './helpers.mjs';
 
 test('Pages deployment and Apple verification run in the Cloudflare runtime', { timeout: 120_000 }, async (t) => {
@@ -48,7 +49,7 @@ test('Pages deployment and Apple verification run in the Cloudflare runtime', { 
   });
 
   await t.test('existing pages and assets are preserved and private files are excluded', async () => {
-    for (const [url, file] of [['/', 'index.html'], ['/zh/', 'zh/index.html'], ['/privacy/', 'privacy/index.html'], ['/home.css', 'home.css'], ['/updates/', 'updates/index.html'], ['/zh/updates/', 'zh/updates/index.html'], ['/de/', 'de/index.html'], ['/de/updates/', 'de/updates/index.html'], ['/de/surf-video-editing/', 'de/surf-video-editing/index.html'], ['/portrait-follow/', 'portrait-follow/index.html'], ['/zh/portrait-follow/', 'zh/portrait-follow/index.html'], ['/de/portrait-follow/', 'de/portrait-follow/index.html'], ['/portrait-follow.css', 'portrait-follow.css'], ['/assets/icons-20261015.js', 'assets/icons-20261015.js'], ['/RapidSurfingMap', 'RapidSurfingMap.html'], ['/venues/map.js', 'venues/map.js'], ['/venues/map.css', 'venues/map.css'], ['/venues/data.json', 'venues/data.json']]) {
+    for (const [url, file] of [['/', 'index.html'], ['/zh/', 'zh/index.html'], ['/privacy/', 'privacy/index.html'], ['/home.css', 'home.css'], ['/updates/', 'updates/index.html'], ['/zh/updates/', 'zh/updates/index.html'], ['/de/', 'de/index.html'], ['/de/updates/', 'de/updates/index.html'], ['/de/surf-video-editing/', 'de/surf-video-editing/index.html'], ['/portrait-follow/', 'portrait-follow/index.html'], ['/zh/portrait-follow/', 'zh/portrait-follow/index.html'], ['/de/portrait-follow/', 'de/portrait-follow/index.html'], ['/portrait-follow.css', 'portrait-follow.css'], ['/assets/icons-20261015.js', 'assets/icons-20261015.js'], ['/venues/map.js', 'venues/map.js'], ['/venues/map.css', 'venues/map.css'], ['/venues/data.json', 'venues/data.json']]) {
       const response = await deployed.fetch(url);
       assert.equal(response.status, 200);
       assert.equal(await response.text(), await readFile(file, 'utf8'));
@@ -60,7 +61,7 @@ test('Pages deployment and Apple verification run in the Cloudflare runtime', { 
       assert.ok(!['venues/index.html', 'zh/venues/index.html', 'de/venues/index.html'].includes(name), `${name}: legacy map pages must redirect instead`);
     }
     assert.deepEqual(JSON.parse(await readFile('dist/_routes.json', 'utf8')), {
-      version: 1, include: ['/api/retention', '/api/retention/*', '/api/maps/*'], exclude: [],
+      version: 1, include: ['/api/retention', '/api/retention/*', '/api/maps/*', '/RapidSurfingMap'], exclude: [],
     });
   });
 
@@ -72,20 +73,74 @@ test('Pages deployment and Apple verification run in the Cloudflare runtime', { 
     }
   });
 
-  await t.test('the standalone map has one effective tile policy and legacy maps redirect to it', async () => {
-    const response = await deployed.fetch('/RapidSurfingMap');
-    assert.equal(response.status, 200);
-    const policy = response.headers.get('Content-Security-Policy');
-    assert.ok(policy.includes('https://tile.openstreetmap.org'));
-    assert.equal(policy.match(/default-src/g).length, 1, 'inherited CSP must be replaced, not combined');
-    assert.equal(response.headers.get('Permissions-Policy'), 'camera=(), microphone=(), geolocation=(self)');
-    assert.match(await response.text(), /id="venue-back-to-sea"/);
+  await t.test('the runtime serves distinct indexable map views with stable canonical and language identity', async () => {
+    const views = [
+      ['?region=china', 'RapidSurfingMap.html', 'zh-Hans', 'venues.json'],
+      ['?region=europe', 'venues/editions/europe-en.txt', 'en', 'venues-europe.json'],
+      ['?region=europe&lang=de', 'venues/editions/europe-de.txt', 'de', 'venues-europe.json'],
+      ['?region=north-america', 'venues/editions/north-america-en.txt', 'en', 'venues-north-america.json'],
+    ];
+    for (const [query, file, language, dataFile] of views) {
+      const path = '/RapidSurfingMap' + query;
+      const response = await deployed.fetch(path);
+      assert.equal(response.status, 200, path);
+      assert.equal(response.headers.get('Content-Language'), language, path);
+      assert.equal(response.headers.get('Cache-Control'), 'private, no-store', path);
+      assert.doesNotMatch(response.headers.get('X-Robots-Tag') || '', /noindex/i, path);
+      const policy = response.headers.get('Content-Security-Policy');
+      assert.ok(policy.includes('https://tile.openstreetmap.org'), path);
+      assert.equal(policy.match(/default-src/g).length, 1, 'inherited CSP must be replaced, not combined');
+      assert.equal(response.headers.get('Permissions-Policy'), 'camera=(), microphone=(), geolocation=(self)');
+      const html = await response.text();
+      assert.ok(html === await readFile(file, 'utf8'), `${path}: runtime must serve the generated ${language} view`);
+      const $ = load(html, { scriptingEnabled: false });
+      const canonical = 'https://deepsurf.app' + path;
+      assert.equal($('link[rel="canonical"]').attr('href'), canonical, path);
+      assert.equal($('meta[property="og:url"]').attr('content'), canonical, path);
+      assert.equal($('html').attr('lang'), language, path);
+      assert.match($('title').text(), /Rapid Surf Map/, path);
+      assert.equal($('#venue-list > details#map-guide').length, 1, path);
+      const data = JSON.parse(await readFile('content/' + dataFile, 'utf8'));
+      assert.equal($('.venue-card').length, data.venues.length, path);
+      for (const venue of data.venues) assert.equal($(`#venue-${venue.id}`).length, 1, `${path}: ${venue.id}`);
+      const head = await deployed.fetch(path, { method: 'HEAD' });
+      assert.equal(head.status, 200, path);
+      assert.equal(head.headers.get('Content-Language'), language, path);
+      assert.equal(await head.text(), '', path);
+    }
+    const negotiated = await deployed.fetch('/RapidSurfingMap');
+    assert.equal(negotiated.status, 200);
+    const $ = load(await negotiated.text());
+    const selected = JSON.parse($('#map-config').text());
+    const edition = views.find(([query]) => new URLSearchParams(query).get('region') === selected.edition);
+    assert.ok(edition, `default must select a configured edition, got ${selected.edition}`);
+    assert.equal(negotiated.headers.get('Content-Language'), edition[2]);
+    assert.equal($('link[rel="canonical"]').attr('href'), 'https://deepsurf.app/RapidSurfingMap' + edition[0]);
+    assert.equal(selected.url, $('link[rel="canonical"]').attr('href'));
+  });
+
+  await t.test('legacy map routes redirect and private map sources remain unpublished', async () => {
     const aliases = ['', 'zh/', 'de/'].flatMap((prefix) => ['', '/', '/index.html'].map((suffix) => `/${prefix}venues${suffix}`));
-    for (const path of [...aliases, '/RapidSurfingMap/', '/RapidSurfingMap.html']) {
+    for (const path of [...aliases, '/RapidSurfingMap.html']) {
       const redirect = await deployed.fetch(path, { redirect: 'manual' });
       assert.equal(redirect.status, 301, path);
       assert.ok(redirect.headers.get('Location'), `${path}: redirect needs a destination`);
       assert.equal(new URL(redirect.headers.get('Location'), 'https://deepsurf.app').pathname, '/RapidSurfingMap', path);
+    }
+    for (const method of ['GET', 'HEAD']) {
+      const path = '/RapidSurfingMap/?region=europe&lang=de';
+      const redirect = await deployed.fetch(path, { method, redirect: 'manual' });
+      assert.equal(redirect.status, 301, `${method} ${path}`);
+      const target = new URL(redirect.headers.get('Location'), 'https://deepsurf.app');
+      assert.equal(target.pathname, '/RapidSurfingMap');
+      assert.equal(target.search, '?region=europe&lang=de', 'canonical path redirect preserves the requested view');
+    }
+    for (const [path, region] of [['/RapidSurfingMap-Europe', 'europe'], ['/RapidSurfingMap-USA', 'north-america']]) {
+      const response = await deployed.fetch(path, { redirect: 'manual' });
+      assert.equal(response.status, 301, path);
+      const target = new URL(response.headers.get('Location'), 'https://deepsurf.app');
+      assert.equal(target.pathname, '/RapidSurfingMap', path);
+      assert.equal(target.searchParams.get('region'), region, path);
     }
     for (const path of ['/', '/zh/', '/de/', '/venues/map.js']) {
       const ordinary = await deployed.fetch(path);

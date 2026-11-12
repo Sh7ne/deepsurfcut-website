@@ -183,3 +183,43 @@ created. Sitemap modification dates change only for the nine edited pages.
 Terminology evidence:
 - [Rapid Surf League: definition of Rapid Surfing](https://rapidsurfleague.com/rapid-surfing/)
 - [Citywave: standing-wave technology](https://citywave.de/technology/)
+
+## November 12, 2026 Rapid Surf Map search visibility
+
+The map keeps its unified `/RapidSurfingMap` entry and country-based default,
+while its four explicit region/language views now have stable self-canonicals:
+`?region=china`, `?region=europe`, `?region=europe&lang=de`, and
+`?region=north-america`. Previously every view pointed at the unqualified entry,
+which could consolidate distinct directories and translations into one page.
+Canonical, Open Graph, CollectionPage identity and sitemap now agree. Only the
+equivalent European English/German directories use reciprocal hreflang, with
+English as x-default. Regional directories are not treated as translations.
+The sitemap contains 25 canonical URLs: 21 product pages and four map views.
+
+Titles and visible map identity cover Rapid Surf Map, Rapid Surfing and
+Rapidsurfen naturally. The native, keyboard-accessible map guide explains the
+sport, this directory's narrower scope, search/filter/navigation features, source
+dates and position accuracy. It remains in the original HTML and readable without
+JavaScript. All three editing guides and support pages link to the relevant
+map view, and each map links to its localized editing and Portrait Follow guides.
+
+CollectionPage/ItemList markup retains the actual venue count and links to real
+listing anchors, with descriptions matching the visible summaries. No venue
+verification date, coordinate accuracy or business claim changes with this copy
+update. The page modification date uses UTC and is separate from check dates.
+Existing reviewed venues, operator sources, contact information and photo credits
+are preserved. No live status, exhaustive coverage, ranking or AI citation is
+promised.
+
+This follows ordinary crawlability, content and localization practices for both
+search and generative answers. Google does not require a special AI file or
+special schema for its generative search features. Keep the existing submitted
+sitemap URL; after deployment, Search Console can inspect the four stable views
+to monitor Google's selected canonical and indexing, then query performance.
+Publishing the sitemap does not establish that Google has processed these URLs.
+
+Primary guidance:
+- [Google: managing multilingual and multi-regional sites](https://developers.google.com/search/docs/specialty/international/managing-multi-regional-sites)
+- [Google: localized versions](https://developers.google.com/search/docs/specialty/international/localized-versions)
+- [Google: AI features and websites](https://developers.google.com/search/docs/appearance/ai-features)
+- [Rapid Surf League: terminology](https://rapidsurfleague.com/rapid-surfing/)

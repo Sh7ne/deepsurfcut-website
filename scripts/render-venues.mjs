@@ -1,11 +1,13 @@
 import { access, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 import { regionalLabels } from './venue-map-labels.mjs';
+import { mapGuideCopy } from './venue-map-guide.mjs';
 import { venuePhoto, venueContact } from '../venues/detail-extras.js';
 
 const root = new URL('../', import.meta.url);
 const origin = 'https://deepsurf.app';
 const mapPath = '/RapidSurfingMap';
+const pageModified = '2026-11-12';
 const editions = {
   china: {},
   europe: { center: [49, 12] },
@@ -20,10 +22,10 @@ const cities = { '北京': '北京', '上海': '上海', '杭州·建德': '杭�
 export const venueLabels = {
   zh: {
     visitDetails: '官网与联系方式', website: '场馆官网', phone: '电话', parkPhone: '场地总机', contactSource: '联系方式来源', photoAdjusted: '已缩放为网页图', email: '邮箱', contactPage: '联系场馆', photoPage: '查看场馆照片', venueExterior: '场馆外观', hostExterior: '所在建筑外观', venueSite: '所在水上运动园区（旧照）', wavePhoto: '浪池实景',
-    lang: 'zh-Hans', locale: 'zh-CN', home: '/zh/', title: '中国深水冲浪场馆地图｜DeepSurfCut',
-    description: '探索中国的深水固定浪与 Rapid Surfing 场馆：地图定位、城市筛选、场馆介绍、季节开放信息、收藏与导航。',
+    lang: 'zh-Hans', locale: 'zh-CN', home: '/zh/', title: 'Rapid Surf Map｜中国深水冲浪场馆地图 · DeepSurfCut',
+    description: '用 Rapid Surf Map 查找深水固定浪与 Rapid Surfing 场馆，按城市、室内外和季节开放筛选，查看资料来源、官网、预约信息及导航。',
     heading: '冲浪地图', edition: '中国版', eyebrow: '', intro: '探索深水冲浪场馆',
-    subtitle: 'Rapid Surfing Venues', skip: '跳转到场馆列表', homeLabel: '返回 DeepSurfCut 官网',
+    subtitle: 'Rapid Surf Map · Rapid Surfing Venues', skip: '跳转到场馆列表', homeLabel: '返回 DeepSurfCut 官网',
     about: '关于这份地图', search: '搜索城市或场馆', searchPlaceholder: '想去哪里冲浪？', clearSearch: '清除搜索',
     all: '全部', allCities: '全部城市', indoor: '室内', outdoor: '室外', seasonal: '季节开放', venues: '处浪点', saved: '已收藏', save: '收藏场馆', unsave: '取消收藏',
     savedToast: '已加入收藏', removedToast: '已取消收藏', mapLoading: '正在加载地图…', mapError: '地图暂时无法加载，仍可浏览场馆和打开导航。', retry: '重试',
@@ -38,7 +40,7 @@ export const venueLabels = {
     filters: '筛选', filterCount: '{count} 项筛选', clear: '清除', details: '场馆详情', dataNotice: '开放安排并非实时营业状态，出发前请向场馆确认。',
     loadingError: '场馆资料加载失败，请刷新页面重试。', unknownStatus: '请提前确认场次', nearestNeedsLocation: '先开启定位，即可按距离排序。',
     listView: '列表', mapView: '地图', savedView: '收藏', noSources: '暂无可链接的公开来源。', copiedAddress: '地址已复制',
-    listLabel: '场馆列表', mapLabel: '中国深水冲浪场馆地图', locate: '定位到我', fitMap: '显示全部场馆', zoomIn: '放大地图', zoomOut: '缩小地图',
+    listLabel: '场馆列表', mapLabel: 'Rapid Surf Map · 中国深水冲浪场馆地图', locate: '定位到我', fitMap: '显示全部场馆', zoomIn: '放大地图', zoomOut: '缩小地图',
     expandSheet: '展开或收起场馆列表', sort: '排序', recommended: '推荐顺序', nameSort: '名称', nearestSort: '距离最近',
     environment: '场馆环境', seasonalOnly: '只看季节开放场馆', apply: '查看场馆', filterHint: '找到适合你这一趟的浪点。',
     aboutHeading: '关于冲浪地图', aboutIntro: '一份持续整理的中国深水固定浪场馆目录，由 DeepSurfCut 制作。',
@@ -136,18 +138,24 @@ export function renderVenues(data, edition = 'china', language = 'zh', venueRegi
   const regionNames = base.regions || ['中国', '欧洲', '北美'];
   const label = regionNames[Object.keys(editions).indexOf(edition)];
   const t = !international ? base : language === 'de' ? {
-    ...base, title: 'Rapid-Surfing-Karte Europa | DeepSurfCut', intro: 'Rapid Surfing in Europa',
-    description: 'Stehende Tiefwasserwellen in Europa entdecken. Mit Karte, Standortdetails, Buchungslinks und Anfahrt.',
-    mapLabel: 'Karte der Rapid-Surfing-Standorte in Europa',
+    ...base, title: 'Rapid Surf Map · Rapidsurfen in Europa | DeepSurfCut', intro: 'Rapid Surfing in Europa',
+    description: 'Mit Rapid Surf Map stehende Tiefwasserwellen in Europa finden: Anlagen filtern, Quellen, Betreiber-Websites, Buchungsinformationen und Anfahrt ansehen.',
+    mapLabel: 'Rapid Surf Map · Karte zum Rapidsurfen in Europa',
     aboutIntro: 'Ein Verzeichnis stehender Tiefwasserwellen in Europa von DeepSurfCut.',
   } : {
-    ...base, title: `Rapid Surfing Map · ${label} | DeepSurfCut`, intro: `Rapid surfing in ${edition === 'north-america' ? 'North America' : 'Europe'}`,
-    description: `Explore deep-water standing waves in ${edition === 'north-america' ? 'North America' : 'Europe'}, with venue details, booking links and directions.`,
-    mapLabel: `Rapid surfing venues · ${label}`,
+    ...base, title: `Rapid Surf Map · ${label} Standing-Wave Venues | DeepSurfCut`, intro: `Rapid surfing in ${edition === 'north-america' ? 'North America' : 'Europe'}`,
+    description: `Find deep-water standing-wave venues in ${edition === 'north-america' ? 'North America' : 'Europe'} with Rapid Surf Map. Filter venues and check sources, operator websites, booking information and directions.`,
+    mapLabel: `Rapid Surf Map · Rapid surfing venues in ${label}`,
     aboutIntro: `A directory of deep-water standing waves in ${edition === 'north-america' ? 'North America' : 'Europe'}, by DeepSurfCut.`,
   };
-  const url = origin + mapPath;
   const viewUrl = origin + mapLink(edition, language);
+  const url = viewUrl;
+  const guide = mapGuideCopy[language];
+  const guidePath = language === 'zh' ? '/zh/' : language === 'de' ? '/de/' : '/';
+  const languageAlternates = edition === 'europe'
+    ? [['en', mapLink('europe', 'en')], ['de', mapLink('europe', 'de')], ['x-default', mapLink('europe', 'en')]]
+      .map(([lang, path]) => `<link rel="alternate" hreflang="${lang}" href="${escape(origin + path)}">`).join('\n  ')
+    : '';
   const regionNav = `<nav class="edition-nav" aria-label="${base.regionPicker || '冲浪地图地区'}">${Object.keys(editions).map((key, index) =>
     `<a href="${escape(mapLink(key, key === edition ? language : 'en'))}"${key === edition ? ' aria-current="page"' : ''}>${regionNames[index]}</a>`).join('')}</nav>`;
   const languageNav = edition === 'europe' ? `<nav class="edition-nav language-nav" aria-label="${base.languages}">
@@ -157,9 +165,10 @@ export function renderVenues(data, edition = 'china', language = 'zh', venueRegi
   const actualCities = [...new Set(data.venues.map((venue) => venue.city))];
   const schemas = {
     '@context': 'https://schema.org', '@type': 'CollectionPage', '@id': `${url}#webpage`,
-    url, name: t.title, description: t.description, inLanguage: t.lang, dateModified: data.updatedAt,
+    url, name: t.title, alternateName: ['Rapid Surf Map', 'Rapid Surfing Map'], description: t.description, inLanguage: t.lang, dateModified: pageModified,
     isPartOf: { '@id': `${origin}/#website` },
-    mainEntity: { '@type': 'ItemList', numberOfItems: count, itemListElement: data.venues.map((venue, i) => ({ '@type': 'ListItem', position: i + 1, name: venue.name, url: `${viewUrl}#venue-${venue.id}` })) },
+    about: { '@type': 'Thing', name: 'Rapid Surfing', description: guide.definition },
+    mainEntity: { '@type': 'ItemList', '@id': `${url}#venues`, numberOfItems: count, itemListElement: data.venues.map((venue, i) => ({ '@type': 'ListItem', position: i + 1, name: venue.name, description: venue.summary, url: `${viewUrl}#venue-${venue.id}` })) },
   };
   return `<!DOCTYPE html>
 <html lang="${t.lang}">
@@ -172,13 +181,13 @@ export function renderVenues(data, edition = 'china', language = 'zh', venueRegi
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="${escape(t.heading)}">
   <title>${escape(t.title)}</title>
-  <link rel="canonical" href="${url}">
-  <meta property="og:type" content="website">
+  <link rel="canonical" href="${escape(url)}">
+${languageAlternates ? `  ${languageAlternates}\n` : ''}  <meta property="og:type" content="website">
   <meta property="og:site_name" content="DeepSurfCut">
   <meta property="og:locale" content="${t.locale.replace('-', '_')}">
   <meta property="og:title" content="${escape(t.title)}">
   <meta property="og:description" content="${escape(t.description)}">
-  <meta property="og:url" content="${url}">
+  <meta property="og:url" content="${escape(url)}">
   <meta property="og:image" content="${origin}/assets/social-preview-20260917.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="753">
@@ -190,7 +199,7 @@ export function renderVenues(data, edition = 'china', language = 'zh', venueRegi
   <link rel="icon" href="/assets/favicon-96.png" sizes="96x96" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180">
   <link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css">
-  <link rel="stylesheet" href="/venues/map.css?v=20261110-venue-thumbnails-1">
+  <link rel="stylesheet" href="/venues/map.css?v=20261112-map-guide-1">
   <script src="/assets/vendor/leaflet/leaflet.js" defer></script>
   <script type="module" src="/venues/map.js?v=20261110-north-america-1"></script>
   <script type="application/ld+json">${json(schemas)}</script>
@@ -222,7 +231,18 @@ export function renderVenues(data, edition = 'china', language = 'zh', venueRegi
       </div>
       <div class="list-heading"><p><strong id="result-count" aria-live="polite">${count}</strong> <span id="result-label">${t.venues}</span></p><label class="sort-control enhance-only"><span class="sr-only">${t.sort}</span><select id="sort"><option value="recommended">${t.recommended}</option><option value="name">${t.nameSort}</option><option value="nearest">${t.nearestSort}</option></select></label></div>
       <noscript><p class="no-script-note">${t.noScript}<br><a href="${t.home}">${t.homeLabel}</a></p></noscript>
-      <div id="venue-list" class="venue-list" tabindex="-1">${data.venues.map(venue => venueCard(venue, t, international)).join('')}
+      <div id="venue-list" class="venue-list" tabindex="-1">
+        <details id="map-guide" class="directory-guide">
+          <summary>${guide.summary}</summary>
+          <div class="directory-guide-content">
+            <p>${guide.intro}</p>
+            <h3>${guide.definitionHeading}</h3><p>${guide.definition} <a href="https://rapidsurfleague.com/rapid-surfing/" target="_blank" rel="noopener noreferrer">${guide.definitionSource}</a></p>
+            <p>${guide.scope}</p>
+            <h3>${guide.findHeading}</h3><p>${guide.find}</p>
+            <h3>${guide.sourcesHeading}</h3><p>${guide.sources}</p>
+            <h3>${guide.editingHeading}</h3><p>${guide.editing} <a href="${guidePath}surf-video-editing/#rapid-surfing">${guide.editingLink}</a> ${guide.connector} <a href="${guidePath}portrait-follow/">${guide.followLink}</a>${guide.end}</p>
+          </div>
+        </details>${data.venues.map(venue => venueCard(venue, t, international)).join('')}
         <div id="empty-state" class="empty-state" hidden>${icon('wave')}<h3>${t.noResults}</h3><p>${t.noResultsHint}</p><button id="reset-filters" type="button">${t.reset}</button></div>
       </div>
       <p class="directory-note">${t.dataNotice}</p>

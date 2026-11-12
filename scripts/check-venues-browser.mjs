@@ -84,6 +84,20 @@ const count = async (page, expected) => {
   assert.equal(await page.locator('.venue-card:not([hidden])').count(), expected);
 };
 const noOverflow = async (page) => assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `horizontal overflow at ${page.url()}`);
+const readMapGuide = async (page) => {
+  const summary = page.locator('#venue-list > details#map-guide > summary');
+  await summary.scrollIntoViewIfNeeded();
+  assert.ok(await summary.isVisible(), 'the map guide is reachable inside the directory');
+  await summary.focus();
+  await page.keyboard.press('Enter');
+  await page.locator('details#map-guide[open]').waitFor();
+  assert.ok(await page.locator('#map-guide a[href*="surf-video-editing/"]').isVisible());
+  assert.ok(await page.locator('#map-guide a[href*="portrait-follow/"]').isVisible());
+  await noOverflow(page);
+  await summary.focus();
+  await page.keyboard.press('Enter');
+  await page.locator('details#map-guide[open]').waitFor({ state: 'hidden' });
+};
 const mapPointIsVisible = (selector) => {
   const point = document.querySelector(selector)?.getBoundingClientRect();
   if (!point || point.width <= 0 || point.height <= 0 || point.top <= 1 || point.left < 0 || point.right > innerWidth || point.bottom >= innerHeight) return false;
@@ -143,7 +157,7 @@ try {
     await page.locator('html.enhanced').waitFor();
     await page.locator('.surf-marker').first().waitFor();
     assert.equal(await page.locator('header').count(), 0);
-    assert.equal(await page.locator('h1').textContent(), '中国深水冲浪场馆地图');
+    assert.match(await page.locator('main h1').textContent(), /Rapid Surf Map/);
     assert.equal(await page.locator('#map-provider').isVisible(), false, 'provider settings stay inside the closed About dialog');
     assert.equal(await page.locator('#about-open').isVisible(), width >= 768);
     await openAbout(page);
@@ -173,6 +187,7 @@ try {
     assert.ok(await page.locator('.map-attribution a[href="https://www.openstreetmap.org/copyright"]').isVisible());
 
     await page.locator('[data-view="list"]').click();
+    await readMapGuide(page);
     if (width < 768) assert.equal(await page.locator('#about-open').isVisible(), false, 'About stays hidden while browsing the full list');
     await page.locator('#city-filters [data-city="北京"]').click();
     await count(page, 3);
@@ -486,7 +501,7 @@ try {
       assert.ok(!requests.includes('/api/maps/config'), 'international editions do not load domestic map configuration');
       assert.equal(await page.locator('.edition-nav:not(.language-nav) [aria-current]').textContent(), label);
       assert.equal(await page.locator('html').getAttribute('lang'), language);
-      assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'), `https://deepsurf.app${mapPath}`);
+      assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'), `https://deepsurf.app${path}`);
       assert.doesNotMatch(await page.locator('#detail-content').textContent(), /[\u3400-\u9fff]/u);
       const detail = page.locator('#detail-content');
       if (language === 'de') assert.match(await detail.textContent(), /Anfahrt|Offizielle Website/);
@@ -501,6 +516,10 @@ try {
       assert.ok(stored.includes(`deepsurf.venues.saved.v1.${region === 'north-america' ? 'usa' : region}`));
       assert.ok(!stored.includes('deepsurf.venues.saved.v1'));
       await noOverflow(page);
+      await page.locator('#detail-close').click();
+      await page.locator('#venue-detail[open]').waitFor({ state: 'hidden' });
+      await page.locator('[data-view="list"]').click();
+      await readMapGuide(page);
       page.off('request', observe);
     }
     await regional.close();
@@ -540,6 +559,7 @@ try {
     assert.equal(await plainPage.locator('.static-details').count(), total);
     await plainPage.locator('.static-details summary').first().click();
     assert.ok(await plainPage.locator('.static-details[open] p').first().isVisible());
+    await readMapGuide(plainPage);
     await noOverflow(plainPage);
   }
   await plain.close();

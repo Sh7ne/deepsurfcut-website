@@ -39,10 +39,19 @@ const documents = await Promise.all(pages.map(async (page) => {
   const html = await readFile(new URL(page.file, root), 'utf8');
   return { ...page, url: `${origin}${page.path}`, html, $: load(html) };
 }));
-const mapHTML = await readFile(new URL('RapidSurfingMap.html', root), 'utf8');
-const mapDocument = {
-  file: 'RapidSurfingMap.html', url: `${origin}/RapidSurfingMap`, locale: 'zh_CN',
-  html: mapHTML, $: load(mapHTML),
+const mapDocuments = await Promise.all([
+  { file: 'RapidSurfingMap.html', path: '/RapidSurfingMap?region=china', language: 'zh-Hans', locale: 'zh_CN', home: '/zh/' },
+  { file: 'venues/editions/europe-en.txt', path: '/RapidSurfingMap?region=europe', language: 'en', locale: 'en_US', home: '/' },
+  { file: 'venues/editions/europe-de.txt', path: '/RapidSurfingMap?region=europe&lang=de', language: 'de', locale: 'de_DE', home: '/de/' },
+  { file: 'venues/editions/north-america-en.txt', path: '/RapidSurfingMap?region=north-america', language: 'en', locale: 'en_US', home: '/' },
+].map(async (page) => {
+  const html = await readFile(new URL(page.file, root), 'utf8');
+  return { ...page, url: origin + page.path, html, $: load(html) };
+}));
+const mapAlternatives = {
+  en: `${origin}/RapidSurfingMap?region=europe`,
+  de: `${origin}/RapidSurfingMap?region=europe&lang=de`,
+  'x-default': `${origin}/RapidSurfingMap?region=europe`,
 };
 
 const single = ($, selector, label) => {
@@ -63,7 +72,10 @@ const hasType = (node, type) => [node?.['@type']].flat().includes(type);
 const assertLocalFile = async (url, label) => {
   assert.equal(url.origin, origin, `${label}: expected a local website resource`);
   const path = decodeURIComponent(url.pathname).replace(/^\/+/, '');
-  const file = /^RapidSurfingMap(?:-Europe|-USA)?$/.test(path) ? 'RapidSurfingMap.html'
+  const view = path === 'RapidSurfingMap' && url.search
+    ? mapDocuments.find((page) => page.url === url.origin + url.pathname + url.search) : null;
+  if (path === 'RapidSurfingMap' && url.search) assert.ok(view, `${label}: unknown map view ${url.search}`);
+  const file = path === 'RapidSurfingMap' ? view?.file || 'RapidSurfingMap.html'
     : path.endsWith('/') || !path ? `${path}index.html` : path;
   const location = new URL(file, root);
   assert.ok(location.href.startsWith(root.href), `${label}: resource must stay within the website`);
@@ -107,24 +119,32 @@ test('each page declares its canonical URL and reciprocal language alternatives'
   }
 });
 
-test('the standalone Chinese map has one canonical identity and no language switch', () => {
-  const { $, file, url } = mapDocument;
-  assert.equal($('html').attr('lang'), 'zh-Hans');
-  assert.equal(canonical($, file), url);
-  assert.equal(meta($, 'og:url', file), url);
-  assert.equal($('head link[hreflang]').length, 0);
-  assert.equal($('.language-menu, [data-map-language], .detail-languages').length, 0);
-  const homeLink = single($, '#about-dialog .about-home-link', file);
-  assert.equal(homeLink.attr('href'), '/zh/');
-  assert.match(homeLink.text(), /返回 DeepSurfCut 官网/);
-  const withoutScripts = load(mapDocument.html, { scriptingEnabled: false });
-  assert.match(single(withoutScripts, 'noscript a[href="/zh/"]', file).text(), /返回 DeepSurfCut 官网/);
-  assert.match(single($, 'head title', file).text(), /中国深水冲浪场馆地图/);
-  const robots = meta($, 'robots', file).toLowerCase().split(/\s*,\s*/);
-  assert.ok(robots.includes('index') && robots.includes('follow') && !robots.includes('noindex'));
-  for (const page of documents) {
-    assert.notEqual($('head title').text().trim(), page.$('head title').text().trim());
-    assert.notEqual(meta($, 'description', file), meta(page.$, 'description', page.file));
+test('each regional map has a distinct crawlable identity and only equivalent European language alternatives', () => {
+  const titles = new Set(documents.map((page) => page.$('title').text().trim()));
+  const descriptions = new Set(documents.map((page) => meta(page.$, 'description', page.file)));
+  for (const { $, file, url, language, home, html } of mapDocuments) {
+    assert.equal($('html').attr('lang'), language, file);
+    assert.equal(canonical($, file), url, file);
+    assert.equal(meta($, 'og:url', file), url, file);
+    const expected = new URL(url).searchParams.get('region') === 'europe' ? mapAlternatives : {};
+    assert.equal($('head link[hreflang]').length, Object.keys(expected).length, file);
+    for (const [lang, href] of Object.entries(expected)) {
+      assert.equal(single($, `head link[rel="alternate"][hreflang="${lang}"]`, file).attr('href'), href, file);
+    }
+    assert.equal(single($, '#about-dialog .about-home-link', file).attr('href'), home, file);
+    const withoutScripts = load(html, { scriptingEnabled: false });
+    assert.ok(single(withoutScripts, `noscript a[href="${home}"]`, file).text().trim(), file);
+    assert.match(single($, 'main h1', file).text(), /Rapid Surf Map/, file);
+    assert.match(single($, '.sheet-subtitle', file).text(), /Rapid Surf Map/, file);
+    const title = single($, 'head title', file).text().trim();
+    const description = meta($, 'description', file);
+    assert.match(title, /Rapid Surf Map/, file);
+    assert.ok(!titles.has(title), `${file}: duplicate title`);
+    assert.ok(!descriptions.has(description), `${file}: duplicate description`);
+    titles.add(title);
+    descriptions.add(description);
+    const robots = meta($, 'robots', file).toLowerCase().split(/\s*,\s*/);
+    assert.ok(robots.includes('index') && robots.includes('follow') && !robots.includes('noindex'), file);
   }
 });
 
@@ -141,7 +161,7 @@ test('every homepage links to the map from desktop navigation, mobile navigation
 });
 
 test('social metadata matches page identity and uses real local imagery and icons', async () => {
-  for (const page of [...documents, mapDocument]) {
+  for (const page of [...documents, ...mapDocuments]) {
     const title = page.$('head title').text().trim();
     const description = meta(page.$, 'description', page.file);
     assert.equal(meta(page.$, 'og:title', page.file), title, page.file);
@@ -224,9 +244,9 @@ test('all three homepages expose Portrait Follow with an honest visual and match
   }
 });
 
-test('the sitemap lists localized product pages and one canonical surf map', async () => {
+test('the sitemap lists localized product pages and every explicit canonical map view', async () => {
   const $ = load(await readFile(new URL('sitemap.xml', root), 'utf8'), { xmlMode: true });
-  const sitemapPages = [...documents, { standalone: true, url: `${origin}/RapidSurfingMap` }];
+  const sitemapPages = [...documents, ...mapDocuments.map(page => ({ ...page, standalone: true }))];
   const entries = $('urlset > url').toArray();
   assert.equal(entries.length, sitemapPages.length);
   const urls = entries.map((entry) => $(entry).children('loc').text().trim());
@@ -237,7 +257,11 @@ test('the sitemap lists localized product pages and one canonical surf map', asy
     const page = sitemapPages.find((candidate) => candidate.url === url);
     const alternatives = $(entry).children('[hreflang]');
     if (page.standalone) {
-      assert.equal(alternatives.length, 0, 'regional map editions are distinct directories');
+      const expected = new URL(url).searchParams.get('region') === 'europe' ? mapAlternatives : {};
+      assert.equal(alternatives.length, Object.keys(expected).length, `${url}: regions are not language alternatives`);
+      for (const [language, target] of Object.entries(expected)) {
+        assert.equal(alternatives.filter(`[hreflang="${language}"]`).attr('href'), target, url);
+      }
       continue;
     }
     const expected = alternativesFor(page);
@@ -276,7 +300,7 @@ test('public pages reference only existing local navigation and static resources
   const notFound = await Promise.all(['404.html', 'zh/404.html', 'de/404.html'].map(async (file) => ({
     file, url: `${origin}/${file}`, $: load(await readFile(new URL(file, root), 'utf8')),
   })));
-  for (const page of [...documents, mapDocument, ...notFound]) {
+  for (const page of [...documents, ...mapDocuments, ...notFound]) {
     const references = page.$('a[href], img[src], script[src], link[rel="stylesheet"][href]').toArray();
     for (const element of references) {
       const href = page.$(element).attr('href') || page.$(element).attr('src');

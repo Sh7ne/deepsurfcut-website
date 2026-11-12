@@ -21,6 +21,10 @@ export async function onRequest({ request, env }) {
     return new Response(null, { status: 405, headers: { Allow: 'GET, HEAD' } });
   }
   const url = new URL(request.url);
+  if (url.pathname === basePath + '/') {
+    url.pathname = basePath;
+    return Response.redirect(url.href, 301);
+  }
   const { region, lang, asset } = mapEdition(url.searchParams, request.cf?.country);
   const response = await env.ASSETS.fetch(new URL(asset, url.origin));
   if (!response.ok) return new Response('Map unavailable', { status: 503 });

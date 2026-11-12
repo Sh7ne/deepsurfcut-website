@@ -7,10 +7,16 @@ import { renderVenuePages } from '../scripts/render-venues.mjs';
 const root = new URL('../', import.meta.url);
 const origin = 'https://deepsurf.app';
 const source = JSON.parse(await readFile(new URL('content/venues.json', root), 'utf8'));
-const pages = [{
-  lang: 'zh', htmlLang: 'zh-Hans', path: '/RapidSurfingMap',
-  $: load(await readFile(new URL('RapidSurfingMap.html', root), 'utf8')),
-}];
+const pages = await Promise.all([
+  { lang: 'zh', htmlLang: 'zh-Hans', region: 'china', path: '/RapidSurfingMap?region=china', file: 'RapidSurfingMap.html', dataFile: 'venues.json', home: '/zh/' },
+  { lang: 'en', htmlLang: 'en', region: 'europe', path: '/RapidSurfingMap?region=europe', file: 'venues/editions/europe-en.txt', dataFile: 'venues-europe.json', home: '/' },
+  { lang: 'de', htmlLang: 'de', region: 'europe', path: '/RapidSurfingMap?region=europe&lang=de', file: 'venues/editions/europe-de.txt', dataFile: 'venues-europe.json', home: '/de/' },
+  { lang: 'en', htmlLang: 'en', region: 'north-america', path: '/RapidSurfingMap?region=north-america', file: 'venues/editions/north-america-en.txt', dataFile: 'venues-north-america.json', home: '/' },
+].map(async (page) => ({
+  ...page,
+  source: JSON.parse(await readFile(new URL(`content/${page.dataFile}`, root), 'utf8')),
+  $: load(await readFile(new URL(page.file, root), 'utf8'), { scriptingEnabled: false }),
+})));
 
 test('the venue directory retains eleven distinct reviewed sites with honest seasonal and position data', () => {
   assert.equal(source.coordinateSystem, 'WGS84');
@@ -53,44 +59,53 @@ test('the venue directory retains eleven distinct reviewed sites with honest sea
   assert.doesNotMatch(publicText, /libfile_|library_file_id|用户原话|本轮修订依据|内部笔记|实时营业中|openNow|"(?:price|offers|aggregateRating|apiKey|token)"/i);
 });
 
-test('the generated Chinese venue page and public data are current', async () => {
+test('all generated venue views and public data are current', async () => {
   await renderVenuePages({ check: true });
 });
 
-test('the Chinese map exposes complete venue details and working deep links without JavaScript', () => {
+test('every map view exposes reviewed venue details and working deep links without JavaScript', () => {
   for (const page of pages) {
     const $ = page.$;
     assert.equal($('html').attr('lang'), page.htmlLang);
     assert.equal($('body').attr('data-lang'), page.lang);
-    assert.equal($('.venue-card').length, source.venues.length);
+    const venues = page.source.venues;
+    assert.equal($('.venue-card').length, venues.length);
     assert.equal($('.venue-card[hidden]').length, 0);
-    assert.equal($('.static-details').length, source.venues.length);
+    assert.equal($('.static-details').length, venues.length);
     const ids = $('[id]').toArray().map(element => $(element).attr('id'));
     assert.equal(new Set(ids).size, ids.length, `${page.path}: duplicate DOM IDs`);
-    for (const venue of source.venues) {
+    for (const venue of venues) {
+      const copy = { ...venue, ...venue.i18n?.[page.lang] };
       const card = $(`#venue-${venue.id}`);
       assert.equal(card.length, 1);
       assert.equal(card.find(`[data-open="${venue.id}"]`).attr('href'), `#venue-${venue.id}`);
       const detail = card.find('.static-details');
-      assert.ok(detail.text().includes(venue.description));
-      assert.ok(detail.text().includes(venue.address));
-      assert.ok(detail.text().includes(venue.seasonNote));
-      assert.ok(detail.text().includes(venue.position.label));
-      assert.equal(detail.find('time').attr('datetime'), venue.verifiedAt);
+      assert.ok(detail.text().includes(copy.description), `${page.path}: ${venue.id} description`);
+      assert.ok(detail.text().includes(copy.address), `${page.path}: ${venue.id} address`);
+      assert.ok(detail.text().includes(copy.seasonNote), `${page.path}: ${venue.id} opening information`);
+      assert.ok(detail.find('.position-note').text().trim(), `${page.path}: ${venue.id} position accuracy explanation`);
+      assert.equal(detail.find('time').attr('datetime'), venue.verifiedAt, `${page.path}: preserve source check date`);
       for (const item of venue.sources) assert.ok(detail.find(`a[href="${item.url}"]`).length);
-      assert.ok(detail.find('a.external-navigation[href^="https://api.map.baidu.com/place/search?"]').length);
+      assert.ok(detail.find(`a.external-navigation[href^="${page.region === 'china' ? 'https://api.map.baidu.com/place/search?' : 'https://www.google.com/maps/search/?'}"]`).length);
     }
     const config = JSON.parse($('#map-config').text());
     assert.equal(config.lang, page.lang);
-    assert.equal(config.venues.length, source.venues.length);
-    assert.equal($('#result-count').text(), '11');
-    assert.equal($('#city-filters [data-city]').length, 7);
+    assert.equal(config.venues.length, venues.length);
+    assert.equal(config.url, origin + page.path);
+    for (const venue of venues) {
+      const record = config.venues.find(item => item.id === venue.id);
+      assert.equal(record.verifiedAt, venue.verifiedAt, `${page.path}: keep venue verification independent of page revisions`);
+      for (const field of ['lat', 'lng', 'accuracy']) assert.equal(record.position[field], venue.position[field], `${venue.id}: preserve ${field}`);
+      assert.deepEqual(record.sources.map(item => item.url), venue.sources.map(item => item.url));
+    }
+    assert.equal($('#result-count').text(), String(venues.length));
+    assert.equal($('#city-filters [data-city]').length, new Set(venues.map(venue => venue.city)).size + 1);
     assert.ok($('#search').attr('aria-label'));
     assert.ok($('#filter-open').attr('aria-label'));
     assert.ok($('.map-attribution a[href="https://www.openstreetmap.org/copyright"]').length);
     assert.equal($('[data-map-language], .language-menu, .detail-languages').length, 0);
     assert.equal($('header').length, 0);
-    assert.equal($('h1.sr-only').text(), '中国深水冲浪场馆地图');
+    assert.match($('main h1').text(), /Rapid Surf Map/);
     assert.equal($('.map-stage #about-open').attr('aria-controls'), 'about-dialog');
     assert.equal($('#about-dialog #map-provider').length, 1);
     assert.equal($('#about-dialog #provider-legal-attribution[hidden]').length, 1, 'native legal text belongs in the initially empty About host');
@@ -99,13 +114,13 @@ test('the Chinese map exposes complete venue details and working deep links with
     assert.equal($('footer#provider-attribution, .tab-bar #provider-attribution').length, 0, 'the logo is outside the page footer and navigation row');
     assert.equal($('#about-dialog #provider-attribution').length, 0, 'the map logo keeps its independent map host');
     assert.equal($('#provider-legal-attribution').children().length, 0, 'provider legal text must come from the original SDK nodes');
-    assert.equal($('#about-dialog .about-home-link').attr('href'), '/zh/');
+    assert.equal($('#about-dialog .about-home-link').attr('href'), page.home);
     assert.equal($('script:not([src]):not([type="application/json"]):not([type="application/ld+json"])').length, 0,
       'the strict local-script CSP must not require inline executable scripts');
   }
 });
 
-test('venue metadata identifies one Chinese canonical page and preserves local assets', async () => {
+test('venue metadata identifies each explicit view and preserves local assets', async () => {
   const titles = new Set();
   for (const page of pages) {
     const $ = page.$;
@@ -115,12 +130,23 @@ test('venue metadata identifies one Chinese canonical page and preserves local a
     assert.equal($('h1').length, 1);
     assert.equal($('link[rel="canonical"]').attr('href'), origin + page.path);
     assert.equal($('meta[property="og:url"]').attr('content'), origin + page.path);
-    assert.equal($('link[rel="alternate"]').length, 0);
+    assert.equal($('link[rel="alternate"][hreflang]').length, page.region === 'europe' ? 3 : 0);
     const schema = JSON.parse($('script[type="application/ld+json"]').text());
     assert.equal(schema.url, origin + page.path);
-    assert.equal(schema.mainEntity.numberOfItems, 11);
-    for (const item of schema.mainEntity.itemListElement) {
-      assert.equal(new URL(item.url).pathname, page.path);
+    assert.equal(schema['@type'], 'CollectionPage');
+    assert.equal(schema.description, $('meta[name="description"]').attr('content'));
+    assert.equal(schema.inLanguage, page.htmlLang);
+    assert.match(schema.dateModified, /^\d{4}-\d{2}-\d{2}/);
+    assert.ok(Date.parse(schema.dateModified) >= Date.parse(page.source.updatedAt));
+    assert.equal(schema.mainEntity.numberOfItems, page.source.venues.length);
+    assert.equal(schema.mainEntity.itemListElement.length, page.source.venues.length);
+    for (const [index, item] of schema.mainEntity.itemListElement.entries()) {
+      const venue = page.source.venues[index];
+      const copy = { ...venue, ...venue.i18n?.[page.lang] };
+      const target = new URL(item.url);
+      assert.equal(target.origin + target.pathname + target.search, origin + page.path);
+      assert.equal(item.name, copy.name);
+      assert.equal(item.position, index + 1);
       assert.equal($(new URL(item.url).hash).length, 1);
     }
     for (const element of $('script[src], link[rel="stylesheet"]').toArray()) {
@@ -131,6 +157,27 @@ test('venue metadata identifies one Chinese canonical page and preserves local a
   }
 });
 
+test('the map guide provides accessible static answers, source context, and localized editing links', () => {
+  const terms = {
+    zh: [/Rapid Surfing/, /深水/, /自然|河流/, /筛选|搜索/, /资料|来源/, /位置|入口/, /实时|预约/],
+    en: [/rapid surfing/i, /deep.water/i, /river/i, /filter|search/i, /source|check/i, /position|location|entrance/i, /live|book/i],
+    de: [/Rapid Surfing|Rapidsurfen/, /Tiefwasser/i, /Fluss/i, /Filter|such/i, /Quelle|Prüf/i, /Position|Gelände|Eingang/i, /live|Buch|Termin/i],
+  };
+  for (const page of pages) {
+    const $ = page.$;
+    const guide = $('#venue-list > details#map-guide');
+    assert.equal(guide.length, 1, page.path);
+    assert.equal(guide.closest('.venue-card, dialog').length, 0, 'guide remains readable outside venue dialogs');
+    assert.equal(guide.is('[hidden], [aria-hidden="true"]'), false, page.path);
+    assert.ok(guide.children('summary').text().trim(), `${page.path}: native keyboard-operable disclosure`);
+    const content = guide.text().replace(/\s+/g, ' ');
+    for (const term of terms[page.lang]) assert.match(content, term, page.path);
+    const prefix = page.lang === 'zh' ? '/zh/' : page.lang === 'de' ? '/de/' : '/';
+    assert.ok(guide.find(`a[href="${prefix}surf-video-editing/#rapid-surfing"]`).length, page.path);
+    assert.ok(guide.find(`a[href="${prefix}portrait-follow/"]`).length, page.path);
+  }
+});
+
 test('tile and location permissions are confined to map routes', async () => {
   const headers = await readFile(new URL('_headers', root), 'utf8');
   const blocks = headers.split(/\n\s*\n/);
@@ -138,9 +185,9 @@ test('tile and location permissions are confined to map routes', async () => {
   assert.ok(global.includes('geolocation=()'));
   assert.ok(!global.includes('tile.openstreetmap.org'));
   assert.doesNotMatch(global, /unsafe-eval|unsafe-inline|http:\/\/api\.map\.baidu\.com/);
-  for (const page of pages) {
-    const block = blocks.find(block => block.split('\n').includes(page.path));
-    assert.ok(block, `${page.path}: missing map headers`);
+  {
+    const block = blocks.find(block => block.split('\n').includes('/RapidSurfingMap'));
+    assert.ok(block, 'missing static fallback map headers');
     assert.ok(block.includes('! Content-Security-Policy'));
     assert.ok(block.includes('! Permissions-Policy'));
     assert.match(block, /img-src [^;]*https:\/\/tile\.openstreetmap\.org/);

@@ -11,8 +11,12 @@ the same entry with a region query. Pages Functions use Cloudflare's request
 country to choose an edition. China, Canada, and the United States use their local editions, and
 other or missing country values default to Europe in English. A region query
 overrides that choice. Europe uses English unless `lang=de` is selected.
-All editions declare the same canonical URL. Share links include the region
-and, when selected, German, so the same venue opens for recipients elsewhere.
+Each edition declares its stable region query as its canonical URL. The German
+edition includes `lang=de`. Only the two European translations declare reciprocal
+`en`/`de` language alternatives, with English as `x-default`; other regions have
+different directories. Share links include the region and, when selected, German,
+so the same venue opens for recipients elsewhere. The unqualified entry retains
+country-based selection and points to the selected edition's canonical URL.
 
 ## Data and generated pages
 
@@ -50,6 +54,12 @@ through the Pages Function and marked noindex at their asset paths.
 Shared JavaScript, CSS, and provider assets remain under `venues/`; the three old
 locale `venues/index.html` files must remain absent. Canonical metadata and shared
 venue links use `https://deepsurf.app/RapidSurfingMap`, with the selected view query and venue hash added to share links.
+The sitemap lists the four stable views, not the variable unqualified entry.
+`scripts/venue-map-guide.mjs` maintains the localized scope, usage, source and
+position explanations shown in a native disclosure in the scrollable directory.
+Keep this usable without JavaScript. Update the page modification date in the
+renderer and sitemap for substantive copy changes; never replace venue check
+dates with a website publication date.
 The build checks generated output against the source. Public assets are copied
 through the existing allowlist; source data, research, scripts, tests, and local
 configuration remain outside `dist/`.
