@@ -18,6 +18,16 @@ for (const region of regionalMaps) {
   region.count = JSON.parse(await readFile(resolve(root, 'content', region.file), 'utf8')).venues.length;
 }
 const data = JSON.parse(await readFile(resolve(root, 'content/venues.json'), 'utf8'));
+const staticVenuePages = (await Promise.all([
+  ['venues.json', 'zh', 'china'], ['venues-europe.json', 'en', 'europe'],
+  ['venues-europe.json', 'de', 'europe'], ['venues-north-america.json', 'en', 'north-america'],
+].map(async ([file, language, region]) => {
+  const data = JSON.parse(await readFile(resolve(root, 'content', file), 'utf8'));
+  return data.venues.map((venue) => ({ id: venue.id, language, region,
+    path: `${language === 'zh' ? '/zh' : language === 'de' ? '/de' : ''}/rapid-surf-map/venues/${venue.id}/`,
+    map: `${mapPath}?region=${region}${language === 'de' ? '&lang=de' : ''}#venue-${venue.id}`,
+  }));
+}))).flat();
 const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.json': 'application/json', '.png': 'image/png', '.svg': 'image/svg+xml', '.webp': 'image/webp' };
 const headerRules = (await readFile(resolve(publicRoot, '_headers'), 'utf8')).split(/\r?\n/).reduce((rules, line) => {
   if (!line.trim() || line.trim().startsWith('#')) return rules;
@@ -150,7 +160,7 @@ try {
     const context = await newContext({ viewport: { width, height: width < 768 ? 844 : 1000 } });
     const page = await context.newPage();
     await page.goto(new URL('/zh/', base).href, { waitUntil: 'domcontentloaded' });
-    const footerEntry = page.locator(`.site-footer a[href="${mapPath}"]`);
+    const footerEntry = page.locator(`.site-footer a[href="${mapPath}?region=china"]`);
     assert.equal(await footerEntry.count(), 1);
     await footerEntry.click();
     await page.waitForURL((url) => url.pathname === mapPath && !url.hash);
@@ -219,6 +229,7 @@ try {
     await page.locator('[data-open="back-to-sea"]').click();
     await page.locator('#venue-detail[open]').waitFor();
     assert.match(await page.locator('#detail-title').textContent(), /有浪岛/);
+    assert.equal(new URL(await page.locator('#venue-detail .venue-page-link').getAttribute('href'), page.url()).pathname, '/zh/rapid-surf-map/venues/back-to-sea/');
     assert.equal(new URL(page.url()).hash, '#venue-back-to-sea');
     assert.equal(await page.locator('.navigation-links a').count(), 3);
     const baiduNavigation = new URL(await page.locator('.navigation-links a').first().getAttribute('href'));
@@ -327,7 +338,7 @@ try {
   await page.locator('#venue-detail [data-save="back-to-sea"]').click();
   assert.equal(await page.locator('#venue-detail [data-save="back-to-sea"]').getAttribute('aria-pressed'), 'true');
   await page.locator('#share-venue').click();
-  assert.equal(await page.evaluate(() => window.testCopiedText), `https://deepsurf.app${mapPath}?region=china#venue-back-to-sea`);
+  assert.equal(await page.evaluate(() => window.testCopiedText), 'https://deepsurf.app/zh/rapid-surf-map/venues/back-to-sea/');
   await page.locator('#copy-address').click();
   assert.equal(await page.evaluate(() => window.testCopiedText), data.venues.find((v) => v.id === 'back-to-sea').address);
   await page.keyboard.press('Escape');
@@ -349,6 +360,24 @@ try {
   assert.equal(await page.locator('#venue-detail').evaluate((node) => node.open), false);
   await context.close();
   console.log('PASS favorites persist across reload/revisit, canonical sharing and address copy, browser back');
+
+  const cached = await newContext({ viewport: { width: 390, height: 844 } });
+  await cached.addInitScript(() => {
+    const parse = JSON.parse;
+    JSON.parse = function (value, ...options) {
+      const result = parse.call(this, value, ...options);
+      if (result?.labels && Array.isArray(result.venues)) result.venues.forEach((venue) => { delete venue.detailUrl; });
+      return result;
+    };
+    Object.defineProperty(navigator, 'share', { value: undefined, configurable: true });
+    Object.defineProperty(navigator, 'clipboard', { value: { writeText: async (value) => { window.testCopiedText = value; } }, configurable: true });
+  });
+  const cachedPage = await cached.newPage();
+  await ready(cachedPage, `${mapPath}?region=china#venue-back-to-sea`);
+  await cachedPage.locator('#share-venue').click();
+  assert.equal(await cachedPage.evaluate(() => window.testCopiedText), `https://deepsurf.app${mapPath}?region=china#venue-back-to-sea`, 'old cached records without detailUrl retain their stable map/hash share link');
+  await cached.close();
+  console.log('PASS sharing prefers the canonical venue page and preserves the old cached map/hash fallback');
 
   const denied = await newContext({ viewport: { width: 390, height: 844 } });
   await denied.addInitScript(() => {
@@ -551,6 +580,72 @@ try {
   await geoPage.locator('#venue-detail[open]').waitFor();
   await geo.close();
 
+  const detailLinks = await newContext({ viewport: { width: 1440, height: 1000 } });
+  const linksPage = await detailLinks.newPage();
+  for (const spec of staticVenuePages.filter((venue) => ['back-to-sea', 'wellenwerk-berlin', 'wai-kai'].includes(venue.id))) {
+    await ready(linksPage, spec.map);
+    await linksPage.locator('#venue-detail[open]').waitFor();
+    const modalLink = linksPage.locator('#venue-detail .venue-page-link');
+    assert.equal(new URL(await modalLink.getAttribute('href'), linksPage.url()).pathname, spec.path);
+    await modalLink.focus(); await linksPage.keyboard.press('Enter');
+    await linksPage.waitForURL((url) => url.pathname === spec.path);
+    assert.equal(await linksPage.locator('html').getAttribute('lang'), spec.language === 'zh' ? 'zh-Hans' : spec.language);
+    assert.equal(await linksPage.locator('link[rel="canonical"]').getAttribute('href'), `https://deepsurf.app${spec.path}`);
+    assert.ok(await linksPage.locator('main h1').isVisible());
+    const mapLink = linksPage.locator(`a[href="https://deepsurf.app${spec.map}"]`).first();
+    // The original canonical return link is absolute; exercise its navigation
+    // against this local fixture after checking its public region/lang/hash.
+    await mapLink.focus();
+    await mapLink.evaluate((node, href) => { node.href = href; }, new URL(spec.map, base).href);
+    await linksPage.keyboard.press('Enter');
+    await linksPage.waitForURL((url) => url.pathname === mapPath && url.hash === `#venue-${spec.id}`);
+    await linksPage.locator('#venue-detail[open]').waitFor();
+  }
+  await ready(linksPage, `${mapPath}?region=china`);
+  const cardLink = linksPage.locator('[data-open="back-to-sea"]');
+  assert.equal(new URL(await cardLink.getAttribute('href'), linksPage.url()).pathname, '/zh/rapid-surf-map/venues/back-to-sea/');
+  await cardLink.focus(); await linksPage.keyboard.press('Enter');
+  await linksPage.locator('#venue-detail[open]').waitFor();
+  assert.equal(new URL(linksPage.url()).pathname, mapPath, 'ordinary card activation still opens the modal');
+  await linksPage.keyboard.press('Escape');
+  await linksPage.waitForURL((url) => !url.hash);
+  const popupPromise = detailLinks.waitForEvent('page');
+  await cardLink.click({ modifiers: [process.platform === 'darwin' ? 'Meta' : 'Control'] });
+  const popup = await popupPromise;
+  await popup.waitForURL((url) => url.pathname === '/zh/rapid-surf-map/venues/back-to-sea/');
+  assert.ok(await popup.locator('main h1').isVisible());
+  assert.equal(await linksPage.locator('#venue-detail').evaluate((node) => node.open), false, 'modified activation follows the real link without opening the modal');
+  await popup.close(); await detailLinks.close();
+  console.log('PASS real card URLs, keyboard modal/detail navigation, explicit map return deep links, and modified-click venue tabs');
+
+  for (const width of [390, 1440]) {
+    const plainDetails = await newContext({ javaScriptEnabled: false, viewport: { width, height: 900 } });
+    const detailPage = await plainDetails.newPage();
+    const providerRequests = [];
+    detailPage.on('request', (request) => {
+      const url = new URL(request.url());
+      if (url.pathname.startsWith('/api/maps/') || /provider-(?:baidu|amap|osm)\.js$/.test(url.pathname)) providerRequests.push(url.pathname);
+    });
+    assert.equal(staticVenuePages.length, 46);
+    for (const spec of staticVenuePages) {
+      const response = await detailPage.goto(new URL(spec.path, base).href, { waitUntil: 'domcontentloaded' });
+      assert.equal(response.status(), 200, spec.path);
+      assert.ok(await detailPage.locator('main h1').isVisible(), spec.path);
+      assert.equal(await detailPage.locator('link[rel="canonical"]').getAttribute('href'), `https://deepsurf.app${spec.path}`);
+      assert.equal(await detailPage.locator('main').evaluate((node) => node.textContent.trim().length > 100), true, spec.path);
+      assert.ok(await detailPage.locator(`a[href="https://deepsurf.app${spec.map}"]`).count(), `${spec.path}: explicit map/hash link works without scripts`);
+      await noOverflow(detailPage);
+    }
+    const first = staticVenuePages[0];
+    await detailPage.goto(new URL(`${mapPath}?region=china`, base).href, { waitUntil: 'domcontentloaded' });
+    await detailPage.locator(`[data-open="${first.id}"]`).focus(); await detailPage.keyboard.press('Enter');
+    await detailPage.waitForURL((url) => url.pathname === first.path);
+    assert.ok(await detailPage.locator('main h1').isVisible());
+    assert.deepEqual(providerRequests, [], 'static venue pages need neither SDK nor map bootstrap API');
+    await plainDetails.close();
+  }
+  console.log('PASS all 46 original-HTML venue pages without JavaScript at mobile and desktop widths, crawlable card activation and no map SDK/API use');
+
   const plain = await newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
   const plainPage = await plain.newPage();
   for (const [path, total] of [[mapPath, 11], ...regionalMaps.map(region => [region.path, region.count])]) {
@@ -563,7 +658,8 @@ try {
     await noOverflow(plainPage);
   }
   await plain.close();
-  for (const path of ['/content/venues.json', '/content/venues-europe.json', '/content/venues-north-america.json', '/docs/venue-sources.md', '/tests/venues.test.mjs', '/scripts/render-venues.mjs']) {
+  for (const path of ['/content/venues.json', '/content/venues-europe.json', '/content/venues-north-america.json', '/content/venue-directory-details.json',
+    '/docs/venue-sources.md', '/tests/venues.test.mjs', '/scripts/render-venues.mjs', '/scripts/venue-pages.mjs', '/scripts/render-map-social.mjs', '/design/rapid-surf-map-social.svg']) {
     const response = await fetch(new URL(path, base));
     assert.equal(response.status, 404, `private source must not publish: ${path}`);
   }

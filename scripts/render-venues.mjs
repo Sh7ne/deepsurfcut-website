@@ -1,13 +1,15 @@
-import { access, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { access, mkdir, readFile, readdir, rm, rmdir, writeFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 import { regionalLabels } from './venue-map-labels.mjs';
 import { mapGuideCopy } from './venue-map-guide.mjs';
 import { venuePhoto, venueContact } from '../venues/detail-extras.js';
+import { venuePagePath, venueEntityId, renderVenuePage } from './venue-pages.mjs';
 
 const root = new URL('../', import.meta.url);
 const origin = 'https://deepsurf.app';
 const mapPath = '/RapidSurfingMap';
-const pageModified = '2026-11-12';
+// UTC date of this content update, independent of the venues' source-check dates.
+const pageModified = '2026-11-13';
 const editions = {
   china: {},
   europe: { center: [49, 12] },
@@ -21,7 +23,7 @@ const cities = { '北京': '北京', '上海': '上海', '杭州·建德': '杭�
 
 export const venueLabels = {
   zh: {
-    visitDetails: '官网与联系方式', website: '场馆官网', phone: '电话', parkPhone: '场地总机', contactSource: '联系方式来源', photoAdjusted: '已缩放为网页图', email: '邮箱', contactPage: '联系场馆', photoPage: '查看场馆照片', venueExterior: '场馆外观', hostExterior: '所在建筑外观', venueSite: '所在水上运动园区（旧照）', wavePhoto: '浪池实景',
+    visitDetails: '官网与联系方式', venuePage: '场馆资料页', website: '场馆官网', phone: '电话', parkPhone: '场地总机', contactSource: '联系方式来源', photoAdjusted: '已缩放为网页图', email: '邮箱', contactPage: '联系场馆', photoPage: '查看场馆照片', venueExterior: '场馆外观', hostExterior: '所在建筑外观', venueSite: '所在水上运动园区（旧照）', wavePhoto: '浪池实景',
     lang: 'zh-Hans', locale: 'zh-CN', home: '/zh/', title: 'Rapid Surf Map｜中国深水冲浪场馆地图 · DeepSurfCut',
     description: '用 Rapid Surf Map 查找深水固定浪与 Rapid Surfing 场馆，按城市、室内外和季节开放筛选，查看资料来源、官网、预约信息及导航。',
     heading: '冲浪地图', edition: '中国版', eyebrow: '', intro: '探索深水冲浪场馆',
@@ -83,7 +85,7 @@ function venueCard(venue, t, international) {
   return `
           <article class="venue-card" id="venue-${escape(venue.id)}" data-id="${escape(venue.id)}" aria-labelledby="title-${escape(venue.id)}">
             <div class="venue-card-main">
-              <a class="venue-open" href="#venue-${escape(venue.id)}" data-open="${escape(venue.id)}">
+              <a class="venue-open" href="${escape(venue.detailUrl)}" data-open="${escape(venue.id)}">
                 <span class="venue-number" aria-hidden="true">${thumbnail ? `<img src="${escape(thumbnail)}" alt="" width="160" height="160" loading="lazy" decoding="async">` : icon('wave')}</span>
                 <span class="venue-copy">
                   <span class="venue-meta"><span class="venue-city">${escape(cities[venue.city] || venue.city)}</span><span class="venue-distance" hidden></span></span>
@@ -160,7 +162,7 @@ export function renderVenues(data, edition = 'china', language = 'zh', venueRegi
     `<a href="${escape(mapLink(key, key === edition ? language : 'en'))}"${key === edition ? ' aria-current="page"' : ''}>${regionNames[index]}</a>`).join('')}</nav>`;
   const languageNav = edition === 'europe' ? `<nav class="edition-nav language-nav" aria-label="${base.languages}">
     ${[['en', 'English'], ['de', 'Deutsch']].map(([key, name]) => `<a data-map-lang="${key}" lang="${key}" href="${escape(mapLink(edition, key))}"${key === language ? ' aria-current="page"' : ''}>${name}</a>`).join('')}</nav>` : '';
-  data = { ...data, venues: data.venues.map(venue => localizedVenue(venue, language)) };
+  data = { ...data, venues: data.venues.map(venue => ({ ...localizedVenue(venue, language), detailUrl: venuePagePath(venue.id, language) })) };
   const count = data.venues.length;
   const actualCities = [...new Set(data.venues.map((venue) => venue.city))];
   const schemas = {
@@ -168,7 +170,11 @@ export function renderVenues(data, edition = 'china', language = 'zh', venueRegi
     url, name: t.title, alternateName: ['Rapid Surf Map', 'Rapid Surfing Map'], description: t.description, inLanguage: t.lang, dateModified: pageModified,
     isPartOf: { '@id': `${origin}/#website` },
     about: { '@type': 'Thing', name: 'Rapid Surfing', description: guide.definition },
-    mainEntity: { '@type': 'ItemList', '@id': `${url}#venues`, numberOfItems: count, itemListElement: data.venues.map((venue, i) => ({ '@type': 'ListItem', position: i + 1, name: venue.name, description: venue.summary, url: `${viewUrl}#venue-${venue.id}` })) },
+    primaryImageOfPage: { '@type': 'ImageObject', url: `${origin}/assets/rapid-surf-map-social-20261114.png`, width: 1200, height: 630 },
+    mainEntity: { '@type': 'ItemList', '@id': `${url}#venues`, numberOfItems: count, itemListElement: data.venues.map((venue, i) => ({
+      '@type': 'ListItem', position: i + 1, name: venue.name, description: venue.summary, url: origin + venue.detailUrl,
+      item: { '@type': 'Place', '@id': venueEntityId(venue.id, language), url: origin + venue.detailUrl, name: venue.name, description: venue.summary, address: venue.address },
+    })) },
   };
   return `<!DOCTYPE html>
 <html lang="${t.lang}">
@@ -188,20 +194,21 @@ ${languageAlternates ? `  ${languageAlternates}\n` : ''}  <meta property="og:typ
   <meta property="og:title" content="${escape(t.title)}">
   <meta property="og:description" content="${escape(t.description)}">
   <meta property="og:url" content="${escape(url)}">
-  <meta property="og:image" content="${origin}/assets/social-preview-20260917.jpg">
+  <meta property="og:image" content="${origin}/assets/rapid-surf-map-social-20261114.png">
   <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="753">
-  <meta property="og:image:alt" content="DeepSurfCut">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="${escape(guide.socialAlt)}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escape(t.title)}">
   <meta name="twitter:description" content="${escape(t.description)}">
-  <meta name="twitter:image" content="${origin}/assets/social-preview-20260917.jpg">
+  <meta name="twitter:image" content="${origin}/assets/rapid-surf-map-social-20261114.png">
+  <meta name="twitter:image:alt" content="${escape(guide.socialAlt)}">
   <link rel="icon" href="/assets/favicon-96.png" sizes="96x96" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180">
   <link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css">
-  <link rel="stylesheet" href="/venues/map.css?v=20261112-map-guide-1">
+  <link rel="stylesheet" href="/venues/map.css?v=20261114-seo-1">
   <script src="/assets/vendor/leaflet/leaflet.js" defer></script>
-  <script type="module" src="/venues/map.js?v=20261110-north-america-1"></script>
+  <script type="module" src="/venues/map.js?v=20261114-seo-1"></script>
   <script type="application/ld+json">${json(schemas)}</script>
 </head>
 <body data-lang="${language}">
@@ -265,6 +272,46 @@ ${languageAlternates ? `  ${languageAlternates}\n` : ''}  <meta property="og:typ
 `;
 }
 
+function venueSitemap(source, profiles) {
+  let mapViews = 0;
+  const preserved = source.replace(/(^|\n)[ \t]*<url>[\s\S]*?<\/url>/g, (entry) => {
+    const location = entry.match(/<loc>([^<]+)<\/loc>/)?.[1];
+    if (/^https:\/\/deepsurf\.app\/(?:zh\/|de\/)?rapid-surf-map\/venues\//.test(location || '')) return '';
+    if (location?.startsWith(`${origin}${mapPath}?`)) {
+      mapViews++;
+      return entry.replace(/<lastmod>[^<]+<\/lastmod>/, `<lastmod>${pageModified}</lastmod>`);
+    }
+    return entry;
+  });
+  if (mapViews !== 4 || !preserved.includes('</urlset>')) throw new Error('Expected four canonical map views in sitemap.');
+  const entries = profiles.map(({ url, id, edition }) => {
+    const alternates = edition === 'europe' ? [['en', venuePagePath(id, 'en')], ['de', venuePagePath(id, 'de')], ['x-default', venuePagePath(id, 'en')]]
+      .map(([language, path]) => `<xhtml:link rel="alternate" hreflang="${language}" href="${escape(origin + path)}" />`).join('') : '';
+    return `  <url><loc>${escape(url)}</loc><lastmod>${pageModified}</lastmod>${alternates}</url>`;
+  }).join('\n');
+  return preserved.replace(/\n<\/urlset>/, `\n${entries}\n</urlset>`);
+}
+
+async function pruneVenuePages(outputs, check) {
+  const expected = new Set(outputs.map(([path]) => path));
+  for (const prefix of ['rapid-surf-map/venues', 'zh/rapid-surf-map/venues', 'de/rapid-surf-map/venues']) {
+    const folders = await readdir(new URL(`${prefix}/`, root), { withFileTypes: true }).catch(error => {
+      if (error.code === 'ENOENT') return [];
+      throw error;
+    });
+    for (const folder of folders.filter(entry => entry.isDirectory())) {
+      const path = `${prefix}/${folder.name}/index.html`;
+      if (expected.has(path)) continue;
+      if (check) throw new Error(`${path} is obsolete. Run npm run venues:generate.`);
+      const directory = new URL(`${prefix}/${folder.name}/`, root);
+      const files = await readdir(directory);
+      if (files.length !== 1 || files[0] !== 'index.html') throw new Error(`Unexpected files in generated venue folder: ${prefix}/${folder.name}`);
+      await rm(new URL(path, root));
+      await rmdir(directory);
+    }
+  }
+}
+
 export async function renderVenuePages({ check = false } = {}) {
   const data = JSON.parse(await readFile(new URL('content/venues.json', root), 'utf8'));
   if (!Array.isArray(data.venues) || !data.venues.length) throw new Error('Venue directory must not be empty.');
@@ -313,6 +360,19 @@ export async function renderVenuePages({ check = false } = {}) {
   for (const [region, language] of [['europe', 'en'], ['europe', 'de'], ['north-america', 'en']]) {
     outputs.push([`venues/editions/${region}-${language}.txt`, renderVenues(allData[region], region, language, venueRegions)]);
   }
+  const profiles = [];
+  for (const [edition, directory] of Object.entries(allData)) {
+    const languages = edition === 'china' ? ['zh'] : edition === 'europe' ? ['en', 'de'] : ['en'];
+    for (const language of languages) for (const original of directory.venues) {
+      const venue = localizedVenue(original, language);
+      const path = venuePagePath(venue.id, language);
+      profiles.push({ id: venue.id, edition, language, url: origin + path });
+      outputs.push([`${path.slice(1)}index.html`, renderVenuePage({ venue, edition, language,
+        mapUrl: origin + mapLink(edition, language), labels: regionalLabels[language] || venueLabels.zh, pageModified })]);
+    }
+  }
+  outputs.push(['sitemap.xml', venueSitemap(await readFile(new URL('sitemap.xml', root), 'utf8'), profiles)]);
+  await pruneVenuePages(outputs, check);
   const legacyPages = ['venues/index.html', 'zh/venues/index.html', 'de/venues/index.html', 'RapidSurfingMap-Europe.html', 'RapidSurfingMap-USA.html', 'venues/editions/usa-en.txt'];
   for (const path of legacyPages) {
     const file = new URL(path, root);
@@ -339,5 +399,5 @@ export async function renderVenuePages({ check = false } = {}) {
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   await renderVenuePages({ check: process.argv.includes('--check') });
-  console.log(process.argv.includes('--check') ? 'Venue pages are up to date.' : 'Generated the three Rapid Surfing maps and public China venue data.');
+  console.log(process.argv.includes('--check') ? 'Venue pages are up to date.' : 'Generated Rapid Surf Map views, venue pages and public directory data.');
 }

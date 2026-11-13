@@ -361,6 +361,7 @@ import { createBaiduProvider } from './provider-baidu.js?v=20261028-map-about-cr
       <h2 id="detail-title" lang="${contentLang}">${escape(v.name)}</h2>
       <div class="detail-badges"><span class="badge">${escape(t(v.environment))}</span>${v.seasonal ? `<span class="badge seasonal">${escape(t('seasonal'))}</span>` : ''}<span class="badge precision">${escape(t(accuracy))}</span></div>
       <p class="detail-description" lang="${contentLang}">${escape(v.description || v.summary)}</p>
+      ${v.detailUrl ? `<a class="venue-page-link" href="${escape(v.detailUrl)}">${escape(t('venuePage'))}${icon('arrow')}</a>` : ''}
       <div class="detail-tools"><button type="button" data-save="${escape(v.id)}">${icon('heart')}<span data-save-label>${escape(t('save'))}</span></button><button id="share-venue" type="button">${icon('share')}${escape(t('share'))}</button></div>
       ${venueContact(v, labels)}
       <section class="detail-section"><h3>${escape(t('address'))}</h3><p lang="${contentLang}">${escape(v.address)}</p><p class="detail-note" lang="${contentLang}">${escape(v.position?.label || '')}</p><button class="text-button" id="copy-address" type="button">${icon('copy')}${escape(labels.copyAddress || t('address'))}</button></section>
@@ -428,7 +429,9 @@ import { createBaiduProvider } from './provider-baidu.js?v=20261028-map-about-cr
     }
   }
   async function share(v) {
-    const data = { title: v.name, text: v.summary, url: `${config.viewUrl || 'https://deepsurf.app/RapidSurfingMap'}#venue-${v.id}` };
+    const url = v.detailUrl ? new URL(v.detailUrl, config.viewUrl || config.url).href
+      : `${config.viewUrl || 'https://deepsurf.app/RapidSurfingMap'}#venue-${v.id}`;
+    const data = { title: v.name, text: v.summary, url };
     if (navigator.share) {
       try { await navigator.share(data); return; } catch (error) { if (error.name === 'AbortError') return; }
     }
@@ -452,7 +455,9 @@ import { createBaiduProvider } from './provider-baidu.js?v=20261028-map-about-cr
     const saveButton = event.target.closest('[data-save]');
     if (saveButton) { event.preventDefault(); save(saveButton.dataset.save); return; }
     const openButton = event.target.closest('[data-open]');
-    if (openButton) { event.preventDefault(); openVenue(openButton.dataset.open); }
+    if (openButton && event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
+      event.preventDefault(); openVenue(openButton.dataset.open);
+    }
     const city = event.target.closest('#city-filters [data-city]');
     if (city) { state.city = city.dataset.city; filter(); }
     const view = event.target.closest('.tab-bar [data-view]');

@@ -6,6 +6,13 @@ import { createTestHarness } from 'wrangler';
 import { load } from 'cheerio';
 import { bindings, createTestChain, MESSAGE_ID, signedPayload } from './helpers.mjs';
 
+const venuePagePaths = (await Promise.all([
+  ['venues.json', '/zh'], ['venues-europe.json', ''], ['venues-europe.json', '/de'], ['venues-north-america.json', ''],
+].map(async ([file, prefix]) => {
+  const data = JSON.parse(await readFile(`content/${file}`, 'utf8'));
+  return data.venues.map((venue) => `${prefix}/rapid-surf-map/venues/${venue.id}/`);
+}))).flat();
+
 test('Pages deployment and Apple verification run in the Cloudflare runtime', { timeout: 120_000 }, async (t) => {
   const config = JSON.parse(await readFile('wrangler.jsonc', 'utf8'));
   execFileSync(process.execPath, ['scripts/build.mjs'], { stdio: 'pipe' });
@@ -55,18 +62,50 @@ test('Pages deployment and Apple verification run in the Cloudflare runtime', { 
       assert.equal(await response.text(), await readFile(file, 'utf8'));
     }
     const output = await readdir('dist', { recursive: true });
+    assert.match(await readFile('design/rapid-surf-map-social.svg', 'utf8'), /<svg\b/, 'the editable social source exists outside public assets');
     for (const name of output) {
       assert.ok(!/(^|\/)(server|tests|node_modules|functions|scripts|content|docs|\.git|\.DS_Store|\.dev\.vars)(\/|$)/.test(name), name);
       assert.ok(!['AGENTS.md', 'README.md', 'package.json', 'package-lock.json', 'wrangler.jsonc'].includes(name), name);
       assert.ok(!['venues/index.html', 'zh/venues/index.html', 'de/venues/index.html'].includes(name), `${name}: legacy map pages must redirect instead`);
+      assert.ok(!/rapid.*surf.*map.*\.svg$/i.test(name), `${name}: editable social-card SVG source must not enter the public build`);
     }
     assert.deepEqual(JSON.parse(await readFile('dist/_routes.json', 'utf8')), {
       version: 1, include: ['/api/retention', '/api/retention/*', '/api/maps/*', '/RapidSurfingMap'], exclude: [],
     });
   });
 
+  await t.test('all 46 venue pages are crawlable static assets with ordinary site policies', async () => {
+    assert.equal(venuePagePaths.length, 46);
+    for (const path of venuePagePaths) {
+      const response = await deployed.fetch(path);
+      assert.equal(response.status, 200, path);
+      const html = await response.text();
+      assert.equal(html, await readFile(path.slice(1) + 'index.html', 'utf8'), path);
+      const $ = load(html, { scriptingEnabled: false });
+      assert.equal($('link[rel="canonical"]').attr('href'), `https://deepsurf.app${path}`, path);
+      assert.ok($('main').text().trim().length > 100, path);
+      assert.equal(response.headers.get('Permissions-Policy'), 'camera=(), microphone=(), geolocation=()', path);
+      assert.doesNotMatch(response.headers.get('Content-Security-Policy'), /tile\.openstreetmap\.org|unsafe-eval/, path);
+      assert.doesNotMatch(response.headers.get('X-Robots-Tag') || '', /noindex/i, path);
+      const head = await deployed.fetch(path, { method: 'HEAD' });
+      assert.equal(head.status, 200, path); assert.equal(await head.text(), '', path);
+    }
+    const style = await deployed.fetch('/venues/venue.css');
+    assert.equal(style.status, 200); assert.match(style.headers.get('Content-Type'), /text\/css/);
+    const social = await deployed.fetch('/assets/rapid-surf-map-social-20261114.png');
+    assert.equal(social.status, 200); assert.match(social.headers.get('Content-Type'), /image\/png/);
+    const sitemap = await deployed.fetch('/sitemap.xml');
+    const $ = load(await sitemap.text(), { xmlMode: true });
+    const urls = $('urlset > url > loc').toArray().map((node) => $(node).text());
+    assert.equal(new Set(urls).size, 71);
+    const statuses = await Promise.all(urls.map(async (url) => [url, (await deployed.fetch(new URL(url).pathname + new URL(url).search)).status]));
+    for (const [url, status] of statuses) assert.equal(status, 200, `${url}: every sitemap canonical is actually served`);
+  });
+
   await t.test('unknown pages do not return a successful copy of the homepage', async () => {
-    for (const path of ['/not-a-real-page/', '/zh/not-a-real-page/', '/de/not-a-real-page/']) {
+    for (const path of ['/not-a-real-page/', '/zh/not-a-real-page/', '/de/not-a-real-page/',
+      '/rapid-surf-map/venues/not-a-real-venue/', '/zh/rapid-surf-map/venues/not-a-real-venue/', '/de/rapid-surf-map/venues/not-a-real-venue/',
+      '/de/rapid-surf-map/venues/wai-kai/', '/zh/rapid-surf-map/venues/wellenwerk-berlin/']) {
       const response = await deployed.fetch(path);
       assert.equal(response.status, 404, path);
       assert.notEqual(await response.text(), await readFile('index.html', 'utf8'));
@@ -147,7 +186,8 @@ test('Pages deployment and Apple verification run in the Cloudflare runtime', { 
       assert.equal(ordinary.headers.get('Permissions-Policy'), 'camera=(), microphone=(), geolocation=()', path);
       assert.ok(!ordinary.headers.get('Content-Security-Policy').includes('tile.openstreetmap.org'), path);
     }
-    for (const path of ['/content/venues.json', '/docs/venue-sources.md', '/scripts/render-venues.mjs', '/tests/venues.test.mjs']) {
+    for (const path of ['/content/venues.json', '/content/venue-directory-details.json', '/docs/venue-sources.md',
+      '/scripts/render-venues.mjs', '/scripts/venue-pages.mjs', '/scripts/render-map-social.mjs', '/design/rapid-surf-map-social.svg', '/tests/venues.test.mjs']) {
       assert.equal((await deployed.fetch(path)).status, 404, path);
     }
   });

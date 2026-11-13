@@ -223,3 +223,48 @@ Primary guidance:
 - [Google: localized versions](https://developers.google.com/search/docs/specialty/international/localized-versions)
 - [Google: AI features and websites](https://developers.google.com/search/docs/appearance/ai-features)
 - [Rapid Surf League: terminology](https://rapidsurfleague.com/rapid-surfing/)
+
+## November 14, 2026 Rapid Surf Map venue discovery
+
+The directory now gives each reviewed venue a static information URL, rather
+than treating a map fragment as a separate search page. The 32 existing venues
+produce 46 localized pages: 11 Chinese, 21 English and 14 German. They retain
+reviewed descriptions, addresses, source dates, operator links, contact ownership,
+position-accuracy notes, and photo credits. No new venue facts, live availability,
+prices or ratings are introduced. The purpose is a useful venue record with a
+stable search/share destination, not a collection of city-keyword landing pages.
+
+The map's existing card anchors point at these real URLs. Ordinary enhanced clicks
+still open the map dialog; modified clicks and no-JavaScript use follow the links.
+Dialogs also provide a visible information-page link. New shares use the venue
+page, with the existing hash URL retained as a compatibility fallback for cached
+configuration. Each information page returns to the correct region/language and
+selected marker. Existing incoming map fragments still work.
+
+Each page has a unique venue/city title, matching social metadata, self-canonical,
+visible breadcrumb and corresponding BreadcrumbList, WebPage and Place entities.
+The equivalent European translations use reciprocal hreflang and a shared venue
+entity ID. The collection ItemList now links to the real venue pages and those
+same Place entities. Approximate or site pins are not promoted to exact coordinates,
+and park reception numbers are not marked as a venue's direct line.
+
+A dedicated map-themed 1200 × 630 PNG replaces the app-editor screenshot on map
+and venue shares. It identifies Rapid Surf Map and its standing-wave scope without
+pretending that abstract artwork is a real map or venue photo. Chinese and German
+homepage map links preserve their corresponding map language; the general English
+entry retains country-based selection.
+
+The sitemap now has 71 canonical URLs: 21 product pages, four explicit map views,
+and 46 venue pages. The venue generator maintains its own entries and the four
+map modification dates while preserving unrelated product entries. Page
+modification dates remain distinct from the underlying venue check dates. The
+sitemap URL stays unchanged; this update does not submit it to search tools or
+establish indexing, search position, traffic growth, or rich-result eligibility.
+
+Primary guidance:
+- [Google: URL structure and fragments](https://developers.google.com/search/docs/crawling-indexing/url-structure)
+- [Google: crawlable links](https://developers.google.com/search/docs/crawling-indexing/links-crawlable)
+- [Google: JavaScript and interaction-dependent content](https://developers.google.com/search/docs/crawling-indexing/javascript/lazy-loading)
+- [Google: structured-data accuracy](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)
+- [Google: localized versions](https://developers.google.com/search/docs/specialty/international/localized-versions)
+- [Google: sitemap lastmod](https://developers.google.com/search/blog/2023/06/sitemaps-lastmod-ping)

@@ -53,6 +53,25 @@ const mapAlternatives = {
   de: `${origin}/RapidSurfingMap?region=europe&lang=de`,
   'x-default': `${origin}/RapidSurfingMap?region=europe`,
 };
+const venueDocuments = (await Promise.all([
+  ['venues.json', 'zh', 'zh-Hans', 'zh_CN', 'china'],
+  ['venues-europe.json', 'en', 'en', 'en_US', 'europe'],
+  ['venues-europe.json', 'de', 'de', 'de_DE', 'europe'],
+  ['venues-north-america.json', 'en', 'en', 'en_US', 'north-america'],
+].map(async ([file, lang, language, locale, region]) => {
+  const data = JSON.parse(await readFile(new URL(`content/${file}`, root), 'utf8'));
+  return Promise.all(data.venues.map(async (venue) => {
+    const path = `${lang === 'zh' ? '/zh' : lang === 'de' ? '/de' : ''}/rapid-surf-map/venues/${venue.id}/`;
+    const file = path.slice(1) + 'index.html';
+    const html = await readFile(new URL(file, root), 'utf8');
+    return { file, path, url: origin + path, language, locale, region, venue, html, $: load(html) };
+  }));
+}))).flat();
+const venueAlternativesFor = (page) => page.region === 'europe' ? {
+  en: `${origin}/rapid-surf-map/venues/${page.venue.id}/`,
+  de: `${origin}/de/rapid-surf-map/venues/${page.venue.id}/`,
+  'x-default': `${origin}/rapid-surf-map/venues/${page.venue.id}/`,
+} : {};
 
 const single = ($, selector, label) => {
   const elements = $(selector);
@@ -151,17 +170,19 @@ test('each regional map has a distinct crawlable identity and only equivalent Eu
 test('every homepage links to the map from desktop navigation, mobile navigation, and the footer', () => {
   const labels = { en: 'Rapid Surf Map', 'zh-Hans': '深水冲浪地图', de: 'Rapid Surf Map' };
   for (const page of documents.filter((candidate) => candidate.group === '')) {
-    const links = page.$('a[href="/RapidSurfingMap"]');
+    const target = page.language === 'zh-Hans' ? '/RapidSurfingMap?region=china'
+      : page.language === 'de' ? '/RapidSurfingMap?region=europe&lang=de' : '/RapidSurfingMap';
+    const links = page.$(`a[href="${target}"]`);
     assert.equal(links.length, 3, page.file);
     for (const selector of ['.desktop-nav', '#mobile-nav', '.site-footer > nav']) {
-      const link = single(page.$, `${selector} > a[href="/RapidSurfingMap"]`, page.file);
+      const link = single(page.$, `${selector} > a[href="${target}"]`, page.file);
       assert.equal(link.text().trim(), labels[page.language], page.file);
     }
   }
 });
 
 test('social metadata matches page identity and uses real local imagery and icons', async () => {
-  for (const page of [...documents, ...mapDocuments]) {
+  for (const page of [...documents, ...mapDocuments, ...venueDocuments]) {
     const title = page.$('head title').text().trim();
     const description = meta(page.$, 'description', page.file);
     assert.equal(meta(page.$, 'og:title', page.file), title, page.file);
@@ -170,10 +191,18 @@ test('social metadata matches page identity and uses real local imagery and icon
     assert.equal(meta(page.$, 'og:site_name', page.file), 'DeepSurfCut', page.file);
     assert.equal(meta(page.$, 'og:locale', page.file), page.locale, page.file);
     assert.equal(meta(page.$, 'og:image:width', page.file), '1200', page.file);
-    assert.equal(meta(page.$, 'og:image:height', page.file), '753', page.file);
+    const mapSocial = mapDocuments.includes(page) || venueDocuments.includes(page);
+    assert.equal(meta(page.$, 'og:image:height', page.file), mapSocial ? '630' : '753', page.file);
     meta(page.$, 'og:image:alt', page.file);
     const image = meta(page.$, 'og:image', page.file);
-    await assertLocalFile(new URL(image), `${page.file} social image`);
+    const imageFile = await assertLocalFile(new URL(image), `${page.file} social image`);
+    if (mapSocial) {
+      assert.equal(new URL(image).pathname.endsWith('.png'), true, page.file);
+      const bytes = await readFile(imageFile);
+      assert.equal(bytes.subarray(0, 8).toString('hex'), '89504e470d0a1a0a', `${page.file}: social image is an actual PNG`);
+      assert.equal(bytes.readUInt32BE(16), 1200, page.file);
+      assert.equal(bytes.readUInt32BE(20), 630, page.file);
+    }
     assert.equal(meta(page.$, 'twitter:card', page.file), 'summary_large_image', page.file);
     assert.equal(meta(page.$, 'twitter:title', page.file), title, page.file);
     assert.equal(meta(page.$, 'twitter:description', page.file), description, page.file);
@@ -182,6 +211,32 @@ test('social metadata matches page identity and uses real local imagery and icon
       const href = single(page.$, `head link[rel="${relation}"][sizes="${size}"]`, page.file).attr('href');
       assert.ok(href, `${page.file}: missing ${relation} resource`);
       await assertLocalFile(new URL(href, page.url), `${page.file} ${relation}`);
+    }
+  }
+});
+
+test('all 46 venue documents have distinct canonical identities and reciprocal European language links', () => {
+  assert.equal(venueDocuments.length, 46);
+  const titles = new Set([...documents, ...mapDocuments].map((page) => page.$('title').text().trim()));
+  const descriptions = new Set([...documents, ...mapDocuments].map((page) => meta(page.$, 'description', page.file)));
+  for (const page of venueDocuments) {
+    const { $, url, file } = page;
+    assert.equal(canonical($, file), url, file);
+    assert.equal($('html').attr('lang'), page.language, file);
+    assert.ok(!new URL(url).search && !new URL(url).hash && url.endsWith('/'), file);
+    const title = single($, 'title', file).text().trim(), description = meta($, 'description', file);
+    assert.ok(!titles.has(title) && !descriptions.has(description), `${file}: duplicate public title or description`);
+    titles.add(title); descriptions.add(description);
+    const robots = meta($, 'robots', file).toLowerCase();
+    assert.match(robots, /index/); assert.doesNotMatch(robots, /noindex/);
+    assert.ok(single($, 'main', file).text().trim().length > 100, `${file}: substantial original HTML`);
+    const expected = venueAlternativesFor(page);
+    assert.equal($('head link[rel="alternate"][hreflang]').length, Object.keys(expected).length, file);
+    for (const [lang, target] of Object.entries(expected)) {
+      assert.equal(single($, `head link[hreflang="${lang}"]`, file).attr('href'), target, file);
+      const counterpart = venueDocuments.find((candidate) => candidate.url === target);
+      assert.ok(counterpart, `${file}: alternative exists`);
+      assert.equal(counterpart.$(`head link[hreflang="${page.language}"]`).attr('href'), url, `${file}: reciprocal alternative`);
     }
   }
 });
@@ -244,11 +299,12 @@ test('all three homepages expose Portrait Follow with an honest visual and match
   }
 });
 
-test('the sitemap lists localized product pages and every explicit canonical map view', async () => {
+test('the sitemap lists all 71 canonical product, map and static venue pages', async () => {
   const $ = load(await readFile(new URL('sitemap.xml', root), 'utf8'), { xmlMode: true });
-  const sitemapPages = [...documents, ...mapDocuments.map(page => ({ ...page, standalone: true }))];
+  const sitemapPages = [...documents, ...mapDocuments.map(page => ({ ...page, standalone: true })), ...venueDocuments.map(page => ({ ...page, standaloneVenue: true }))];
   const entries = $('urlset > url').toArray();
   assert.equal(entries.length, sitemapPages.length);
+  assert.equal(entries.length, 71);
   const urls = entries.map((entry) => $(entry).children('loc').text().trim());
   assert.deepEqual([...urls].sort(), sitemapPages.map((page) => page.url).sort());
   assert.ok(urls.every((url) => !/\/(404|device-preview|api)(\/|\.|$)/.test(new URL(url).pathname)));
@@ -256,12 +312,14 @@ test('the sitemap lists localized product pages and every explicit canonical map
     const url = $(entry).children('loc').text().trim();
     const page = sitemapPages.find((candidate) => candidate.url === url);
     const alternatives = $(entry).children('[hreflang]');
-    if (page.standalone) {
-      const expected = new URL(url).searchParams.get('region') === 'europe' ? mapAlternatives : {};
+    if (page.standalone || page.standaloneVenue) {
+      const expected = page.standaloneVenue ? venueAlternativesFor(page)
+        : new URL(url).searchParams.get('region') === 'europe' ? mapAlternatives : {};
       assert.equal(alternatives.length, Object.keys(expected).length, `${url}: regions are not language alternatives`);
       for (const [language, target] of Object.entries(expected)) {
         assert.equal(alternatives.filter(`[hreflang="${language}"]`).attr('href'), target, url);
       }
+      if (page.standalone) assert.equal($(entry).children('lastmod').text(), '2026-11-13', `${url}: substantive map revision uses the source UTC date`);
       continue;
     }
     const expected = alternativesFor(page);
@@ -300,7 +358,7 @@ test('public pages reference only existing local navigation and static resources
   const notFound = await Promise.all(['404.html', 'zh/404.html', 'de/404.html'].map(async (file) => ({
     file, url: `${origin}/${file}`, $: load(await readFile(new URL(file, root), 'utf8')),
   })));
-  for (const page of [...documents, ...mapDocuments, ...notFound]) {
+  for (const page of [...documents, ...mapDocuments, ...venueDocuments, ...notFound]) {
     const references = page.$('a[href], img[src], script[src], link[rel="stylesheet"][href]').toArray();
     for (const element of references) {
       const href = page.$(element).attr('href') || page.$(element).attr('src');

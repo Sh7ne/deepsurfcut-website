@@ -1,6 +1,6 @@
 export const regionalLabels = {
   en: {
-    visitDetails: 'Website and contact', website: 'Official website', phone: 'Phone', parkPhone: 'Site reception', contactSource: 'Contact source', photoAdjusted: 'Resized for web', email: 'Email', contactPage: 'Contact the venue', photoPage: 'View venue photos', venueExterior: 'Venue exterior', hostExterior: 'Exterior of the host building', venueSite: 'Water sports site (archival photo)', wavePhoto: 'Standing wave photo',
+    visitDetails: 'Website and contact', venuePage: 'Venue information page', website: 'Official website', phone: 'Phone', parkPhone: 'Site reception', contactSource: 'Contact source', photoAdjusted: 'Resized for web', email: 'Email', contactPage: 'Contact the venue', photoPage: 'View venue photos', venueExterior: 'Venue exterior', hostExterior: 'Exterior of the host building', venueSite: 'Water sports site (archival photo)', wavePhoto: 'Standing wave photo',
     lang: 'en', locale: 'en-US', home: '/', heading: 'Rapid Surf Map', subtitle: 'Rapid Surf Map · Deep-water standing waves',
     regions: ['China', 'Europe', 'North America'], regionPicker: 'Map region', languages: 'Page language',
     skip: 'Skip to venue list', homeLabel: 'Back to DeepSurfCut', about: 'About this map', search: 'Search cities or venues',
@@ -36,7 +36,7 @@ export const regionalLabels = {
     noScript: 'Enable JavaScript for the interactive map, filters and favorites. The venue directory remains available below.',
   },
   de: {
-    visitDetails: 'Website und Kontakt', website: 'Offizielle Website', phone: 'Telefon', parkPhone: 'Auskunft vor Ort', contactSource: 'Quelle der Kontaktdaten', photoAdjusted: 'Für das Web verkleinert', email: 'E-Mail', contactPage: 'Kontakt zur Anlage', photoPage: 'Fotos der Anlage ansehen', venueExterior: 'Außenansicht der Anlage', hostExterior: 'Außenansicht des Gebäudes', venueSite: 'Wassersportgelände (Archivfoto)', wavePhoto: 'Foto der Surfwelle',
+    visitDetails: 'Website und Kontakt', venuePage: 'Standortseite', website: 'Offizielle Website', phone: 'Telefon', parkPhone: 'Auskunft vor Ort', contactSource: 'Quelle der Kontaktdaten', photoAdjusted: 'Für das Web verkleinert', email: 'E-Mail', contactPage: 'Kontakt zur Anlage', photoPage: 'Fotos der Anlage ansehen', venueExterior: 'Außenansicht der Anlage', hostExterior: 'Außenansicht des Gebäudes', venueSite: 'Wassersportgelände (Archivfoto)', wavePhoto: 'Foto der Surfwelle',
     lang: 'de', locale: 'de-DE', home: '/de/', heading: 'Rapid Surf Map', subtitle: 'Rapid Surf Map · Stehende Tiefwasserwellen',
     regions: ['China', 'Europa', 'Nordamerika'], regionPicker: 'Kartenregion', languages: 'Seitensprache',
     skip: 'Zur Standortliste springen', homeLabel: 'Zurück zu DeepSurfCut', about: 'Über diese Karte', search: 'Städte oder Standorte suchen',

@@ -35,6 +35,8 @@ dialog{color:var(--ink);border:1px solid white;background:var(--paper);border-ra
 .provider-marker-label, .amap-marker-label { font-family: inherit; font-size: 12px; line-height: 1.5; color: var(--ink); background: #fffffff0; border: 0; border-radius: 8px; padding: 4px 8px; box-shadow: 0 2px 6px #00000015; white-space: nowrap; }
 .provider-links { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--accent); }
 .provider-links a { display: inline-flex; min-height: 44px; align-items: center; }
+.venue-page-link { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin-top: 8px; color: var(--accent); font-size: 13px; text-decoration: underline; text-underline-offset: 3px; }
+.venue-page-link svg { width: 16px; height: 16px; }
 .provider-attribution { position: absolute; z-index: 450; right: 14px; bottom: 12px; display: flex; align-items: center; width: auto; height: auto; padding: 0; border: 0; background: transparent; box-shadow: none; line-height: 0; }
 .provider-legal-attribution { margin: 12px 0 4px; padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: #f7f7f9; color: var(--muted); font-size: 12px; line-height: 1.7; overflow-wrap: anywhere; }
 .provider-legal-attribution > .BMap_cpyCtrl, .provider-legal-attribution > .BMap_cpyCtrlV4 { position: static !important; inset: auto !important; min-width: 0; width: auto !important; max-width: 100%; height: auto !important; white-space: normal !important; color: inherit !important; font-size: inherit !important; line-height: inherit !important; text-align: left !important; }

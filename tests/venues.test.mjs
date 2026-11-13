@@ -7,6 +7,8 @@ import { renderVenuePages } from '../scripts/render-venues.mjs';
 const root = new URL('../', import.meta.url);
 const origin = 'https://deepsurf.app';
 const source = JSON.parse(await readFile(new URL('content/venues.json', root), 'utf8'));
+const extras = JSON.parse(await readFile(new URL('content/venue-directory-details.json', root), 'utf8'));
+const detailPath = (venue, lang) => `${lang === 'zh' ? '/zh' : lang === 'de' ? '/de' : ''}/rapid-surf-map/venues/${venue.id}/`;
 const pages = await Promise.all([
   { lang: 'zh', htmlLang: 'zh-Hans', region: 'china', path: '/RapidSurfingMap?region=china', file: 'RapidSurfingMap.html', dataFile: 'venues.json', home: '/zh/' },
   { lang: 'en', htmlLang: 'en', region: 'europe', path: '/RapidSurfingMap?region=europe', file: 'venues/editions/europe-en.txt', dataFile: 'venues-europe.json', home: '/' },
@@ -16,6 +18,11 @@ const pages = await Promise.all([
   ...page,
   source: JSON.parse(await readFile(new URL(`content/${page.dataFile}`, root), 'utf8')),
   $: load(await readFile(new URL(page.file, root), 'utf8'), { scriptingEnabled: false }),
+})));
+const detailPages = await Promise.all(pages.flatMap((edition) => edition.source.venues.map(async (venue) => {
+  const path = detailPath(venue, edition.lang);
+  return { ...edition, venue, copy: { ...venue, ...venue.i18n?.[edition.lang] }, path, url: origin + path,
+    $: load(await readFile(new URL(path.slice(1) + 'index.html', root), 'utf8'), { scriptingEnabled: false }) };
 })));
 
 test('the venue directory retains eleven distinct reviewed sites with honest seasonal and position data', () => {
@@ -78,7 +85,7 @@ test('every map view exposes reviewed venue details and working deep links witho
       const copy = { ...venue, ...venue.i18n?.[page.lang] };
       const card = $(`#venue-${venue.id}`);
       assert.equal(card.length, 1);
-      assert.equal(card.find(`[data-open="${venue.id}"]`).attr('href'), `#venue-${venue.id}`);
+      assert.equal(card.find(`[data-open="${venue.id}"]`).attr('href'), detailPath(venue, page.lang), 'the original HTML links to a crawlable venue page');
       const detail = card.find('.static-details');
       assert.ok(detail.text().includes(copy.description), `${page.path}: ${venue.id} description`);
       assert.ok(detail.text().includes(copy.address), `${page.path}: ${venue.id} address`);
@@ -95,6 +102,7 @@ test('every map view exposes reviewed venue details and working deep links witho
     for (const venue of venues) {
       const record = config.venues.find(item => item.id === venue.id);
       assert.equal(record.verifiedAt, venue.verifiedAt, `${page.path}: keep venue verification independent of page revisions`);
+      assert.equal(new URL(record.detailUrl, origin).href, origin + detailPath(venue, page.lang), `${venue.id}: sharing uses the matching language detail page`);
       for (const field of ['lat', 'lng', 'accuracy']) assert.equal(record.position[field], venue.position[field], `${venue.id}: preserve ${field}`);
       assert.deepEqual(record.sources.map(item => item.url), venue.sources.map(item => item.url));
     }
@@ -144,10 +152,15 @@ test('venue metadata identifies each explicit view and preserves local assets', 
       const venue = page.source.venues[index];
       const copy = { ...venue, ...venue.i18n?.[page.lang] };
       const target = new URL(item.url);
-      assert.equal(target.origin + target.pathname + target.search, origin + page.path);
+      assert.equal(target.href, origin + detailPath(venue, page.lang));
       assert.equal(item.name, copy.name);
       assert.equal(item.position, index + 1);
-      assert.equal($(new URL(item.url).hash).length, 1);
+      assert.ok(item.item?.['@id'], `${venue.id}: directory item identifies the stable Place entity`);
+      if (venue.position.accuracy !== 'venue') assert.equal(item.item.geo, undefined, `${venue.id}: directory Place must not imply exact venue geometry`);
+      if (extras[venue.id]?.contact?.parkPhone) assert.equal(item.item.telephone, undefined, `${venue.id}: directory Place must not label a park telephone as the venue`);
+      const detail = detailPages.find((candidate) => candidate.url === target.href);
+      const graph = JSON.parse(detail.$('script[type="application/ld+json"]').text())['@graph'];
+      assert.equal(item.item['@id'], graph.find((node) => [node['@type']].flat().includes('Place'))['@id']);
     }
     for (const element of $('script[src], link[rel="stylesheet"]').toArray()) {
       const path = $(element).attr('src') || $(element).attr('href');
@@ -155,6 +168,65 @@ test('venue metadata identifies each explicit view and preserves local assets', 
       assert.ok((await stat(new URL(path.slice(1), root))).isFile(), path);
     }
   }
+});
+
+test('46 static venue pages retain reviewed facts, source dates and licensed photo credits without JavaScript', () => {
+  assert.equal(detailPages.length, 46);
+  const titles = new Set(), descriptions = new Set();
+  for (const { $, venue, copy, path, url, lang, region } of detailPages) {
+    const facts = extras[venue.id] || {};
+    assert.equal($('html').attr('lang'), lang === 'zh' ? 'zh-Hans' : lang, path);
+    assert.equal($('main h1').length, 1, path);
+    assert.ok($('main h1').text().includes(copy.name), path);
+    for (const text of [copy.description, copy.address, copy.seasonNote]) assert.ok($('main').text().includes(text), `${path}: reviewed body fact missing`);
+    assert.ok($('time').toArray().some((node) => $(node).attr('datetime') === venue.verifiedAt), `${path}: venue check date is independent of page modification`);
+    for (const item of venue.sources) assert.ok($(`main a[href="${item.url}"]`).length, `${path}: missing source ${item.url}`);
+    if (facts.website) assert.ok($(`main a[href="${facts.website}"]`).length, `${path}: reviewed operator website`);
+    if (facts.contact?.phone) assert.ok($(`main a[href="tel:${facts.contact.phone.replace(/[^\d+]/g, '')}"]`).length, path);
+    if (facts.contact?.parkPhone) assert.match($('main').text(), /场地总机/, `${path}: park contact must stay qualified`);
+    if (facts.photo) {
+      assert.ok($(`main img[src="${facts.photo.url}"]`).length, path);
+      assert.ok($(`main figcaption a[href="${facts.photo.source}"]`).text().includes(facts.photo.credit), path);
+      assert.ok($(`main figcaption a[href="${facts.photo.licenseUrl}"]`).text().includes(facts.photo.license), path);
+    }
+    const title = $('title').text().trim(), description = $('meta[name="description"]').attr('content');
+    assert.ok(title && description && !titles.has(title) && !descriptions.has(description), `${path}: unique public identity`);
+    titles.add(title); descriptions.add(description);
+    assert.equal($('link[rel="canonical"]').attr('href'), url, path);
+    assert.equal($('meta[property="og:url"]').attr('content'), url, path);
+    const map = new URL(`/RapidSurfingMap?region=${region}${lang === 'de' ? '&lang=de' : ''}#venue-${venue.id}`, origin);
+    assert.ok($('a[href]').toArray().some((node) => new URL($(node).attr('href'), url).href === map.href), `${path}: explicit edition/language/hash return link`);
+    assert.equal($('script[src*="/venues/provider-"], script[src*="leaflet"], #map').length, 0, `${path}: the static page must not initialize map SDKs`);
+  }
+});
+
+test('venue Place entities preserve identity without inventing precise geometry, park telephones or business claims', () => {
+  const identities = new Map();
+  for (const { $, venue, path, url } of detailPages) {
+    const schema = JSON.parse($('script[type="application/ld+json"]').text());
+    const graph = schema['@graph'];
+    assert.ok(Array.isArray(graph), path);
+    const place = graph.find((node) => [node['@type']].flat().includes('Place'));
+    const webpage = graph.find((node) => [node['@type']].flat().includes('WebPage'));
+    const breadcrumbs = graph.find((node) => node['@type'] === 'BreadcrumbList');
+    assert.ok(place?.['@id'] && webpage?.['@id'] && breadcrumbs, path);
+    assert.equal(webpage.url, url, path);
+    assert.equal(webpage.mainEntity['@id'], place['@id'], path);
+    assert.equal(breadcrumbs.itemListElement.at(-1).item, url, path);
+    if (identities.has(venue.id)) assert.equal(place['@id'], identities.get(venue.id), `${path}: translations describe the same physical Place`);
+    identities.set(venue.id, place['@id']);
+    if (venue.position.accuracy !== 'venue') assert.equal(place.geo, undefined, `${path}: site/approximate markers are not exact venue geometry`);
+    else if (place.geo) {
+      assert.equal(place.geo.latitude, venue.position.lat, path);
+      assert.equal(place.geo.longitude, venue.position.lng, path);
+    }
+    const contact = extras[venue.id]?.contact;
+    if (contact?.parkPhone || !contact?.phone) assert.equal(place.telephone, undefined, `${path}: only a reviewed direct venue telephone may be structured`);
+    else if (place.telephone) assert.equal(place.telephone.replace(/[^\d+]/g, ''), contact.phone.replace(/[^\d+]/g, ''), path);
+    if (place.sameAs) assert.equal(place.sameAs, extras[venue.id]?.website, `${path}: official identity is reviewed source data`);
+    assert.doesNotMatch(JSON.stringify(schema), /"(?:openingHours|openingHoursSpecification|aggregateRating|review|offers|priceRange|currenciesAccepted)"/, `${path}: no inferred opening hours, ratings or commercial claims`);
+  }
+  assert.equal(identities.size, 32, 'translations share the 32 physical venue identities');
 });
 
 test('the map guide provides accessible static answers, source context, and localized editing links', () => {

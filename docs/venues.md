@@ -49,12 +49,15 @@ and their reset button belong inside the scrollable list so they remain reachabl
 on small screens.
 
 `scripts/render-venues.mjs` owns `RapidSurfingMap.html`, `venues/editions/*.txt`,
-and `venues/data.json`. The edition files are static rendering inputs served
+`venues/data.json`, and the generated venue pages under `rapid-surf-map/venues/`
+with their `zh/` and `de/` equivalents. The edition files are static rendering inputs served
 through the Pages Function and marked noindex at their asset paths.
 Shared JavaScript, CSS, and provider assets remain under `venues/`; the three old
 locale `venues/index.html` files must remain absent. Canonical metadata and shared
-venue links use `https://deepsurf.app/RapidSurfingMap`, with the selected view query and venue hash added to share links.
-The sitemap lists the four stable views, not the variable unqualified entry.
+venue map links use `https://deepsurf.app/RapidSurfingMap`, with the selected view query and venue hash.
+Venue shares use their localized static information pages; those pages link back
+to the same region and selected map marker. Older hash links remain supported.
+The sitemap lists the four stable views and generated venue pages, not the variable unqualified entry.
 `scripts/venue-map-guide.mjs` maintains the localized scope, usage, source and
 position explanations shown in a native disclosure in the scrollable directory.
 Keep this usable without JavaScript. Update the page modification date in the
@@ -63,6 +66,27 @@ dates with a website publication date.
 The build checks generated output against the source. Public assets are copied
 through the existing allowlist; source data, research, scripts, tests, and local
 configuration remain outside `dist/`.
+
+`scripts/venue-pages.mjs` renders each information page from the same localized
+record and reviewed contact/photo extras. Venue IDs remain unique across regions.
+The 32 venues produce 46 pages because the 14 European venues have English and
+German translations. Their `Place` entity IDs are shared across those translations;
+page URLs, titles, canonicals and breadcrumbs identify the individual language.
+Source dates, original addresses, phone ownership and position accuracy stay intact.
+Do not add ratings, inferred opening hours, or exact coordinates to the markup.
+
+Run `npm run venues:generate` after changing records or templates. It also maintains
+the venue sitemap entries and removes obsolete generated venue folders only when
+they contain the single owned `index.html`. Unexpected contents stop generation.
+Edit data or templates rather than generated venue HTML. Root-level pages are
+included by the `rapid-surf-map` build allowlist; translated pages use the existing
+`zh` and `de` trees. Venue pages are static assets and do not expand Function or
+map-SDK permissions.
+
+Maps and venue information pages use the dedicated 1200 × 630 sharing image
+`assets/rapid-surf-map-social-20261114.png`. Its abstract artwork does not represent
+a real venue or geographic boundary. The SVG in `design/` and optional export
+script in `scripts/` stay outside the published build.
 
 
 ## Websites, contacts, and photos

@@ -1,6 +1,7 @@
 // Public guide copy shared by the static and server-selected map views.
 export const mapGuideCopy = {
   zh: {
+    socialAlt: 'Rapid Surf Map：深水固定浪场馆目录，支持查找场馆、查看来源与导航。',
     summary: 'Rapid Surf Map：收录范围与使用说明',
     intro: 'Rapid Surf Map 是 DeepSurfCut 整理的深水固定浪场馆地图。你可以查找场馆、比较室内外环境，并从详情查看资料来源、官网与导航。',
     definitionHeading: 'Rapid Surfing 是什么？',
@@ -16,6 +17,7 @@ export const mapGuideCopy = {
     followLink: '9:16 竖屏跟拍教程', connector: '与', end: '。',
   },
   en: {
+    socialAlt: 'Rapid Surf Map: a deep-water standing-wave venue directory with sources and directions.',
     summary: 'Rapid Surf Map: coverage and how to use it',
     intro: 'Rapid Surf Map is a directory of deep-water standing-wave venues by DeepSurfCut. Find venues, compare indoor and outdoor settings, and open sources, operator websites and directions in each listing.',
     definitionHeading: 'What is rapid surfing?',
@@ -31,6 +33,7 @@ export const mapGuideCopy = {
     followLink: '9:16 Portrait Follow tutorial', connector: 'and', end: '.',
   },
   de: {
+    socialAlt: 'Rapid Surf Map: Verzeichnis stehender Tiefwasserwellen mit Quellen und Anfahrt.',
     summary: 'Rapid Surf Map: Umfang und Nutzung',
     intro: 'Rapid Surf Map ist ein Verzeichnis stehender Tiefwasserwellen von DeepSurfCut. Finde Anlagen, vergleiche Hallen und Außenanlagen und öffne Quellen, Betreiber-Websites und Anfahrtslinks im jeweiligen Eintrag.',
     definitionHeading: 'Was ist Rapid Surfing?',
