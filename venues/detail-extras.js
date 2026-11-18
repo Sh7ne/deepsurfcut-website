@@ -21,7 +21,7 @@ export function venueContact(venue, labels) {
   const links = [
     website ? external(website, `${labels.website} · ${new URL(website).hostname.replace(/^www\./, '')}`, 'venue-website') : '',
     contact.phone ? `<a href="tel:${escape(contact.phone.replace(/[^\d+]/g, ''))}">${escape(contact.parkPhone ? labels.parkPhone : labels.phone)} · <bdi>${escape(contact.phone)}</bdi></a>` : '',
-    contact.email ? `<a href="mailto:${escape(contact.email)}">${escape(labels.email)} · ${escape(contact.email)}</a>` : '',
+    contact.email ? `<span class="venue-email">${escape(labels.email)} · <button type="button" class="contact-email" data-contact-email aria-label="${escape(labels.email)}: ${escape(contact.email)}">${escape(contact.email)}</button></span>` : '',
     contact.url && contact.url !== website ? external(contact.url, labels.contactPage) : '',
     photoPage ? external(photoPage, labels.photoPage) : '',
     contact.phone && !contact.url && contact.source && contact.source !== website ? external(contact.source, labels.contactSource, 'venue-contact-source') : '',

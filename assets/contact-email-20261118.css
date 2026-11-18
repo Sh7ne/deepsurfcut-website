@@ -1,0 +1,36 @@
+[data-contact-email] {
+  overflow-wrap: anywhere;
+}
+
+.contact-email {
+  appearance: none;
+  max-inline-size: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  text-align: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+
+.contact-email:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.venue-contact .venue-email {
+  display: block;
+  min-height: 44px;
+  padding: 10px 13px;
+  border-radius: 8px;
+  background: #f0f5fa;
+  color: #0057a6;
+  font-size: 14px;
+}

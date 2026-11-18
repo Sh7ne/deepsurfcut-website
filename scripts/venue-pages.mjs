@@ -145,6 +145,8 @@ ${edition === 'europe' ? `  <meta property="og:locale:alternate" content="${lang
   <link rel="icon" href="/assets/favicon-96.png" sizes="96x96" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180">
   <link rel="stylesheet" href="/venues/venue.css?v=20261118-rapid-category-1">
+  <link rel="stylesheet" href="/assets/contact-email-20261118.css">
+  <script src="/assets/contact-email-20261118.js" defer></script>
   <script type="application/ld+json">${json(schema)}</script>
 </head>
 <body>

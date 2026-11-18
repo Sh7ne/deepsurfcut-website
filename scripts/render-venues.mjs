@@ -207,6 +207,8 @@ ${languageAlternates ? `  ${languageAlternates}\n` : ''}  <meta property="og:typ
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180">
   <link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css">
   <link rel="stylesheet" href="/venues/map.css?v=20261114-seo-1">
+  <link rel="stylesheet" href="/assets/contact-email-20261118.css">
+  <script src="/assets/contact-email-20261118.js" defer></script>
   <script src="/assets/vendor/leaflet/leaflet.js" defer></script>
   <script type="module" src="/venues/map.js?v=20261114-seo-1"></script>
   <script type="application/ld+json">${json(schemas)}</script>
@@ -338,7 +340,7 @@ export async function renderVenuePages({ check = false } = {}) {
       if (new URL(link).protocol !== 'https:') throw new Error(`Invalid venue details link: ${id}`);
     }
     if (entry.contact?.phone && !/^\+[0-9][0-9 ()-]+$/.test(entry.contact.phone)) throw new Error(`Invalid venue phone: ${id}`);
-    if (entry.contact?.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(entry.contact.email)) throw new Error(`Invalid venue email: ${id}`);
+    if (entry.contact?.email && !/^[a-z0-9._+-]+ \[at\] [a-z0-9-]+(?: \[dot\] [a-z0-9-]+)+$/i.test(entry.contact.email)) throw new Error(`Invalid obfuscated venue email: ${id}`);
     if (entry.thumbnail) {
       if (!/^\/venues\/thumbnails\/[a-z0-9-]+\.webp$/.test(entry.thumbnail.url) || !entry.thumbnail.source) {
         throw new Error(`Invalid venue thumbnail: ${id}`);

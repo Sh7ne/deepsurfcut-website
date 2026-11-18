@@ -110,7 +110,7 @@
     "contact": {
       "url": "https://wellenwerk-berlin.de/en/contact/",
       "phone": "+49 30 54452707",
-      "email": "info@wellenwerk-berlin.de",
+      "email": "info [at] wellenwerk-berlin [dot] de",
       "source": "https://wellenwerk-berlin.de/en/contact/"
     },
     "photoPage": "https://wellenwerk-berlin.de/indoor-surfen/",
@@ -124,7 +124,7 @@
     "contact": {
       "url": "https://www.jochen-schweizer-arena.de/en/faq/",
       "phone": "+49 89 452 44 55 995",
-      "email": "info@jochen-schweizer-arena.de",
+      "email": "info [at] jochen-schweizer-arena [dot] de",
       "source": "https://www.jochen-schweizer-arena.de/faq/"
     },
     "photoPage": "https://www.jochen-schweizer-arena.de/indoor-surfen/",
@@ -147,7 +147,7 @@
     "website": "https://www.rheinriff.com/",
     "contact": {
       "url": "https://www.rheinriff.com/de/kontakt",
-      "email": "info@rheinriff.de",
+      "email": "info [at] rheinriff [dot] de",
       "source": "https://www.rheinriff.com/de/kontakt"
     },
     "photoPage": "https://www.rheinriff.com/de/surf",
@@ -159,7 +159,7 @@
   "hasewelle": {
     "website": "https://www.l-t.de/pages/hasewelle",
     "contact": {
-      "email": "hasewelle@l-t.de",
+      "email": "hasewelle [at] l-t [dot] de",
       "source": "https://www.l-t.de/pages/hasewelle"
     },
     "photoPage": "https://www.l-t.de/pages/hasewelle",
@@ -183,7 +183,7 @@
     "contact": {
       "url": "https://iriesurf.de/impressum",
       "phone": "+49 151 416 444 77",
-      "email": "aloha@iriesurf.de",
+      "email": "aloha [at] iriesurf [dot] de",
       "source": "https://iriesurf.de/impressum"
     },
     "photoPage": "https://iriesurf.de/activities/surf",
@@ -196,7 +196,7 @@
     "website": "https://www.surf-langenfeld.de/",
     "contact": {
       "url": "https://www.surf-langenfeld.de/en/contact/",
-      "email": "kontakt@wasserski-langenfeld.de",
+      "email": "kontakt [at] wasserski-langenfeld [dot] de",
       "source": "https://www.surf-langenfeld.de/impressum/"
     },
     "photoPage": "https://www.surf-langenfeld.de/",
@@ -219,7 +219,7 @@
     "website": "https://www.oana.surf/",
     "contact": {
       "url": "https://www.oana.surf/impressum",
-      "email": "hello@oana.surf",
+      "email": "hello [at] oana [dot] surf",
       "source": "https://www.oana.surf/impressum"
     },
     "photoPage": "https://www.oana.surf/media",
@@ -255,7 +255,7 @@
     "contact": {
       "url": "https://www.city-surf-park.com/contact",
       "phone": "+33 4 78 58 38 61",
-      "email": "aloha@city-surf-park.com",
+      "email": "aloha [at] city-surf-park [dot] com",
       "source": "https://www.city-surf-park.com/contact"
     },
     "photoPage": "https://www.city-surf-park.com/",
@@ -268,7 +268,7 @@
     "website": "https://wakeparadise.it/milano/en/milan/",
     "contact": {
       "url": "https://wakeparadise.it/milano/en/contacts/",
-      "email": "milano@wakeparadise.it",
+      "email": "milano [at] wakeparadise [dot] it",
       "source": "https://wakeparadise.it/milano/en/contacts/"
     },
     "photoPage": "https://wakeparadise.it/milano/surf/",
@@ -282,7 +282,7 @@
     "contact": {
       "url": "https://enefitarena.lt/en/contact/",
       "phone": "+370 693 03 090",
-      "email": "aloha@citywave.lt",
+      "email": "aloha [at] citywave [dot] lt",
       "source": "https://enefitarena.lt/en/city-wave/"
     },
     "photoPage": "https://enefitarena.lt/en/city-wave/",
@@ -296,7 +296,7 @@
     "contact": {
       "url": "https://surflux.eu/en/contact/",
       "phone": "+32 63 23 32 22",
-      "email": "info@surflux.eu",
+      "email": "info [at] surflux [dot] eu",
       "source": "https://surflux.eu/de/kontakt/"
     },
     "photoPage": "https://surflux.eu/en/surfing-experience/",
@@ -310,7 +310,7 @@
     "contact": {
       "url": "https://skolkovo.surfbrothers.ru/contacts",
       "phone": "+7 495 241 24 44",
-      "email": "info@surfbrothers.ru",
+      "email": "info [at] surfbrothers [dot] ru",
       "source": "https://skolkovo.surfbrothers.ru/contacts"
     },
     "photoPage": "https://skolkovo.surfbrothers.ru/",
@@ -334,7 +334,7 @@
     "contact": {
       "url": "https://moscowflow.ru/directions",
       "phone": "+7 499 670 09 09",
-      "email": "info@moscowflow.ru",
+      "email": "info [at] moscowflow [dot] ru",
       "source": "https://moscowflow.ru/directions"
     },
     "photoPage": "https://moscowflow.ru/en/volna/",
@@ -348,7 +348,7 @@
     "contact": {
       "url": "https://waikai.com/contact",
       "phone": "+1 808 515 7873",
-      "email": "aloha@waikaiexperience.com",
+      "email": "aloha [at] waikaiexperience [dot] com",
       "source": "https://waikai.com/about-wai-kai"
     },
     "photoPage": "https://waikai.com/surf",
@@ -361,7 +361,7 @@
     "website": "https://revelsurf.com/river-wave/",
     "contact": {
       "phone": "+1 480 944 7873",
-      "email": "info@revelsurf.com",
+      "email": "info [at] revelsurf [dot] com",
       "source": "https://revelsurf.com/privacy-policy/"
     },
     "photoPage": "https://revelsurf.com/river-wave/",
@@ -374,7 +374,7 @@
     "website": "https://www.heroesparadise.com/epicsurfusa",
     "contact": {
       "phone": "+1 833 543 7637",
-      "email": "theteam@heroesparadise.com",
+      "email": "theteam [at] heroesparadise [dot] com",
       "source": "https://www.heroesparadise.com/epicsurfusa"
     },
     "photoPage": "https://epic.surf/heroes-paradise-opens-their-brand-new-epicsurf-deep-water-standing-wave-today-the-first-standing-wave-on-the-east-coast/",
@@ -388,7 +388,7 @@
     "contact": {
       "url": "https://skyventurenh.com/contact/",
       "phone": "+1 603 897 0002",
-      "email": "info@skyventurenh.com",
+      "email": "info [at] skyventurenh [dot] com",
       "source": "https://skyventurenh.com/hours/"
     },
     "photoPage": "https://skyventurenh.com/indoor-surfing/",
@@ -401,7 +401,7 @@
     "website": "https://wacosurf.com/surf-session/shredmill/",
     "contact": {
       "url": "https://wacosurf.com/contact/",
-      "email": "info@wacosurf.com",
+      "email": "info [at] wacosurf [dot] com",
       "source": "https://wacosurf.com/first-time-waco-surf-guide/"
     },
     "photoPage": "https://wacosurf.com/surf-session/shredmill/",
@@ -415,7 +415,7 @@
     "contact": {
       "url": "https://oasissurf.com/en/pages/contact",
       "phone": "+1 514 372 7873",
-      "email": "info@oasissurf.com",
+      "email": "info [at] oasissurf [dot] com",
       "source": "https://oasissurf.com/en/pages/contact"
     },
     "photoPage": "https://www.mtl.org/en/what-to-do/sport-activities/oasis-surf-montreal",

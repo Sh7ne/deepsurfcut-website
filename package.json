@@ -8,7 +8,7 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "dev": "npm run build && node scripts/dev.mjs",
-    "test": "node --test tests/retention.test.mjs tests/seo.test.mjs tests/updates.test.mjs tests/performance.test.mjs tests/app-store-sync.test.mjs tests/release-workflow.test.mjs tests/venues.test.mjs tests/maps-server.test.mjs tests/map-providers.test.mjs",
+    "test": "node --test tests/retention.test.mjs tests/seo.test.mjs tests/updates.test.mjs tests/performance.test.mjs tests/app-store-sync.test.mjs tests/release-workflow.test.mjs tests/venues.test.mjs tests/maps-server.test.mjs tests/map-providers.test.mjs tests/contact-email.test.mjs",
     "venues:generate": "node scripts/render-venues.mjs",
     "test:venues": "node --test tests/venues.test.mjs",
     "updates:generate": "node scripts/render-updates.mjs",

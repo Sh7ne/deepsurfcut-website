@@ -536,7 +536,9 @@ try {
       if (language === 'de') assert.match(await detail.textContent(), /Anfahrt|Offizielle Website/);
       assert.equal(await detail.locator('.venue-website').count(), 1);
       assert.equal(await detail.locator('a[href^="tel:"]').count(), 1);
-      assert.equal(await detail.locator('a[href^="mailto:"]').count(), 1);
+      assert.equal(await detail.locator('a[href^="mailto:"]').count(), 0);
+      assert.equal(await detail.locator('button[data-contact-email]').count(), 1);
+      assert.match(await detail.locator('button[data-contact-email]').textContent(), / \[at\] .* \[dot\] /);
       if (region === 'europe') assert.equal(await page.locator('.language-nav [aria-current]').getAttribute('lang'), language);
       await count(page, total);
       assert.equal(await page.locator('#venue-detail a[href^="https://www.google.com/maps/search/"]').count(), 1);
