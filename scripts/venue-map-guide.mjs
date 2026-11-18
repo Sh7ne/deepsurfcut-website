@@ -1,9 +1,9 @@
 // Public guide copy shared by the static and server-selected map views.
 export const mapGuideCopy = {
   zh: {
-    socialAlt: 'Rapid Surf Map：深水固定浪场馆目录，支持查找场馆、查看来源与导航。',
+    socialAlt: 'Rapid Surf Map：Rapid Surfing 深水冲浪场馆目录，支持查找场馆、查看来源与导航。',
     summary: 'Rapid Surf Map：收录范围与使用说明',
-    intro: 'Rapid Surf Map 是 DeepSurfCut 整理的深水固定浪场馆地图。你可以查找场馆、比较室内外环境，并从详情查看资料来源、官网与导航。',
+    intro: 'Rapid Surf Map 是 DeepSurfCut 整理的 Rapid Surfing 场馆地图，聚焦商业深水固定浪。你可以查找场馆、比较室内外环境，并从详情查看资料来源、官网与导航。',
     definitionHeading: 'Rapid Surfing 是什么？',
     definition: 'Rapid Surfing 指在自然或人工形成的固定浪上冲浪。',
     definitionSource: 'Rapid Surf League 的术语说明',

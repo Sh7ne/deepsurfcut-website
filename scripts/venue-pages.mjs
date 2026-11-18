@@ -1,31 +1,37 @@
 import { venuePhoto, venueContact } from '../venues/detail-extras.js';
 
 const origin = 'https://deepsurf.app';
-const socialImage = `${origin}/assets/rapid-surf-map-social-20261114.png`;
+const socialImage = `${origin}/assets/rapid-surf-map-social-20261118.png`;
 const copy = {
   zh: {
     pageType: '场馆资料', skip: '跳转到场馆资料', breadcrumb: '页面位置', languages: '页面语言',
     back: '返回地图', directions: '打开导航', position: '地图位置精度', information: '资料说明',
     sourceNote: '核对日期不代表今天营业或仍有空位。出发前请向运营方确认开放安排与预约信息。',
     guide: 'Rapid Surfing 视频剪辑指南', credit: '由 DeepSurfCut 整理',
-    socialAlt: 'Rapid Surf Map 深水固定浪场馆地图',
-    description: '在 Rapid Surf Map 查看场馆地址、开放安排、资料来源与导航。',
+    category: 'Rapid Surfing 深水冲浪',
+    categoryIntro: 'Rapid Surf Map 收录的 Rapid Surfing 场馆，提供商业深水固定浪冲浪体验。',
+    socialAlt: 'Rapid Surf Map：Rapid Surfing 深水冲浪场馆地图',
+    description: 'Rapid Surfing 深水冲浪场馆资料，包含地址、开放安排、预约来源与导航。',
   },
   en: {
     pageType: 'Venue details', skip: 'Skip to venue details', breadcrumb: 'Breadcrumb', languages: 'Page language',
     back: 'Back to the map', directions: 'Get directions', position: 'Map location accuracy', information: 'About this listing',
     sourceNote: 'The check date does not confirm that the venue is open today or that sessions are available. Confirm opening and booking information with the operator before travelling.',
     guide: 'Rapid surfing video editing guide', credit: 'A directory by DeepSurfCut',
+    category: 'Rapid Surfing',
+    categoryIntro: 'A rapid surfing venue listed on Rapid Surf Map, with a commercial deep-water standing wave.',
     socialAlt: 'Rapid Surf Map showing rapid surfing venues',
-    description: 'Find the address, opening information, sources and directions on Rapid Surf Map.',
+    description: 'Rapid Surfing venue information, address, booking sources and directions.',
   },
   de: {
     pageType: 'Standortdetails', skip: 'Zu den Standortdetails springen', breadcrumb: 'Brotkrumennavigation', languages: 'Seitensprache',
     back: 'Zurück zur Karte', directions: 'Anfahrt öffnen', position: 'Genauigkeit der Kartenposition', information: 'Über diesen Eintrag',
     sourceNote: 'Das Prüfdatum bestätigt weder die heutige Öffnung noch freie Termine. Kläre Öffnung und Buchung vor der Anreise mit dem Betreiber.',
     guide: 'Anleitung zur Bearbeitung von Rapid-Surfing-Videos', credit: 'Ein Verzeichnis von DeepSurfCut',
+    category: 'Rapidsurfen',
+    categoryIntro: 'Eine Anlage zum Rapidsurfen auf Rapid Surf Map mit einer kommerziellen stehenden Tiefwasserwelle.',
     socialAlt: 'Rapid Surf Map mit Anlagen für Rapid Surfing',
-    description: 'Adresse, Öffnungsangaben, Quellen und Anfahrt auf Rapid Surf Map ansehen.',
+    description: 'Anlage für Rapid Surfing und Rapidsurfen: Adresse, Buchungsquellen und Anfahrt.',
   },
 };
 
@@ -67,8 +73,8 @@ export function renderVenuePage({ venue, edition, language = 'en', mapUrl, label
   const c = copy[language];
   const city = (venue.city || '').trim();
   const titleName = city && !venue.name.toLocaleLowerCase().includes(city.toLocaleLowerCase()) ? `${venue.name} · ${city}` : venue.name;
-  const title = `${titleName} · ${c.pageType} | Rapid Surf Map`;
-  const description = `${venue.name}${language === 'zh' ? '：' : ': '}${venue.summary || venue.description} ${c.description}`;
+  const title = `${titleName} · ${c.category} | Rapid Surf Map`;
+  const description = `${venue.name}${language === 'zh' ? '：' : ': '}${c.description} ${venue.summary || venue.description}`;
   const location = [...new Set([city, venue.province].filter(Boolean))].join(' · ');
   const placeId = venueEntityId(venue.id, language);
   const mapVenueUrl = `${mapUrl}#venue-${venue.id}`;
@@ -92,6 +98,7 @@ export function renderVenuePage({ venue, edition, language = 'en', mapUrl, label
         inLanguage: labels.lang || language,
         ...(pageModified ? { dateModified: pageModified } : {}),
         isPartOf: { '@id': `${mapUrl}#webpage` },
+        about: { '@type': 'Thing', name: 'Rapid Surfing' },
         mainEntity: { '@id': placeId }, breadcrumb: { '@id': `${url}#breadcrumb` },
       },
       {
@@ -137,7 +144,7 @@ ${edition === 'europe' ? `  <meta property="og:locale:alternate" content="${lang
   <meta name="twitter:image:alt" content="${c.socialAlt}">
   <link rel="icon" href="/assets/favicon-96.png" sizes="96x96" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180">
-  <link rel="stylesheet" href="/venues/venue.css?v=20261114-seo-1">
+  <link rel="stylesheet" href="/venues/venue.css?v=20261118-rapid-category-1">
   <script type="application/ld+json">${json(schema)}</script>
 </head>
 <body>
@@ -150,9 +157,10 @@ ${edition === 'europe' ? `  <meta property="og:locale:alternate" content="${lang
     <nav class="breadcrumb" aria-label="${c.breadcrumb}"><ol><li><a href="${escape(mapUrl)}">Rapid Surf Map</a></li><li><span aria-current="page">${escape(venue.name)}</span></li></ol></nav>
     <article aria-labelledby="venue-title">
       <header class="venue-heading">
-        <div class="heading-top"><p class="eyebrow">${c.pageType}</p>${edition === 'europe' ? `<nav class="language-nav" aria-label="${c.languages}">${[['en', 'English'], ['de', 'Deutsch']].map(([lang, name]) => `<a href="${venuePagePath(venue.id, lang)}" lang="${lang}" hreflang="${lang}"${lang === language ? ' aria-current="page"' : ''}>${name}</a>`).join('')}</nav>` : ''}</div>
+        <div class="heading-top"><p class="eyebrow">${c.category}</p>${edition === 'europe' ? `<nav class="language-nav" aria-label="${c.languages}">${[['en', 'English'], ['de', 'Deutsch']].map(([lang, name]) => `<a href="${venuePagePath(venue.id, lang)}" lang="${lang}" hreflang="${lang}"${lang === language ? ' aria-current="page"' : ''}>${name}</a>`).join('')}</nav>` : ''}</div>
         <h1 id="venue-title">${escape(venue.name)}</h1>
         ${location ? `<p class="venue-location">${escape(location)}</p>` : ''}
+        <p class="venue-category">${c.categoryIntro}</p>
         <p class="venue-summary">${escape(venue.summary || venue.description)}</p>
         <ul class="venue-tags" aria-label="${escape(labels.environment)}"><li>${escape(labels[venue.environment] || venue.environment)}</li>${venue.seasonal ? `<li>${escape(labels.seasonal)}</li>` : ''}</ul>
         <div class="primary-actions"><a class="button button-primary" href="${escape(mapVenueUrl)}">${wave}${escape(labels.viewMap)}</a>${external(directionsUrl(venue, edition), c.directions, 'button button-secondary')}</div>

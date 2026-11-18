@@ -24,9 +24,9 @@ const cities = { '北京': '北京', '上海': '上海', '杭州·建德': '杭�
 export const venueLabels = {
   zh: {
     visitDetails: '官网与联系方式', venuePage: '场馆资料页', website: '场馆官网', phone: '电话', parkPhone: '场地总机', contactSource: '联系方式来源', photoAdjusted: '已缩放为网页图', email: '邮箱', contactPage: '联系场馆', photoPage: '查看场馆照片', venueExterior: '场馆外观', hostExterior: '所在建筑外观', venueSite: '所在水上运动园区（旧照）', wavePhoto: '浪池实景',
-    lang: 'zh-Hans', locale: 'zh-CN', home: '/zh/', title: 'Rapid Surf Map｜中国深水冲浪场馆地图 · DeepSurfCut',
-    description: '用 Rapid Surf Map 查找深水固定浪与 Rapid Surfing 场馆，按城市、室内外和季节开放筛选，查看资料来源、官网、预约信息及导航。',
-    heading: '冲浪地图', edition: '中国版', eyebrow: '', intro: '探索深水冲浪场馆',
+    lang: 'zh-Hans', locale: 'zh-CN', home: '/zh/', title: '中国 Rapid Surfing 深水冲浪地图｜Rapid Surf Map',
+    description: '用 Rapid Surf Map 查找中国 Rapid Surfing（深水冲浪）场馆，按城市、室内外和季节开放筛选，查看官网、预约来源及导航。',
+    heading: '冲浪地图', edition: '中国版', eyebrow: '', intro: 'Rapid Surfing 场馆',
     subtitle: 'Rapid Surf Map · Rapid Surfing Venues', skip: '跳转到场馆列表', homeLabel: '返回 DeepSurfCut 官网',
     about: '关于这份地图', search: '搜索城市或场馆', searchPlaceholder: '想去哪里冲浪？', clearSearch: '清除搜索',
     all: '全部', allCities: '全部城市', indoor: '室内', outdoor: '室外', seasonal: '季节开放', venues: '处浪点', saved: '已收藏', save: '收藏场馆', unsave: '取消收藏',
@@ -42,10 +42,10 @@ export const venueLabels = {
     filters: '筛选', filterCount: '{count} 项筛选', clear: '清除', details: '场馆详情', dataNotice: '开放安排并非实时营业状态，出发前请向场馆确认。',
     loadingError: '场馆资料加载失败，请刷新页面重试。', unknownStatus: '请提前确认场次', nearestNeedsLocation: '先开启定位，即可按距离排序。',
     listView: '列表', mapView: '地图', savedView: '收藏', noSources: '暂无可链接的公开来源。', copiedAddress: '地址已复制',
-    listLabel: '场馆列表', mapLabel: 'Rapid Surf Map · 中国深水冲浪场馆地图', locate: '定位到我', fitMap: '显示全部场馆', zoomIn: '放大地图', zoomOut: '缩小地图',
+    listLabel: '场馆列表', mapLabel: 'Rapid Surf Map · 中国 Rapid Surfing 深水冲浪场馆地图', locate: '定位到我', fitMap: '显示全部场馆', zoomIn: '放大地图', zoomOut: '缩小地图',
     expandSheet: '展开或收起场馆列表', sort: '排序', recommended: '推荐顺序', nameSort: '名称', nearestSort: '距离最近',
     environment: '场馆环境', seasonalOnly: '只看季节开放场馆', apply: '查看场馆', filterHint: '找到适合你这一趟的浪点。',
-    aboutHeading: '关于冲浪地图', aboutIntro: '一份持续整理的中国深水固定浪场馆目录，由 DeepSurfCut 制作。',
+    aboutHeading: '关于 Rapid Surf Map', aboutIntro: '一份持续整理的中国 Rapid Surfing 场馆目录，由 DeepSurfCut 制作，聚焦商业深水固定浪。',
     aboutScope: '这份地图收录已整理的商业深水固定浪场馆。薄水层模拟冲浪、自然河流浪点以及尚待核实的项目不计入场馆数量。',
     aboutDates: '资料日期见各场馆详情。目录记录不代表场馆此刻营业；季节安排、预约和场次请以场馆最新确认为准。',
     aboutPositions: '地图区分场馆、所在园区和大致位置。标注不能代替入口确认；导航时请再次核对场馆名称与地址。',
@@ -140,12 +140,12 @@ export function renderVenues(data, edition = 'china', language = 'zh', venueRegi
   const regionNames = base.regions || ['中国', '欧洲', '北美'];
   const label = regionNames[Object.keys(editions).indexOf(edition)];
   const t = !international ? base : language === 'de' ? {
-    ...base, title: 'Rapid Surf Map · Rapidsurfen in Europa | DeepSurfCut', intro: 'Rapid Surfing in Europa',
+    ...base, title: 'Rapid Surfing in Europa: Standorte | Rapid Surf Map', intro: 'Rapid Surfing in Europa',
     description: 'Mit Rapid Surf Map Anlagen für Rapid Surfing in Europa finden: Anlagen filtern, Quellen, Betreiber-Websites, Buchungsinformationen und Anfahrt ansehen.',
     mapLabel: 'Rapid Surf Map · Karte zum Rapidsurfen in Europa',
     aboutIntro: 'Ein Verzeichnis von Anlagen für Rapid Surfing in Europa, zusammengestellt von DeepSurfCut.',
   } : {
-    ...base, title: `Rapid Surf Map · ${label} Rapid Surfing Venues | DeepSurfCut`, intro: `Rapid surfing in ${edition === 'north-america' ? 'North America' : 'Europe'}`,
+    ...base, title: `Rapid Surfing Venues in ${label} | Rapid Surf Map`, intro: `Rapid surfing in ${edition === 'north-america' ? 'North America' : 'Europe'}`,
     description: `Find rapid surfing venues in ${edition === 'north-america' ? 'North America' : 'Europe'} with Rapid Surf Map. Filter venues and check sources, operator websites, booking information and directions.`,
     mapLabel: `Rapid Surf Map · Rapid surfing venues in ${label}`,
     aboutIntro: `A rapid surfing venue directory in ${edition === 'north-america' ? 'North America' : 'Europe'}, by DeepSurfCut.`,
@@ -170,7 +170,7 @@ export function renderVenues(data, edition = 'china', language = 'zh', venueRegi
     url, name: t.title, alternateName: ['Rapid Surf Map', 'Rapid Surfing Map'], description: t.description, inLanguage: t.lang, dateModified: pageModified,
     isPartOf: { '@id': `${origin}/#website` },
     about: { '@type': 'Thing', name: 'Rapid Surfing', description: guide.definition },
-    primaryImageOfPage: { '@type': 'ImageObject', url: `${origin}/assets/rapid-surf-map-social-20261114.png`, width: 1200, height: 630 },
+    primaryImageOfPage: { '@type': 'ImageObject', url: `${origin}/assets/rapid-surf-map-social-20261118.png`, width: 1200, height: 630 },
     mainEntity: { '@type': 'ItemList', '@id': `${url}#venues`, numberOfItems: count, itemListElement: data.venues.map((venue, i) => ({
       '@type': 'ListItem', position: i + 1, name: venue.name, description: venue.summary, url: origin + venue.detailUrl,
       item: { '@type': 'Place', '@id': venueEntityId(venue.id, language), url: origin + venue.detailUrl, name: venue.name, description: venue.summary, address: venue.address },
@@ -194,14 +194,14 @@ ${languageAlternates ? `  ${languageAlternates}\n` : ''}  <meta property="og:typ
   <meta property="og:title" content="${escape(t.title)}">
   <meta property="og:description" content="${escape(t.description)}">
   <meta property="og:url" content="${escape(url)}">
-  <meta property="og:image" content="${origin}/assets/rapid-surf-map-social-20261114.png">
+  <meta property="og:image" content="${origin}/assets/rapid-surf-map-social-20261118.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="${escape(guide.socialAlt)}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escape(t.title)}">
   <meta name="twitter:description" content="${escape(t.description)}">
-  <meta name="twitter:image" content="${origin}/assets/rapid-surf-map-social-20261114.png">
+  <meta name="twitter:image" content="${origin}/assets/rapid-surf-map-social-20261118.png">
   <meta name="twitter:image:alt" content="${escape(guide.socialAlt)}">
   <link rel="icon" href="/assets/favicon-96.png" sizes="96x96" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180">

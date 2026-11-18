@@ -14,7 +14,7 @@ if (args.length && (args.length !== 2 || args[0] !== '--playwright-root')) {
 const require = createRequire(resolve(args[1] || root, 'package.json'));
 const { chromium } = require('playwright');
 const source = await readFile(resolve(root, 'design/rapid-surf-map-social.svg'), 'utf8');
-const output = resolve(root, 'assets/rapid-surf-map-social-20261114.png');
+const output = resolve(root, 'assets/rapid-surf-map-social-20261118.png');
 let executablePath = process.env.BROWSER_PATH;
 if (!executablePath && process.platform === 'darwin') {
   const chrome = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';

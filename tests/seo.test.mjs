@@ -87,6 +87,7 @@ const meta = ($, name, label) => {
 
 const canonical = ($, label) => single($, 'head link[rel="canonical"]', label).attr('href');
 const hasType = (node, type) => [node?.['@type']].flat().includes(type);
+const rapidSurfing = /\brapid[ -]surfing\b|\brapidsurfen\b/i;
 
 const assertLocalFile = async (url, label) => {
   assert.equal(url.origin, origin, `${label}: expected a local website resource`);
@@ -158,6 +159,9 @@ test('each regional map has a distinct crawlable identity and only equivalent Eu
     const title = single($, 'head title', file).text().trim();
     const description = meta($, 'description', file);
     assert.match(title, /Rapid Surf Map/, file);
+    assert.match(title, rapidSurfing, `${file}: identify the sport as well as the map brand`);
+    assert.match(description, rapidSurfing, `${file}: describe the sport in the search snippet`);
+    assert.match($('.sheet-header h2').text(), rapidSurfing, `${file}: sport category is visible before the directory`);
     assert.ok(!titles.has(title), `${file}: duplicate title`);
     assert.ok(!descriptions.has(description), `${file}: duplicate description`);
     titles.add(title);
@@ -225,6 +229,8 @@ test('all 46 venue documents have distinct canonical identities and reciprocal E
     assert.equal($('html').attr('lang'), page.language, file);
     assert.ok(!new URL(url).search && !new URL(url).hash && url.endsWith('/'), file);
     const title = single($, 'title', file).text().trim(), description = meta($, 'description', file);
+    assert.match(title, rapidSurfing, `${file}: venue titles identify the sport, not just generic details`);
+    assert.match(description, rapidSurfing, `${file}: venue descriptions identify the sport`);
     assert.ok(!titles.has(title) && !descriptions.has(description), `${file}: duplicate public title or description`);
     titles.add(title); descriptions.add(description);
     const robots = meta($, 'robots', file).toLowerCase();
@@ -398,6 +404,16 @@ test('broader surfing use cases have substantive localized content and contextua
     const home = documents.find(page => page.prefix === language.prefix && page.group === '');
     const guide = documents.find(page => page.prefix === language.prefix && page.group === 'surf-video-editing/');
     const support = documents.find(page => page.prefix === language.prefix && page.group === 'support/');
+    const portrait = documents.find(page => page.prefix === language.prefix && page.group === 'portrait-follow/');
+    for (const page of [home, guide, support, portrait]) {
+      assert.match(page.$('head title').text(), rapidSurfing, `${page.file}: purpose-specific search title identifies the sport`);
+      assert.match(meta(page.$, 'description', page.file), rapidSurfing, `${page.file}: relevant product descriptions identify the sport`);
+      const reading = page.$('main').clone();
+      reading.find('script, style, nav, footer').remove();
+      assert.match(reading.text(), rapidSurfing, `${page.file}: category is readable in page content, not only shared navigation`);
+    }
+    assert.match(home.$('.hero-description').text(), rapidSurfing, `${home.file}: the opening product explanation identifies the sport`);
+    assert.match(guide.$('main h1').text(), rapidSurfing, `${guide.file}: the guide heading identifies its subject`);
     assert.match(home.$('#surf-video').text(), /FlowRider/);
     assert.match(home.$('#surf-video').text(), /Rapid Surfing/);
     assert.match(meta(home.$, 'description', home.file), /Rapid Surfing/);

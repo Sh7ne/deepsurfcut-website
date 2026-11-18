@@ -84,9 +84,17 @@ included by the `rapid-surf-map` build allowlist; translated pages use the exist
 map-SDK permissions.
 
 Maps and venue information pages use the dedicated 1200 × 630 sharing image
-`assets/rapid-surf-map-social-20261114.png`. Its abstract artwork does not represent
+`assets/rapid-surf-map-social-20261118.png`. Its abstract artwork does not represent
 a real venue or geographic boundary. The SVG in `design/` and optional export
 script in `scripts/` stay outside the published build.
+
+Use Rapid Surfing as the sport category in the map and venue search metadata and
+visible introductions. Rapid Surf Map is the map name; deep-water standing waves
+describe the narrower venue scope. Preserve each venue name as its H1 and retain
+reviewed technical summaries, check dates and source records. Generic labels such
+as Venue details are useful for controls, but do not replace the sport category in
+search titles. Export a new dated sharing asset when its public artwork changes;
+the assets directory uses immutable caching.
 
 
 ## Websites, contacts, and photos

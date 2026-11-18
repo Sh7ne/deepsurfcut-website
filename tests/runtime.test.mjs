@@ -92,7 +92,7 @@ test('Pages deployment and Apple verification run in the Cloudflare runtime', { 
     }
     const style = await deployed.fetch('/venues/venue.css');
     assert.equal(style.status, 200); assert.match(style.headers.get('Content-Type'), /text\/css/);
-    const social = await deployed.fetch('/assets/rapid-surf-map-social-20261114.png');
+    const social = await deployed.fetch('/assets/rapid-surf-map-social-20261118.png');
     assert.equal(social.status, 200); assert.match(social.headers.get('Content-Type'), /image\/png/);
     const sitemap = await deployed.fetch('/sitemap.xml');
     const $ = load(await sitemap.text(), { xmlMode: true });

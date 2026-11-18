@@ -40,6 +40,7 @@ svg { width: 22px; height: 22px; flex: none; }
 .language-nav a[aria-current] { border-color: var(--line); background: white; color: var(--ink); text-decoration: none; }
 h1 { max-width: 960px; font-size: clamp(30px, 4.6vw, 52px); line-height: 1.16; letter-spacing: -.035em; font-weight: 750; overflow-wrap: anywhere; }
 .venue-location { margin-top: 14px; color: var(--muted); font-size: 14px; overflow-wrap: anywhere; }
+.venue-category { max-width: 760px; margin-top: 16px; color: var(--muted); font-size: 15px; }
 .venue-summary { max-width: 760px; margin-top: 20px; color: var(--muted); font-size: 18px; line-height: 1.65; }
 .venue-tags { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin-top: 20px; list-style: none; }
 .venue-tags li { padding: 3px 11px; border: 1px solid #d4e2ed; border-radius: 20px; background: #eaf2f9; color: #344e64; font-size: 12px; }

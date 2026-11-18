@@ -268,3 +268,27 @@ Primary guidance:
 - [Google: structured-data accuracy](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)
 - [Google: localized versions](https://developers.google.com/search/docs/specialty/international/localized-versions)
 - [Google: sitemap lastmod](https://developers.google.com/search/blog/2023/06/sitemaps-lastmod-ping)
+
+## November 18, 2026 primary sport terminology
+
+Rapid Surfing is the primary sport name across all 62 relevant pages: the four
+map views, 46 venue information pages, and the three-language home, support,
+editing-guide and Portrait Follow pages. Rapid Surf Map remains the map name.
+German also uses Rapidsurfen, while Chinese pairs Rapid Surfing with the existing
+深水冲浪 term. Deep-water standing waves and their translations remain precise
+descriptions of the main recording conditions and the directory's narrower scope.
+
+The map and venue templates now put the sport in search titles, descriptions and
+visible category/introductory copy. Venue H1s retain the actual venue identity;
+their reviewed summaries, addresses, check dates and sources remain unchanged.
+The WebPage sport relationship matches the visible category rather than adding
+unseen claims to Place entities. Product metadata, social text and JSON-LD agree
+with the corresponding public copy. Existing URL and language relationships stay
+stable, and the sitemap still lists 71 canonical URLs.
+
+The sharing card also names Rapid Surfing, exported from its existing SVG source
+to a new dated PNG. The prior immutable asset remains available for cached links.
+Legal policies, reviewed release histories and the separate general-surfing
+DeepFollow pages have no category gap requiring a terminology change; they are
+not rewritten as keyword content. No new venue facts or performance promises are
+added, and these changes do not establish search ranking or indexing outcomes.

@@ -6,6 +6,7 @@ import { renderVenuePages } from '../scripts/render-venues.mjs';
 
 const root = new URL('../', import.meta.url);
 const origin = 'https://deepsurf.app';
+const rapidSurfing = /\brapid[ -]surfing\b|\brapidsurfen\b/i;
 const source = JSON.parse(await readFile(new URL('content/venues.json', root), 'utf8'));
 const extras = JSON.parse(await readFile(new URL('content/venue-directory-details.json', root), 'utf8'));
 const detailPath = (venue, lang) => `${lang === 'zh' ? '/zh' : lang === 'de' ? '/de' : ''}/rapid-surf-map/venues/${venue.id}/`;
@@ -191,6 +192,9 @@ test('46 static venue pages retain reviewed facts, source dates and licensed pho
     }
     const title = $('title').text().trim(), description = $('meta[name="description"]').attr('content');
     assert.ok(title && description && !titles.has(title) && !descriptions.has(description), `${path}: unique public identity`);
+    assert.match(title, rapidSurfing, `${path}: primary category belongs in the venue search title`);
+    assert.match(description, rapidSurfing, `${path}: primary category belongs in the venue search description`);
+    assert.match($('.venue-heading').text(), rapidSurfing, `${path}: the sport category is visible with the venue identity`);
     titles.add(title); descriptions.add(description);
     assert.equal($('link[rel="canonical"]').attr('href'), url, path);
     assert.equal($('meta[property="og:url"]').attr('content'), url, path);
@@ -211,6 +215,8 @@ test('venue Place entities preserve identity without inventing precise geometry,
     const breadcrumbs = graph.find((node) => node['@type'] === 'BreadcrumbList');
     assert.ok(place?.['@id'] && webpage?.['@id'] && breadcrumbs, path);
     assert.equal(webpage.url, url, path);
+    assert.equal(webpage.name, $('title').text().trim(), `${path}: structured page name matches the public title`);
+    assert.equal(webpage.description, $('meta[name="description"]').attr('content'), `${path}: structured description matches the public snippet`);
     assert.equal(webpage.mainEntity['@id'], place['@id'], path);
     assert.equal(breadcrumbs.itemListElement.at(-1).item, url, path);
     if (identities.has(venue.id)) assert.equal(place['@id'], identities.get(venue.id), `${path}: translations describe the same physical Place`);
@@ -242,6 +248,7 @@ test('the map guide provides accessible static answers, source context, and loca
     assert.equal(guide.closest('.venue-card, dialog').length, 0, 'guide remains readable outside venue dialogs');
     assert.equal(guide.is('[hidden], [aria-hidden="true"]'), false, page.path);
     assert.ok(guide.children('summary').text().trim(), `${page.path}: native keyboard-operable disclosure`);
+    assert.match(guide.find('p').first().text(), rapidSurfing, `${page.path}: the directory introduction names the sport`);
     const content = guide.text().replace(/\s+/g, ' ');
     for (const term of terms[page.lang]) assert.match(content, term, page.path);
     const prefix = page.lang === 'zh' ? '/zh/' : page.lang === 'de' ? '/de/' : '/';
