@@ -319,7 +319,7 @@ test('the sitemap lists all 71 canonical product, map and static venue pages', a
       for (const [language, target] of Object.entries(expected)) {
         assert.equal(alternatives.filter(`[hreflang="${language}"]`).attr('href'), target, url);
       }
-      if (page.standalone) assert.equal($(entry).children('lastmod').text(), '2026-11-13', `${url}: substantive map revision uses the source UTC date`);
+      if (page.standalone) assert.equal($(entry).children('lastmod').text(), '2026-11-18', `${url}: substantive map revision uses the source UTC date`);
       continue;
     }
     const expected = alternativesFor(page);

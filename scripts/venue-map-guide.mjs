@@ -17,9 +17,9 @@ export const mapGuideCopy = {
     followLink: '9:16 竖屏跟拍教程', connector: '与', end: '。',
   },
   en: {
-    socialAlt: 'Rapid Surf Map: a deep-water standing-wave venue directory with sources and directions.',
+    socialAlt: 'Rapid Surf Map: a rapid surfing venue directory with sources and directions.',
     summary: 'Rapid Surf Map: coverage and how to use it',
-    intro: 'Rapid Surf Map is a directory of deep-water standing-wave venues by DeepSurfCut. Find venues, compare indoor and outdoor settings, and open sources, operator websites and directions in each listing.',
+    intro: 'Rapid Surf Map is a rapid surfing venue directory by DeepSurfCut. Find venues, compare indoor and outdoor settings, and open sources, operator websites and directions in each listing.',
     definitionHeading: 'What is rapid surfing?',
     definition: 'Rapid surfing means surfing a standing wave formed naturally or by an artificial system.',
     definitionSource: 'Rapid Surf League terminology',
@@ -33,9 +33,9 @@ export const mapGuideCopy = {
     followLink: '9:16 Portrait Follow tutorial', connector: 'and', end: '.',
   },
   de: {
-    socialAlt: 'Rapid Surf Map: Verzeichnis stehender Tiefwasserwellen mit Quellen und Anfahrt.',
+    socialAlt: 'Rapid Surf Map: Anlagen für Rapid Surfing mit Quellen und Anfahrt.',
     summary: 'Rapid Surf Map: Umfang und Nutzung',
-    intro: 'Rapid Surf Map ist ein Verzeichnis stehender Tiefwasserwellen von DeepSurfCut. Finde Anlagen, vergleiche Hallen und Außenanlagen und öffne Quellen, Betreiber-Websites und Anfahrtslinks im jeweiligen Eintrag.',
+    intro: 'Rapid Surf Map ist ein Verzeichnis von Anlagen für Rapid Surfing, zusammengestellt von DeepSurfCut. Finde Anlagen, vergleiche Hallen und Außenanlagen und öffne Quellen, Betreiber-Websites und Anfahrtslinks im jeweiligen Eintrag.',
     definitionHeading: 'Was ist Rapid Surfing?',
     definition: 'Rapid Surfing oder Rapidsurfen bezeichnet das Surfen auf einer natürlich oder künstlich erzeugten stehenden Welle.',
     definitionSource: 'Begriffserklärung der Rapid Surf League',

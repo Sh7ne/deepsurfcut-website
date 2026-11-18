@@ -9,7 +9,7 @@ const root = new URL('../', import.meta.url);
 const origin = 'https://deepsurf.app';
 const mapPath = '/RapidSurfingMap';
 // UTC date of this content update, independent of the venues' source-check dates.
-const pageModified = '2026-11-13';
+const pageModified = '2026-11-18';
 const editions = {
   china: {},
   europe: { center: [49, 12] },
@@ -141,14 +141,14 @@ export function renderVenues(data, edition = 'china', language = 'zh', venueRegi
   const label = regionNames[Object.keys(editions).indexOf(edition)];
   const t = !international ? base : language === 'de' ? {
     ...base, title: 'Rapid Surf Map · Rapidsurfen in Europa | DeepSurfCut', intro: 'Rapid Surfing in Europa',
-    description: 'Mit Rapid Surf Map stehende Tiefwasserwellen in Europa finden: Anlagen filtern, Quellen, Betreiber-Websites, Buchungsinformationen und Anfahrt ansehen.',
+    description: 'Mit Rapid Surf Map Anlagen für Rapid Surfing in Europa finden: Anlagen filtern, Quellen, Betreiber-Websites, Buchungsinformationen und Anfahrt ansehen.',
     mapLabel: 'Rapid Surf Map · Karte zum Rapidsurfen in Europa',
-    aboutIntro: 'Ein Verzeichnis stehender Tiefwasserwellen in Europa von DeepSurfCut.',
+    aboutIntro: 'Ein Verzeichnis von Anlagen für Rapid Surfing in Europa, zusammengestellt von DeepSurfCut.',
   } : {
-    ...base, title: `Rapid Surf Map · ${label} Standing-Wave Venues | DeepSurfCut`, intro: `Rapid surfing in ${edition === 'north-america' ? 'North America' : 'Europe'}`,
-    description: `Find deep-water standing-wave venues in ${edition === 'north-america' ? 'North America' : 'Europe'} with Rapid Surf Map. Filter venues and check sources, operator websites, booking information and directions.`,
+    ...base, title: `Rapid Surf Map · ${label} Rapid Surfing Venues | DeepSurfCut`, intro: `Rapid surfing in ${edition === 'north-america' ? 'North America' : 'Europe'}`,
+    description: `Find rapid surfing venues in ${edition === 'north-america' ? 'North America' : 'Europe'} with Rapid Surf Map. Filter venues and check sources, operator websites, booking information and directions.`,
     mapLabel: `Rapid Surf Map · Rapid surfing venues in ${label}`,
-    aboutIntro: `A directory of deep-water standing waves in ${edition === 'north-america' ? 'North America' : 'Europe'}, by DeepSurfCut.`,
+    aboutIntro: `A rapid surfing venue directory in ${edition === 'north-america' ? 'North America' : 'Europe'}, by DeepSurfCut.`,
   };
   const viewUrl = origin + mapLink(edition, language);
   const url = viewUrl;

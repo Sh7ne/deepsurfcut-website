@@ -1,7 +1,7 @@
 export const regionalLabels = {
   en: {
     visitDetails: 'Website and contact', venuePage: 'Venue information page', website: 'Official website', phone: 'Phone', parkPhone: 'Site reception', contactSource: 'Contact source', photoAdjusted: 'Resized for web', email: 'Email', contactPage: 'Contact the venue', photoPage: 'View venue photos', venueExterior: 'Venue exterior', hostExterior: 'Exterior of the host building', venueSite: 'Water sports site (archival photo)', wavePhoto: 'Standing wave photo',
-    lang: 'en', locale: 'en-US', home: '/', heading: 'Rapid Surf Map', subtitle: 'Rapid Surf Map · Deep-water standing waves',
+    lang: 'en', locale: 'en-US', home: '/', heading: 'Rapid Surf Map', subtitle: 'Rapid Surf Map · Rapid surfing venues',
     regions: ['China', 'Europe', 'North America'], regionPicker: 'Map region', languages: 'Page language',
     skip: 'Skip to venue list', homeLabel: 'Back to DeepSurfCut', about: 'About this map', search: 'Search cities or venues',
     searchPlaceholder: 'Where do you want to surf?', clearSearch: 'Clear search', all: 'All', allCities: 'All cities',
@@ -26,7 +26,7 @@ export const regionalLabels = {
     locate: 'Find my location', fitMap: 'Show all venues', zoomIn: 'Zoom in', zoomOut: 'Zoom out',
     expandSheet: 'Expand or collapse the venue list', sort: 'Sort', recommended: 'Featured', nameSort: 'Name',
     nearestSort: 'Nearest', environment: 'Venue setting', seasonalOnly: 'Seasonal venues only', apply: 'Show venues',
-    filterHint: 'Find a venue for your next session.', aboutHeading: 'About the Rapid Surfing Map',
+    filterHint: 'Find a venue for your next session.', aboutHeading: 'About Rapid Surf Map',
     aboutScope: 'The directory covers commercial deep-water standing waves. It excludes thin-sheet simulators, natural river waves and unverified projects.',
     aboutDates: 'Each listing shows its last check. Check the operator for current hours, seasonal closures and bookings.',
     aboutPositions: 'Pins show venue, site or approximate locations. Check the address and entrance before travelling.',
@@ -37,7 +37,7 @@ export const regionalLabels = {
   },
   de: {
     visitDetails: 'Website und Kontakt', venuePage: 'Standortseite', website: 'Offizielle Website', phone: 'Telefon', parkPhone: 'Auskunft vor Ort', contactSource: 'Quelle der Kontaktdaten', photoAdjusted: 'Für das Web verkleinert', email: 'E-Mail', contactPage: 'Kontakt zur Anlage', photoPage: 'Fotos der Anlage ansehen', venueExterior: 'Außenansicht der Anlage', hostExterior: 'Außenansicht des Gebäudes', venueSite: 'Wassersportgelände (Archivfoto)', wavePhoto: 'Foto der Surfwelle',
-    lang: 'de', locale: 'de-DE', home: '/de/', heading: 'Rapid Surf Map', subtitle: 'Rapid Surf Map · Stehende Tiefwasserwellen',
+    lang: 'de', locale: 'de-DE', home: '/de/', heading: 'Rapid Surf Map', subtitle: 'Rapid Surf Map · Anlagen für Rapid Surfing',
     regions: ['China', 'Europa', 'Nordamerika'], regionPicker: 'Kartenregion', languages: 'Seitensprache',
     skip: 'Zur Standortliste springen', homeLabel: 'Zurück zu DeepSurfCut', about: 'Über diese Karte', search: 'Städte oder Standorte suchen',
     searchPlaceholder: 'Wo möchtest du surfen?', clearSearch: 'Suche löschen', all: 'Alle', allCities: 'Alle Städte',
@@ -62,7 +62,7 @@ export const regionalLabels = {
     locate: 'Meinen Standort finden', fitMap: 'Alle Standorte zeigen', zoomIn: 'Vergrößern', zoomOut: 'Verkleinern',
     expandSheet: 'Standortliste aus- oder einklappen', sort: 'Sortieren', recommended: 'Empfohlen', nameSort: 'Name',
     nearestSort: 'Entfernung', environment: 'Anlagentyp', seasonalOnly: 'Nur saisonale Standorte', apply: 'Standorte anzeigen',
-    filterHint: 'Finde eine Welle für deine nächste Session.', aboutHeading: 'Über die Rapid-Surfing-Karte',
+    filterHint: 'Finde eine Welle für deine nächste Session.', aboutHeading: 'Über Rapid Surf Map',
     aboutScope: 'Das Verzeichnis erfasst kommerzielle stehende Tiefwasserwellen. Dünnschicht-Simulatoren, natürliche Flusswellen und ungeprüfte Projekte bleiben außen vor.',
     aboutDates: 'Jeder Eintrag zeigt das Prüfdatum. Aktuelle Öffnungszeiten, Saisonpausen und Termine findest du beim Betreiber.',
     aboutPositions: 'Markierungen zeigen die Anlage, das Gelände oder eine ungefähre Position. Prüfe Adresse und Eingang vor der Anreise.',

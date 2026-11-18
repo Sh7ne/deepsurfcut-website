@@ -16,7 +16,7 @@ const copy = {
     back: 'Back to the map', directions: 'Get directions', position: 'Map location accuracy', information: 'About this listing',
     sourceNote: 'The check date does not confirm that the venue is open today or that sessions are available. Confirm opening and booking information with the operator before travelling.',
     guide: 'Rapid surfing video editing guide', credit: 'A directory by DeepSurfCut',
-    socialAlt: 'Rapid Surf Map deep-water standing-wave venue map',
+    socialAlt: 'Rapid Surf Map showing rapid surfing venues',
     description: 'Find the address, opening information, sources and directions on Rapid Surf Map.',
   },
   de: {
@@ -24,7 +24,7 @@ const copy = {
     back: 'Zurück zur Karte', directions: 'Anfahrt öffnen', position: 'Genauigkeit der Kartenposition', information: 'Über diesen Eintrag',
     sourceNote: 'Das Prüfdatum bestätigt weder die heutige Öffnung noch freie Termine. Kläre Öffnung und Buchung vor der Anreise mit dem Betreiber.',
     guide: 'Anleitung zur Bearbeitung von Rapid-Surfing-Videos', credit: 'Ein Verzeichnis von DeepSurfCut',
-    socialAlt: 'Rapid Surf Map mit Anlagen für stehende Tiefwasserwellen',
+    socialAlt: 'Rapid Surf Map mit Anlagen für Rapid Surfing',
     description: 'Adresse, Öffnungsangaben, Quellen und Anfahrt auf Rapid Surf Map ansehen.',
   },
 };
